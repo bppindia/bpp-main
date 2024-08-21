@@ -13,9 +13,9 @@ const Footer = () => {
             <span className="font-bold text-3xl">Bharatiya Popular Party</span>
             </div>
             <div>
-              <p className="mb-4  text-base font-medium">Please be advised that Bhartiya Public Party does not hold any official accounts on social media platforms. </p>
+              <p className="mb-4  text-base font-medium">Please be advised that Bharatiya Popular Party does not hold any official accounts on social media platforms. </p>
               <p className="mb-4  text-base font-medium">Our organization is not present on any social media network, including but not limited to Facebook, Twitter, Instagram, LinkedIn, and others. Reporting Unauthorized Accounts</p>
-              <p className="mb-4  text-base font-medium">If you encounter any social media accounts or profiles that claim to represent Bhartiya Public Party or use our name, logo, or any other intellectual property, please notify us immediately. These accounts are unauthorized and not affiliated with our organization.
+              <p className="mb-4  text-base font-medium">If you encounter any social media accounts or profiles that claim to represent Bhartiya Popular Party or use our name, logo, or any other intellectual property, please notify us immediately. These accounts are unauthorized and not affiliated with our organization.
               To report any such accounts, please contact us through email.</p>
               <p className="text-sm text-gray-600">
                 &copy; Copyright 2024. All Rights Reserved by Bharatiya popular party.

@@ -125,8 +125,9 @@ export function HomePage() {
       <div className="relative relative-bg">
         <div className="mx-auto max-w-7xl lg:px-8">
           <div className="flex flex-col justify-center px-4 py-10 lg:px-6">
-            <h1 className="mt-8 max-w-4xl text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-6xl">
-            Empowering Communities Through Decentralization
+            <h1 className="mt-8 max-w-8xl text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
+            {/* Empowering Communities Through Decentralization */}
+            Decentralized Democracy, Centralized Progress
             </h1>
             <p className="mt-8 max-w-3xl text-2xl text-white text-bolder">
             Objective: Strengthen the people of India and local institutions

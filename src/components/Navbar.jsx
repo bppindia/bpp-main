@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import menuItems from '../data/menuItems'
-import bpplogo from '../assets/bpplogo.svg';
+import bpplogo from '../assets/bpplogo.png';
 import {  Menu, X, } from 'lucide-react'
 
 const Navbar = () => {
@@ -12,25 +12,30 @@ const Navbar = () => {
     }
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white">
-    <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2">
-      <div className="inline-flex items-center space-x-2">
-      <img src={bpplogo} alt="BPP Logo" width={35} height={35} />
-        <span className="font-bold text-3xl">Bharatiya Popular Party</span>
-      </div>
-      <div className="hidden lg:block">
+   <div className="mx-auto flex max-w-screen-2xl items-center justify-between px-4 py-2">
+  <div className="flex gap-4 items-center justify-center w-full">
+    <h1 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-4xl" style={{ color: "#ce502d" }}>
+      BHARATIYA POPULAR PARTY
+    </h1>
+    <img src={bpplogo} alt="BPP Logo" width={140} height={140} className="my-2" />
+    <h1 className="text-3xl tracking-widest font-bold  md:text-4xl lg:text-4xl" style={{ color: "#ce502d" }}>
+      भारतीय पॉप्युलर पार्टी
+    </h1>
+  </div>
+      {/* <div className="hidden lg:block">
         <ul className="inline-flex space-x-8">
           {menuItems.map((item) => (
             <li key={item.name}>
               <a
                 href={item.href}
-                className="text-sm font-semibold text-gray-800 hover:text-gray-900"
+                className="text-2xl font-semibold text-gray-800 hover:text-gray-900"
               >
                 {item.name}
               </a>
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
       {/* <div className="hidden lg:block">
         <button
           type="button"
@@ -48,7 +53,7 @@ const Navbar = () => {
             <div className="px-5 pb-6 pt-5">
               <div className="flex items-center justify-between">
                 <div className="inline-flex items-center space-x-2">
-                  <img src={bpplogo} alt="BPP Logo" width={35} height={35} />
+                  <img src={bpplogo} alt="BPP Logo" width={55} height={55} />
                   <span className="font-bold text-3xl">Bharatiya Popular Party</span>
                 </div>
                 <div className="-mr-2">
