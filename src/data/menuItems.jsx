@@ -1,15 +1,15 @@
 const menuItems = [
     {
         name: "Enroll",
-        href: "/",
+        href: "#enroll",
     },
     {
         name: "Vision",
-        href: "#",
+        href: "#vision",
     },
     {
         name: "Mission",
-        href: "#",
+        href: "#mission",
     },
 ];
 

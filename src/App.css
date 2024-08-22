@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 /* styles.css or index.css */
 .relative-bg {
     position: relative;
