@@ -17,11 +17,12 @@ html {
     right: 0;
     bottom: 0;
     background-image: url('/public/homepagebanner.png');
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/public/homepagebanner.png'); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(3px); /* Adjust the blur level */
-    z-index: -2;       /* Ensure it stays behind the overlay */
+    z-index: -2;      
+    /* filter: blur(3px); Adjust the blur level */
   }
   
   .relative-bg::after {
