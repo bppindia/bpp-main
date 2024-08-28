@@ -2,13 +2,14 @@
 import { useState } from "react";
 import Layout from "../layout/Layout";
 import { Input } from "@/components/ui/input";
-import bppmic from '../assets/bppmic.png';
-import bpplogo from '../assets/bpplogo.png';
+import bpplogo from '../assets/bpplogoo.png';
 import { ChevronRight } from "lucide-react";
 import { toast } from "react-hot-toast";
 import bppflag from "../assets/bppflag.png"
 import axios from "axios";
 import { getURLbyEndPointV2 } from "@/api";
+import { Checkbox } from "@/components/ui/checkbox"
+import '../App.css'
 
 export function HomePage() {
   const [registerFormSuccess, setRegisterFormSuccess] = useState(false);
@@ -121,33 +122,33 @@ export function HomePage() {
     <>
     <Layout>
     <div
-      className="relative h-screen bg-cover bg-center"
+      className="relative bg-cover bg-center"
       style={{ backgroundImage: "url('/homepagebanner.png')" }}
     >
-      <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div className="relative container z-10 flex flex-col lg:flex-row items-center h-full text-white p-8">
-        <div className="flex-1 content-center">
+      <div className="absolute inset-0 bg-black opacity-30"></div>
+      <div className="relative container z-10 flex flex-col items-center justify-center content-center lg:flex-row h-full text-white p-8">
+        <div className="flex-1 container content-center">
           <div className="flex gap-2 content-center items-center">
-          <img src={bpplogo} width={130}/>
-          <h1 className="text-3xl lg:text-4xl font-bold">
+          <img src={bpplogo} className="w-20 lg:w-32"/>
+          <h1 className="text-xl lg:text-4xl raleway">
             {" "}
             Decentralized Democracy, Centralized Progress
           </h1>
           </div>
-          <h2 className="text-lg mt-4 font-semibold">
+          <h2 className="text-lg mt-4 font-semibold poppins-semibold">
             Objective: Strengthen the people of India and local institutions to
             ensure that decisions are made with the involvement of the people
             they affect
           </h2>
         </div>
-        <div className="mt-10 bg-white rounded-lg p-8 max-w-xl w-full shadow-lg flex-shrink-0">
-          <h3 className="text-2xl font-bold text-gray-800">Enroll Now</h3>
-          <h6 className="text-sm font-semibold text-gray-600 mb-4">Fill all the details as per Voter Id *</h6>
+        <div className="mt-10 container bg-white rounded-lg p-8 max-w-xl w-full shadow-lg flex-shrink-0">
+          <h3 className="text-2xl font-bold text-gray-800 roboto-medium">Enroll Now</h3>
+          <h6 className="text-sm font-semibold lato-thin  text-gray-600 mb-4">Fill all the details as per Voter Id <span className="text-red-700">*</span></h6>
           <form onSubmit={handleFormSubmit} className="space-y-4">
             <div className="flex flex-row space-x-4 lg:flex-row lg:space-x-4">
               <div className="flex-1">
                 <label className="block text-gray-700" htmlFor="firstName">
-                  First Name
+                  First Name  <span className="text-red-700">*</span>
                 </label>
                 <Input
                   id="firstName"
@@ -160,7 +161,7 @@ export function HomePage() {
               </div>
               <div className="flex-1">
                 <label className="block text-gray-700" htmlFor="lastName">
-                  Last Name
+                  Last Name  <span className="text-red-700">*</span>
                 </label>
                 <Input
                   id="lastName"
@@ -175,7 +176,7 @@ export function HomePage() {
             <div className="flex flex-row space-x-4 lg:flex-row lg:space-x-4">
               <div className="flex-1">
                 <label className="block text-gray-700" htmlFor="fatherName">
-                  Father's Name
+                  Father's Name  <span className="text-red-700">*</span>
                 </label>
                 <Input
                   id="fatherName"
@@ -188,7 +189,7 @@ export function HomePage() {
               </div>
               <div className="flex-1">
                 <label className="block text-gray-700" htmlFor="voterIdNo">
-                  Voter ID No
+                  Voter ID No  <span className="text-red-700">*</span>
                 </label>
                 <Input
                   id="voterIdNo"
@@ -203,7 +204,7 @@ export function HomePage() {
             <div className="flex flex-row space-x-4 lg:flex-row lg:space-x-4">
               <div className="flex-1">
                 <label className="block text-gray-700" htmlFor="phoneNo">
-                  Phone
+                  Phone  <span className="text-red-700">*</span>
                 </label>
                 <Input
                   id="phoneNo"
@@ -216,7 +217,7 @@ export function HomePage() {
               </div>
               <div className="flex-1">
                 <label className="block text-gray-700" htmlFor="email">
-                  Email
+                  Email  <span className="text-red-700">*</span>
                 </label>
                 <Input
                   id="email"
@@ -232,9 +233,10 @@ export function HomePage() {
             <div className="flex flex-row space-x-4 lg:flex-row lg:space-x-4">
               <div className="flex-1">
                 <label className="block text-gray-700" htmlFor="voterIdFront">
-                  Voter ID Front
+                  Voter ID Front  <span className="text-red-700">*</span>
                 </label>
                 <Input
+                 className="text-black"
                   id="voterIdFront"
                   type="file"
                   accept=".jpg,.jpeg,.png,.pdf"
@@ -245,20 +247,37 @@ export function HomePage() {
                 />
               </div>
               <div className="flex-1">
-                <label className="block text-gray-700" htmlFor="voterIdFront">
-                  Voter ID Back
+                <label className="block text-gray-700" htmlFor="voterIdBack">
+                  Voter ID Back  <span className="text-red-700">*</span>
                 </label>
                 <Input
-                  id="voterIdFront"
+                  id="voterIdBack"
+                  className="text-black"
                   type="file"
                   accept=".jpg,.jpeg,.png,.pdf"
-                  name="voterIdFront"
+                  name="voterIdBack"
                   onChange={(e) =>
-                    handleFileUpload("voterIdFront", e.target.files[0])
+                    handleFileUpload("voterIdBack", e.target.files[0])
                   }
                 />
               </div>
             </div>
+            <div className="flex items-center space-x-2">
+      <Checkbox id="terms" required />
+      <label
+        htmlFor="terms"
+        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-black"
+      >
+        I agree to the{' '}
+        <a href="#" className="text-blue-600 hover:underline">
+          Terms and Conditions
+        </a>{' '}
+        and{' '}
+        <a href="#" className="text-blue-600 hover:underline">
+          Privacy Policy
+        </a>.
+      </label>
+    </div>
 
             <button
               type="submit"
@@ -272,7 +291,7 @@ export function HomePage() {
       </div>
     </div>
   
-            <div className="relative py-28" style={{background: "#D3E6E0"}}>
+            <div id="vision" className="relative py-28" style={{background: "#D3E6E0"}}>
   <div>
     <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="lg:flex lg:items-center lg:justify-between">
@@ -296,6 +315,7 @@ export function HomePage() {
               alt="bppflag"
               src={bppflag}
               className="h-full w-full object-cover object-center"
+              style={{border: "1px solid"}}
             />
           </div>
         </div>
@@ -304,7 +324,7 @@ export function HomePage() {
   </div>
 </div>
 
-<div className="container h-3/5">
+<div id="mission" className="container h-3/5">
     <div className="my-40">
             <h1 className="text-4xl text-center font-bold tracking-tight text-gray-900 sm:text-6xl">
               Our Mission
@@ -319,56 +339,6 @@ export function HomePage() {
             </p>
             </div>
             </div>
-
-    <footer className="w-full bg-slate-900 pb-8 pt-12 md:mt-16 border-t">
-        <div className="mx-auto flex max-w-6xl flex-col items-start space-x-8 md:flex-row">
-          <div className="w-full px-6 md:w-1/2 lg:px-0">
-            <h1 className="max-w-sm text-3xl text-white font-bold">Subscribe to our Newsletter</h1>
-            <form action="" className="mt-4 inline-flex w-full items-center md:w-3/4">
-            <input
-  className="flex h-10 w-full rounded-md border border-white/60 bg-transparent px-3 py-2 text-sm placeholder-white focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 text-white"
-  type="email"
-  placeholder="Email"
-/>
-
-              <button
-                type="button"
-                className="ml-4 rounded-full bg-white px-3 py-3 text-sm font-semibold text-white shadow-sm hover:bg-white/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                onClick={()=> alert("thank you for subscribe!")}
-              >
-                <ChevronRight className="h-4 w-4 text-black" />
-              </button>
-            </form>
-          </div>
-          <div className="mt-8 grid w-4/5 gap-6 md:mt-0 lg:w-3/4 ">
-          <p className="mb-6 text-lg font-semibold text-white">Please be advised that Bharatiya Popular Party does not hold any official accounts on social media platforms.
-          </p>
-          <p className="mb-6 text-lg font-semibold text-white" >
-
-Our organization is not present on any social media network, including but not limited to Facebook, Twitter, Instagram, LinkedIn, and others. Reporting Unauthorized Accounts
-
-          </p>
-          <p className="mb-6 text-lg font-semibold text-white">
-If you encounter any social media accounts or profiles that claim to represent Bhartiya Popular Party or use our name, logo, or any other intellectual property, please notify us immediately. These accounts are unauthorized and not affiliated with our organization. To report any such accounts, please contact us through email.</p>
-          
-          </div>
-        </div>
-        <hr className="my-8" />
-        <div className="mx-auto max-w-6xl items-center justify-between px-4 md:flex lg:px-0">
-        <div>
-            <a
-              href="/"
-            className="flex gap-3 font-bold text-black-700 items-center"
-            >
-             <img src={bppmic} width={25} height={25}/>
-              <span className='poppins-regular text-white font-black text-md lg:text-xl'>BHARATIYA POPULAR PARTY</span>
-            </a>
-          </div>
-          <div className="mt-4 md:mt-0">
-            <p className="text-sm font-medium text-gray-500">© 2024 Bharatiya Popular Party. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </Layout>
     </>
   );
