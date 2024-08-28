@@ -126,19 +126,17 @@ export function HomePage() {
       style={{ backgroundImage: "url('/homepagebanner.png')" }}
     >
       <div className="absolute inset-0 bg-black opacity-30"></div>
-      <div className="relative container z-10 flex flex-col items-center justify-center content-center lg:flex-row h-full text-white p-8">
-        <div className="flex-1 container content-center">
+      <div className="relative container z-10 flex flex-col justify-center content-center gap-2 lg:flex-row h-full text-white p-8">
+        <div className="flex-1 mt-14">
           <div className="flex gap-2 content-center items-center">
-          <img src={bpplogo} className="w-20 lg:w-32"/>
-          <h1 className="text-xl lg:text-4xl raleway">
+         
+          <h1 className="text-4xl lg:text-4xl raleway">
             {" "}
-            Decentralized Democracy, Centralized Progress
+            Empowering Communities Through Decentralization
           </h1>
           </div>
           <h2 className="text-lg mt-4 font-semibold poppins-semibold">
-            Objective: Strengthen the people of India and local institutions to
-            ensure that decisions are made with the involvement of the people
-            they affect
+          Objectives of Bhartiya Popular Party is to ensure that its policies and decisions are more responsive to the needs of the people. And, that local representatives, without interference of the central power, plays an important role in shaping a better, more connected community. To achieve the centralized progress, we aim to develop strong communication channels to facilitate information exchange and feedback.
           </h2>
         </div>
         <div className="mt-10 container bg-white rounded-lg p-8 max-w-xl w-full shadow-lg flex-shrink-0">
@@ -153,7 +151,7 @@ export function HomePage() {
                 <Input
                   id="firstName"
                   type="text"
-                  className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+                  className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-5 lg:h-10 focus:ring-indigo-500 text-black"
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleInputChange}
@@ -166,7 +164,7 @@ export function HomePage() {
                 <Input
                   id="lastName"
                   type="text"
-                  className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+                  className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-5 lg:h-10 focus:ring-indigo-500 text-black"
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleInputChange}
@@ -181,7 +179,7 @@ export function HomePage() {
                 <Input
                   id="fatherName"
                   type="text"
-                  className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+                  className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-5 lg:h-10 focus:ring-indigo-500 text-black"
                   name="fatherName"
                   value={formData.fatherName}
                   onChange={handleInputChange}
@@ -194,7 +192,7 @@ export function HomePage() {
                 <Input
                   id="voterIdNo"
                   type="text"
-                  className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+                  className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-5 lg:h-10 focus:ring-indigo-500 text-black"
                   name="voterIdNo"
                   value={formData.voterIdNo}
                   onChange={handleInputChange}
@@ -209,7 +207,7 @@ export function HomePage() {
                 <Input
                   id="phoneNo"
                   type="text"
-                  className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+                  className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-5 lg:h-10 focus:ring-indigo-500 text-black"
                   name="phoneNo"
                   value={formData.phoneNo}
                   onChange={handleInputChange}
@@ -222,7 +220,7 @@ export function HomePage() {
                 <Input
                   id="email"
                   type="email"
-                  className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+                  className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-5 lg:h-10 focus:ring-indigo-500 text-black"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
@@ -236,7 +234,7 @@ export function HomePage() {
                   Voter ID Front  <span className="text-red-700">*</span>
                 </label>
                 <Input
-                 className="text-black"
+               className="text-black h-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   id="voterIdFront"
                   type="file"
                   accept=".jpg,.jpeg,.png,.pdf"
@@ -252,7 +250,7 @@ export function HomePage() {
                 </label>
                 <Input
                   id="voterIdBack"
-                  className="text-black"
+                  className="text-black h-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   type="file"
                   accept=".jpg,.jpeg,.png,.pdf"
                   name="voterIdBack"

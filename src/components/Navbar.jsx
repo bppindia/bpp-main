@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import bppmic from "../assets/bppmic.png";
-import bpplogo from "../assets/bpplogo.png";
+import bpplogo from "../assets/bpplogoo.png";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
@@ -9,10 +9,10 @@ const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 py-4 w-full border-b bg-white">
+    <header className="sticky top-0 z-50 py-2 w-full border-b bg-white">
       <nav>
         <div className="max-w-full mx-auto">
-          <div className="flex justify-between items-center mx-auto w-4/5">
+          <div className="flex justify-between items-center mx-auto w-5/6">
             {/* Logo Section */}
             <div className="flex items-center gap-24 raleway">
               <div>
@@ -20,10 +20,14 @@ const Navbar = () => {
                   to="/"
                   className="flex gap-3 items-center"
                 >
-                  <img src={bpplogo} alt="BPP Logo" className="w-10 lg:w-16"/>
-                  <span className="text-md lg:text-2xl montserrat">
-                    BHARATIYA POPULAR PARTY
-                  </span>
+                  <img src={bpplogo} alt="BPP Logo" className="w-14 lg:w-32"/>
+                  <div className="flex flex-col justify-center">
+                  <div>
+                  <span className="text-sm lg:text-4xl font-extrabold montserrat" style={{color: "#79a5f2"}}> BHARATIYA POPULAR PARTY </span>
+                  </div>
+              
+  <span className="text-center  navbarText px-2 lg:text-lg text-white"  style={{background: "#CF502D"}}>Decentralized Democracy, Centralized Progress</span>
+</div>
                 </Link>
               </div>
             </div>

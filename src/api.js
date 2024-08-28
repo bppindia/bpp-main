@@ -1,4 +1,4 @@
-// export const domain = "https://e-platapi.aecci.org.in";
+// export const domain = "https://api.bppindia.com";
 export const domain = "http://localhost:3001";
 
 
@@ -8,7 +8,7 @@ const endpoints = {
 
 
 function getURLbyEndPointV2(endpoint) {
-  return domain + "/api/v2" + endpoints[endpoint];
+  return domain + "/api/" + endpoints[endpoint];
 }
 
 export { endpoints, getURLbyEndPointV2 };
