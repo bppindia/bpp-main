@@ -29,7 +29,7 @@ const Footer = () => {
               </button>
             </form>
             <h5 className="max-w-sm text-md py-5 text-white font-semibold">
-              Reach us: bpp.headoffice@gmail.com
+              For General Query: bpp.headoffice@gmail.com
             </h5>
           </div>
           <div className="mt-8 grid w-4/5 gap-6 md:mt-0 lg:w-3/4 ">
@@ -55,7 +55,7 @@ const Footer = () => {
         </div>
       </div>
       <hr />
-      <div className="mx-auto mt-6  max-w-6xl items-center justify-between px-4 md:flex lg:px-0">
+      <div className="mx-auto my-6  max-w-6xl items-center justify-between px-4 md:flex lg:px-0">
         <div>
           <a
             href="/"
@@ -67,7 +67,7 @@ const Footer = () => {
             </span>
           </a>
         </div>
-        <div className="mt-4 md:mt-0">
+        <div className="md:mt-0">
           <p className="text-sm font-medium text-gray-500">
             © 2024 Bharatiya Popular Party. All rights reserved.
           </p>

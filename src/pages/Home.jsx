@@ -7,6 +7,7 @@ import axios from "axios";
 import { getURLbyEndPointV2 } from "@/api";
 import { Checkbox } from "@/components/ui/checkbox";
 import "../App.css";
+import { indianStateWithCity, profession } from "@/data/data";
 
 export function HomePage() {
   const [registerFormSuccess, setRegisterFormSuccess] = useState(false);
@@ -15,46 +16,53 @@ export function HomePage() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    gender: "",
     fatherName: "",
+    dob: "",
     voterIdNo: "",
-    phoneNo: "",
+    state: "",
+    city: "",
+    profession: "",
     email: "",
+    phoneNo: "",
     voterIdFront: null,
     voterIdBack: null,
   });
 
+ 
+  const [cities, setCities] = useState([]);
+
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, files } = e.target;
+    if (type === 'file') {
+      setFormData({
+        ...formData,
+        [name]: files[0], 
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
+
+  const handleStateChange = (e) => {
+    const selectedState = e.target.value;
     setFormData({
       ...formData,
-      [name]: value,
+      state: selectedState,
+      city: "",
     });
+    setCities(indianStateWithCity[selectedState] || []);
   };
 
-  const handleVoterIdFront = (e) => {
-    const voterFrontFile = e.target.files[0];
-    if (voterFrontFile && voterFrontFile.size <= 3 * 1024 * 1024) {
-      // Check if the file size is 3MB or less
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        voterIdFront: voterFrontFile,
-      }));
-    } else {
-      alert("voter id size must be 3MB or less.");
-    }
-  };
-
-  const handleVoterIdBack = (e) => {
-    const voterBackFile = e.target.files[0];
-    if (voterBackFile && voterBackFile.size <= 3 * 1024 * 1024) {
-      // Check if the file size is 3MB or less
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        voterIdBack: voterBackFile,
-      }));
-    } else {
-      alert("voter id size must be 3MB or less.");
-    }
+  const handleCityChange = (e) => {
+    const selectedCity = e.target.value;
+    setFormData({
+      ...formData,
+      city: selectedCity,
+    });
   };
 
   const handleFormSubmit = async (e) => {
@@ -76,11 +84,30 @@ export function HomePage() {
           message: "Please enter fathers Name.",
           isValid: () => formData.fatherName.trim() !== "",
         },
+        dob: {
+          message: "Please enter your date of birth.",
+          isValid: () => formData.dob.trim() !== "",
+        },
+        gender: {
+          message: "Please enter your gender",
+          isValid: () => formData.gender.trim() !== "",
+        },
+        profession: {
+          message: "Please select your profession",
+          isValid: () => formData.profession.trim() !== "",
+        },
+        state: {
+          message: "Please select state",
+          isValid: () => formData.state.trim() !== "",
+        },
+        city: {
+          message: "Please select your city",
+          isValid: () => formData.city.trim() !== "",
+        },
         email: {
-          message: "Please enter email.",
+          message: "Please enter email",
           isValid: () => formData.email.trim() !== "",
         },
-
         phoneNo: {
           message: "Please enter phoneNo.",
           isValid: () => formData.phoneNo.trim() !== "",
@@ -94,13 +121,13 @@ export function HomePage() {
           message: "Please upload voter id (below 3 MB).",
           isValid: () =>
             formData.voterIdFront !== null &&
-            formData.voterIdFront.size <= 3 * 1024 * 1024, // Check if file is not null and size is below 3 MB
+            formData.voterIdFront.size <= 3 * 1024 * 1024, 
         },
         voterIdBack: {
           message: "Please upload Voter id (below 3 MB).",
           isValid: () =>
             formData.voterIdBack !== null &&
-            formData.voterIdBack.size <= 3 * 1024 * 1024, // Check if file is not null and size is below 3 MB
+            formData.voterIdBack.size <= 3 * 1024 * 1024, 
         },
       };
 
@@ -121,6 +148,11 @@ export function HomePage() {
       apiFormData.append("email", formData.email);
       apiFormData.append("voterIdNo", formData.voterIdNo);
       apiFormData.append("phoneNo", formData.phoneNo);
+      apiFormData.append("dob", formData.dob);
+      apiFormData.append("gender", formData.gender);
+      apiFormData.append("profession", formData.profession);
+      apiFormData.append("state", formData.state);
+      apiFormData.append("city", formData.city);
       apiFormData.append("voterIdFront", formData.voterIdFront);
       apiFormData.append("voterIdBack", formData.voterIdBack);
 
@@ -138,9 +170,14 @@ export function HomePage() {
         setFormData({
           firstName: "",
           lastName: "",
+          gender: "",
           fatherName: "",
-          email: "",
+          dob: "",
           voterIdNo: "",
+          state: "",
+          city: "",
+          profession: "",
+          email: "",
           phoneNo: "",
           voterIdFront: null,
           voterIdBack: null,
@@ -189,7 +226,7 @@ export function HomePage() {
                 <span className="text-red-700">*</span>
               </h6>
               <form onSubmit={handleFormSubmit} className="space-y-4">
-                <div className="flex flex-row space-x-4 lg:flex-row lg:space-x-4">
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
                   <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="firstName">
                       First Name <span className="text-red-700">*</span>
@@ -197,7 +234,7 @@ export function HomePage() {
                     <Input
                       id="firstName"
                       type="text"
-                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-5 lg:h-10 focus:ring-indigo-500 text-black"
+                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
                       name="firstName"
                       maxLength={30}
                       value={formData.firstName}
@@ -212,7 +249,7 @@ export function HomePage() {
                     <Input
                       id="lastName"
                       type="text"
-                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-5 lg:h-10 focus:ring-indigo-500 text-black"
+                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
                       name="lastName"
                       maxLength={30}
                       value={formData.lastName}
@@ -220,8 +257,27 @@ export function HomePage() {
                       required
                     />
                   </div>
+                  <div className="flex-1">
+  <label className="block text-gray-700" htmlFor="gender">
+    Gender <span className="text-red-700">*</span>
+  </label>
+  <select
+    id="gender"
+    className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black text-sm"
+    name="gender"
+    value={formData.gender}
+    onChange={handleInputChange}
+    required
+  >
+    <option value="" disabled>Select gender</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+    <option value="preferNotToSay">Prefer not to say</option>
+  </select>
+</div>
                 </div>
-                <div className="flex flex-row space-x-4 lg:flex-row lg:space-x-4">
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
                   <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="fatherName">
                       Father's Name <span className="text-red-700">*</span>
@@ -229,7 +285,7 @@ export function HomePage() {
                     <Input
                       id="fatherName"
                       type="text"
-                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-5 lg:h-10 focus:ring-indigo-500 text-black"
+                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
                       name="fatherName"
                       maxLength={30}
                       value={formData.fatherName}
@@ -238,6 +294,20 @@ export function HomePage() {
                     />
                   </div>
                   <div className="flex-1">
+  <label className="block text-gray-700" htmlFor="dob">
+    Date of Birth <span className="text-red-700">*</span>
+  </label>
+  <input
+    id="dob"
+    type="date"
+    className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+    name="dob"
+    value={formData.dob}
+    onChange={handleInputChange}
+    required
+  />
+</div>
+                  <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="voterIdNo">
                       Voter ID No <span className="text-red-700">*</span>
                     </label>
@@ -245,15 +315,84 @@ export function HomePage() {
                       id="voterIdNo"
                       type="text"
                       maxLength={10}
-                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-5 lg:h-10 focus:ring-indigo-500 text-black"
+                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                      style={{ textTransform: 'uppercase' }}
                       name="voterIdNo"
                       value={formData.voterIdNo}
                       onChange={handleInputChange}
                       required
                     />
                   </div>
+                
                 </div>
-                <div className="flex flex-row space-x-4 lg:flex-row lg:space-x-4">
+
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+                <div className="flex-1">
+                <label className="block text-gray-700" htmlFor="state">
+          State <span className="text-red-700">*</span>
+        </label>
+        <select
+          id="state"
+          name="state"
+          value={formData.state}
+          onChange={handleStateChange}
+          className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+          required
+        >
+          <option value="" disabled>Select state</option>
+          {Object.keys(indianStateWithCity).map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
+                  </div>
+
+                  <div className="flex-1">
+                  <label className="block text-gray-700" htmlFor="city">
+          City <span className="text-red-700">*</span>
+        </label>
+        <select
+          id="city"
+          name="city"
+          value={formData.city}
+          onChange={handleCityChange}
+          className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+          disabled={!formData.state} // Disable if no state is selected
+          required
+        >
+          <option value="" disabled>Select city</option>
+          {cities.map((city) => (
+            <option key={city} value={city}>
+              {city}
+            </option>
+          ))}
+        </select>
+                  </div>
+
+                  <div className="flex-1">
+                <label className="block text-gray-700" htmlFor="profession">
+          Profession <span className="text-red-700">*</span>
+        </label>
+        <select
+          id="profession"
+          name="profession"
+          value={formData.profession}
+          onChange={handleInputChange}
+          className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+          required
+        >
+          <option value="" disabled>Select state</option>
+          {profession.map((profession, index) => (
+            <option key={index} value={profession}>
+              {profession}
+            </option>
+          ))}
+        </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                   <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="phoneNo">
                       Phone <span className="text-red-700">*</span>
@@ -262,7 +401,7 @@ export function HomePage() {
                       id="phoneNo"
                       type="text"
                       maxLength={10}
-                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-5 lg:h-10 focus:ring-indigo-500 text-black"
+                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
                       name="phoneNo"
                       value={formData.phoneNo}
                       onChange={handleInputChange}
@@ -276,7 +415,7 @@ export function HomePage() {
                     <Input
                       id="email"
                       type="email"
-                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-5 lg:h-10 focus:ring-indigo-500 text-black"
+                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
                       name="email"
                       maxLength={25}
                       value={formData.email}
@@ -285,7 +424,8 @@ export function HomePage() {
                   </div>
                 </div>
 
-                <div className="flex flex-row space-x-4 lg:flex-row lg:space-x-4">
+
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                   <div className="flex-1">
                     <label
                       className="block text-gray-700"
@@ -297,9 +437,9 @@ export function HomePage() {
                       className="text-black h-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       id="voterIdFront"
                       type="file"
-                      accept=".jpg,.jpeg,.png,.pdf"
+                      accept="image/*,.pdf" 
                       name="voterIdFront"
-                      onChange={handleVoterIdFront}
+                      onChange={handleInputChange}
                       required
                     />
                   </div>
@@ -314,9 +454,9 @@ export function HomePage() {
                       id="voterIdBack"
                       className="text-black h-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       type="file"
-                      accept=".jpg,.jpeg,.png,.pdf"
+                      accept="image/*,.pdf" 
                       name="voterIdBack"
-                      onChange={handleVoterIdBack}
+                      onChange={handleInputChange}
                       required
                     />
                   </div>
