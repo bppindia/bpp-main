@@ -118,16 +118,16 @@ export function HomePage() {
           isValid: () => /^([a-zA-Z]){3}([0-9]){7}$/.test(formData.voterIdNo),
         },
         voterIdFront: {
-          message: "Please upload voter id (below 3 MB).",
+          message: "Please upload voter id (below 5 MB).",
           isValid: () =>
             formData.voterIdFront !== null &&
-            formData.voterIdFront.size <= 3 * 1024 * 1024, 
+            formData.voterIdFront.size <= 5 * 1024 * 1024, 
         },
         voterIdBack: {
-          message: "Please upload Voter id (below 3 MB).",
+          message: "Please upload Voter id (below 5 MB).",
           isValid: () =>
             formData.voterIdBack !== null &&
-            formData.voterIdBack.size <= 3 * 1024 * 1024, 
+            formData.voterIdBack.size <= 5 * 1024 * 1024, 
         },
       };
 
