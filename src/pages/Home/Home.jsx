@@ -1,17 +1,17 @@
 "use client";
 import { useState } from "react";
-import Layout from "../layout/Layout";
-import { Input } from "@/components/ui/input";
-import bppflag from "../assets/bppflag.png";
+import "@/App.css";
+import Layout from "@/layout/Layout";
+import bppflag from "@/assets/bppflag.png";
 import axios from "axios";
-import { getURLbyEndPointV2 } from "@/api";
+import { getURLbyEndPointV1 } from "@/api";
+import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import "../App.css";
 import { indianStateWithCity, profession } from "@/data/data";
 
 export function HomePage() {
-  const [registerFormSuccess, setRegisterFormSuccess] = useState(false);
-  const [formSuccessful, setFormSuccessful] = useState(false);
+  const [ApiRecomFlag, setApiRecomFlag] = useState(false);
+  const [cities, setCities] = useState([]);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -29,21 +29,58 @@ export function HomePage() {
     voterIdBack: null,
   });
 
- 
-  const [cities, setCities] = useState([]);
+  const handleInputChange = (field, value) => {
+    setFormData((prevData) => {
+      const updatedData = {
+        ...prevData,
+        [field]: value,
+      };
 
-  const handleInputChange = (e) => {
-    const { name, value, type, files } = e.target;
-    if (type === 'file') {
-      setFormData({
-        ...formData,
-        [name]: files[0], 
-      });
+      // Add validation for DOB to ensure user is at least 18 years old
+      if (field === "dob") {
+        const dob = value.trim();
+        if (dob !== "") {
+          const dobDate = new Date(dob);
+          const today = new Date();
+
+          // Calculate age
+          let age = today.getFullYear() - dobDate.getFullYear();
+          const monthDifference = today.getMonth() - dobDate.getMonth();
+          const dayDifference = today.getDate() - dobDate.getDate();
+
+          // Calculate adjusted age
+          if (
+            monthDifference < 0 ||
+            (monthDifference === 0 && dayDifference < 0)
+          ) {
+            age--; // Adjust age if birthday hasn't occurred yet this year
+          }
+
+          // If age is less than 18, set an error message
+          if (age < 18) {
+            console.error("You must be at least 18 years old.");
+            alert("You must be at least 18 years old.");
+            return prevData; // Return previous data to avoid updating with invalid DOB
+          }
+        }
+      }
+
+      return updatedData;
+    });
+  };
+
+  const handleFileUpload = (field, file) => {
+    // You can set the size limit here if needed
+    const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+
+    if (file.size <= MAX_SIZE) {
+      setFormData((prevData) => ({
+        ...prevData,
+        [field]: file,
+      }));
     } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
+      console.error("File size exceeds 5MB");
+      alert("File size exceeds 5MB");
     }
   };
 
@@ -66,80 +103,83 @@ export function HomePage() {
   };
 
   const handleFormSubmit = async (e) => {
+    setApiRecomFlag(true);
     e.preventDefault();
-
     console.log(formData);
-    try {
-      // Validation rules for each field
-      const validationRulesCreateUser = {
-        firstName: {
-          message: "Please enter first name.",
-          isValid: () => formData.firstName.trim() !== "",
-        },
-        lastName: {
-          message: "Please enter last Name.",
-          isValid: () => formData.lastName.trim() !== "",
-        },
-        fatherName: {
-          message: "Please enter fathers Name.",
-          isValid: () => formData.fatherName.trim() !== "",
-        },
-        dob: {
-          message: "Please enter your date of birth.",
-          isValid: () => formData.dob.trim() !== "",
-        },
-        gender: {
-          message: "Please enter your gender",
-          isValid: () => formData.gender.trim() !== "",
-        },
-        profession: {
-          message: "Please select your profession",
-          isValid: () => formData.profession.trim() !== "",
-        },
-        state: {
-          message: "Please select state",
-          isValid: () => formData.state.trim() !== "",
-        },
-        city: {
-          message: "Please select your city",
-          isValid: () => formData.city.trim() !== "",
-        },
-        email: {
-          message: "Please enter email",
-          isValid: () => formData.email.trim() !== "",
-        },
-        phoneNo: {
-          message: "Please enter phoneNo.",
-          isValid: () => formData.phoneNo.trim() !== "",
-        },
-        voterIdNo: {
-          message:
-            "Please enter a valid voter ID number.",
-          isValid: () => /^([a-zA-Z]){3}([0-9]){7}$/.test(formData.voterIdNo),
-        },
-        voterIdFront: {
-          message: "Please upload voter id (below 5 MB).",
-          isValid: () =>
-            formData.voterIdFront !== null &&
-            formData.voterIdFront.size <= 5 * 1024 * 1024, 
-        },
-        voterIdBack: {
-          message: "Please upload Voter id (below 5 MB).",
-          isValid: () =>
-            formData.voterIdBack !== null &&
-            formData.voterIdBack.size <= 5 * 1024 * 1024, 
-        },
-      };
 
-      // Loop through each field and validate
-      for (const field in validationRulesCreateUser) {
-        const { message, isValid } = validationRulesCreateUser[field];
-        if (!isValid()) {
-          alert(message);
-          return;
-        }
+    const validationRules = {
+      firstName: {
+        message: "Please enter first name.",
+        isValid: () => formData.firstName.trim() !== "",
+      },
+      lastName: {
+        message: "Please enter last Name.",
+        isValid: () => formData.lastName.trim() !== "",
+      },
+      fatherName: {
+        message: "Please enter fathers Name.",
+        isValid: () => formData.fatherName.trim() !== "",
+      },
+      dob: {
+        message: "Please enter your date of birth.",
+        isValid: () => formData.dob.trim() !== "",
+      },
+      gender: {
+        message: "Please enter your gender",
+        isValid: () => formData.gender.trim() !== "",
+      },
+      profession: {
+        message: "Please select your profession",
+        isValid: () => formData.profession.trim() !== "",
+      },
+      state: {
+        message: "Please select state",
+        isValid: () => formData.state.trim() !== "",
+      },
+      city: {
+        message: "Please select your city",
+        isValid: () => formData.city.trim() !== "",
+      },
+      email: {
+        message: "Please enter a valid email address",
+        isValid: () => {
+          const email = formData.email.trim();
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return email !== "" && emailPattern.test(email);
+        },
+      },
+      phoneNo: {
+        message: "Please enter a valid phone number.",
+        isValid: () => {
+          const phoneNo = formData.phoneNo.trim();
+          const phonePattern = /^\d{10}$/;
+          return phoneNo !== "" && phonePattern.test(phoneNo);
+        },
+      },
+      voterIdNo: {
+        message: "Please enter a valid voter ID number.",
+        isValid: () => /^([a-zA-Z]){3}([0-9]){7}$/.test(formData.voterIdNo),
+      },
+      voterIdFront: {
+        message: "Please Upload voter id Front.",
+        isValid: () => formData.voterIdFront !== null,
+      },
+      voterIdBack: {
+        message: "Please Upload voter id Back.",
+        isValid: () => formData.voterIdBack !== null,
+      },
+    };
+
+    // Loop through each field and validate
+    for (const field in validationRules) {
+      const { message, isValid } = validationRules[field];
+      if (!isValid()) {
+        alert(message);
+        return;
       }
+    }
 
+    try {
       // If all fields are valid, create FormData object and make API call
       const apiFormData = new FormData();
       apiFormData.append("firstName", formData.firstName);
@@ -157,37 +197,27 @@ export function HomePage() {
       apiFormData.append("voterIdBack", formData.voterIdBack);
 
       const res = await axios.post(
-        getURLbyEndPointV2("createBppMember"),
-        apiFormData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        getURLbyEndPointV1("createBppMember"),
+        apiFormData
       );
 
       if (res.data.status) {
-        setFormData({
-          firstName: "",
-          lastName: "",
-          gender: "",
-          fatherName: "",
-          dob: "",
-          voterIdNo: "",
-          state: "",
-          city: "",
-          profession: "",
-          email: "",
-          phoneNo: "",
-          voterIdFront: null,
-          voterIdBack: null,
-        });
+        alert(res.data.message);
+        setTableFlag(true);
+        setFormFlag(false);
+        setApiRecomFlag(false);
+        window.location.reload();
+      } else {
+        alert(res.data.message);
       }
-
-      alert(res.data.message);
-    } catch (error) {
-      alert("Something went wrong!!");
-      console.log(error);
+    } catch (e) {
+      if (e.response && e.response.data && e.response.data.message) {
+        alert(e.response.data.message);
+      } else {
+        console.error("Server is not responding");
+      }
+    } finally {
+      setApiRecomFlag(false);
     }
   };
 
@@ -238,7 +268,9 @@ export function HomePage() {
                       name="firstName"
                       maxLength={30}
                       value={formData.firstName}
-                      onChange={handleInputChange}
+                      onChange={(e) =>
+                        handleInputChange("firstName", e.target.value)
+                      }
                       required
                     />
                   </div>
@@ -253,29 +285,35 @@ export function HomePage() {
                       name="lastName"
                       maxLength={30}
                       value={formData.lastName}
-                      onChange={handleInputChange}
+                      onChange={(e) =>
+                        handleInputChange("lastName", e.target.value)
+                      }
                       required
                     />
                   </div>
                   <div className="flex-1">
-  <label className="block text-gray-700" htmlFor="gender">
-    Gender <span className="text-red-700">*</span>
-  </label>
-  <select
-    id="gender"
-    className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black text-sm"
-    name="gender"
-    value={formData.gender}
-    onChange={handleInputChange}
-    required
-  >
-    <option value="" disabled>Select gender</option>
-    <option value="male">Male</option>
-    <option value="female">Female</option>
-    <option value="other">Other</option>
-    <option value="preferNotToSay">Prefer not to say</option>
-  </select>
-</div>
+                    <label className="block text-gray-700" htmlFor="gender">
+                      Gender <span className="text-red-700">*</span>
+                    </label>
+                    <select
+                      id="gender"
+                      className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black text-sm"
+                      name="gender"
+                      value={formData.gender}
+                      onChange={(e) =>
+                        handleInputChange("gender", e.target.value)
+                      }
+                      required
+                    >
+                      <option value="" disabled>
+                        Select gender
+                      </option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                      <option value="preferNotToSay">Prefer not to say</option>
+                    </select>
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
                   <div className="flex-1">
@@ -289,24 +327,26 @@ export function HomePage() {
                       name="fatherName"
                       maxLength={30}
                       value={formData.fatherName}
-                      onChange={handleInputChange}
+                      onChange={(e) =>
+                        handleInputChange("fatherName", e.target.value)
+                      }
                       required
                     />
                   </div>
                   <div className="flex-1">
-  <label className="block text-gray-700" htmlFor="dob">
-    Date of Birth <span className="text-red-700">*</span>
-  </label>
-  <input
-    id="dob"
-    type="date"
-    className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-    name="dob"
-    value={formData.dob}
-    onChange={handleInputChange}
-    required
-  />
-</div>
+                    <label className="block text-gray-700" htmlFor="dob">
+                      Date of Birth <span className="text-red-700">*</span>
+                    </label>
+                    <input
+                      id="dob"
+                      type="date"
+                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                      name="dob"
+                      value={formData.dob}
+                      onChange={(e) => handleInputChange("dob", e.target.value)}
+                      required
+                    />
+                  </div>
                   <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="voterIdNo">
                       Voter ID No <span className="text-red-700">*</span>
@@ -316,79 +356,88 @@ export function HomePage() {
                       type="text"
                       maxLength={10}
                       className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-                      style={{ textTransform: 'uppercase' }}
+                      style={{ textTransform: "uppercase" }}
                       name="voterIdNo"
                       value={formData.voterIdNo}
-                      onChange={handleInputChange}
+                      onChange={(e) =>
+                        handleInputChange("voterIdNo", e.target.value)
+                      }
                       required
                     />
                   </div>
-                
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-                <div className="flex-1">
-                <label className="block text-gray-700" htmlFor="state">
-          State <span className="text-red-700">*</span>
-        </label>
-        <select
-          id="state"
-          name="state"
-          value={formData.state}
-          onChange={handleStateChange}
-          className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-          required
-        >
-          <option value="" disabled>Select state</option>
-          {Object.keys(indianStateWithCity).map((state) => (
-            <option key={state} value={state}>
-              {state}
-            </option>
-          ))}
-        </select>
+                  <div className="flex-1">
+                    <label className="block text-gray-700" htmlFor="state">
+                      State <span className="text-red-700">*</span>
+                    </label>
+                    <select
+                      id="state"
+                      name="state"
+                      value={formData.state}
+                      onChange={handleStateChange}
+                      className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                      required
+                    >
+                      <option value="" disabled>
+                        Select state
+                      </option>
+                      {Object.keys(indianStateWithCity).map((state) => (
+                        <option key={state} value={state}>
+                          {state}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   <div className="flex-1">
-                  <label className="block text-gray-700" htmlFor="city">
-          City <span className="text-red-700">*</span>
-        </label>
-        <select
-          id="city"
-          name="city"
-          value={formData.city}
-          onChange={handleCityChange}
-          className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-          disabled={!formData.state} // Disable if no state is selected
-          required
-        >
-          <option value="" disabled>Select city</option>
-          {cities.map((city) => (
-            <option key={city} value={city}>
-              {city}
-            </option>
-          ))}
-        </select>
+                    <label className="block text-gray-700" htmlFor="city">
+                      City <span className="text-red-700">*</span>
+                    </label>
+                    <select
+                      id="city"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleCityChange}
+                      className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                      disabled={!formData.state} // Disable if no state is selected
+                      required
+                    >
+                      <option value="" disabled>
+                        Select city
+                      </option>
+                      {cities.map((city) => (
+                        <option key={city} value={city}>
+                          {city}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   <div className="flex-1">
-                <label className="block text-gray-700" htmlFor="profession">
-          Profession <span className="text-red-700">*</span>
-        </label>
-        <select
-          id="profession"
-          name="profession"
-          value={formData.profession}
-          onChange={handleInputChange}
-          className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-          required
-        >
-          <option value="" disabled>Select state</option>
-          {profession.map((profession, index) => (
-            <option key={index} value={profession}>
-              {profession}
-            </option>
-          ))}
-        </select>
+                    <label className="block text-gray-700" htmlFor="profession">
+                      Profession <span className="text-red-700">*</span>
+                    </label>
+                    <select
+                      id="profession"
+                      name="profession"
+                      value={formData.profession}
+                      onChange={(e) =>
+                        handleInputChange("profession", e.target.value)
+                      }
+                      className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                      required
+                    >
+                      <option value="" disabled>
+                        Select state
+                      </option>
+                      {profession.map((profession, index) => (
+                        <option key={index} value={profession}>
+                          {profession}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
@@ -404,7 +453,9 @@ export function HomePage() {
                       className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
                       name="phoneNo"
                       value={formData.phoneNo}
-                      onChange={handleInputChange}
+                      onChange={(e) =>
+                        handleInputChange("phoneNo", e.target.value)
+                      }
                       required
                     />
                   </div>
@@ -417,13 +468,14 @@ export function HomePage() {
                       type="email"
                       className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
                       name="email"
-                      maxLength={25}
+                      maxLength={40}
                       value={formData.email}
-                      onChange={handleInputChange}
+                      onChange={(e) =>
+                        handleInputChange("email", e.target.value)
+                      }
                     />
                   </div>
                 </div>
-
 
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                   <div className="flex-1">
@@ -437,9 +489,11 @@ export function HomePage() {
                       className="text-black h-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       id="voterIdFront"
                       type="file"
-                      accept="image/*,.pdf" 
+                      accept="image/*,.pdf"
                       name="voterIdFront"
-                      onChange={handleInputChange}
+                      onChange={(e) =>
+                        handleFileUpload("voterIdFront", e.target.files[0])
+                      }
                       required
                     />
                   </div>
@@ -454,9 +508,11 @@ export function HomePage() {
                       id="voterIdBack"
                       className="text-black h-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       type="file"
-                      accept="image/*,.pdf" 
+                      accept="image/*,.pdf"
                       name="voterIdBack"
-                      onChange={handleInputChange}
+                      onChange={(e) =>
+                        handleFileUpload("voterIdBack", e.target.files[0])
+                      }
                       required
                     />
                   </div>
@@ -482,9 +538,13 @@ export function HomePage() {
                 <button
                   type="submit"
                   className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  disabled={registerFormSuccess}
+                  disabled={ApiRecomFlag}
                 >
-                  {!registerFormSuccess ? "Enroll Now" : "Processing..."}
+                  {ApiRecomFlag ? (
+                    "Processing..."
+                  ) : (
+                    "Enroll Now"
+                  )}
                 </button>
               </form>
             </div>

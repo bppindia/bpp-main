@@ -498,7 +498,6 @@ export const indianStateWithCity = {
       "Rawatsar",
       "Rajakhera",
       "Shahpura",
-      "Shahpura",
       "Raisinghnagar",
       "Malpura",
       "Nadbai",

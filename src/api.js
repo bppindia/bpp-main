@@ -7,8 +7,8 @@ const endpoints = {
 };
 
 
-function getURLbyEndPointV2(endpoint) {
+function getURLbyEndPointV1(endpoint) {
   return domain + "/api" + endpoints[endpoint];
 }
 
-export { endpoints, getURLbyEndPointV2 };
+export { endpoints, getURLbyEndPointV1 };
