@@ -139,10 +139,10 @@ export function HomePage() {
         message: "Please enter fathers Name.",
         isValid: () => formData.fatherName.trim() !== "",
       },
-      dob: {
-        message: "Please enter your date of birth.",
-        isValid: () => formData.dob.trim() !== "",
-      },
+      // dob: {
+      //   message: "Please enter your date of birth.",
+      //   isValid: () => formData.dob.trim() !== "",
+      // },
       gender: {
         message: "Please enter your gender",
         isValid: () => formData.gender.trim() !== "",
@@ -370,7 +370,7 @@ export function HomePage() {
                       name="dob"
                       value={formData.dob}
                       onChange={(e) => handleInputChange("dob", e.target.value)}
-                      required
+                      // required
                     />
                   </div>
                   <div className="flex-1">
