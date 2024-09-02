@@ -23,6 +23,7 @@ export function HomePage() {
     voterIdNo: "",
     state: "",
     city: "",
+    district: "",
     profession: "",
     email: "",
     phoneNo: "",
@@ -70,14 +71,13 @@ export function HomePage() {
     });
   };
 
-
   const handleProfessionChange = (e) => {
     const selectedProfession = e.target.value;
-    if (selectedProfession === 'Other') {
+    if (selectedProfession === "Other") {
       setIsOtherSelected(true);
       setFormData((prevData) => ({
         ...prevData,
-        profession: '', // Clear the profession field to show the input box as empty
+        profession: "", // Clear the profession field to show the input box as empty
       }));
     } else {
       setIsOtherSelected(false);
@@ -155,6 +155,10 @@ export function HomePage() {
         message: "Please select state",
         isValid: () => formData.state.trim() !== "",
       },
+      district: {
+        message: "Please Enter Your district",
+        isValid: () => formData.district.trim() !== "",
+      },
       // city: {
       //   message: "Please select your city",
       //   isValid: () => formData.city.trim() !== "",
@@ -212,6 +216,7 @@ export function HomePage() {
       apiFormData.append("profession", formData.profession);
       apiFormData.append("state", formData.state);
       apiFormData.append("city", formData.city);
+      apiFormData.append("district", formData.district);
       apiFormData.append("voterIdFront", formData.voterIdFront);
       apiFormData.append("voterIdBack", formData.voterIdBack);
 
@@ -293,6 +298,25 @@ export function HomePage() {
                       required
                     />
                   </div>
+
+                  <div className="flex-1">
+                    <label className="block text-gray-700" htmlFor="fatherName">
+                      Father's Name <span className="text-red-700">*</span>
+                    </label>
+                    <Input
+                      id="fatherName"
+                      type="text"
+                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                      name="fatherName"
+                      maxLength={30}
+                      value={formData.fatherName}
+                      onChange={(e) =>
+                        handleInputChange("fatherName", e.target.value)
+                      }
+                      required
+                    />
+                  </div>
+
                   <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="lastName">
                       Last Name <span className="text-red-700">*</span>
@@ -310,6 +334,8 @@ export function HomePage() {
                       required
                     />
                   </div>
+                </div>
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
                   <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="gender">
                       Gender <span className="text-red-700">*</span>
@@ -332,25 +358,6 @@ export function HomePage() {
                       <option value="other">Other</option>
                       <option value="preferNotToSay">Prefer not to say</option>
                     </select>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-                  <div className="flex-1">
-                    <label className="block text-gray-700" htmlFor="fatherName">
-                      Father's Name <span className="text-red-700">*</span>
-                    </label>
-                    <Input
-                      id="fatherName"
-                      type="text"
-                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-                      name="fatherName"
-                      maxLength={30}
-                      value={formData.fatherName}
-                      onChange={(e) =>
-                        handleInputChange("fatherName", e.target.value)
-                      }
-                      required
-                    />
                   </div>
                   <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="dob">
@@ -388,6 +395,43 @@ export function HomePage() {
 
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
                   <div className="flex-1">
+                    <label className="block text-gray-700" htmlFor="city">
+                      Taluka/village/city{" "}
+                      <span className="text-red-700">*</span>
+                    </label>
+                    <Input
+                      id="city"
+                      type="text"
+                      maxLength={40}
+                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                      name="city"
+                      value={formData.city}
+                      onChange={(e) =>
+                        handleInputChange("city", e.target.value)
+                      }
+                      required
+                    />
+                  </div>
+
+                  <div className="flex-1">
+                    <label className="block text-gray-700" htmlFor="district">
+                      District <span className="text-red-700">*</span>
+                    </label>
+                    <Input
+                      id="district"
+                      type="text"
+                      maxLength={40}
+                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                      name="district"
+                      value={formData.district}
+                      onChange={(e) =>
+                        handleInputChange("district", e.target.value)
+                      }
+                      required
+                    />
+                  </div>
+
+                  <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="state">
                       State <span className="text-red-700">*</span>
                     </label>
@@ -396,7 +440,9 @@ export function HomePage() {
                       name="state"
                       value={formData.state}
                       // onChange={handleInputChange}
-                      onChange={(e) => handleInputChange("state", e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("state", e.target.value)
+                      }
                       // onChange={handleStateChange}
                       className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
                       required
@@ -436,24 +482,6 @@ export function HomePage() {
                     </select>
                   </div> */}
 
-<div className="flex-1">
-                    <label className="block text-gray-700" htmlFor="city">
-                      City / Village <span className="text-red-700">*</span>
-                    </label>
-                    <Input
-                      id="city"
-                      type="text"
-                      maxLength={40}
-                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-                      name="city"
-                      value={formData.city}
-                      onChange={(e) =>
-                        handleInputChange("city", e.target.value)
-                      }
-                      required
-                    />
-                  </div>
-
                   {/* <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="profession">
                       Profession <span className="text-red-700">*</span>
@@ -478,46 +506,47 @@ export function HomePage() {
                       ))}
                     </select>
                   </div> */}
-
-<div className="flex-1">
-      <label className="block text-gray-700" htmlFor="profession">
-        Profession <span className="text-red-700">*</span>
-      </label>
-
-      {isOtherSelected ? (
-        <input
-          type="text"
-          id="profession"
-          name="profession"
-          value={formData.profession}
-          onChange={(e) => handleInputChange('profession', e.target.value)}
-          className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-          placeholder="Enter your profession"
-          // required
-        />
-      ) : (
-        <select
-          id="profession"
-          name="profession"
-          value={formData.profession}
-          onChange={handleProfessionChange}
-          className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-          // required
-        >
-          <option value="" disabled>
-            Select profession
-          </option>
-          {professions.map((profession, index) => (
-            <option key={index} value={profession}>
-              {profession}
-            </option>
-          ))}
-        </select>
-      )}
-    </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+                  <div className="flex-1">
+                    <label className="block text-gray-700" htmlFor="profession">
+                      Profession <span className="text-red-700">*</span>
+                    </label>
+
+                    {isOtherSelected ? (
+                      <input
+                        type="text"
+                        id="profession"
+                        name="profession"
+                        value={formData.profession}
+                        onChange={(e) =>
+                          handleInputChange("profession", e.target.value)
+                        }
+                        className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                        placeholder="Enter your profession"
+                        // required
+                      />
+                    ) : (
+                      <select
+                        id="profession"
+                        name="profession"
+                        value={formData.profession}
+                        onChange={handleProfessionChange}
+                        className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                        // required
+                      >
+                        <option value="" disabled>
+                          Select profession
+                        </option>
+                        {professions.map((profession, index) => (
+                          <option key={index} value={profession}>
+                            {profession}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </div>
                   <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="phoneNo">
                       Phone <span className="text-red-700">*</span>
@@ -532,7 +561,7 @@ export function HomePage() {
                       onChange={(e) =>
                         handleInputChange("phoneNo", e.target.value)
                       }
-                      required
+                      // required
                     />
                   </div>
                   <div className="flex-1">
@@ -572,6 +601,9 @@ export function HomePage() {
                       }
                       required
                     />
+                    <p className="text-xs text-red-600">
+                      File size exceeds the 5MB limit
+                    </p>
                   </div>
                   <div className="flex-1">
                     <label
@@ -591,6 +623,9 @@ export function HomePage() {
                       }
                       required
                     />
+                    <p className="text-xs text-red-600">
+                      File size exceeds the 5MB limit
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -616,11 +651,7 @@ export function HomePage() {
                   className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                   disabled={ApiRecomFlag}
                 >
-                  {ApiRecomFlag ? (
-                    "Processing..."
-                  ) : (
-                    "Enroll Now"
-                  )}
+                  {ApiRecomFlag ? "Processing..." : "Enroll Now"}
                 </button>
               </form>
             </div>
