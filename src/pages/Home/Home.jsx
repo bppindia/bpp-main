@@ -7,11 +7,12 @@ import axios from "axios";
 import { getURLbyEndPointV1 } from "@/api";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { indianStateWithCity, profession } from "@/data/data";
+import { indianStateWithCity, professions } from "@/data/data";
 
 export function HomePage() {
   const [ApiRecomFlag, setApiRecomFlag] = useState(false);
   const [cities, setCities] = useState([]);
+  const [isOtherSelected, setIsOtherSelected] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -69,6 +70,24 @@ export function HomePage() {
     });
   };
 
+
+  const handleProfessionChange = (e) => {
+    const selectedProfession = e.target.value;
+    if (selectedProfession === 'Other') {
+      setIsOtherSelected(true);
+      setFormData((prevData) => ({
+        ...prevData,
+        profession: '', // Clear the profession field to show the input box as empty
+      }));
+    } else {
+      setIsOtherSelected(false);
+      setFormData((prevData) => ({
+        ...prevData,
+        profession: selectedProfession, // Update the profession with the selected value
+      }));
+    }
+  };
+
   const handleFileUpload = (field, file) => {
     // You can set the size limit here if needed
     const MAX_SIZE = 5 * 1024 * 1024; // 5MB
@@ -84,23 +103,23 @@ export function HomePage() {
     }
   };
 
-  const handleStateChange = (e) => {
-    const selectedState = e.target.value;
-    setFormData({
-      ...formData,
-      state: selectedState,
-      city: "",
-    });
-    setCities(indianStateWithCity[selectedState] || []);
-  };
+  // const handleStateChange = (e) => {
+  //   const selectedState = e.target.value;
+  //   setFormData({
+  //     ...formData,
+  //     state: selectedState,
+  //     city: "",
+  //   });
+  //   setCities(indianStateWithCity[selectedState] || []);
+  // };
 
-  const handleCityChange = (e) => {
-    const selectedCity = e.target.value;
-    setFormData({
-      ...formData,
-      city: selectedCity,
-    });
-  };
+  // const handleCityChange = (e) => {
+  //   const selectedCity = e.target.value;
+  //   setFormData({
+  //     ...formData,
+  //     city: selectedCity,
+  //   });
+  // };
 
   const handleFormSubmit = async (e) => {
     setApiRecomFlag(true);
@@ -136,26 +155,26 @@ export function HomePage() {
         message: "Please select state",
         isValid: () => formData.state.trim() !== "",
       },
-      city: {
-        message: "Please select your city",
-        isValid: () => formData.city.trim() !== "",
-      },
-      email: {
-        message: "Please enter a valid email address",
-        isValid: () => {
-          const email = formData.email.trim();
-          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          return email !== "" && emailPattern.test(email);
-        },
-      },
-      phoneNo: {
-        message: "Please enter a valid phone number.",
-        isValid: () => {
-          const phoneNo = formData.phoneNo.trim();
-          const phonePattern = /^\d{10}$/;
-          return phoneNo !== "" && phonePattern.test(phoneNo);
-        },
-      },
+      // city: {
+      //   message: "Please select your city",
+      //   isValid: () => formData.city.trim() !== "",
+      // },
+      // email: {
+      //   message: "Please enter a valid email address",
+      //   isValid: () => {
+      //     const email = formData.email.trim();
+      //     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      //     return email !== "" && emailPattern.test(email);
+      //   },
+      // },
+      // phoneNo: {
+      //   message: "Please enter a valid phone number.",
+      //   isValid: () => {
+      //     const phoneNo = formData.phoneNo.trim();
+      //     const phonePattern = /^\d{10}$/;
+      //     return phoneNo !== "" && phonePattern.test(phoneNo);
+      //   },
+      // },
       voterIdNo: {
         message: "Please enter a valid voter ID number.",
         isValid: () => /^([a-zA-Z]){3}([0-9]){7}$/.test(formData.voterIdNo),
@@ -376,7 +395,9 @@ export function HomePage() {
                       id="state"
                       name="state"
                       value={formData.state}
-                      onChange={handleStateChange}
+                      // onChange={handleInputChange}
+                      onChange={(e) => handleInputChange("state", e.target.value)}
+                      // onChange={handleStateChange}
                       className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
                       required
                     >
@@ -391,9 +412,9 @@ export function HomePage() {
                     </select>
                   </div>
 
-                  <div className="flex-1">
+                  {/* <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="city">
-                      City <span className="text-red-700">*</span>
+                      City / Village <span className="text-red-700">*</span>
                     </label>
                     <select
                       id="city"
@@ -413,9 +434,27 @@ export function HomePage() {
                         </option>
                       ))}
                     </select>
+                  </div> */}
+
+<div className="flex-1">
+                    <label className="block text-gray-700" htmlFor="city">
+                      City / Village <span className="text-red-700">*</span>
+                    </label>
+                    <Input
+                      id="city"
+                      type="text"
+                      maxLength={40}
+                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                      name="city"
+                      value={formData.city}
+                      onChange={(e) =>
+                        handleInputChange("city", e.target.value)
+                      }
+                      required
+                    />
                   </div>
 
-                  <div className="flex-1">
+                  {/* <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="profession">
                       Profession <span className="text-red-700">*</span>
                     </label>
@@ -438,7 +477,44 @@ export function HomePage() {
                         </option>
                       ))}
                     </select>
-                  </div>
+                  </div> */}
+
+<div className="flex-1">
+      <label className="block text-gray-700" htmlFor="profession">
+        Profession <span className="text-red-700">*</span>
+      </label>
+
+      {isOtherSelected ? (
+        <input
+          type="text"
+          id="profession"
+          name="profession"
+          value={formData.profession}
+          onChange={(e) => handleInputChange('profession', e.target.value)}
+          className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+          placeholder="Enter your profession"
+          // required
+        />
+      ) : (
+        <select
+          id="profession"
+          name="profession"
+          value={formData.profession}
+          onChange={handleProfessionChange}
+          className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+          // required
+        >
+          <option value="" disabled>
+            Select profession
+          </option>
+          {professions.map((profession, index) => (
+            <option key={index} value={profession}>
+              {profession}
+            </option>
+          ))}
+        </select>
+      )}
+    </div>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">

@@ -1288,8 +1288,9 @@ export const indianStateWithCity = {
   }
 
 
-  export const profession =
+  export const professions =
   [
+      "Other",
       "accountant",
       "actor",
       "actuary",
