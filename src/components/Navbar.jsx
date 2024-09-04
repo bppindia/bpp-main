@@ -33,15 +33,18 @@ const Navbar = () => {
             </div>
             {/* Desktop Menu */}
             <div className="hidden poppins-bold lg:flex gap-8">
-              <a href="#" className="hover:text-gray-600">
+              <Link to="/" className="hover:text-gray-600">
                 Enroll
-              </a>
-              <a href="#vision" className="hover:text-gray-600">
+              </Link>
+              <Link to="/" className="hover:text-gray-600">
                 Vision
-              </a>
-              <a href="#mission" className="hover:text-gray-600">
+              </Link>
+              <Link to="/" className="hover:text-gray-600">
                 Our Mission
-              </a>
+              </Link>
+              <Link to="/why-bpp" className="hover:text-gray-600">
+               Why BPP
+              </Link>
             </div>
             {/* Mobile Menu Button */}
             <div className="flex gap-6 lg:hidden">
@@ -62,15 +65,18 @@ const Navbar = () => {
         >
           <div className="px-8 mt-6">
             <div className="flex flex-col gap-8 font-bold tracking-wider">
-              <a href="#" className="border-l-4 border-gray-600 pl-4">
+            <Link to="/" className="hover:text-gray-600">
                 Enroll
-              </a>
-              <a href="#vision" className="pl-4">
+              </Link>
+              <Link to="/" className="hover:text-gray-600">
                 Vision
-              </a>
-              <a href="#mission" className="pl-4">
+              </Link>
+              <Link to="/" className="hover:text-gray-600">
                 Our Mission
-              </a>
+              </Link>
+              <Link to="/why-bpp" className="hover:text-gray-600">
+               Why BPP
+              </Link>
             </div>
           </div>
         </div>

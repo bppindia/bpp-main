@@ -8,11 +8,14 @@ import { getURLbyEndPointV1 } from "@/api";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { indianStateWithCity, professions } from "@/data/data";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export function HomePage() {
   const [ApiRecomFlag, setApiRecomFlag] = useState(false);
   const [cities, setCities] = useState([]);
   const [isOtherSelected, setIsOtherSelected] = useState(false);
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -262,14 +265,24 @@ export function HomePage() {
                 </h1>
               </div>
               <h2 className="text-lg mt-4 font-semibold poppins-semibold">
-                Objectives of Bhartiya Popular Party is to ensure that its
-                policies and decisions are more responsive to the needs of the
-                people. And, that local representatives, without interference of
-                the central power, plays an important role in shaping a better,
-                more connected community. To achieve the centralized progress,
-                we aim to develop strong communication channels to facilitate
-                information exchange and feedback.
+              Objectives: BPP works on the concept of mass-connectivity. Our objective is to
+create connectivity among people at different levels of society and empower
+every individual by offering a transparent, and accessible way to contribute to
+the shaping of policies and decisions that impact our society.
+The Party intends to create an environment where every citizen has a voice,
+where transparency is the norm, and where decision-making is a collective
+process. The Party is aimed to ensure that all voices are heard, and all
+perspectives are considered.
               </h2>
+              <div className="mt-4">
+              <button
+                  className="w-2/6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+
+                  onClick={()=> navigate("/why-bpp")}
+                >
+                 Learn More
+                </button>
+              </div>
             </div>
             <div className="mt-10 container bg-white rounded-lg p-8 max-w-xl w-full shadow-lg flex-shrink-0">
               <h3 className="text-2xl font-bold text-gray-800 roboto-medium">

@@ -11,6 +11,10 @@ const menuItems = [
         name: "Mission",
         href: "#mission",
     },
+    {
+        name: "Why BPP",
+        href: "/why-bpp",
+    },
 ];
 
 export default menuItems;
