@@ -15,7 +15,7 @@ export function HomePage() {
   const [ApiRecomFlag, setApiRecomFlag] = useState(false);
   const [cities, setCities] = useState([]);
   const [isOtherSelected, setIsOtherSelected] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -28,11 +28,33 @@ export function HomePage() {
     city: "",
     district: "",
     profession: "",
+    role: "",
     email: "",
     phoneNo: "",
     voterIdFront: null,
     voterIdBack: null,
   });
+
+  const handlesendotp=async ()=>{
+    console.log("PHONE NUMBER--------->>>>>",formData.phoneNo);
+    const phoneNumber=formData.phoneNo;
+    try {
+      const res = await axios.post(
+        getURLbyEndPointV1("requestOtp"),
+        {
+          phoneNumber
+        }
+      );
+
+     
+    
+     console.log("OTP---->>>>",res.data.otp)
+    } catch (error) {
+      console.error(error);
+      alert('Error requesting OTP.');
+    }
+
+  }
 
   const handleInputChange = (field, value) => {
     setFormData((prevData) => {
@@ -89,6 +111,14 @@ export function HomePage() {
         profession: selectedProfession, // Update the profession with the selected value
       }));
     }
+  };
+
+  const handleProfession1Change = (e) => {
+    const selectedRole = e.target.value;
+    setFormData((prevData) => ({
+      ...prevData,
+      role: selectedRole, // Update the profession with the selected value
+    }));
   };
 
   const handleFileUpload = (field, file) => {
@@ -265,22 +295,22 @@ export function HomePage() {
                 </h1>
               </div>
               <h2 className="text-lg mt-4 font-semibold poppins-semibold">
-              Objectives: BPP works on the concept of mass-connectivity. Our objective is to
-create connectivity among people at different levels of society and empower
-every individual by offering a transparent, and accessible way to contribute to
-the shaping of policies and decisions that impact our society.
-The Party intends to create an environment where every citizen has a voice,
-where transparency is the norm, and where decision-making is a collective
-process. The Party is aimed to ensure that all voices are heard, and all
-perspectives are considered.
+                Objectives: BPP works on the concept of mass-connectivity. Our
+                objective is to create connectivity among people at different
+                levels of society and empower every individual by offering a
+                transparent, and accessible way to contribute to the shaping of
+                policies and decisions that impact our society. The Party
+                intends to create an environment where every citizen has a
+                voice, where transparency is the norm, and where decision-making
+                is a collective process. The Party is aimed to ensure that all
+                voices are heard, and all perspectives are considered.
               </h2>
               <div className="mt-4">
-              <button
+                <button
                   className="w-2/6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-
-                  onClick={()=> navigate("/why-bpp")}
+                  onClick={() => navigate("/why-bpp")}
                 >
-                 Learn More
+                  Learn More
                 </button>
               </div>
             </div>
@@ -524,42 +554,116 @@ perspectives are considered.
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
                   <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="profession">
-                      Profession <span className="text-red-700">*</span>
+                      Profession 1 <span className="text-red-700">*</span>
                     </label>
 
-                    {isOtherSelected ? (
-                      <input
-                        type="text"
-                        id="profession"
-                        name="profession"
-                        value={formData.profession}
-                        onChange={(e) =>
-                          handleInputChange("profession", e.target.value)
-                        }
-                        className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-                        placeholder="Enter your profession"
-                        // required
-                      />
-                    ) : (
-                      <select
-                        id="profession"
-                        name="profession"
-                        value={formData.profession}
-                        onChange={handleProfessionChange}
-                        className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-                        // required
-                      >
-                        <option value="" disabled>
-                          Select profession
-                        </option>
-                        {professions.map((profession, index) => (
-                          <option key={index} value={profession}>
-                            {profession}
-                          </option>
-                        ))}
-                      </select>
-                    )}
+                    <select
+                      id="profession"
+                      name="profession"
+                      value={formData.role}
+                      onChange={handleProfession1Change}
+                      className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                      // required
+                    >
+                      <option value="" disabled>
+                        Select profession
+                      </option>
+
+                      <option key="" value="CommonMan">
+                        Common Man
+                      </option>
+                      <option key="" value="Professionals">
+                        Professionals
+                      </option>
+                      <option key="" value="BusinessCommunity">
+                        Business Community
+                      </option>
+                    </select>
                   </div>
+                  
+                    {formData.role == "BusinessCommunity" ? (
+                      <div className="flex-1">
+                        <label
+                          className="block text-gray-700"
+                          htmlFor="profession"
+                        >
+                          Profession 2 <span className="text-red-700">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="profession"
+                          name="profession"
+                          value={formData.profession}
+                          onChange={(e) =>
+                            handleInputChange("profession", e.target.value)
+                          }
+                          className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                          placeholder="Enter your profession"
+                          // required
+                        />
+                      </div>
+                    ) : formData.role == "Professionals" ? (
+                      <div className="flex-1">
+                        <label
+                          className="block text-gray-700"
+                          htmlFor="profession"
+                        >
+                          Profession 2 <span className="text-red-700">*</span>
+                        </label>
+                        {isOtherSelected ? (
+                          <input
+                            type="text"
+                            id="profession"
+                            name="profession"
+                            value={formData.profession}
+                            onChange={(e) =>
+                              handleInputChange("profession", e.target.value)
+                            }
+                            className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                            placeholder="Enter your profession"
+                            // required
+                          />
+                        ) : (
+                          <select
+                            id="profession"
+                            name="profession"
+                            value={formData.profession}
+                            onChange={handleProfessionChange}
+                            className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                            // required
+                          >
+                            <option value="" disabled>
+                              Select profession
+                            </option>
+                            {professions.map((profession, index) => (
+                              <option key={index} value={profession}>
+                                {profession}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+                      </div>
+                    ) : null}
+                  
+
+                  <div className="flex-1">
+                    <label className="block text-gray-700" htmlFor="email">
+                      Email
+                    </label>
+                    <Input
+                      id="email"
+                      type="email"
+                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                      name="email"
+                      maxLength={40}
+                      value={formData.email}
+                      onChange={(e) =>
+                        handleInputChange("email", e.target.value)
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                   <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="phoneNo">
                       Phone <span className="text-red-700">*</span>
@@ -577,21 +681,8 @@ perspectives are considered.
                       // required
                     />
                   </div>
-                  <div className="flex-1">
-                    <label className="block text-gray-700" htmlFor="email">
-                      Email
-                    </label>
-                    <Input
-                      id="email"
-                      type="email"
-                      className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-                      name="email"
-                      maxLength={40}
-                      value={formData.email}
-                      onChange={(e) =>
-                        handleInputChange("email", e.target.value)
-                      }
-                    />
+                  <div className="flex flex-wrap items-end">
+                    <Button onClick={handlesendotp}>send Otp</Button>
                   </div>
                 </div>
 

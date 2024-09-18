@@ -4,6 +4,8 @@ export const domain = "https://api.bppindia.com";
 
 const endpoints = {
     createBppMember: "/user/createBppMember",
+    requestOtp:"/user/requestOtp",
+    
 };
 
 

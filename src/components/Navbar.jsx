@@ -50,6 +50,9 @@ const Navbar = () => {
               <Link to="/map" className="hover:text-gray-600">
                 Our Mission
               </Link>
+              <Link to="/map" className="hover:text-gray-600">
+                Mapping
+              </Link>
               <Link to="/why-bpp" className="hover:text-gray-600">
                 Why BPP
               </Link>
