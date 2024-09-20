@@ -43,3 +43,85 @@
   .hover-info div {
     color: #000;
   } */
+
+  /* State-Region  */
+  /* Base styles for the state-region-wise container */
+/* .state-region-wise {
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.states-regions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+} */
+
+
+/* Styling for each region section */
+/* .states-regions h6 {
+  font-size: 1.125rem; /* Default to 18px */
+  /* margin-bottom: 0.5rem; */
+/* } */
+
+/* .states-regions h4 { */
+  /* font-size: 1rem; Default to 16px */
+  /* margin: 0; */
+/* }  */
+
+/* Responsive styling */
+/* @media (min-width: 768px) {
+  .states-regions > div {
+    width: 18%;
+  }
+} */
+
+
+
+/* Individual state div styling */
+/* .states-regions > div > div {
+  /*background-color: #f8f9fa;  Light grey background for each state */
+  /* border-radius: 0.25rem; Rounded corners */
+  /* padding: 0.5rem;
+  margin-bottom: 0.5rem; */
+/* } */
+
+/* @media (max-width: 490px) {
+  .states-regions > div {
+    width: 33%;
+  }
+
+ 
+} */
+
+.state-region-wise{
+  padding-left: 23%;
+  padding-right: 23%;
+}
+.nfr-tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.nfr-tooltip .nfr-tooltiptext {
+  visibility: hidden;
+  width: 220px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Position above the tooltip icon */
+  left: 50%;
+  margin-left: -110px; /* Center the tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.nfr-tooltip:hover .nfr-tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

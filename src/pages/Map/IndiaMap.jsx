@@ -125,7 +125,7 @@ function IndiaMap({ animationPhase, onStateClick }) {
                       key={geo.rsmKey}
                       geography={geo}
                       style={geographyStyle}
-                      // onClick={() => onLocationClick(geo)}
+                      onClick={() => onLocationClick(geo)}
                       stroke="#000000" // Border color
                       strokeWidth={0.8} // Border width
                     />
