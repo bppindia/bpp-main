@@ -2,18 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { scaleQuantile } from "d3-scale";
-import INDIA_TOPO_JSON from "./Indiatopo.json";
-import Maharashtra_TOPO_JSON from "./maharashtratopo.json";
+import Mahara_TOPO_JSON from "./Maharashtratopo.json"
+
 import MapModal from "./MapModal.jsx";
 
-const INDIA_PROJECTION_CONFIG = {
-  scale: 700, // Scale for the India map
-  center: [78.9629, 22.5937],
-};
-
-const STATE_PROJECTION_CONFIG = {
-  scale: 2400, // Scale for individual states (like Maharashtra)
-  center: [75.9629, 18.6632], // Adjust this as needed for better centering
+const PROJECTION_CONFIG = {
+  scale: 700,
+  center: [76.9629, 19.5937], // [East Longitude, North Latitude]
 };
 
 const COLOR_RANGE = [
@@ -89,10 +84,9 @@ const BackgroundPattern = ({ animationPhase }) => {
   );
 };
 
-function IndiaMap({ animationPhase, onStateClick }) {
+function MaharashtraMap({ animationPhase, onStateClick }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
-  const [selectedState, setSelectedState] = useState(null);
   const navigate = useNavigate();
   const [data] = useState(getHeatMapData());
 
@@ -100,18 +94,10 @@ function IndiaMap({ animationPhase, onStateClick }) {
     .domain(data.map((d) => d.value))
     .range(COLOR_RANGE);
 
-    function onLocationClick(geo) {
-      const clickedState = geo.properties.name;
-      setSelectedState(clickedState);
-      console.log("clickedState--->>>>", clickedState);
-    }
-  
-  function onStatelick(geo) {
-    console.log(geo)
-    const clickedState = geo.properties.division;
-    setIsModalOpen(true);
+  function onLocationClick(geo) {
+    const clickedState = geo.properties.name;
     setModalContent(clickedState); // Set the state to display the content in the modal
-    // setState(geo.properties.division)
+    setIsModalOpen(true);
     console.log("setIsModalOpen--->>>>", isModalOpen);
     console.log("clickedState--->>>>", clickedState);
   }
@@ -123,45 +109,31 @@ function IndiaMap({ animationPhase, onStateClick }) {
     <>
       <div>
         <ComposableMap
-          projectionConfig={selectedState ? STATE_PROJECTION_CONFIG : INDIA_PROJECTION_CONFIG}
+          projectionConfig={PROJECTION_CONFIG}
           projection="geoMercator"
-          width={1200} // Adjusted width if necessary
-          height={600} // Adjusted height if necessary
+          width={450}
+          height={350}
         >
           <BackgroundPattern animationPhase={animationPhase} />
-          {!selectedState ? (
-            <Geographies geography={INDIA_TOPO_JSON}>
-              {({ geographies }) =>
-                geographies.map((geo) => (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    style={geographyStyle}
-                    onClick={() => onLocationClick(geo)}
-                    stroke="#000000"
-                    strokeWidth={0.8}
-                  />
-                ))
-              }
-            </Geographies>
-          ) : selectedState === 'Maharashtra' ? (
-            <Geographies geography={Maharashtra_TOPO_JSON}>
-              {({ geographies }) =>
-                geographies.map((geo) => (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    style={geographyStyle}
-                    onClick={() => onStatelick(geo)}
-                    stroke="#000000"
-                    strokeWidth={0.8}
-                  />
-                ))
-              }
-            </Geographies>
-          ) : (
-            <h1>Please select a state</h1>
-          )}
+          <Geographies geography={Mahara_TOPO_JSON}>
+            {({ geographies }) =>
+              geographies.map((geo) => {
+                const current = data.find((s) => s.id === geo.id);
+                return (
+                  <>
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      style={geographyStyle}
+                      onClick={() => onLocationClick(geo)}
+                      stroke="#000000" // Border color
+                      strokeWidth={0.8} // Border width
+                    />
+                  </>
+                );
+              })
+            }
+          </Geographies>
         </ComposableMap>
 
       </div>
@@ -170,4 +142,4 @@ function IndiaMap({ animationPhase, onStateClick }) {
   );
 }
 
-export default IndiaMap;
+export default MaharashtraMap;

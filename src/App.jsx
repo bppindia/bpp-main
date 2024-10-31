@@ -4,6 +4,7 @@ import PageNotFound from './pages/NotFound/PageNotFound';
 import WhyBpp from './pages/About/WhyBpp';
 import Map from './pages/Map/Map';
 
+
 function App() {
   return (
     <Router>
@@ -12,7 +13,7 @@ function App() {
       <Route path="/why-bpp" element={<WhyBpp />} />
       <Route path="/map" element={<Map />} />
       <Route path="*" element={<PageNotFound />} />
-    </Routes>
+     </Routes>
   </Router>
   );
 }
