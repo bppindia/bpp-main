@@ -123,7 +123,7 @@ const Map = () => {
       </div>
 
       <div className="state-region-wise">
-        <div className="states-regions flex justify-between">
+        <div className="states-regions flex">
           <div className="northern ">
             <h6 className="font-medium text-lg leading-tight text-gray-500 my-2">
               Northern

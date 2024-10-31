@@ -1,103 +1,58 @@
 .map-container {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-image:  ; */
-   background-size: cover; 
+  background-size: cover;
   background-position: center;
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
   transition: background-image 1s ease-in-out, opacity 1s ease-in-out;
 }
 
- .india-map {
-  width: 200px ;
-  max-width: 200px !important;
+.india-map {
+  width: 100%;
+  max-width: 200px;
   height: auto;
-  /* transition: transform 1.5s ease-out; */
 }
 
 .india-map-wrapper {
-    width: 100%;
-    height: auto;
-    /* transition: transform 1.5s ease-in-out, opacity 1s ease-in-out;   */
+  width: 100%;
+  height: auto;
 }
-/*
 
-.hover-info {
-    position: absolute; 
-    transform: translate(-50%, -50%); 
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 5px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    font-size: 14px;
-    pointer-events: none;
-    z-index: 9999;
-    top: 50%; 
-    left: 50%; 
-  }
-  
-  .hover-info div {
-    color: #000;
-  } */
-
-  /* State-Region  */
-  /* Base styles for the state-region-wise container */
-/* .state-region-wise {
+.state-region-wise {
+  padding-left: 10%;
+  padding-right: 10%;
   margin: 0 auto;
-  padding: 0 1rem;
 }
 
 .states-regions {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
-} */
-
-
-/* Styling for each region section */
-/* .states-regions h6 {
-  font-size: 1.125rem; /* Default to 18px */
-  /* margin-bottom: 0.5rem; */
-/* } */
-
-/* .states-regions h4 { */
-  /* font-size: 1rem; Default to 16px */
-  /* margin: 0; */
-/* }  */
-
-/* Responsive styling */
-/* @media (min-width: 768px) {
-  .states-regions > div {
-    width: 18%;
-  }
-} */
-
-
-
-/* Individual state div styling */
-/* .states-regions > div > div {
-  /*background-color: #f8f9fa;  Light grey background for each state */
-  /* border-radius: 0.25rem; Rounded corners */
-  /* padding: 0.5rem;
-  margin-bottom: 0.5rem; */
-/* } */
-
-/* @media (max-width: 490px) {
-  .states-regions > div {
-    width: 33%;
-  }
-
- 
-} */
-
-.state-region-wise{
-  padding-left: 23%;
-  padding-right: 23%;
+  flex-wrap: wrap;
+  gap: 10px;
 }
+
+.states-regions > div {
+  flex: 1 1 150px;
+  max-width: 200px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.states-regions h6 {
+  font-size: 1rem;
+  color: #4b5563;
+  margin: 0.5rem 0;
+}
+
+.states-regions h4 {
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+
 .nfr-tooltip {
   position: relative;
   display: inline-block;
@@ -114,9 +69,9 @@
   padding: 5px 0;
   position: absolute;
   z-index: 1;
-  bottom: 125%; /* Position above the tooltip icon */
+  bottom: 125%;
   left: 50%;
-  margin-left: -110px; /* Center the tooltip */
+  margin-left: -110px;
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -124,4 +79,54 @@
 .nfr-tooltip:hover .nfr-tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+  .india-map {
+    width: 80%;
+    max-width: none;
+  }
+
+  .state-region-wise {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .states-regions > div {
+    max-width: 150px;
+  }
+
+  .states-regions h6 {
+    font-size: 0.875rem;
+  }
+
+  .states-regions h4 {
+    font-size: 0.8rem;
+  }
+
+  .nfr-tooltip .nfr-tooltiptext {
+    width: 180px;
+    margin-left: -90px;
+  }
+
+  .mx-auto {
+    margin: 0 auto;
+    padding: 1rem;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .mx-auto .poppins-regular {
+    font-size: 1.1rem;
+  }
+
+  .mx-auto img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mx-auto p {
+    font-size: 0.875rem;
+  }
 }

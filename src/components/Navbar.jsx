@@ -79,7 +79,7 @@ const Navbar = () => {
             height: 100%;
             background-color: #f3f4f6; /* gray-100 */
             z-index: 40;
-            display: flex;
+            display: ${toggleMenu ? 'flex' : 'none'};
             flex-direction: column;
             align-items: center;
             gap: 2rem;
@@ -114,6 +114,19 @@ const Navbar = () => {
           
             .navbar-subtitle {
               font-size: 1rem;
+            }
+          }
+
+          /* Media Query for Small Screens */
+          @media (max-width: 1023px) {
+            .mobile-menu {
+              display: ${toggleMenu ? 'flex' : 'none'};
+            }
+            .navbar-logo-lg {
+              width: 3rem;
+            }
+            .navbar-subtitle {
+              font-size: 0.35rem;
             }
           }
         `}
