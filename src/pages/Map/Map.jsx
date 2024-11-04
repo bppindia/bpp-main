@@ -14,6 +14,7 @@ const Map = () => {
   const [bgOpacity, setBgOpacity] = useState(0);
   const mapRef = useRef(null);
   const bgRef = useRef(null);
+  const [selectedState, setSelectedState] = useState(null);
 
   useEffect(() => {
     gsap.fromTo(
@@ -92,7 +93,7 @@ const Map = () => {
           </div>
         </nav>
         <div className="india-map-wrapper" ref={mapRef}>
-          <IndiaMap animationPhase={animationPhase} />
+          <IndiaMap animationPhase={animationPhase}selectedState={selectedState}setSelectedState={setSelectedState} />
         </div>
       </div>
       <div className="Welcome-bpp text-center my-4">
@@ -145,7 +146,8 @@ const Map = () => {
             </h6>
             <div className="states-western">
               {["Maharashtra", "Gujarat", "Goa"].map((state, index) => (
-                <div key={index} className={`state-${state.toLowerCase()}`}>
+                <div onClick={()=>{setSelectedState(state);
+                  window.scrollTo(0,0);}} style={{cursor:"pointer"}} key={index} className={`state-${state.toLowerCase()}`}>
                   <h4 className="text-base font-normal">{state}</h4>
                 </div>
               ))}

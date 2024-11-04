@@ -768,68 +768,63 @@ export function HomePage() {
           style={{ background: "#D3E6E0" }}
         >
           <div>
-            <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="lg:flex lg:items-center lg:justify-between">
-                <div className="lg:w-1/2">
-                  <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                    Our Vision
-                  </h1>
-                  <p className="mt-3 text-lg text-gray-600">
-                    BPP’s vision is: "Empowering communities through
-                    decentralized solutions while driving combined progress."
-                  </p>
-                  <p className="mt-3 text-lg text-gray-600">
-                    Our vision is to create a society where local initiatives
-                    prosper with autonomy and flexibility, yet contribute to a
-                    progressive national impact. By understanding the strength
-                    of localized efforts and aligning them with a central
-                    mission,
-                  </p>
-                  <p className="mt-3 text-lg text-gray-600">
-                    we strive to achieve sustainable development, peace, and
-                    prosperity on the national level."
-                  </p>
-                </div>
-                <div className="mt-10 lg:mt-0 lg:w-1/2 lg:pl-10">
-                  <div className="relative overflow-hidden rounded-lg">
-                    <img
-                      alt="bppflag"
-                      src={bppflag}
-                      className="h-full w-full object-cover object-center"
-                      style={{ border: "1px solid" }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div className="lg:flex lg:items-center lg:justify-between">
+    <div className="lg:w-1/2">
+      <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+        Our Vision
+      </h1>
+      <p className="mt-5 text-lg sm:text-xl text-gray-600">
+        BPP’s vision is: "Empowering communities through decentralized solutions while driving combined progress."
+      </p>
+      <p className="mt-3 text-lg sm:text-xl text-gray-600">
+        Our vision is to create a society where local initiatives prosper with autonomy and flexibility, yet contribute to a progressive national impact. By understanding the strength of localized efforts and aligning them with a central mission,
+      </p>
+      <p className="mt-3 text-lg sm:text-xl text-gray-600">
+        we strive to achieve sustainable development, peace, and prosperity on the national level."
+      </p>
+    </div>
+    <div className="mt-10 lg:mt-0 lg:w-1/2 lg:pl-10">
+      <div className="relative overflow-hidden rounded-lg">
+        <img
+          alt="bppflag"
+          src={bppflag}
+          className="object-cover object-center"
+          style={{
+            border: "1px solid",
+            width: "100%",      // Fit within the container width
+            height: "auto",     // Maintain aspect ratio
+            maxHeight: "360px", // Max height for mobile responsiveness
+          }}
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
         </div>
 
-        <div id="mission" className="container h-3/5">
-          <div className="my-40">
-            <h1 className="text-4xl text-center font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Our Mission
-            </h1>
-            <p className="mt-3 text-lg  container text-gray-600">
-              BPP's mission is: "Our mission is to empower individuals by
-              leveraging a decentralized society, giving the common man a
-              central role in shaping the nation.{" "}
-            </p>
+        <div id="mission" className="container mx-auto py-20">
+  <div className="text-center">
+    <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl mb-6">
+      Our Mission
+    </h1>
+    <p className="mt-3 text-lg text-gray-600 max-w-3xl mx-auto">
+      BPP's mission is: "Our mission is to empower individuals by leveraging a decentralized society, giving the common man a central role in shaping the nation."
+    </p>
+    
+    <p className="mt-3 text-lg text-gray-600 max-w-3xl mx-auto">
+      We aim to create a party platform where educated representatives from different parts of the community can connect, share ideas, and collaborate on services. By ensuring decisions are made at the grassroots level, we support and drive the overall growth of the nation.
+    </p>
+    
+    <p className="mt-3 text-lg text-gray-600 max-w-3xl mx-auto">
+      While planning and implementation are decentralized, we focus on achieving centralized outcomes and sustainable growth."
+    </p>
+  </div>
+</div>
 
-            <p className="mt-3 text-lg  container text-gray-600">
-              We aim to create party's platform where educated representatives
-              from different parts of the community can connect, share ideas,
-              and collaborate on services. By ensuring decisions are made at the
-              grassroots level, we support and drive the overall growth of the
-              nation.
-            </p>
-
-            <p className="mt-3 text-lg  container text-gray-600">
-              While planning and implementation are decentralized, we focus on
-              achieving centralized outcomes and sustainable growth."
-            </p>
-          </div>
-        </div>
       </Layout>
     </>
   );

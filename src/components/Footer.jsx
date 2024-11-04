@@ -61,7 +61,7 @@ const Footer = () => {
             href="/"
             className="flex gap-3 font-bold text-black-700 items-center"
           >
-            <img src={bppmic} width={25} height={25} />
+            <img src={bppmic} width={38} height={25} />
             <span className="poppins-regular font-black text-md lg:text-xl">
               BHARATIYA POPULAR PARTY
             </span>

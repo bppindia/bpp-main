@@ -9,49 +9,54 @@ const WhyBpp = () => {
     const navigate = useNavigate()
   return (
     <Layout>
-      <section className="text-gray-700 body-font">
-        <div className="container mx-auto flex px-5 py-36 md:flex-row flex-col items-center">
-          <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-            <h1 className="title-font sm:text-4xl text-3xl mb-4 font-bold text-gray-900">
-              Why Join BPP?
-            </h1>
-            <p className="mb-1 leading-relaxed">
-              - Have a direct say in the policies and decisions that impact you
-              as a citizen.
-            </p>
-            <p className="mb-1 leading-relaxed">
-              - Benefit from connections using each other’s expertise, knowledge
-              and resources.
-            </p>
-            <p className="mb-1 leading-relaxed">
-              - Be the part of a process where your voice is heard, and
-              decisions are made with clarity and openness.
-            </p>
-            <p className="mb-4 leading-relaxed">
-              - Be responsive to the people’s need and earn the opportunity to
-              be your area’s representative.
-            </p>
-            <div className="flex justify-center">
-              <button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-              onClick={()=> navigate('/')}
-              >
-                Enroll Now
-              </button>
-              <button className="ml-4 inline-flex text-gray-700 bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded text-lg"
-              >
-                Benefits
-              </button>
-            </div>
-          </div>
-          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-            <img
-              className="object-cover object-center rounded"
-              alt="hero"
-              src={bppflag}
-            />
-          </div>
+    <section className="text-gray-700 body-font">
+  <div className="container mx-auto flex flex-col md:flex-row px-5 py-10 md:py-26 items-center">
+    <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col items-center md:items-start text-center md:text-left mb-10 md:mb-0">
+      <h1 className="title-font sm:text-4xl text-3xl mb-4 font-bold text-gray-900">
+        Why Join BPP?
+      </h1>
+      <p className="mb-1 leading-relaxed">
+        - Have a direct say in the policies and decisions that impact you as a citizen.
+      </p>
+      <p className="mb-1 leading-relaxed">
+        - Benefit from connections using each other’s expertise, knowledge, and resources.
+      </p>
+      <p className="mb-1 leading-relaxed">
+        - Be part of a process where your voice is heard, and decisions are made with clarity and openness.
+      </p>
+      <p className="mb-4 leading-relaxed">
+        - Be responsive to the people’s needs and earn the opportunity to be your area’s representative.
+      </p>
+      <div className="flex flex-col md:flex-row justify-center md:justify-start">
+        <button 
+          className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg mb-2 md:mb-0 md:mr-4"
+          onClick={() => navigate('/')}
+        >
+          Enroll Now
+        </button>
+        <button 
+          className="inline-flex text-gray-700 bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded text-lg"
+        >
+          Benefits
+        </button>
+      </div>
+    </div>
+    <div className="relative overflow-hidden rounded-lg">
+          <img
+            alt="bppflag"
+            src={bppflag}
+            className="object-cover object-center"
+            style={{
+              border: "1px solid",
+              width: "100%",      // Container ki width ke andar fit kare
+              height: "auto",     // Height ko auto rakhein taaki aspect ratio maintain rahe
+              maxHeight: "360px"  // Phone size ke liye max-height
+            }}
+          />
         </div>
-      </section>
+  </div>
+</section>
+
 
       <section className="text-gray-700 body-font border-t border-gray-200">
         <div

@@ -8,7 +8,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  transition: background-image 1s ease-in-out, opacity 1s ease-in-out;
+  transition: background-image 0.8s ease-in-out, opacity 0.8s ease-in-out;
 }
 
 .india-map {
@@ -19,6 +19,7 @@
 
 .india-map-wrapper {
   width: 100%;
+  min-width: 55rem;
   height: auto;
 }
 
@@ -73,7 +74,7 @@
   left: 50%;
   margin-left: -110px;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.2s;
 }
 
 .nfr-tooltip:hover .nfr-tooltiptext {
