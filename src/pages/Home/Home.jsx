@@ -35,26 +35,20 @@ export function HomePage() {
     voterIdBack: null,
   });
 
-  const handlesendotp=async ()=>{
-    console.log("PHONE NUMBER--------->>>>>",formData.phoneNo);
-    const phoneNumber=formData.phoneNo;
+  const handlesendotp = async () => {
+    console.log("PHONE NUMBER--------->>>>>", formData.phoneNo);
+    const phoneNumber = formData.phoneNo;
     try {
-      const res = await axios.post(
-        getURLbyEndPointV1("requestOtp"),
-        {
-          phoneNumber
-        }
-      );
+      const res = await axios.post(getURLbyEndPointV1("requestOtp"), {
+        phoneNumber,
+      });
 
-     
-    
-     console.log("OTP---->>>>",res.data.otp)
+      console.log("OTP---->>>>", res.data.otp);
     } catch (error) {
       console.error(error);
-      alert('Error requesting OTP.');
+      alert("Error requesting OTP.");
     }
-
-  }
+  };
 
   const handleInputChange = (field, value) => {
     setFormData((prevData) => {
@@ -283,8 +277,7 @@ export function HomePage() {
       <Layout>
         <div
           className="relative bg-cover bg-center"
-          style={{ backgroundImage: "url('/homepagebanner.png')" }}
-        >
+          style={{ backgroundImage: "url('/homepagebanner.png')" }}>
           <div className="absolute inset-0 bg-black opacity-30"></div>
           <div className="relative container z-10 flex flex-col justify-center content-center gap-2 lg:flex-row h-full text-white p-8">
             <div className="flex-1 mt-14">
@@ -308,8 +301,7 @@ export function HomePage() {
               <div className="mt-4">
                 <button
                   className="w-2/6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  onClick={() => navigate("/why-bpp")}
-                >
+                  onClick={() => navigate("/why-bpp")}>
                   Learn More
                 </button>
               </div>
@@ -391,8 +383,7 @@ export function HomePage() {
                       onChange={(e) =>
                         handleInputChange("gender", e.target.value)
                       }
-                      required
-                    >
+                      required>
                       <option value="" disabled>
                         Select gender
                       </option>
@@ -488,8 +479,7 @@ export function HomePage() {
                       }
                       // onChange={handleStateChange}
                       className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-                      required
-                    >
+                      required>
                       <option value="" disabled>
                         Select state
                       </option>
@@ -580,15 +570,35 @@ export function HomePage() {
                       </option>
                     </select>
                   </div>
-                  
-                    {formData.role == "BusinessCommunity" ? (
-                      <div className="flex-1">
-                        <label
-                          className="block text-gray-700"
-                          htmlFor="profession"
-                        >
-                          Profession 2 <span className="text-red-700">*</span>
-                        </label>
+
+                  {formData.role == "BusinessCommunity" ? (
+                    <div className="flex-1">
+                      <label
+                        className="block text-gray-700"
+                        htmlFor="profession">
+                        Profession 2 <span className="text-red-700">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="profession"
+                        name="profession"
+                        value={formData.profession}
+                        onChange={(e) =>
+                          handleInputChange("profession", e.target.value)
+                        }
+                        className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                        placeholder="Enter your profession"
+                        // required
+                      />
+                    </div>
+                  ) : formData.role == "Professionals" ? (
+                    <div className="flex-1">
+                      <label
+                        className="block text-gray-700"
+                        htmlFor="profession">
+                        Profession 2 <span className="text-red-700">*</span>
+                      </label>
+                      {isOtherSelected ? (
                         <input
                           type="text"
                           id="profession"
@@ -601,50 +611,27 @@ export function HomePage() {
                           placeholder="Enter your profession"
                           // required
                         />
-                      </div>
-                    ) : formData.role == "Professionals" ? (
-                      <div className="flex-1">
-                        <label
-                          className="block text-gray-700"
-                          htmlFor="profession"
+                      ) : (
+                        <select
+                          id="profession"
+                          name="profession"
+                          value={formData.profession}
+                          onChange={handleProfessionChange}
+                          className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
+                          // required
                         >
-                          Profession 2 <span className="text-red-700">*</span>
-                        </label>
-                        {isOtherSelected ? (
-                          <input
-                            type="text"
-                            id="profession"
-                            name="profession"
-                            value={formData.profession}
-                            onChange={(e) =>
-                              handleInputChange("profession", e.target.value)
-                            }
-                            className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-                            placeholder="Enter your profession"
-                            // required
-                          />
-                        ) : (
-                          <select
-                            id="profession"
-                            name="profession"
-                            value={formData.profession}
-                            onChange={handleProfessionChange}
-                            className="mt-1 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 h-8 lg:h-10 focus:ring-indigo-500 text-black"
-                            // required
-                          >
-                            <option value="" disabled>
-                              Select profession
+                          <option value="" disabled>
+                            Select profession
+                          </option>
+                          {professions.map((profession, index) => (
+                            <option key={index} value={profession}>
+                              {profession}
                             </option>
-                            {professions.map((profession, index) => (
-                              <option key={index} value={profession}>
-                                {profession}
-                              </option>
-                            ))}
-                          </select>
-                        )}
-                      </div>
-                    ) : null}
-                  
+                          ))}
+                        </select>
+                      )}
+                    </div>
+                  ) : null}
 
                   <div className="flex-1">
                     <label className="block text-gray-700" htmlFor="email">
@@ -690,8 +677,7 @@ export function HomePage() {
                   <div className="flex-1">
                     <label
                       className="block text-gray-700"
-                      htmlFor="voterIdFront"
-                    >
+                      htmlFor="voterIdFront">
                       Voter ID Front <span className="text-red-700">*</span>
                     </label>
                     <Input
@@ -712,8 +698,7 @@ export function HomePage() {
                   <div className="flex-1">
                     <label
                       className="block text-gray-700"
-                      htmlFor="voterIdBack"
-                    >
+                      htmlFor="voterIdBack">
                       Voter ID Back <span className="text-red-700">*</span>
                     </label>
                     <Input
@@ -736,8 +721,7 @@ export function HomePage() {
                   <Checkbox id="terms" required />
                   <label
                     htmlFor="terms"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-black"
-                  >
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-black">
                     I agree to the{" "}
                     <a href="#" className="text-blue-600 hover:underline">
                       Terms and Conditions
@@ -753,8 +737,7 @@ export function HomePage() {
                 <button
                   type="submit"
                   className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  disabled={ApiRecomFlag}
-                >
+                  disabled={ApiRecomFlag}>
                   {ApiRecomFlag ? "Processing..." : "Enroll Now"}
                 </button>
               </form>
@@ -765,66 +748,75 @@ export function HomePage() {
         <div
           id="vision"
           className="relative py-28"
-          style={{ background: "#D3E6E0" }}
-        >
+          style={{ background: "#D3E6E0" }}>
           <div>
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-  <div className="lg:flex lg:items-center lg:justify-between">
-    <div className="lg:w-1/2">
-      <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-        Our Vision
-      </h1>
-      <p className="mt-5 text-lg sm:text-xl text-gray-600">
-        BPP’s vision is: "Empowering communities through decentralized solutions while driving combined progress."
-      </p>
-      <p className="mt-3 text-lg sm:text-xl text-gray-600">
-        Our vision is to create a society where local initiatives prosper with autonomy and flexibility, yet contribute to a progressive national impact. By understanding the strength of localized efforts and aligning them with a central mission,
-      </p>
-      <p className="mt-3 text-lg sm:text-xl text-gray-600">
-        we strive to achieve sustainable development, peace, and prosperity on the national level."
-      </p>
-    </div>
-    <div className="mt-10 lg:mt-0 lg:w-1/2 lg:pl-10">
-      <div className="relative overflow-hidden rounded-lg">
-        <img
-          alt="bppflag"
-          src={bppflag}
-          className="object-cover object-center"
-          style={{
-            border: "1px solid",
-            width: "100%",      // Fit within the container width
-            height: "auto",     // Maintain aspect ratio
-            maxHeight: "360px", // Max height for mobile responsiveness
-          }}
-        />
-      </div>
-    </div>
-  </div>
-</div>
-
-</div>
-
+            <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div className="lg:flex lg:items-center lg:justify-between">
+                <div className="lg:w-1/2">
+                  <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+                    Our Vision
+                  </h1>
+                  <p className="mt-5 text-lg sm:text-xl text-gray-600">
+                    BPP’s vision is: "Empowering communities through
+                    decentralized solutions while driving combined progress."
+                  </p>
+                  <p className="mt-3 text-lg sm:text-xl text-gray-600">
+                    Our vision is to create a society where local initiatives
+                    prosper with autonomy and flexibility, yet contribute to a
+                    progressive national impact. By understanding the strength
+                    of localized efforts and aligning them with a central
+                    mission,
+                  </p>
+                  <p className="mt-3 text-lg sm:text-xl text-gray-600">
+                    we strive to achieve sustainable development, peace, and
+                    prosperity on the national level."
+                  </p>
+                </div>
+                <div className="mt-10 lg:mt-0 lg:w-1/2 lg:pl-10">
+                  <div className="relative overflow-hidden rounded-lg">
+                    <img
+                      alt="bppflag"
+                      src={bppflag}
+                      className="object-cover object-center"
+                      style={{
+                        border: "1px solid",
+                        width: "100%", // Fit within the container width
+                        height: "auto", // Maintain aspect ratio
+                        maxHeight: "360px", // Max height for mobile responsiveness
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div id="mission" className="container mx-auto py-20">
-  <div className="text-center">
-    <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl mb-6">
-      Our Mission
-    </h1>
-    <p className="mt-3 text-lg text-gray-600 max-w-3xl mx-auto">
-      BPP's mission is: "Our mission is to empower individuals by leveraging a decentralized society, giving the common man a central role in shaping the nation."
-    </p>
-    
-    <p className="mt-3 text-lg text-gray-600 max-w-3xl mx-auto">
-      We aim to create a party platform where educated representatives from different parts of the community can connect, share ideas, and collaborate on services. By ensuring decisions are made at the grassroots level, we support and drive the overall growth of the nation.
-    </p>
-    
-    <p className="mt-3 text-lg text-gray-600 max-w-3xl mx-auto">
-      While planning and implementation are decentralized, we focus on achieving centralized outcomes and sustainable growth."
-    </p>
-  </div>
-</div>
+          <div className="text-center">
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl mb-6">
+              Our Mission
+            </h1>
+            <p className="mt-3 text-lg text-gray-600 max-w-3xl mx-auto">
+              BPP's mission is: "Our mission is to empower individuals by
+              leveraging a decentralized society, giving the common man a
+              central role in shaping the nation."
+            </p>
 
+            <p className="mt-3 text-lg text-gray-600 max-w-3xl mx-auto">
+              We aim to create a party platform where educated representatives
+              from different parts of the community can connect, share ideas,
+              and collaborate on services. By ensuring decisions are made at the
+              grassroots level, we support and drive the overall growth of the
+              nation.
+            </p>
+
+            <p className="mt-3 text-lg text-gray-600 max-w-3xl mx-auto">
+              While planning and implementation are decentralized, we focus on
+              achieving centralized outcomes and sustainable growth."
+            </p>
+          </div>
+        </div>
       </Layout>
     </>
   );
