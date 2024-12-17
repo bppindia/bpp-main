@@ -126,11 +126,11 @@ const MultiStepForm = () => {
 
     const { currentStepIndex, step, isFirstStep, isLastStep, back, next } =
         useMultiStepForm([
-            <RegistrationForm {...data} updateFields={updateFields} />,
             <EmailForm {...data} updateFields={updateFields} />,
             <OtpVerificationForm {...data} updateFields={updateFields} />,
             <PersonalDetailForm {...data} updateFields={updateFields} />,
             <AddressForm {...data} updateFields={updateFields} />,
+            <RegistrationForm {...data} updateFields={updateFields} />,
             <EducationalDetailsForm {...data} updateFields={updateFields} />,
             <CredentialsForm {...data} updateFields={updateFields} />,
         ])
