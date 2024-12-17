@@ -4,6 +4,7 @@ import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
 import MarqueNews from "@/components/features/MarqueNews";
 import MapChart from "@/components/maps/mapChart";
+import GoalsCarousel from "@/components/test/goalsSlider";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -159,6 +160,9 @@ const DashboardPage: React.FC = () => {
               <LineChart className="w-full aspect-[4/3]" />
             </CardContent>
           </Card>
+        </div>
+        <div>
+          <GoalsCarousel/>
         </div>
         <WelcomeDialog />
       </ContentLayout>

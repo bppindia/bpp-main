@@ -107,24 +107,29 @@ export function getMenuList(_pathname?: string): Group[] {
     {
       groupLabel: "Membership Services",
       menus: [
+        // {
+        //   href: "/users",
+        //   label: "Membership",
+        //   icon: Users,
+        //   submenus: [
+        //     {
+        //       href: "/dashboard/certificate",
+        //       label: "Membership Pass",
+        //     },
+        //     {
+        //       href: "/dashboard/renewal",
+        //       label: "Membership Renewals",
+        //     },
+        //     {
+        //       href: "/dashboard/referral",
+        //       label: "Referral Code",
+        //     },
+        //   ]
+        // },
         {
-          href: "/users",
+          href: "/dashboard/membership",
           label: "Membership",
           icon: Users,
-          submenus: [
-            {
-              href: "/dashboard/certificate",
-              label: "Membership Pass",
-            },
-            {
-              href: "/dashboard/renewal",
-              label: "Membership Renewals",
-            },
-            {
-              href: "/dashboard/referral",
-              label: "Referral Code",
-            },
-          ]
         },
         {
           href: "/dashboard/community-contribution",
@@ -158,11 +163,11 @@ export function getMenuList(_pathname?: string): Group[] {
         //     },
         //   ]
         // },
-        {
-          href: "/dashboard/home",
-          label: "Business Community Join",
-          icon: HandCoins,
-        },
+        // {
+        //   href: "/dashboard/home",
+        //   label: "Business Community Join",
+        //   icon: HandCoins,
+        // },
       ]
     }
   ];
