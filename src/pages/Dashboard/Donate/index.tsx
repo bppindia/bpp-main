@@ -1,5 +1,4 @@
 import { ContentLayout } from "@/components/admin-panel/content-layout";
-import PayDialog from "@/components/dialogs/PayDialog";
 import { Badge } from "@/components/ui/badge";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
@@ -139,7 +138,7 @@ const DonatePage = () => {
                         </div>
                     </div>
                 </main>
-                <PayDialog />
+                {/* <PayDialog /> */}
             </ContentLayout>
         </DashboardLayout>
     )

@@ -7,8 +7,8 @@ import {
   SquarePen,
   UserRoundPen,
   Users,
-  Wallet
-} from 'lucide-react';
+  Wallet,
+} from "lucide-react";
 
 type Submenu = {
   href: string;
@@ -32,100 +32,53 @@ type Group = {
 export function getMenuList(_pathname?: string): Group[] {
   return [
     {
-      groupLabel: "",
+      groupLabel: "Dashboard",
       menus: [
         {
           href: "/dashboard/home",
           label: "Dashboard",
           icon: LayoutGrid,
-          submenus: []
-        }
-      ]
-    },
-    {
-      groupLabel: "",
-      menus: [
+          submenus: [],
+        },
         {
           href: "/dashboard/goal",
           label: "Goals",
           icon: Goal,
-          submenus: []
-        }
-      ]
-    },
-    {
-      groupLabel: "",
-      menus: [
+          submenus: [],
+        },
         {
           href: "/dashboard/donate",
           label: "Donate",
           icon: HandHelping,
-          submenus: []
-        }
-      ]
+          submenus: [],
+        },
+      ],
     },
     {
       groupLabel: "Profile",
       menus: [
         {
-          href: "",
+          href: "/dashboard/profile",
           label: "Profile",
           icon: SquarePen,
-          submenus: [
-            {
-              href: "/dashboard/profile",
-              label: "Personal Details",
-            },
-            // {
-            //   href: "/posts/new",
-            //   label: "Change Password",
-            // },
-          ]
+          submenus: [],
         },
         {
-          href: "",
+          href: "/dashboard/account",
           label: "Account",
           icon: UserRoundPen,
-          submenus: [
-            {
-              href: "/dashboard/account",
-              label: "Account Details",
-            },
-            {
-              href: "/dashboard/change-pin",
-              label: "Change Pin",
-            },
-          ]
+          submenus: [],
         },
         {
           href: "/dashboard/wallet",
           label: "Wallet",
           icon: Wallet,
         },
-      ]
+      ],
     },
     {
       groupLabel: "Membership Services",
       menus: [
-        // {
-        //   href: "/users",
-        //   label: "Membership",
-        //   icon: Users,
-        //   submenus: [
-        //     {
-        //       href: "/dashboard/certificate",
-        //       label: "Membership Pass",
-        //     },
-        //     {
-        //       href: "/dashboard/renewal",
-        //       label: "Membership Renewals",
-        //     },
-        //     {
-        //       href: "/dashboard/referral",
-        //       label: "Referral Code",
-        //     },
-        //   ]
-        // },
         {
           href: "/dashboard/membership",
           label: "Membership",
@@ -136,39 +89,7 @@ export function getMenuList(_pathname?: string): Group[] {
           label: "Community Contribution",
           icon: HandCoins,
         },
-        // {
-        //   href: "/dashboard/home",
-        //   label: "Community Contribution",
-        //   icon: Users,
-        //   submenus: [
-        //     {
-        //       href: "/dashboard/register-case",
-        //       label: "Register Case",
-        //     },
-        //     {
-        //       href: "/account",
-        //       label: "Review and Approvals",
-        //     },
-        //     {
-        //       href: "/dashboard/voting",
-        //       label: "Voting",
-        //     },
-        //     {
-        //       href: "/account",
-        //       label: "Results",
-        //     },
-        //     {
-        //       href: "/account",
-        //       label: "Execution",
-        //     },
-        //   ]
-        // },
-        // {
-        //   href: "/dashboard/home",
-        //   label: "Business Community Join",
-        //   icon: HandCoins,
-        // },
-      ]
-    }
+      ],
+    },
   ];
 }

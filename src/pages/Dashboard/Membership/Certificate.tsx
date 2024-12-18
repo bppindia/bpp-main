@@ -1,3 +1,4 @@
+import bppcard from '@/assets/images/BPPcard.png';
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
@@ -6,8 +7,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import DashboardLayout from "@/layout/DashboardLayout";
 import { QrCode } from "lucide-react";
 import { Link } from "react-router-dom";
-import bppcard from '@/assets/images/BPPcard.png'
-import PayDialog from "@/components/dialogs/PayDialog";
 
 const MembershipCertificate = () => {
     const certificateUrl = bppcard;
@@ -89,7 +88,7 @@ const MembershipCertificate = () => {
                         </Card>
                     </div>
                 </section>
-                <PayDialog />
+                {/* <PayDialog /> */}
             </ContentLayout>
         </DashboardLayout>
     );

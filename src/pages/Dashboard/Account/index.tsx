@@ -1,11 +1,9 @@
 import { ContentLayout } from '@/components/admin-panel/content-layout'
-import PayDialog from '@/components/dialogs/PayDialog'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import DashboardLayout from '@/layout/DashboardLayout'
 import { Link } from 'react-router-dom'
@@ -67,39 +65,24 @@ const AccountSettingsPage = () => {
                             </Card>
                             <Card>
                                 <CardHeader>
-                                    <CardTitle>Preferences</CardTitle>
+                                    <CardTitle>Change Pin</CardTitle>
                                 </CardHeader>
                                 <CardContent className="grid gap-4">
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="theme">Theme</Label>
-                                        <Select defaultValue="light">
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select theme" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="light">Light</SelectItem>
-                                                <SelectItem value="dark">Dark</SelectItem>
-                                                <SelectItem value="system">System</SelectItem>
-                                            </SelectContent>
-                                        </Select>
+                                    <div>
+                                        <Label htmlFor="current-pin">Current Pin</Label>
+                                        <Input id="current-pin" placeholder="Enter your current pin" type="pin" />
                                     </div>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="language">Language</Label>
-                                        <Select defaultValue="en">
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select language" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="en">English</SelectItem>
-                                                <SelectItem value="es">Español</SelectItem>
-                                                <SelectItem value="fr">Français</SelectItem>
-                                                <SelectItem value="de">Deutsch</SelectItem>
-                                            </SelectContent>
-                                        </Select>
+                                    <div>
+                                        <Label htmlFor="new-pin">New Pin</Label>
+                                        <Input id="new-pin" placeholder="Enter your new pin" type="pin" />
+                                    </div>
+                                    <div>
+                                        <Label htmlFor="confirm-pin">Confirm Pin</Label>
+                                        <Input id="confirm-pin" placeholder="Confirm your new pin" type="pin" />
                                     </div>
                                 </CardContent>
                                 <CardFooter>
-                                    <Button className="ml-auto">Save Preferences</Button>
+                                    <Button className="ml-auto">Save Changes</Button>
                                 </CardFooter>
                             </Card>
                         </div>
@@ -143,7 +126,7 @@ const AccountSettingsPage = () => {
                         </Card>
                     </section>
                 </main>
-                <PayDialog />
+                {/* <PayDialog /> */}
             </ContentLayout>
         </DashboardLayout>
     )

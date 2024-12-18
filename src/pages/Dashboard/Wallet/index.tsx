@@ -1,5 +1,4 @@
 import { ContentLayout } from '@/components/admin-panel/content-layout';
-import PayDialog from '@/components/dialogs/PayDialog';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -139,7 +138,7 @@ const WalletPage = () => {
                             </Card>
                         </div>
                     </div>
-                    <PayDialog />
+                    {/* <PayDialog /> */}
                 </ContentLayout>
             </DashboardLayout>
         </main>

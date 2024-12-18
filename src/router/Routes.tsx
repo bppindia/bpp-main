@@ -1,6 +1,7 @@
 import { About } from '@/components/About';
 import Login from '@/components/form/loginForm/index';
 import MultiStepForm from '@/components/form/mutistepForm';
+import { useAuth } from '@/context/AuthContext';
 import CommitmentToProgress from '@/pages/About/CommitmentToProgress';
 import GetToKnow from '@/pages/About/GetToKnow';
 import Goals from '@/pages/About/Goals';
@@ -17,17 +18,18 @@ import CommunityContribution from '@/pages/contribution/CommunityContribution';
 import HowItWorks from '@/pages/contribution/HowItWorks';
 import DashboardPage from '@/pages/Dashboard';
 import AccountSettingsPage from '@/pages/Dashboard/Account';
-import ChangePin from '@/pages/Dashboard/Account/ChangePin';
 import CaseRegistrationForm from '@/pages/Dashboard/Community/CaseRegistration';
 import Contribution from '@/pages/Dashboard/Community/contribution';
 import Voting from '@/pages/Dashboard/Community/Voting';
 import DonatePage from '@/pages/Dashboard/Donate';
 import DonationPage from '@/pages/Dashboard/Donate/Donation';
 import GoalsPage from '@/pages/Dashboard/Goals';
+import Membership from '@/pages/Dashboard/Membership';
 import MembershipCertificate from '@/pages/Dashboard/Membership/Certificate';
 import ReferralPage from '@/pages/Dashboard/Membership/Referral';
 import RenewalsPage from '@/pages/Dashboard/Membership/Renewals';
 import ProfilePage from '@/pages/Dashboard/Profile';
+import ProfessionalPage from '@/pages/Dashboard/Profile/professional';
 import Track from '@/pages/Dashboard/Track';
 import TrackingDetails from '@/pages/Dashboard/Track/TrackingDetails';
 import WalletPage from '@/pages/Dashboard/Wallet';
@@ -45,15 +47,13 @@ import MembershipPrivilege from '@/pages/Membership/MembershipPrivilege';
 import MembershipRenewal from '@/pages/Membership/MembershipRenewal';
 import Mission from '@/pages/Mission/Mission';
 import PageNotFound from '@/pages/NotFound/PageNotFound';
+import { Payment } from '@/pages/Payment/Payment';
 import PrivacyPolicy from '@/pages/PrivacyPolicy/PrivacyPolicy';
 import CustomerService from '@/pages/support/CustomerService';
 import TermsAndConditions from '@/pages/TermsAndCondtions/TermsAndCondtions';
 import Vision from '@/pages/Vision/Vision';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
-import { useAuth } from '@/context/AuthContext';
-import { Payment } from '@/pages/Payment/Payment';
-import Membership from '@/pages/Dashboard/Membership';
 
 const AppRoutes = () => {
     const { isAuthenticated } = useAuth();
@@ -143,8 +143,8 @@ const AppRoutes = () => {
                                 <Route path="home" element={<DashboardPage />} />
                                 <Route path="goal" element={<GoalsPage />} />
                                 <Route path="profile" element={<ProfilePage />} />
+                                <Route path="professional-profile" element={<ProfessionalPage />} />
                                 <Route path="account" element={<AccountSettingsPage />} />
-                                <Route path="change-pin" element={<ChangePin />} />
                                 <Route path="wallet" element={<WalletPage />} />
                                 <Route path="transaction" element={<Transactions />} />
                                 <Route path="add-fund" element={<AddFund />} />
