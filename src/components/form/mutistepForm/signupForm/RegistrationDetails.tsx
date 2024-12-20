@@ -1,15 +1,17 @@
+import { FileInput } from "@/components/FileInput";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { FormWrapper } from "./FormWrapper";
+import { useState } from "react";
 import { toast } from "sonner";
-import { FileInput } from "@/components/FileInput";
+import { FormWrapper } from "./FormWrapper";
 
 type RegistrationData = {
     aadhaarNumber: string;
-    voterId: string;
     aadhaarCard: File | null;
-    voterCard: File | null;
+    voterId?: string;
+    voterCard?: File | null;
+    serveCommunityAccepted?: boolean;
 };
 
 type RegistrationFormProps = RegistrationData & {
@@ -21,6 +23,12 @@ export function RegistrationForm({
     voterId,
     updateFields,
 }: RegistrationFormProps) {
+    const [serveCommunity, setServeCommunity] = useState<boolean | null>(null);
+
+    const handleServeAccepted = (value: boolean) => {
+        setServeCommunity(value);
+        updateFields({ serveCommunityAccepted: value });
+    };
 
     return (
         <FormWrapper title="User Details">
@@ -46,8 +54,12 @@ export function RegistrationForm({
                             label="Aadhaar Card"
                             required
                             onChange={(file) => {
-                                if (file && !['image/jpeg', 'application/pdf'].includes(file.type)) {
-                                    toast.error('Please upload a valid file (JPEG or PDF)');
+                                if (file && !['image/jpeg', 'image/png', 'application/pdf'].includes(file.type)) {
+                                    toast.error('Please upload a valid file (JPEG, PNG, or PDF)');
+                                    return;
+                                }
+                                if (file && file.size > 5 * 1024 * 1024) {
+                                    toast.error('File size should be less than 5 MB');
                                     return;
                                 }
                                 updateFields({ aadhaarCard: file });
@@ -61,7 +73,7 @@ export function RegistrationForm({
                     <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent h-[1px] w-full" />
                 </div>
                 <div className="text-xs text-center text-muted-foreground font-semibold">
-                    * Providing your Voter ID card details is optional.
+                    * Providing our Voter ID card details is optional.
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                     <div>
@@ -78,8 +90,12 @@ export function RegistrationForm({
                             id="voterCard"
                             label="Voter / Electoral Card"
                             onChange={(file) => {
-                                if (file && !['image/jpeg', 'application/pdf'].includes(file.type)) {
-                                    toast.error('Please upload a valid file (JPEG or PDF)');
+                                if (file && !['image/jpeg', 'image/png', 'application/pdf'].includes(file.type)) {
+                                    toast.error('Please upload a valid file (JPEG, PNG, or PDF)');
+                                    return;
+                                }
+                                if (file && file.size > 5 * 1024 * 1024) {
+                                    toast.error('File size should be less than 5 MB');
                                     return;
                                 }
                                 updateFields({ voterCard: file });
@@ -87,19 +103,19 @@ export function RegistrationForm({
                         />
                     </div>
                 </div>
-                <div>If you wish to serve the community as a professional?</div>
+                <div>If you wish to serve the community as a professional? <span className="text-red-700">*</span></div>
                 <div className="flex gap-4">
                     <Label>
                         <Checkbox
-                            id="yes"
-                            className="mx-2"
+                            checked={serveCommunity === true}
+                            onCheckedChange={() => handleServeAccepted(true)}
                         />
                         Yes
                     </Label>
                     <Label>
                         <Checkbox
-                            id="no"
-                            className="mx-2"
+                            checked={serveCommunity === false}
+                            onCheckedChange={() => handleServeAccepted(false)}
                         />
                         No
                     </Label>

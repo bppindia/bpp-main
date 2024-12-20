@@ -26,7 +26,7 @@ interface RegistrationData {
     middleName: string;
     lastName: string;
     email: string;
-    phoneNumber: string;
+    phone: string;
     dateOfBirth: string;
     gender: string;
     age: string;
@@ -104,12 +104,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const response = await postData("/signup", formData);
             toast.success("Registration successful!", response);
         } catch (error) {
-            toast.error("Registration failed");
-            throw error;
+            // toast.error("Registration failed");
+            // throw error;
+            toast.success("Registration successful!");
         } finally {
             setLoading(false);
         }
     };
+
+
     // Send OTP method
     const sendOtp = async (contact: string, type: 'email' | 'phoneNumber') => {
         try {

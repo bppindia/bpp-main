@@ -21,6 +21,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from '@/context/AuthContext';
+import { useEffect } from 'react';
 
 export function UserNav() {
   const { logout } = useAuth();
@@ -30,6 +31,12 @@ export function UserNav() {
     logout();
     navigate("/auth/login");
   };
+
+
+  useEffect(() => {
+   alert('error while getting data');
+  }, []);
+
   return (
     <DropdownMenu>
       <TooltipProvider disableHoverableContent>
@@ -54,9 +61,9 @@ export function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">John Doe</p>
+            <p className="text-sm font-medium leading-none">Undefined</p>
             <p className="text-xs leading-none text-muted-foreground">
-              johndoe@example.com
+            Null
             </p>
           </div>
         </DropdownMenuLabel>

@@ -18,9 +18,9 @@ import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { Toaster } from '@/components/ui/sonner';
 import { useAuth } from '@/context/AuthContext';
+import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { useForm } from 'react-hook-form';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -44,10 +44,10 @@ const Login = () => {
                 description: 'Redirecting to the dashboard...',
             });
 
-            // Redirect to dashboard after 5 seconds
+            // Redirect to dashboard after 3 seconds
             setTimeout(() => {
                 navigate('/dashboard/home');
-            }, 5000);
+            }, 3000);
         } catch (error) {
             console.error('Login error:', error);
             toast.error('Failed to log in. Please check your credentials.');
@@ -55,9 +55,9 @@ const Login = () => {
     }
 
     return (
-        <section className="py-20">
+        <section className="">
             <div className="container">
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col justify-center h-screen gap-4">
                     <Card className="mx-auto w-full max-w-lg">
                         <CardHeader className="items-center">
                             <div className="flex gap-2 items-center justify-center text-xl font-bold text-blue-800">

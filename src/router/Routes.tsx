@@ -1,6 +1,6 @@
 import { About } from '@/components/About';
 import Login from '@/components/form/loginForm/index';
-import MultiStepForm from '@/components/form/mutistepForm';
+import MultiStepForm from '@/components/form/mutistepForm/signupForm';
 import { useAuth } from '@/context/AuthContext';
 import CommitmentToProgress from '@/pages/About/CommitmentToProgress';
 import GetToKnow from '@/pages/About/GetToKnow';
@@ -54,6 +54,7 @@ import TermsAndConditions from '@/pages/TermsAndCondtions/TermsAndCondtions';
 import Vision from '@/pages/Vision/Vision';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
+import BussinessCommunitySignup from '@/components/form/mutistepForm/bussinessCommunitySignup';
 
 const AppRoutes = () => {
     const { isAuthenticated } = useAuth();
@@ -72,6 +73,7 @@ const AppRoutes = () => {
                     <Route path="forgot-pin" element={<ForgetPin />} />
                     <Route path="reset-password" element={<ResetPassword />} />
                     <Route path="reset-pin" element={<ResetPin />} />
+                    <Route path="business-community-join" element={<BussinessCommunitySignup />} />
                 </Route>
 
                 {/* About Routes */}
@@ -93,7 +95,7 @@ const AppRoutes = () => {
                 </Route>
 
                 {/* Business Community Routes */}
-                <Route path="business-community">
+                <Route path="-join">
                     <Route path="vendor-suppliers" element={<VendorSupplier />} />
                     <Route path="ethics" element={<EthicsVendorsSuppliers />} />
                 </Route>
@@ -120,18 +122,6 @@ const AppRoutes = () => {
                 <Route path="customer-support" element={<CustomerService />} />
                 <Route path="privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="terms-and-conditions" element={<TermsAndConditions />} />
-
-
-
-                {/* <Route path="/admin" element={<AdminPanelLayout />}> */}
-                {/* <Route path="dashboard" element={<DashboardPage />} />
-                    <Route path="categories" element={<CategoriesPage />} />
-                    <Route path="posts" element={<PostsPage />} />
-                    <Route path="posts/new" element={<NewPostPage />} />
-                    <Route path="tags" element={<TagsPage />} />
-                    <Route path="users" element={<UsersPage />} />
-                    <Route path="account" element={<AccountPage />} /> */}
-                {/* </Route> */}
 
 
 
@@ -176,44 +166,3 @@ const AppRoutes = () => {
 };
 
 export default AppRoutes;
-
-
-
-
-
-
-
-
-
-{/* Protected Routes (requires authentication) */ }
-//  <Route
-//  path="/membership"
-//  element={
-//    <ProtectedRoute isAuthenticated={isAuthenticated}>
-//      <Route>
-//        <Route path="join-now" element={<Join />} />
-//        <Route path="renewals" element={<MembershipRenewal />} />
-//      </Route>
-//    </ProtectedRoute>
-//  }
-// />
-
-{/* Private Routes (requires authentication + specific roles) */ }
-{/* <Route
- path="/admin"
- element={
-   <PrivateRoute
-     isAuthenticated={isAuthenticated}
-     userRole={userRole}
-     allowedRoles={['admin']}
-   >
-     <Route>
-       <Route path="dashboard" element={<AdminDashboard />} />
-       <Route path="users" element={<UserManagement />} />
-     </Route>
-   </PrivateRoute>
- }
-/> */}
-
-{/* Error Routes */ }
-{/* <Route path="/unauthorized" element={<UnauthorizedPage />} /> */ }

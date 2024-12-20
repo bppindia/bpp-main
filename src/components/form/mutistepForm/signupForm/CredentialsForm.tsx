@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React from "react";
 import { FormWrapper } from "./FormWrapper";
+import { PasswordInput } from "@/components/features/password-input";
 
 type CredentialsData = {
   password: string;
@@ -21,31 +22,26 @@ const CredentialsForm: React.FC<CredentialsFormProps> = ({
 }) => {
   return (
     <FormWrapper title="Credentials Details">
-      <div className="grid gap-4">
         <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
           <div>
             <Label htmlFor="password">Password <span className="text-red-700">*</span></Label>
-            <Input
-              id="password"
-              type="password"
-              required
-              placeholder="Create a password"
-              value={password}
-              onChange={(e) => updateFields({ password: e.target.value })}
-            />
+            <PasswordInput
+					id="password"
+					value={password}
+          onChange={(e) => updateFields({ password: e.target.value })}
+					autoComplete="password"
+				/>
           </div>
           <div>
             <Label htmlFor="confirmPassword">Confirm Password <span className="text-red-700">*</span></Label>
-            <Input
-              id="confirmPassword"
-              type="password"
-              required
-              placeholder="Confirm your password"
-              value={confirmPassword}
-              onChange={(e) =>
-                updateFields({ confirmPassword: e.target.value })
-              }
-            />
+            <PasswordInput
+					id="confirmPassword"
+					value={confirmPassword}
+          onChange={(e) =>
+            updateFields({ confirmPassword: e.target.value })
+          }
+					autoComplete="confirmPassword"
+				/>
           </div>
           <div>
             <Label htmlFor="referralCode">Referal code ( Optional )</Label>
@@ -60,7 +56,6 @@ const CredentialsForm: React.FC<CredentialsFormProps> = ({
             />
           </div>
         </div>
-      </div>
     </FormWrapper>
   );
 };

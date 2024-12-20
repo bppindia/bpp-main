@@ -10,7 +10,7 @@ import { FormWrapper } from "./FormWrapper";
 
 type EmailData = {
     email?: string;
-    phoneNumber?: string;
+    phone?: string;
     termsAccepted?: boolean;
     partyObjectivesAccepted?: boolean;
 };
@@ -19,12 +19,12 @@ type EmailFormProps = EmailData & {
     updateFields: (fields: Partial<EmailData>) => void;
 };
 
-export function EmailForm({ email, phoneNumber, updateFields }: EmailFormProps) {
+export function EmailForm({ email, phone, updateFields }: EmailFormProps) {
     const [isTermsDialogOpen, setTermsDialogOpen] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [partyObjectivesAccepted, setPartyObjectivesAccepted] = useState(false);
 
-    const [inputValue, setInputValue] = useState(email || phoneNumber || '');
+    const [inputValue, setInputValue] = useState(email || phone || '');
 
     const handleInputChange = (value: string) => {
         // Regular expressions for validation
@@ -36,14 +36,14 @@ export function EmailForm({ email, phoneNumber, updateFields }: EmailFormProps) 
 
         // Detect input type
         if (emailRegex.test(value)) {
-            updateFields({ email: value, phoneNumber: "" });
+            updateFields({ email: value });
         } else if (phoneRegex.test(value)) {
             // Automatically prepend +91 if not already present
             const formattedPhoneNumber = value.startsWith("+91") ? value : `+91${value}`;
             setInputValue(formattedPhoneNumber); // Update local input state with +91
-            updateFields({ phoneNumber: formattedPhoneNumber, email: "" });
+            updateFields({ phone: value, email: "" });
         } else {
-            updateFields({ email: "", phoneNumber: "" });
+            updateFields({ email: "", phone: "" });
         }
     };
 
@@ -87,7 +87,7 @@ export function EmailForm({ email, phoneNumber, updateFields }: EmailFormProps) 
                 />
                 <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50">
                     {email && <Mail size={16} strokeWidth={2} aria-hidden="true" />}
-                    {phoneNumber && <Phone size={16} strokeWidth={2} aria-hidden="true" />}
+                    {phone && <Phone size={16} strokeWidth={2} aria-hidden="true" />}
                 </div>
             </div>
             <div className="flex flex-row items-center space-x-3 space-y-0">

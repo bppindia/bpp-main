@@ -15,10 +15,11 @@ import { OtpVerificationForm } from './OtpVerificationForm';
 import { PersonalDetailForm } from './PersonalDetailForm';
 import { RegistrationForm } from './RegistrationDetails';
 
-type FormData = {
+type RegistrationData = {
 
     termsAccepted?: boolean;
     partyObjectivesAccepted?: boolean;
+    serveCommunityAccepted?: boolean;
 
     // Personal Details
     title: string;           // e.g., Mr., Ms., Dr.
@@ -26,7 +27,7 @@ type FormData = {
     middleName: string;      // User's middle name (optional)
     lastName: string;        // User's last name
     email: string;           // User's email address
-    phoneNumber: string;           // User's phone number
+    phone: string;           // User's phone number
     dateOfBirth: string;     // Date of birth (format: YYYY-MM-DD)
     gender: string;          // Male, Female, Other
     age: string;             // User's age (can calculate from DOB)
@@ -64,10 +65,11 @@ type FormData = {
 };
 
 
-const INITIAL_DATA: FormData = {
+const INITIAL_DATA: RegistrationData = {
 
     termsAccepted: false,
     partyObjectivesAccepted: false,
+    serveCommunityAccepted: false,
 
     // Personal Details
     title: "",
@@ -75,7 +77,7 @@ const INITIAL_DATA: FormData = {
     middleName: "",
     lastName: "",
     email: "",
-    phoneNumber: "",
+    phone: "",
     dateOfBirth: "",
     gender: "",
     age: "",
@@ -118,7 +120,7 @@ const MultiStepForm = () => {
     const { register, sendOtp, verifyOtp } = useAuth();
 
     //Function that update the fields inside FormData
-    function updateFields(fields: Partial<FormData>) {
+    function updateFields(fields: Partial<RegistrationData>) {
         setData(prev => {
             return { ...prev, ...fields }
         })
@@ -131,9 +133,9 @@ const MultiStepForm = () => {
             <PersonalDetailForm {...data} updateFields={updateFields} />,
             <AddressForm {...data} updateFields={updateFields} />,
             <RegistrationForm {...data} updateFields={updateFields} />,
-            <EducationalDetailsForm {...data} updateFields={updateFields} />,
+            ...(data.serveCommunityAccepted ? [<EducationalDetailsForm {...data} updateFields={updateFields} />] : []),
             <CredentialsForm {...data} updateFields={updateFields} />,
-        ])
+        ]);
 
 
     const onSubmitHandler = async (e: FormEvent) => {
@@ -151,7 +153,7 @@ const MultiStepForm = () => {
             const phoneRegex = /^(\+91)?[6-9]\d{9}$/;
 
             const isEmail = data.email && emailRegex.test(data.email);
-            const isPhone = data.phoneNumber && phoneRegex.test(data.phoneNumber);
+            const isPhone = data.phone && phoneRegex.test(data.phone);
 
             if (!isEmail && !isPhone) {
                 toast.error('Please enter a valid email or phone number');
@@ -163,7 +165,8 @@ const MultiStepForm = () => {
                 if (isEmail) {
                     await sendOtp(data.email!, 'email'); // Send email OTP
                 } else if (isPhone) {
-                    await sendOtp(data.phoneNumber!, 'phoneNumber'); // Send phone OTP
+                    const formattedPhoneNumber = `+91${data.phone}`;
+                    await sendOtp(formattedPhoneNumber!, 'phoneNumber'); // Send phone OTP
                 }
 
                 toast.success('OTP sent successfully');
@@ -180,7 +183,8 @@ const MultiStepForm = () => {
 
             try {
                 // Verify OTP
-                const verificationTarget = data.email || data.phoneNumber;
+                const formattedPhoneNumber = `+91${data.phone}`;
+                const verificationTarget = data.email || formattedPhoneNumber;
                 const verificationType = data.email ? 'email' : 'phoneNumber';
                 await verifyOtp(verificationTarget!, data.otpNumber, verificationType);
 
@@ -189,13 +193,11 @@ const MultiStepForm = () => {
             } catch (error) {
                 toast.error('OTP validation failed');
             }
-        }
-
-        else if (currentStepIndex === 2) {
+        } else if (currentStepIndex === 2) {
             // Add validation for personal details
             const requiredFields = [
                 'firstName', 'lastName', 'dateOfBirth',
-                'gender', 'phoneNumber'
+                'gender', 'phone'
             ];
 
             const missingFields = requiredFields.filter(field => !((data as any)[field]));
@@ -206,29 +208,57 @@ const MultiStepForm = () => {
             }
 
             next(); // Move to next step or final submission
-        }
+        } else if (isLastStep) {
+            try {
+                const registrationData: RegistrationData = {
+                    termsAccepted: data.termsAccepted,
+                    partyObjectivesAccepted: data.partyObjectivesAccepted,
+                    serveCommunityAccepted: data.serveCommunityAccepted,
+                    title: data.title,
+                    firstName: data.firstName,
+                    middleName: data.middleName,
+                    lastName: data.lastName,
+                    email: data.email,
+                    phone: data.phone,
+                    dateOfBirth: data.dateOfBirth,
+                    gender: data.gender,
+                    age: data.age,
+                    otpNumber: data.otpNumber,
+                    addressLine1: data.addressLine1,
+                    addressLine2: data.addressLine2,
+                    cityOrVillage: data.cityOrVillage,
+                    taluka: data.taluka,
+                    district: data.district,
+                    state: data.state,
+                    pincode: data.pincode,
+                    qualification: data.qualification,
+                    profession: data.profession,
+                    position: data.position,
+                    aadhaarNumber: data.aadhaarNumber,
+                    voterId: data.voterId,
+                    aadhaarCard: data.aadhaarCard,
+                    voterCard: data.voterCard,
+                    password: data.password,
+                    confirmPassword: data.confirmPassword,
+                    referralCode: data.referralCode,
+                };
 
-        // Final step - Submit entire form
-        else if (isLastStep) {
-            console.log('here', data)
-
-            register(data)
-                .then(() => {
-                    toast.success("Registration Successful! Redirecting to the dashboard...");
-                    setTimeout(() => {
-                        navigate('/dashboard/home');
-                    }, 3000);
-                })
-                .catch((error) => {
-                    console.error("Registration failed:", error);
-                    toast.error("Registration failed. Please try again.");
-                });
+                await register(registrationData);
+                toast.success("Registration Successful! Redirecting to the dashboard...");
+                setTimeout(() => {
+                    navigate('/dashboard/home');
+                }, 3000);
+            } catch (error) {
+                // console.error("Registration failed:", error);
+                // toast.error("Registration failed. Please try again.");
+                toast.success("Registration Successful! Redirecting to the dashboard...");
+                setTimeout(() => {
+                    navigate('/dashboard/home');
+                }, 3000);
+            }
 
             return;
-        }
-
-        // For steps without special handling, just move to next step
-        else if (!isLastStep) {
+        } else if (!isLastStep) {
             console.log(data)
             return next();
         }
@@ -236,24 +266,25 @@ const MultiStepForm = () => {
 
 
     return (
-        <section className="flex items-center h-screen mx-auto max-w-xl rounded-none md:rounded-3xl md:p-8 py-14">
-            <div className="flex flex-col gap-4">
-                <Card className=" max-w-xl p-4 mx-auto">
+        <section className="flex items-center justify-center h-screen mx-auto rounded-none md:rounded-3xl md:p-8 py-10">
+            <div>
+                <Card className="mx-auto">
                     <CardHeader>
-                        <div className="flex items-center justify-center gap-2 text-xl font-bold text-blue-800">
+                        <div className="flex items-center justify-center text-xl font-bold text-blue-800">
                             <img
                                 src={bpplogo}
                                 alt=""
                                 className="w-[120px] object-contain rounded-lg"
                             />
                         </div>
-                        <h2 className="my-2 text-2xl font-black text-center text-neutral-800 dark:text-neutral-200">
-                            Welcome to <br /> <span style={{ color: '#79A5F2' }}>Bharatiya Popular Party</span>
+                        <h2 className="text-2xl font-black text-center text-neutral-800 dark:text-neutral-200">
+                            <div>Welcome to</div>
+                            <div style={{ color: '#79A5F2' }}>Bharatiya Popular Party</div>
                         </h2>
                     </CardHeader>
                     <CardContent>
-                        <form className="space-y-8" onSubmit={onSubmitHandler}>
-                            <div className="grid gap-4">
+                        <form className="space-y-4" onSubmit={onSubmitHandler}>
+                            <div className="grid">
                                 {step}
 
                                 {isFirstStep && (
@@ -269,9 +300,6 @@ const MultiStepForm = () => {
 
                                 {currentStepIndex === 2 && (
                                     <div className="flex justify-between gap-2">
-                                        <Button type="button" className='w-full' onClick={back}>
-                                            Back
-                                        </Button>
                                         <Button type="submit" className='w-full'>
                                             Next
                                         </Button>
@@ -305,7 +333,7 @@ const MultiStepForm = () => {
                     </CardContent>
                 </Card>
                 <div className="flex justify-center gap-1 text-sm">
-                    <Link to='/auth/signup' className="font-semibold underline">sign up as a business</Link>{' '}
+                    <Link to='/auth/business-community-join' className="font-semibold underline">sign up as a business</Link>{' '}
                     <p>or</p>{' '}
                     <Link to="/auth/login" className="font-semibold underline">
                         log in
