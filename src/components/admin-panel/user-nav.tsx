@@ -1,16 +1,10 @@
 "use client";
 
-import { Link, useNavigate } from 'react-router-dom';
 import { LayoutGrid, LogOut, User } from "lucide-react";
+import { Link, useNavigate } from 'react-router-dom';
 
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider
-} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,8 +14,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from "@/components/ui/tooltip";
 import { useAuth } from '@/context/AuthContext';
-import { useEffect } from 'react';
 
 export function UserNav() {
   const { logout } = useAuth();
@@ -32,10 +31,6 @@ export function UserNav() {
     navigate("/auth/login");
   };
 
-
-  useEffect(() => {
-   alert('error while getting data');
-  }, []);
 
   return (
     <DropdownMenu>

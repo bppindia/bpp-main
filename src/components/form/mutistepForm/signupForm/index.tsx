@@ -19,7 +19,7 @@ type RegistrationData = {
 
     termsAccepted?: boolean;
     partyObjectivesAccepted?: boolean;
-    serveCommunityAccepted?: boolean;
+    serveCommunityAccepted?: boolean
 
     // Personal Details
     title: string;           // e.g., Mr., Ms., Dr.
@@ -30,7 +30,7 @@ type RegistrationData = {
     phone: string;           // User's phone number
     dateOfBirth: string;     // Date of birth (format: YYYY-MM-DD)
     gender: string;          // Male, Female, Other
-    age: string;             // User's age (can calculate from DOB)
+    age: number;             // User's age (can calculate from DOB)
 
     // OTP Verification
     otpNumber: string;             // One-time password for verification email otp/ phone otp
@@ -51,7 +51,7 @@ type RegistrationData = {
 
     // Registration Details
     aadhaarNumber: string;      // Aadhaar card number
-    voterId: string;         // Voter ID number
+    voterID: string;         // Voter ID number
     aadhaarCard: File | null;      // Aadhaar card file (File type)
     voterCard: File | null;         // Voter ID file (File type)
 
@@ -80,7 +80,7 @@ const INITIAL_DATA: RegistrationData = {
     phone: "",
     dateOfBirth: "",
     gender: "",
-    age: "",
+    age: 0,
 
     // OTP Verification
     otpNumber: "",
@@ -101,7 +101,7 @@ const INITIAL_DATA: RegistrationData = {
 
     // Registration Details
     aadhaarNumber: "",
-    voterId: "",
+    voterID: "",
     aadhaarCard: null,  // Initialize as null
     voterCard: null,    // Initialize as null
 
@@ -117,7 +117,7 @@ const INITIAL_DATA: RegistrationData = {
 const MultiStepForm = () => {
     const [data, setData] = useState(INITIAL_DATA);
     const navigate = useNavigate();
-    const { register, sendOtp, verifyOtp } = useAuth();
+    const { sendOtp, verifyOtp } = useAuth();
 
     //Function that update the fields inside FormData
     function updateFields(fields: Partial<RegistrationData>) {
@@ -210,54 +210,62 @@ const MultiStepForm = () => {
             next(); // Move to next step or final submission
         } else if (isLastStep) {
             try {
-                const registrationData: RegistrationData = {
-                    termsAccepted: data.termsAccepted,
-                    partyObjectivesAccepted: data.partyObjectivesAccepted,
-                    serveCommunityAccepted: data.serveCommunityAccepted,
-                    title: data.title,
-                    firstName: data.firstName,
-                    middleName: data.middleName,
-                    lastName: data.lastName,
-                    email: data.email,
-                    phone: data.phone,
-                    dateOfBirth: data.dateOfBirth,
-                    gender: data.gender,
-                    age: data.age,
-                    otpNumber: data.otpNumber,
-                    addressLine1: data.addressLine1,
-                    addressLine2: data.addressLine2,
-                    cityOrVillage: data.cityOrVillage,
-                    taluka: data.taluka,
-                    district: data.district,
-                    state: data.state,
-                    pincode: data.pincode,
-                    qualification: data.qualification,
-                    profession: data.profession,
-                    position: data.position,
-                    aadhaarNumber: data.aadhaarNumber,
-                    voterId: data.voterId,
-                    aadhaarCard: data.aadhaarCard,
-                    voterCard: data.voterCard,
-                    password: data.password,
-                    confirmPassword: data.confirmPassword,
-                    referralCode: data.referralCode,
-                };
+                const formData = new FormData();
 
-                await register(registrationData);
-                toast.success("Registration Successful! Redirecting to the dashboard...");
-                setTimeout(() => {
-                    navigate('/dashboard/home');
-                }, 3000);
+                // Append required fields
+                formData.append('title', data.title);
+                formData.append('firstName', data.firstName);
+                formData.append('middleName', data.middleName);
+                formData.append('lastName', data.lastName);
+                formData.append('email', data.email);
+                formData.append('phone', data.phone);
+                formData.append('dateOfBirth', data.dateOfBirth);
+                formData.append('gender', data.gender);
+                formData.append('age', String(data.age));
+                formData.append('addressLine1', data.addressLine1);
+                formData.append('addressLine2', data.addressLine2);
+                formData.append('cityOrVillage', data.cityOrVillage);
+                formData.append('taluka', data.taluka);
+                formData.append('district', data.district);
+                formData.append('state', data.state);
+                formData.append('pincode', data.pincode);
+    
+                // Append optional fields if filled
+                if (data.qualification) formData.append('qualification', data.qualification);
+                if (data.profession) formData.append('profession', data.profession);
+                if (data.position) formData.append('position', data.position);
+                if (data.referralCode) formData.append('referralCode', data.referralCode);
+    
+                // Append files if they exist
+                if (data.aadhaarCard) formData.append('aadhaarCard', data.aadhaarCard);
+                if (data.aadhaarNumber) formData.append('aadhaarNumber', data.aadhaarNumber);
+                if (data.voterCard) formData.append('voterCard', data.voterCard);
+                if (data.voterID) formData.append('voterID', data.voterID);
+    
+                // Append credentials
+                formData.append('password', data.password);
+    
+                const response = await fetch('https://api.bppindia.com:8443/api/v1/signup', {
+                    method: 'POST',
+                    body: formData,
+                });
+    
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log(result, 'Registration successful');
+                    toast.success("Registration Successful! Redirecting to the dashboard...");
+                    setTimeout(() => {
+                        navigate('/dashboard/home');
+                    }, 3000);
+                } else {
+                    const errorData = await response.json();
+                    console.error("Registration failed:", errorData);
+                    toast.error("Registration failed. Please try again.");
+                }
             } catch (error) {
-                // console.error("Registration failed:", error);
-                // toast.error("Registration failed. Please try again.");
-                toast.success("Registration Successful! Redirecting to the dashboard...");
-                setTimeout(() => {
-                    navigate('/dashboard/home');
-                }, 3000);
+                console.error("Registration failed:", error);
+                toast.error("Registration failed. Please try again.");
             }
-
-            return;
         } else if (!isLastStep) {
             console.log(data)
             return next();

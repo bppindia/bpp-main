@@ -8,14 +8,14 @@ import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger
+  PopoverTrigger,
 } from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select";
 
 interface DatePickerProps {
@@ -34,7 +34,7 @@ export function DatePicker({ date, setDate, endYear }: DatePickerProps) {
 
   const years = React.useMemo(() => {
     const currentYear = new Date().getFullYear();
-    const finalEndYear = endYear ?? currentYear; // Use endYear prop or fallback to current year
+    const finalEndYear = endYear ?? currentYear;
     return Array.from(
       { length: finalEndYear - 1950 + 1 },
       (_, i) => finalEndYear - i
@@ -45,7 +45,7 @@ export function DatePicker({ date, setDate, endYear }: DatePickerProps) {
     if (year) {
       return eachMonthOfInterval({
         start: startOfYear(new Date(year, 0, 1)),
-        end: endOfYear(new Date(year, 0, 1))
+        end: endOfYear(new Date(year, 0, 1)),
       });
     }
     return [];
@@ -62,7 +62,7 @@ export function DatePicker({ date, setDate, endYear }: DatePickerProps) {
     const newYear = parseInt(selectedYear, 10);
     setYear(newYear);
     if (date) {
-      const newDate = new Date(date);
+      const newDate = new Date(date.getTime());
       newDate.setFullYear(newYear);
       setDate(newDate);
     }
@@ -72,11 +72,25 @@ export function DatePicker({ date, setDate, endYear }: DatePickerProps) {
     const newMonth = parseInt(selectedMonth, 10);
     setMonth(newMonth);
     if (date) {
-      const newDate = new Date(date);
+      const newDate = new Date(date.getTime());
       newDate.setMonth(newMonth);
       setDate(newDate);
     } else {
-      setDate(new Date(year, newMonth, 1));
+      const newDate = new Date(year, newMonth, 1);
+      // Ensure we're working with local time
+      newDate.setHours(12, 0, 0, 0);
+      setDate(newDate);
+    }
+  };
+
+  const handleDateSelect = (newDate: Date | undefined) => {
+    if (newDate) {
+      // Set the time to noon to avoid timezone issues
+      const adjustedDate = new Date(newDate);
+      adjustedDate.setHours(12, 0, 0, 0);
+      setDate(adjustedDate);
+    } else {
+      setDate(undefined);
     }
   };
 
@@ -84,7 +98,7 @@ export function DatePicker({ date, setDate, endYear }: DatePickerProps) {
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant={"outline"}
+          variant="outline"
           className={cn(
             "w-full justify-start text-left font-normal",
             !date && "text-muted-foreground"
@@ -124,7 +138,7 @@ export function DatePicker({ date, setDate, endYear }: DatePickerProps) {
         <Calendar
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={handleDateSelect}
           month={new Date(year, month)}
           onMonthChange={(newMonth) => {
             setMonth(newMonth.getMonth());
