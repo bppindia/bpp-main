@@ -206,7 +206,7 @@ export function RegistrationForm({
                         Do you want to serve the community as a professional? <span className="text-red-700">*</span>
                     </div>
                     <div className="text-sm text-muted-foreground">
-                        <em>This information will help you become a block head.</em>
+                        <em>Serving the community as a professional member can help winning the confidence and increase your chances of being nominated as block head.</em>
                     </div>
                 </div>
 
