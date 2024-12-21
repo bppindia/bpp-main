@@ -163,7 +163,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             toast.success('OTP verified successfully!');
             return response;
         } catch (error) {
-            toast.error('Failed to verify OTP');
+            toast.error('Please Enter Valid OTP');
             throw error;
         } finally {
             setLoading(false);

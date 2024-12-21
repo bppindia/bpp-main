@@ -1,4 +1,4 @@
-export const state = {
+export const stateData = {
     "AN":"Andaman and Nicobar Islands",
     "AP":"Andhra Pradesh",
     "AR":"Arunachal Pradesh",

@@ -1,6 +1,8 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FormWrapper } from "./FormWrapper";
+import { stateData } from "@/data/states";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type AddressData = {
     addressLine1: string;
@@ -49,7 +51,6 @@ export function AddressForm({
                         id="addressLine2"
                         placeholder="Area, Landmark"
                         value={addressLine2}
-                        required
                         onChange={(e) => updateFields({ addressLine2: e.target.value })}
                     />
                 </div>
@@ -92,15 +93,22 @@ export function AddressForm({
                 <div className="grid grid-cols-2 gap-4">
                     <div>
                         <Label htmlFor="state">State <span className="text-red-700">*</span></Label>
-                        <Input
-                            id="state"
-                            placeholder="Enter state"
-                            value={state}
-                            required
-                            onChange={(e) => updateFields({ state: e.target.value })}
-                        />
-                    </div>
-                    <div>
+                        <Select
+                            onValueChange={(value) => updateFields({ state: value })}
+                            defaultValue={state || ""}
+                        >
+                            <SelectTrigger id="state" className="w-full">
+                                <SelectValue placeholder="Select your state" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Object.entries(stateData).map(([stateCode, stateName]) => (
+                                    <SelectItem key={stateCode} value={stateName}>
+                                        {stateName}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>              <div>
                         <Label htmlFor="pincode">Pincode <span className="text-red-700">*</span></Label>
                         <Input
                             id="pincode"

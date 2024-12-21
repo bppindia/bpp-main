@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { DatePicker } from "@/components/DatePicker";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,7 +14,7 @@ import { FormWrapper } from "./FormWrapper";
 type PersonalDetailData = {
   title: string;
   firstName: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
   dateOfBirth: string;
   age: number;
@@ -38,6 +39,7 @@ export function PersonalDetailForm({
   email,
   updateFields,
 }: PersonalDetailFormProps) {
+  const [error, setError] = useState<string | null>(null);
 
   const calculateAge = (dob: Date | undefined): number => {
     if (!dob) return 0;
@@ -47,6 +49,11 @@ export function PersonalDetailForm({
     const monthDifference = today.getMonth() - birthDate.getMonth();
     if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
       age--;
+    }
+    if (age < 18) {
+      setError("Age must be 18 or older.");
+    } else {
+      setError(null);
     }
     return age;
   };
@@ -96,19 +103,17 @@ export function PersonalDetailForm({
         {/* Middle Name Field */}
         <div className="col-span-12 md:col-span-5">
           <Label>
-            Middle Name <span className="text-red-700">*</span>
+            Middle Name
           </Label>
           <Input
             placeholder="Middle name"
-            required
             value={middleName}
             onChange={(e) => updateFields({ middleName: e.target.value })}
           />
         </div>
       </div>
 
-
-      <div className="grid grid-cols-1 gap-2">
+      <div className="grid grid-cols-2 gap-2">
         <div>
           <Label>Last Name <span className="text-red-700">*</span></Label>
           <Input
@@ -118,44 +123,9 @@ export function PersonalDetailForm({
             onChange={(e) => updateFields({ lastName: e.target.value })}
           />
         </div>
-      </div>
-
-      {/* Row 2: DOB and Age */}
-      <div className="grid grid-cols-12 gap-4">
-        {/* Date of Birth Field */}
-        <div className="col-span-12 md:col-span-6">
-          <Label>
-            Date of Birth <span className="text-red-700">*</span>
-          </Label>
-          <DatePicker
-  date={dateOfBirth ? new Date(dateOfBirth) : undefined}
-  setDate={(date) => {
-    // Ensure we're using the local date string
-    updateFields({ 
-      dateOfBirth: date ? date.toLocaleDateString('en-CA') : undefined,
-      age: calculateAge(date)
-    });
-  }}
-  endYear={2050}
-/>
-        </div>
-
-        {/* Age Field */}
-        <div className="col-span-12 md:col-span-2">
-          <Label>
-            Age <span className="text-red-700">*</span>
-          </Label>
-          <Input
-            type="number"
-            placeholder="Age"
-            value={age}
-            required
-            readOnly
-          />
-        </div>
 
         {/* Gender Field */}
-        <div className="col-span-12 md:col-span-4">
+        <div>
           <Label>
             Gender <span className="text-red-700">*</span>
           </Label>
@@ -176,6 +146,41 @@ export function PersonalDetailForm({
         </div>
       </div>
 
+      {/* Row 2: DOB and Age */}
+      <div className="grid grid-cols-12 gap-4">
+        {/* Date of Birth Field */}
+        <div className="col-span-12 md:col-span-6">
+          <Label>
+            Date of Birth <span className="text-red-700">*</span>
+          </Label>
+          <DatePicker
+            date={dateOfBirth ? new Date(dateOfBirth) : undefined}
+            setDate={(date) => {
+              // Ensure we're using the local date string
+              updateFields({
+                dateOfBirth: date ? date.toLocaleDateString('en-CA') : undefined,
+                age: calculateAge(date)
+              });
+            }}
+            endYear={2050}
+          />
+          {error && <div className="text-red-700">{error}</div>}
+        </div>
+
+        {/* Age Field */}
+        <div className="col-span-12 md:col-span-6">
+          <Label>
+            Age <span className="text-red-700">*</span>
+          </Label>
+          <Input
+            type="number"
+            placeholder="Age"
+            value={age}
+            required
+            readOnly
+          />
+        </div>
+      </div>
 
       {/* Row 3: Additional Fields */}
       <div className="grid grid-cols-2 gap-4">
@@ -184,6 +189,7 @@ export function PersonalDetailForm({
           <Input
             placeholder="Enter phone number"
             value={phone}
+            maxLength={10}
             required
             onChange={(e) => updateFields({ phone: e.target.value })}
           />

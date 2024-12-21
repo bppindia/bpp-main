@@ -9,14 +9,14 @@ import { FormWrapper } from "./FormWrapper";
 type OtpVerificationData = {
     otpNumber: string;
     email?: string;
-    phoneNumber?: string;
+    phone?: string;
 };
 
 type OtpVerificationProps = OtpVerificationData & {
     updateFields: (fields: Partial<OtpVerificationData>) => void;
 };
 
-export function OtpVerificationForm({ otpNumber, email, phoneNumber, updateFields }: OtpVerificationProps) {
+export function OtpVerificationForm({ otpNumber, email, phone, updateFields }: OtpVerificationProps) {
     const [timer, setTimer] = useState(120);
     const [showResend, setShowResend] = useState(false);
     const { sendOtp } = useAuth();
@@ -25,14 +25,12 @@ export function OtpVerificationForm({ otpNumber, email, phoneNumber, updateField
         try {
             if (email) {
                 await sendOtp(email, 'email'); // Send email OTP
-            } else if (phoneNumber) {
-                const formattedPhoneNumber = `+91${phoneNumber}`;
+            } else if (phone) {
+                const formattedPhoneNumber = `+91${phone}`;
                 await sendOtp(formattedPhoneNumber, 'phoneNumber'); // Send phone OTP
             }
-            toast.success('OTP sent successfully');
             setTimer(120);
             setShowResend(false);
-            toast.success("OTP resent successfully");
         } catch (error) {
             toast.error("Failed to resend OTP. Please try again.");
         }
@@ -66,9 +64,9 @@ export function OtpVerificationForm({ otpNumber, email, phoneNumber, updateField
         return `${username.charAt(0)}${'*'.repeat(username.length - 2)}${username.charAt(username.length - 1)}@${domain}`;
     }
 
-    function maskPhoneNumber(phoneNumber: string): string {
-        if (phoneNumber.length < 4) return phoneNumber;
-        return `${phoneNumber.slice(0, 2)}${'*'.repeat(phoneNumber.length - 4)}${phoneNumber.slice(-2)}`;
+    function maskPhoneNumber(phone: string): string {
+        if (phone.length < 4) return phone;
+        return `${phone.slice(0, 2)}${'*'.repeat(phone.length - 4)}${phone.slice(-2)}`;
     }
 
     return (
@@ -79,10 +77,10 @@ export function OtpVerificationForm({ otpNumber, email, phoneNumber, updateField
                     {maskEmail(email)}
                 </Label>
             )}
-            {phoneNumber && (
+            {phone && (
                 <Label className="text-center">
                     Enter OTP sent to your phone:{" "}
-                    {maskPhoneNumber(phoneNumber)}
+                    {maskPhoneNumber(phone)}
                 </Label>
             )}
             <div className="space-y-4">
