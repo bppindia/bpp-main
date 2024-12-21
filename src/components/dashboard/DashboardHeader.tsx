@@ -9,10 +9,13 @@ import {
     Users,
     Wallet
 } from "lucide-react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 const DashboardHeader = () => {
+    const {userData} = useSelector((state: any) => state.auth);
     const navigate = useNavigate()
+
+
     return (
         <Card className="w-full mb-6 border-0">
             <CardContent className="p-5">
@@ -20,12 +23,13 @@ const DashboardHeader = () => {
                     {/* Left Section: Dashboard Title and User Details */}
                     <div className="space-y-2">
                         <div className="text-lg text-gray-600">
-                            Welcome back, <span className="font-medium">Swapnil</span>!
+                            Welcome back, <span className="font-medium">{userData?.firstName}</span>!
+
                         </div>
                         <div className="space-y-1">
                             <div className="flex items-center gap-3">
                                 <span className="text-xl font-semibold text-gray-800">
-                                    Swapnil Kishor Mahadik
+                                {userData?.firstName} {userData?.middleName} {userData?.lastName}
                                 </span>
                                 <Button
                                     variant="ghost"
@@ -36,7 +40,7 @@ const DashboardHeader = () => {
                                 </Button>
                             </div>
                             <div className="flex items-center gap-2">
-                                <span className="text-lg font-medium text-gray-600">Primary Member</span>
+                                <span className="text-lg font-medium text-gray-600">{userData.role}</span>
                                 <Button
                                     variant="ghost"
                                     size="icon"
@@ -95,18 +99,18 @@ const DashboardHeader = () => {
                         <div className="space-y-2">
                             <div className="flex items-center gap-3 text-gray-600 hover:text-gray-800 transition-colors duration-200">
                                 <Users className="h-4 w-4" />
-                                <span className="text-sm font-medium">Membership No: 001</span>
+                                <span className="text-sm font-medium">Membership No: 00{userData?.id}</span>
                             </div>
                             <div className="flex items-center gap-3 text-gray-600 hover:text-gray-800 transition-colors duration-200">
                                 <Calendar className="h-4 w-4" />
-                                <span className="text-sm font-medium">Valid until: Mar 26, 2028</span>
+                                <span className="text-sm font-medium">Valid until: null</span>
                             </div>
                         </div>
                         <Badge
                             variant="outline"
                             className="text-sm px-4 py-1 border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors duration-200"
                         >
-                            0 Referrals
+                            {userData.referralCount} Referrals
                         </Badge>
                     </div>
                 </div>

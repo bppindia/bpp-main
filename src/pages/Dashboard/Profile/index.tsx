@@ -10,10 +10,13 @@ import { Separator } from '@/components/ui/separator'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import DashboardLayout from '@/layout/DashboardLayout'
-import { Camera } from 'lucide-react'
+import { Camera, ClipboardCopy } from 'lucide-react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
 
 const ProfilePage = () => {
+    const {userData} = useSelector((state: any) => state.auth);
     // const [profileImage, setProfileImage] = useState("https://github.com/shadcn.png");
     const profileImage = "https://github.com/shadcn.png"
 
@@ -45,33 +48,50 @@ const ProfilePage = () => {
                     </BreadcrumbList>
                 </Breadcrumb>
                 <div className="px-4 space-y-6 md:px-6 mt-3">
-                    <header className="space-y-1.5">
-                        <div className="flex items-center space-x-4">
-                            <div className="relative">
-                                <Avatar className="w-24 h-24">
-                                    <AvatarImage src={profileImage} alt="Profile" />
-                                    <AvatarFallback>SM</AvatarFallback>
-                                </Avatar>
-                                <label
-                                    htmlFor="profile-image-upload"
-                                    className="absolute bottom-0 right-0 bg-primary text-white rounded-full p-1 cursor-pointer"
-                                >
-                                    <Camera size={16} />
-                                    <input
-                                        type="file"
-                                        id="profile-image-upload"
-                                        className="hidden"
-                                        accept="image/*"
-                                    // onChange={handleImageChange}
-                                    />
-                                </label>
-                            </div>
-                            <div className="space-y-1.5">
-                                <h1 className="text-2xl font-bold">Null</h1>
-                                <p className="text-gray-500 dark:text-gray-400">Null</p>
-                            </div>
-                        </div>
-                    </header>
+                <header className="space-y-1.5">
+    <div className="flex items-center space-x-4">
+        <div className="relative">
+            <Avatar className="w-24 h-24">
+                <AvatarImage src={profileImage} alt="Profile" />
+                <AvatarFallback>SM</AvatarFallback>
+            </Avatar>
+            <label
+                htmlFor="profile-image-upload"
+                className="absolute bottom-0 right-0 bg-primary text-white rounded-full p-1 cursor-pointer"
+            >
+                <Camera size={16} />
+                <input
+                    type="file"
+                    id="profile-image-upload"
+                    className="hidden"
+                    accept="image/*"
+                />
+            </label>
+        </div>
+        <div className="space-y-1.5">
+            <h1 className="text-2xl font-bold">{userData?.firstName} {userData?.lastName}</h1>
+            <p className="text-gray-500 dark:text-gray-400">{userData?.role}</p>
+            {userData?.referralCode && (
+                <div className="flex items-center space-x-2">
+                    <span className="text-gray-700 dark:text-gray-300">
+                        Referral Code: <span className="font-semibold">{userData.referralCode}</span>
+                    </span>
+                    <button
+                        onClick={() => {
+                            navigator.clipboard.writeText(userData.referralCode || '');
+                            toast.success('Referral code copied to clipboard!');
+                        }}
+                        className="text-primary hover:text-primary-dark transition"
+                        title="Copy Referral Code"
+                    >
+                        <ClipboardCopy size={16} />
+                    </button>
+                </div>
+            )}
+        </div>
+    </div>
+</header>
+
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2">
                         {/* Existing Profile Information Card */}
                         <Card>
@@ -85,175 +105,176 @@ const ProfilePage = () => {
                                         <div>
 
                                             <Label htmlFor="firstName">First Name</Label>
-                                            <Input id="firstName" defaultValue="" />
+                                            <Input id="firstName" defaultValue={userData?.firstName} />
                                         </div>
                                         <div>
                                             <Label htmlFor="middleName">Middle Name</Label>
-                                            <Input id="middleName" defaultValue="" />
+                                            <Input id="middleName" defaultValue={userData?.middleName} />
                                         </div>
                                         <div>
                                             <Label htmlFor="lastName">Last Name</Label>
-                                            <Input id="lastName" defaultValue="" />
+                                            <Input id="lastName" defaultValue={userData?.lastName} />
                                         </div>
 
                                     </div>
-                                    <div className='grid grid-cols-2'>
+                                    <div className='grid grid-cols-2  gap-2'>
                                         <div>
                                             <Label htmlFor="dateOfBirth">Date of Birth</Label>
-                                            <Input id="dateOfBirth" defaultValue="" />
+                                            <Input id="dateOfBirth" defaultValue={userData?.dateOfBirth} />
                                         </div>
                                         <div>
                                             <Label htmlFor="age">age</Label>
-                                            <Input id="age" defaultValue="" />
+                                            <Input id="age" defaultValue={userData?.age} />
                                         </div>
                                     </div>
                                     <div>
                                         <Label htmlFor="gender">gender</Label>
-                                        <Input id="gender" defaultValue="" />
+                                        <Input id="gender" defaultValue={userData?.gender} />
                                     </div>
 
                                     <Separator />
-                                    <div className='mt-3'>
-
-                                        <CardTitle className='my-2'>Address Information</CardTitle>
-                                        <CardDescription>Update your current residential address.</CardDescription>
-                                        <div className="grid mt-5 gap-2">
-                                            <Label htmlFor="street-address">Address Line 1</Label>
-                                            <Input id="street-address" placeholder="123 Main Street" />
+                                    <CardTitle className='my-2'>Address Information</CardTitle>
+                                    <CardDescription>Update your current residential address.</CardDescription>
+                                    <div className="grid mt-5 gap-2">
+                                        <Label htmlFor="street-address">Address Line 1</Label>
+                                        <Input id="street-address" placeholder={userData?.addressLine1} />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="street-address">Address Line 2</Label>
+                                        <Input id="street-address" placeholder={userData?.addressLine2} />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="grid gap-2">
+                                            <Label htmlFor="city">City</Label>
+                                            <Input id="city" placeholder={userData?.cityOrVillage} />
                                         </div>
                                         <div className="grid gap-2">
-                                            <Label htmlFor="street-address">Address Line 2</Label>
-                                            <Input id="street-address" placeholder="123 Main Street" />
+                                            <Label htmlFor="state">State</Label>
+                                            <Input id="state" placeholder={userData?.state} />
                                         </div>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="grid gap-2">
-                                                <Label htmlFor="city">City</Label>
-                                                <Input id="city" placeholder="Mumbai" />
-                                            </div>
-                                            <div className="grid gap-2">
-                                                <Label htmlFor="state">State</Label>
-                                                <Input id="state" placeholder="Maharashtra" />
-                                            </div>
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="grid gap-2">
-                                                <Label htmlFor="postal-code">Postal Code</Label>
-                                                <Input id="postal-code" placeholder="400001" />
-                                            </div>
-                                            <div className="grid gap-2">
-                                                <Label htmlFor="country">Country</Label>
-                                                <Input id="country" placeholder="India" />
-                                            </div>
-                                        </div>
-
                                     </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="grid gap-2">
+                                            <Label htmlFor="postal-code">Postal Code</Label>
+                                            <Input id="postal-code" placeholder={userData?.pincode} />
+                                        </div>
+                                        <div className="grid gap-2">
+                                            <Label htmlFor="country">Country</Label>
+                                            <Input id="country" placeholder="India" />
+                                        </div>
+                                    </div>
+
                                 </form>
                             </CardContent>
                             <CardFooter className="border-t p-6">
                                 <Button>Save Changes</Button>
                             </CardFooter>
                         </Card>
+                        {userData?.profession && (
 
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Need to be update your Profession *</CardTitle>
-                            </CardHeader>
-                            <CardContent className="space-y-6">
-                                <div>
-                                    <h3 className="text-lg font-semibold mb-4">Education Details</h3>
-                                    <Separator className="my-4" />
-                                    <form className="space-y-4">
-                                        <div className="grid gap-2">
-                                            <Label htmlFor="university">Name of University / Institution / Organization *</Label>
-                                            <Input
-                                                id="university"
-                                                placeholder="e.g., Harvard University, Oxford University"
-                                            />
-                                        </div>
-                                        <div className="grid gap-2">
-                                            <Label htmlFor="passout">Passout Year</Label>
-                                            <Input
-                                                id="passout"
-                                                placeholder="e.g., 2019, 2020, 2021"
-                                            />
-                                        </div>
-                                    </form>
-                                </div>
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Need to be update your Profession *</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-6">
+                                    <div>
+                                        <h3 className="text-lg font-semibold">Education Details</h3>
+                                        <Separator className="my-4" />
+                                        <form>
+                                            <div className="grid grid-cols-12 gap-4">
+                                                <div className="grid gap-2 col-span-8">
+                                                    <Label htmlFor="university">Name of University / Institution / Organization *</Label>
+                                                    <Input
+                                                        id="university"
+                                                        placeholder={userData?.qualification || "e.g., Harvard University, Oxford University"}
+                                                    />
+                                                </div>
+                                                <div className="grid gap-2 col-span-4">
+                                                    <Label htmlFor="passout">Passout Year</Label>
+                                                    <Input
+                                                        id="passout"
+                                                        placeholder="e.g., 2019, 2020, 2021"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
 
-                                <div>
-                                    <h3 className="text-lg font-semibold mb-4">Professional Details</h3>
-                                    <Separator className="my-4" />
-                                    <form className="space-y-4">
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="grid gap-2">
-                                                <Label>Professional Categories</Label>
-                                                <Input
-                                                    id="profession"
-                                                    placeholder="Select category"
-                                                    disabled
-                                                />
+                                    <div>
+                                        <h3 className="text-lg font-semibold">Professional Details</h3>
+                                        <Separator className="my-4" />
+                                        <form className="space-y-4">
+                                            <div className="grid grid-cols-12 gap-4">
+                                                <div className="grid gap-2 col-span-5">
+                                                    <Label>Professional Categories</Label>
+                                                    <Input
+                                                        id="profession"
+                                                        placeholder="Select category"
+                                                        disabled
+                                                        value={userData?.profession}
+                                                    />
+                                                </div>
+                                                <div className="grid gap-2 col-span-4">
+                                                    <Label htmlFor="profession">Current Profession / Position</Label>
+                                                    <Input
+                                                        id="profession"
+                                                        placeholder="e.g., Senior Surgeon, Software Engineer"
+                                                    />
+                                                </div>
+                                                <div className="grid gap-2 col-span-3">
+                                                    <Label htmlFor="experience">Years of Experience</Label>
+                                                    <Input
+                                                        id="experience"
+                                                        placeholder="e.g., 5, 10, 15+"
+                                                    />
+                                                </div>
                                             </div>
                                             <div className="grid gap-2">
-                                                <Label htmlFor="profession">Current Profession / Position</Label>
-                                                <Input
-                                                    id="profession"
-                                                    placeholder="e.g., Senior Surgeon, Software Engineer"
+                                                <Label htmlFor="summary">Tell me your Professional Summary</Label>
+                                                <Textarea
+                                                    id="summary"
+                                                    rows={3}
+                                                    placeholder="e.g., Experienced cardiac surgeon with 10+ years of practice..."
                                                 />
+                                                <span className="text-xs text-muted-foreground">500/500 limit</span>
                                             </div>
-                                        </div>
-                                        <div className="grid gap-2">
-                                            <Label htmlFor="experience">Years of Experience in this field</Label>
-                                            <Input
-                                                id="experience"
-                                                placeholder="e.g., 5, 10, 15+"
-                                            />
-                                        </div>
-                                        <div className="grid gap-2">
-                                            <Label htmlFor="summary">Tell me your Professional Summary</Label>
-                                            <Textarea
-                                                id="summary"
-                                                rows={3}
-                                                placeholder="e.g., Experienced cardiac surgeon with 10+ years of practice..."
-                                            />
-                                            <span className="text-xs text-muted-foreground">500/500 limit</span>
-                                        </div>
-                                    </form>
-                                </div>
+                                        </form>
+                                    </div>
 
-                                <div>
-                                    <h3 className="text-lg font-semibold mb-4">Required Documents</h3>
+
+                                    <h3 className="text-lg font-semibold">Upload Documents</h3>
                                     <Separator className="my-4" />
-                                    <form className="space-y-4">
+                                    <div className="grid grid-cols-2 gap-2">
                                         <div className="grid gap-2">
-                                            <Label htmlFor="degree">Upload Your University Degree *</Label>
+                                            <Label htmlFor="degree">Professional Degree *</Label>
                                             <Input type="file" id="degree" />
                                         </div>
                                         <div className="grid gap-2">
                                             <Label htmlFor="experience-cert">Experience Certificate (if any)</Label>
                                             <Input type="file" id="experience-cert" />
                                         </div>
-                                    </form>
-                                </div>
-                                <div>
-                                    <h3 className="text-lg font-semibold mb-4">Terms & Conditions</h3>
-                                    <Separator className="my-4" />
-                                    <ul className="list-disc pl-5">
-                                        <li>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec venenatis metus.
-                                        </li>
-                                        <li>
-                                            Quisque volutpat velit eu sapien auctor, in ultrices augue tincidunt.
-                                        </li>
-                                        <li>
-                                            Ut malesuada, sem sit amet vulputate pretium, tortor enim efficitur risus, at scelerisque est metus id leo.
-                                        </li>
-                                    </ul>
-                                </div>
-                            </CardContent>
-                            <CardFooter className="border-t p-6">
-                                <Button>Save Changes</Button>
-                            </CardFooter>
-                        </Card>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-semibold mb-4">Terms & Conditions</h3>
+                                        <Separator className="my-4" />
+                                        <ul className="list-disc pl-5 text-sm">
+                                            <li>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec venenatis metus.
+                                            </li>
+                                            <li>
+                                                Quisque volutpat velit eu sapien auctor, in ultrices augue tincidunt.
+                                            </li>
+                                            <li>
+                                                Ut malesuada, sem sit amet vulputate pretium, tortor enim efficitur risus, at scelerisque est metus id leo.
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </CardContent>
+                                <CardFooter className="border-t p-6">
+                                    <Button onClick={() => { alert('error while saving data') }}>Save Changes</Button>
+                                </CardFooter>
+                            </Card>
+                        )}
                         {/* 
                                 <div>
                                     <h3 className="text-lg font-semibold mb-4">Terms & Conditions</h3>
@@ -318,7 +339,7 @@ const ProfilePage = () => {
                                         <Input
                                             id="contact-email"
                                             type="email"
-                                            placeholder="john.doe@example.com"
+                                            placeholder={userData?.email}
                                         />
                                     </div>
                                     <div className="grid gap-2">
@@ -332,7 +353,7 @@ const ProfilePage = () => {
                                             <Input
                                                 id="phone-number"
                                                 type="tel"
-                                                placeholder="Enter your phone number"
+                                                placeholder={userData?.phone}
                                                 className="flex-1"
                                             />
                                         </div>
@@ -359,7 +380,7 @@ const ProfilePage = () => {
                                             <Label htmlFor="aadhar-number">Aadhar Number</Label>
                                             <Input
                                                 id="aadhar-number"
-                                                placeholder="Enter your 12-digit Aadhar number"
+                                                placeholder={userData?.aadhaarNumber}
                                                 pattern="[0-9]{12}"
                                             />
                                         </div>
@@ -367,7 +388,7 @@ const ProfilePage = () => {
                                             <Label htmlFor="voter-id">Voter ID Number</Label>
                                             <Input
                                                 id="voter-id"
-                                                placeholder="Enter your Voter ID"
+                                                placeholder={userData?.voterID}
                                                 pattern="[A-Z]{3}[0-9]{7}"
                                             />
                                         </div>

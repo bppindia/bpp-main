@@ -1,6 +1,8 @@
 import { postData } from "@/api/apiClient";
+import { setCredentials } from "@/features/auth/authSlice";
 import Cookies from 'js-cookie';
 import React, { createContext, ReactNode, useContext, useState } from "react";
+import { useDispatch } from 'react-redux';
 import { toast } from "sonner";
 
 interface User {
@@ -61,14 +63,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         Cookies.get('userDetails') ? JSON.parse(Cookies.get('userDetails') || '{}') : null
     );
     const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
 
     // Login method
     const login = async (credentials: LoginCredentials) => {
         try {
             setLoading(true);
             const response = await postData("/login", credentials);
+            
+            // Dispatch to Redux store
+            dispatch(setCredentials({
+                token: response.token,
+                data: response.data
+            }));
+            
+            // Still set cookies if needed
             Cookies.set('authToken', response.token, { expires: 4 });
-            setUser({ username: response.username, email: response.email });
+            setUser({ username: response.data.username, email: response.data.email });
             toast.success("Login successful!");
         } catch (error) {
             toast.error("Login failed. Please check your credentials.");
@@ -77,6 +88,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setLoading(false);
         }
     };
+    
 
     // Register method
     const register = async (registrationData: RegistrationData) => {
