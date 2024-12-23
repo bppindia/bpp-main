@@ -39,7 +39,7 @@ export function RegistrationForm({
     };
 
     const validateVoterId = (value: string) => {
-        const voterIdRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+        const voterIdRegex = /^[A-Z]{3}[0-9]{7}$/;
         return voterIdRegex.test(value);
     };
 
