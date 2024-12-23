@@ -10,13 +10,15 @@ import { Separator } from '@/components/ui/separator'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import DashboardLayout from '@/layout/DashboardLayout'
+import { useTheme } from '@/provider/theme-provider'
 import { Camera, ClipboardCopy } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 
 const ProfilePage = () => {
-    const {userData} = useSelector((state: any) => state.auth);
+    const { userData } = useSelector((state: any) => state.auth);
+    const { setTheme } = useTheme();
     // const [profileImage, setProfileImage] = useState("https://github.com/shadcn.png");
     const profileImage = "https://github.com/shadcn.png"
 
@@ -48,49 +50,49 @@ const ProfilePage = () => {
                     </BreadcrumbList>
                 </Breadcrumb>
                 <div className="px-4 space-y-6 md:px-6 mt-3">
-                <header className="space-y-1.5">
-    <div className="flex items-center space-x-4">
-        <div className="relative">
-            <Avatar className="w-24 h-24">
-                <AvatarImage src={profileImage} alt="Profile" />
-                <AvatarFallback>SM</AvatarFallback>
-            </Avatar>
-            <label
-                htmlFor="profile-image-upload"
-                className="absolute bottom-0 right-0 bg-primary text-white rounded-full p-1 cursor-pointer"
-            >
-                <Camera size={16} />
-                <input
-                    type="file"
-                    id="profile-image-upload"
-                    className="hidden"
-                    accept="image/*"
-                />
-            </label>
-        </div>
-        <div className="space-y-1.5">
-            <h1 className="text-2xl font-bold">{userData?.firstName} {userData?.lastName}</h1>
-            <p className="text-gray-500 dark:text-gray-400">{userData?.role}</p>
-            {userData?.referralCode && (
-                <div className="flex items-center space-x-2">
-                    <span className="text-gray-700 dark:text-gray-300">
-                        Referral Code: <span className="font-semibold">{userData.referralCode}</span>
-                    </span>
-                    <button
-                        onClick={() => {
-                            navigator.clipboard.writeText(userData.referralCode || '');
-                            toast.success('Referral code copied to clipboard!');
-                        }}
-                        className="text-primary hover:text-primary-dark transition"
-                        title="Copy Referral Code"
-                    >
-                        <ClipboardCopy size={16} />
-                    </button>
-                </div>
-            )}
-        </div>
-    </div>
-</header>
+                    <header className="space-y-1.5">
+                        <div className="flex items-center space-x-4">
+                            <div className="relative">
+                                <Avatar className="w-24 h-24">
+                                    <AvatarImage src={profileImage} alt="Profile" />
+                                    <AvatarFallback>SM</AvatarFallback>
+                                </Avatar>
+                                <label
+                                    htmlFor="profile-image-upload"
+                                    className="absolute bottom-0 right-0 bg-primary text-white rounded-full p-1 cursor-pointer"
+                                >
+                                    <Camera size={16} />
+                                    <input
+                                        type="file"
+                                        id="profile-image-upload"
+                                        className="hidden"
+                                        accept="image/*"
+                                    />
+                                </label>
+                            </div>
+                            <div className="space-y-1.5">
+                                <h1 className="text-2xl font-bold">{userData?.firstName} {userData?.lastName}</h1>
+                                <p className="text-gray-500 dark:text-gray-400">{userData?.role}</p>
+                                {userData?.referralCode && (
+                                    <div className="flex items-center space-x-2">
+                                        <span className="text-gray-700 dark:text-gray-300">
+                                            Referral Code: <span className="font-semibold">{userData.referralCode}</span>
+                                        </span>
+                                        <button
+                                            onClick={() => {
+                                                navigator.clipboard.writeText(userData.referralCode || '');
+                                                toast.success('Referral code copied to clipboard!');
+                                            }}
+                                            className="text-primary hover:text-primary-dark transition"
+                                            title="Copy Referral Code"
+                                        >
+                                            <ClipboardCopy size={16} />
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </header>
 
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2">
                         {/* Existing Profile Information Card */}
@@ -424,7 +426,7 @@ const ProfilePage = () => {
                                                 Receive email notifications for important updates.
                                             </p>
                                         </div>
-                                        <Switch id="email-notifications" defaultChecked />
+                                        <Switch id="email-notifications" />
                                     </div>
                                     <div className="flex items-center justify-between">
                                         <div>
@@ -456,7 +458,7 @@ const ProfilePage = () => {
                             <CardContent className="grid gap-4">
                                 <div className="grid gap-2">
                                     <Label htmlFor="theme">Theme</Label>
-                                    <Select defaultValue="light">
+                                    <Select defaultValue="light" onValueChange={(value: 'light' | 'dark' | 'system') => setTheme(value)}>
                                         <SelectTrigger className="w-full">
                                             <SelectValue placeholder="Select theme" />
                                         </SelectTrigger>
@@ -475,16 +477,10 @@ const ProfilePage = () => {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectItem value="en">English</SelectItem>
-                                            <SelectItem value="es">Español</SelectItem>
-                                            <SelectItem value="fr">Français</SelectItem>
-                                            <SelectItem value="de">Deutsch</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </div>
                             </CardContent>
-                            <CardFooter>
-                                <Button className="ml-auto">Save Preferences</Button>
-                            </CardFooter>
                         </Card>
                     </div>
 

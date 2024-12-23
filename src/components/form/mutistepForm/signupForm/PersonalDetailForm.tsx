@@ -63,7 +63,7 @@ export function PersonalDetailForm({
       <div className="text-center text-xs text-muted-foreground text-semibold">* Enter your details exactly given in Aadhaar Card</div>
       <div className="grid grid-cols-12 gap-4">
         {/* Title Field */}
-        <div className="col-span-12 md:col-span-2">
+        <div className="col-span-2 md:col-span-2">
           <Label>
             Title <span className="text-red-700">*</span>
           </Label>
@@ -88,7 +88,7 @@ export function PersonalDetailForm({
         </div>
 
         {/* First Name Field */}
-        <div className="col-span-12 md:col-span-5">
+        <div className="col-span-5 md:col-span-5">
           <Label>
             First Name <span className="text-red-700">*</span>
           </Label>
@@ -101,7 +101,7 @@ export function PersonalDetailForm({
         </div>
 
         {/* Middle Name Field */}
-        <div className="col-span-12 md:col-span-5">
+        <div className="col-span-5 md:col-span-5">
           <Label>
             Middle Name
           </Label>
@@ -149,7 +149,7 @@ export function PersonalDetailForm({
       {/* Row 2: DOB and Age */}
       <div className="grid grid-cols-12 gap-4">
         {/* Date of Birth Field */}
-        <div className="col-span-12 md:col-span-6">
+        <div className="col-span-6 md:col-span-6">
           <Label>
             Date of Birth <span className="text-red-700">*</span>
           </Label>
@@ -164,11 +164,11 @@ export function PersonalDetailForm({
             }}
             endYear={2050}
           />
-          {error && <div className="text-red-700">{error}</div>}
+          {error && <div className="text-red-700 text-xs">{error}</div>}
         </div>
 
         {/* Age Field */}
-        <div className="col-span-12 md:col-span-6">
+        <div className="col-span-6 md:col-span-6">
           <Label>
             Age <span className="text-red-700">*</span>
           </Label>
@@ -183,8 +183,8 @@ export function PersonalDetailForm({
       </div>
 
       {/* Row 3: Additional Fields */}
-      <div className="grid grid-cols-2 gap-4">
-        <div>
+      <div className="grid grid-cols-12 gap-4">
+        <div className="col-span-6 md:col-span-6">
           <Label>Phone Number <span className="text-red-700">*</span></Label>
           <Input
             placeholder="Enter phone number"
@@ -194,7 +194,7 @@ export function PersonalDetailForm({
             onChange={(e) => updateFields({ phone: e.target.value })}
           />
         </div>
-        <div>
+        <div className="col-span-6 md:col-span-6">
           <Label>Email Address <span className="text-red-700">*</span></Label>
           <Input
             placeholder="Enter email address"

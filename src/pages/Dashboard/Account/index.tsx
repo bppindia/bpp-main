@@ -32,12 +32,12 @@ const AccountSettingsPage = () => {
                     </BreadcrumbList>
                 </Breadcrumb>
                 <main className="flex-1 py-6 px-4 md:px-6 lg:py-8">
-                        <div className="flex items-center justify-between mb-6">
-                            <div>
-                                <h1 className="text-2xl font-bold">Account Setting</h1>
-                                <p className="text-muted-foreground"></p>
-                            </div>
+                    <div className="flex items-center justify-between mb-6">
+                        <div>
+                            <h1 className="text-2xl font-bold">Account Setting</h1>
+                            <p className="text-muted-foreground"></p>
                         </div>
+                    </div>
                     <section>
                         <h2 className="text-lg font-semibold mb-3">Account Settings</h2>
                         <div className="grid md:grid-cols-2 gap-6">
@@ -101,24 +101,7 @@ const AccountSettingsPage = () => {
                                     </TableHeader>
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell>2023-04-15</TableCell>
-                                            <TableCell>Logged in</TableCell>
-                                            <TableCell>Logged in from 192.168.1.100</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell>2023-04-12</TableCell>
-                                            <TableCell>Updated profile</TableCell>
-                                            <TableCell>Changed email and password</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell>2023-04-05</TableCell>
-                                            <TableCell>Logged out</TableCell>
-                                            <TableCell>Logged out from all devices</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell>2023-03-28</TableCell>
-                                            <TableCell>Deleted account</TableCell>
-                                            <TableCell>Deleted account and all associated data</TableCell>
+                                            <TableCell colSpan={3}>No details found</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>

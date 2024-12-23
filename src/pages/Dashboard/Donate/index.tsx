@@ -1,5 +1,4 @@
 import { ContentLayout } from "@/components/admin-panel/content-layout";
-import { Badge } from "@/components/ui/badge";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -45,10 +44,10 @@ const DonatePage = () => {
                                     <CardTitle>Total Donations</CardTitle>
                                 </CardHeader>
                                 <CardContent className="flex items-center justify-between">
-                                    <div className="text-4xl font-bold">Rs 5,329</div>
+                                    <div className="text-4xl font-bold">Rs 0</div>
                                     <div className="flex items-center gap-1 text-muted-foreground">
                                         <ArrowUpIcon className="w-4 h-4 text-green-500" />
-                                        <span>+10%</span>
+                                        <span>+0%</span>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -57,10 +56,10 @@ const DonatePage = () => {
                                     <CardTitle>Recurring Donations</CardTitle>
                                 </CardHeader>
                                 <CardContent className="flex items-center justify-between">
-                                    <div className="text-4xl font-bold">Rs 1,200</div>
+                                    <div className="text-4xl font-bold">Rs 0</div>
                                     <div className="flex items-center gap-1 text-muted-foreground">
                                         <ArrowUpIcon className="w-4 h-4 text-green-500" />
-                                        <span>+5%</span>
+                                        <span>+0%</span>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -69,10 +68,10 @@ const DonatePage = () => {
                                     <CardTitle>One-Time Donations</CardTitle>
                                 </CardHeader>
                                 <CardContent className="flex items-center justify-between">
-                                    <div className="text-4xl font-bold">Rs 4,129</div>
+                                    <div className="text-4xl font-bold">Rs 0</div>
                                     <div className="flex items-center gap-1 text-muted-foreground">
                                         <ArrowUpIcon className="w-4 h-4 text-green-500" />
-                                        <span>+12%</span>
+                                        <span>+0%</span>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -92,48 +91,11 @@ const DonatePage = () => {
                                         </TableHeader>
                                         <TableBody>
                                             <TableRow>
-                                                <TableCell>2023-06-15</TableCell>
-                                                <TableCell>Rs 100</TableCell>
-                                                <TableCell>One-Time</TableCell>
-                                                <TableCell>
-                                                    <Badge variant="secondary">Completed</Badge>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell>2023-05-01</TableCell>
-                                                <TableCell>Rs 50</TableCell>
-                                                <TableCell>Recurring</TableCell>
-                                                <TableCell>
-                                                    <Badge variant="secondary">Completed</Badge>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell>2023-04-01</TableCell>
-                                                <TableCell>Rs 50</TableCell>
-                                                <TableCell>Recurring</TableCell>
-                                                <TableCell>
-                                                    <Badge variant="secondary">Completed</Badge>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell>2023-03-15</TableCell>
-                                                <TableCell>Rs 75</TableCell>
-                                                <TableCell>One-Time</TableCell>
-                                                <TableCell>
-                                                    <Badge variant="secondary">Completed</Badge>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell>2023-02-01</TableCell>
-                                                <TableCell>Rs 50</TableCell>
-                                                <TableCell>Recurring</TableCell>
-                                                <TableCell>
-                                                    <Badge variant="secondary">Completed</Badge>
-                                                </TableCell>
+                                                <TableCell className="text-center" colSpan={4}>History Not found</TableCell>
                                             </TableRow>
                                         </TableBody>
                                     </Table>
-                                </CardContent>
+                                </CardContent>  
                             </Card>
                         </div>
                     </div>

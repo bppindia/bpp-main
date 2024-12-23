@@ -1,4 +1,4 @@
-import bppLogo from "@/assets/logo/bppLogo.svg";
+import bppLogo from "@/assets/logo/bppLogo.png";
 import {
   NavigationMenu,
   NavigationMenuContent,

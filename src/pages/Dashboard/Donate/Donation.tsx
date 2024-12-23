@@ -129,8 +129,8 @@ const DonationPage: React.FC = () => {
                                             </div>
                                             <div>
                                                 <div className="flex items-center space-x-2">
-                                                    <Checkbox 
-                                                        id="terms" 
+                                                    <Checkbox
+                                                        id="terms"
                                                         checked={coverFees}
                                                         onCheckedChange={(checked) => setCoverFees(!!checked)}
                                                     />
@@ -148,7 +148,7 @@ const DonationPage: React.FC = () => {
                                 <CardFooter className="flex flex-col items-center justify-between space-y-4">
                                     <div className="w-full">
                                         <div>My grand total will be Rs {totalDonation.toFixed(2)}</div>
-                                        <Button className="w-full mt-4">Next</Button>
+                                        <Button className="w-full mt-4" disabled>Next</Button>
                                     </div>
                                     <div className="flex items-center space-x-1">
                                         <Lock className="h-4 w-4" />

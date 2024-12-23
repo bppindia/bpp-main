@@ -56,7 +56,7 @@ export function AddressForm({
                 </div>
 
                 {/* City/Village, Taluka, District Row */}
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <Label htmlFor="cityOrVillage">City/Village <span className="text-red-700">*</span></Label>
                         <Input

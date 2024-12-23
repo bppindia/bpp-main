@@ -6,9 +6,6 @@ import {
 import { BadgeDollarSign, Building2, Church, Factory, GraduationCap, Heart, Scale, Sword, Users, Wheat } from 'lucide-react';
 import { Card, CardContent } from "../ui/card";
 
-// Import images (keep the existing imports)
-
-
 const goals = [
     {
         number: "1",
@@ -104,7 +101,10 @@ const GoalsCarousel = () => {
             >
                 <CarouselContent className="-ml-4">
                     {goals.map((goal) => (
-                        <CarouselItem key={goal.number} className="pl-4 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                        <CarouselItem
+                            key={goal.number}
+                            className="pl-4 grid sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
+                        >
                             <Card
                                 className={`${goal.bgColor} text-white hover:scale-105 transition-transform duration-200 cursor-pointer overflow-hidden h-full`}
                             >
@@ -117,7 +117,7 @@ const GoalsCarousel = () => {
 
                                         {/* Icon and content */}
                                         <div className="p-1 flex flex-col items-center text-center">
-                                            <div >
+                                            <div>
                                                 <goal.icon size={40} color={goal.iconColor} />
                                             </div>
                                             <h3 className="text-xl font-bold mb-2 leading-tight">
@@ -133,8 +133,6 @@ const GoalsCarousel = () => {
                         </CarouselItem>
                     ))}
                 </CarouselContent>
-                {/* <CarouselPrevious className="left-0" />
-                <CarouselNext className="right-0" /> */}
             </Carousel>
         </section>
     );

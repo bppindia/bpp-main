@@ -1,10 +1,10 @@
-import bpplogo from '@/assets/images/logos/Bpp.png';
-import { Button } from '@/components/ui/button';
+import bppLogo from '@/assets/logo/bppLogo.svg';
+import { LoadingButton } from '@/components/features/LoadingButton';
 import {
     Card,
     CardContent,
     CardHeader,
-    CardTitle
+    CardTitle,
 } from '@/components/ui/card';
 import {
     Form,
@@ -18,39 +18,62 @@ import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { Toaster } from '@/components/ui/sonner';
 import { useAuth } from '@/context/AuthContext';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Mail, Phone } from 'lucide-react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
+import { z } from 'zod';
+
+const loginSchema = z.object({
+    identifier: z
+        .string()
+        .nonempty('Email or phone number is required')
+        .refine(
+            (value) => /\S+@\S+\.\S+/.test(value) || /^\d{10}$/.test(value),
+            {
+                message: 'Enter a valid email or 10-digit phone number',
+            }
+        ),
+    password: z.string().min(6, 'Password must be at least 6 characters long'),
+});
+
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 const Login = () => {
-    const navigate = useNavigate();
     const { login } = useAuth();
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
-    // Initialize the useForm hook
-    const form = useForm({
+    const form = useForm<LoginFormValues>({
+        resolver: zodResolver(loginSchema),
         defaultValues: {
-            email: '',
+            identifier: '',
             password: '',
         },
     });
 
-    async function onSubmit(values: { email: string; password: string }) {
+    const { watch, handleSubmit, control } = form;
+    const identifierValue = watch('identifier');
+    const isEmail = /\S+@\S+\.\S+/.test(identifierValue);
+    const isPhone = /^\d{10}$/.test(identifierValue);
+
+    async function onSubmit(values: LoginFormValues) {
         try {
-            // Call login function from context
-            await login(values);
+            setIsLoading(true);
+            const payload = isEmail
+                ? { email: values.identifier, password: values.password }
+                : { phone: values.identifier, password: values.password };
 
-            // Show success toast
-            toast.success('Login Successful!', {
-                description: 'Redirecting to the dashboard...',
-            });
+            await login(payload);
 
-            // Redirect to dashboard after 3 seconds
             setTimeout(() => {
                 navigate('/dashboard/home');
-            }, 3000);
+            }, 2000);
         } catch (error) {
             console.error('Login error:', error);
-            toast.error('Failed to log in. Please check your credentials.');
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -60,53 +83,80 @@ const Login = () => {
                 <div className="flex flex-col justify-center h-screen gap-4">
                     <Card className="mx-auto w-full max-w-lg">
                         <CardHeader className="items-center">
-                            <div className="flex gap-2 items-center justify-center text-xl font-bold text-blue-800">
+                            <div className="flex items-center justify-center text-xl font-bold text-blue-800">
                                 <img
-                                    src={bpplogo}
+                                    src={bppLogo}
                                     alt="BPP Logo"
-                                    className="w-[120px] object-contain rounded-lg"
+                                    className="w-[130px] md:w-[140px] object-contain rounded-lg"
                                 />
                             </div>
-                            <h2 className="font-black text-2xl my-2 text-neutral-800 text-center dark:text-neutral-200">
-                                Welcome to <br /> <span style={{ color: '#79A5F2' }}>Bharatiya Popular Party</span>
+                            <h2 className="font-black text-2xl text-neutral-800 text-center dark:text-neutral-200">
+                                <div>Welcome Back to{' '}</div>
+                                <span style={{ color: '#79A5F2' }}>
+                                    Bharatiya Popular Party
+                                </span>
                             </h2>
-                            <CardTitle className="text-xl">Log in with your email & phone</CardTitle>
+                            <CardTitle className="text-md">
+                                Log in with your email & phone
+                            </CardTitle>
                         </CardHeader>
                         <CardContent>
                             <Form {...form}>
-                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                                <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
                                     <div className="grid gap-4">
                                         <FormField
-                                            control={form.control}
-                                            name="email"
+                                            control={control}
+                                            name="identifier"
                                             render={({ field }) => (
                                                 <FormItem className="grid gap-2">
-                                                    <FormLabel htmlFor="email">Email/Phone number</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            id="email"
-                                                            placeholder="johndoe@mail.com"
-                                                            type="email"
-                                                            autoComplete="email"
-                                                            {...field}
-                                                        />
-                                                    </FormControl>
+                                                    <FormLabel htmlFor="identifier">
+                                                        Email/Phone number
+                                                    </FormLabel>
+                                                    <div className="relative">
+                                                        <FormControl>
+                                                            <Input
+                                                                id="identifier"
+                                                                placeholder="Enter email or phone"
+                                                                type="text"
+                                                                autoComplete="username"
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
+                                                        <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50">
+                                                            {isEmail && (
+                                                                <Mail
+                                                                    size={16}
+                                                                    strokeWidth={2}
+                                                                    aria-hidden="true"
+                                                                />
+                                                            )}
+                                                            {isPhone && (
+                                                                <Phone
+                                                                    size={16}
+                                                                    strokeWidth={2}
+                                                                    aria-hidden="true"
+                                                                />
+                                                            )}
+                                                        </div>
+                                                    </div>
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
                                         <FormField
-                                            control={form.control}
+                                            control={control}
                                             name="password"
                                             render={({ field }) => (
                                                 <FormItem className="grid gap-2">
                                                     <div className="flex justify-between items-center">
-                                                        <FormLabel htmlFor="password">Password</FormLabel>
+                                                        <FormLabel htmlFor="password">
+                                                            Password
+                                                        </FormLabel>
                                                         <Link
                                                             to="/auth/forgot-password"
-                                                            className="ml-auto inline-block text-sm underline"
+                                                            className="ml-auto hover:text-blue-950 inline-block text-sm underline"
                                                         >
-                                                            Forgot your password?
+                                                            Forgot password?
                                                         </Link>
                                                     </div>
                                                     <FormControl>
@@ -121,15 +171,13 @@ const Login = () => {
                                                 </FormItem>
                                             )}
                                         />
-                                        <Button type="submit" className="w-full">
-                                            Login
-                                        </Button>
+                                        <LoadingButton type="submit" className="w-full" loading={isLoading}>Login</LoadingButton>
                                     </div>
                                 </form>
                             </Form>
                         </CardContent>
                     </Card>
-                    <div className="mx-auto flex gap-1 text-sm">
+                    <div className="mx-auto font-semibold flex gap-1 text-sm">
                         <p>Don&apos;t have an account yet?</p>
                         <Link to="/auth/signup" className="underline">
                             Sign up

@@ -14,6 +14,7 @@ import { EmailForm } from './EmailForm';
 import { OtpVerificationForm } from './OtpVerificationForm';
 import { PersonalDetailForm } from './PersonalDetailForm';
 import { RegistrationForm } from './RegistrationDetails';
+import { LoadingButton } from '@/components/features/LoadingButton';
 
 type RegistrationData = {
 
@@ -120,6 +121,7 @@ const INITIAL_DATA: RegistrationData = {
 
 const MultiStepForm = () => {
     const [data, setData] = useState(INITIAL_DATA);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { sendOtp, verifyOtp } = useAuth();
 
@@ -210,12 +212,15 @@ const MultiStepForm = () => {
             next(); // Move to next step or final submission
         } else if (isLastStep) {
             try {
+
+                setLoading(true);
+
                 const formData = new FormData();
 
                 // Append required fields
                 formData.append('title', data.title);
                 formData.append('firstName', data.firstName);
-            
+
                 formData.append('lastName', data.lastName);
                 formData.append('email', data.email);
                 formData.append('phone', data.phone);
@@ -230,7 +235,7 @@ const MultiStepForm = () => {
                 formData.append('pincode', data.pincode);
 
                 // Append optional fields if filled
-                if(data.middleName) formData.append('middleName', data.middleName);
+                if (data.middleName) formData.append('middleName', data.middleName);
                 if (data.addressLine2) formData.append('addressLine2', data.addressLine2);
                 if (data.qualification) formData.append('qualification', data.qualification);
                 if (data.profession) formData.append('profession', data.profession);
@@ -248,29 +253,34 @@ const MultiStepForm = () => {
                 // Append credentials
                 formData.append('password', data.password);
 
+                // Make API request
                 const response = await fetch('https://api.bppindia.com:8443/api/v1/signup', {
                     method: 'POST',
                     body: formData,
                 });
 
+
                 if (response.ok) {
                     const result = await response.json();
                     console.log(result, 'Registration successful');
-                    toast.success("Registration Successful! Redirecting to the dashboard...");
+                    toast.success("Registration Successful! Redirecting to the Login page...");
                     setTimeout(() => {
-                        navigate('/dashboard/home');
+                        navigate('/auth/login');
                     }, 3000);
                 } else {
                     const errorData = await response.json();
                     console.error("Registration failed:", errorData);
-                    toast.error("Registration failed. Please try again.");
+                    toast.error(errorData.message || "Registration failed. Please try again.");
+                    setLoading(false);
                 }
             } catch (error) {
                 console.error("Registration failed:", error);
                 toast.error("Registration failed. Please try again.");
+                setLoading(false);
             }
         } else if (!isLastStep) {
-            console.log(data)
+            setLoading(false);
+
             return next();
         }
     }
@@ -322,9 +332,9 @@ const MultiStepForm = () => {
                                         <Button type="button" className='w-full' onClick={back}>
                                             Back
                                         </Button>
-                                        <Button type="submit" className="w-full">
+                                        <LoadingButton loading={loading} type="submit" className="w-full">
                                             Finish
-                                        </Button>
+                                        </LoadingButton>
                                     </div>
                                 )}
                                 {!isFirstStep && currentStepIndex !== 1 && currentStepIndex !== 2 && !isLastStep && (
@@ -343,7 +353,7 @@ const MultiStepForm = () => {
                         </form>
                     </CardContent>
                 </Card>
-                <div className="flex justify-center gap-1 text-sm">
+                <div className="flex justify-center mt-3 gap-1 text-sm">
                     <Link to='/auth/business-community-join' className="font-semibold underline">sign up as a business</Link>{' '}
                     <p>or</p>{' '}
                     <Link to="/auth/login" className="font-semibold underline">

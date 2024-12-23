@@ -51,7 +51,8 @@ interface RegistrationData {
 }
 
 interface LoginCredentials {
-    email: string;
+    email?: string;
+    phone?: string;
     password: string;
 }
 
@@ -70,17 +71,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         try {
             setLoading(true);
             const response = await postData("/login", credentials);
-            
+
             // Dispatch to Redux store
             dispatch(setCredentials({
                 token: response.token,
                 data: response.data
             }));
-            
+
             // Still set cookies if needed
             Cookies.set('authToken', response.token, { expires: 4 });
             setUser({ username: response.data.username, email: response.data.email });
-            toast.success("Login successful!");
+             toast.success('Login Successful!', {
+                description: 'Redirecting to the dashboard...',
+            });
         } catch (error) {
             toast.error("Login failed. Please check your credentials.");
             throw error;
@@ -88,7 +91,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setLoading(false);
         }
     };
-    
+
 
     // Register method
     const register = async (registrationData: RegistrationData) => {

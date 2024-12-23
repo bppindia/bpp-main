@@ -3,7 +3,6 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import DashboardLayout from '@/layout/DashboardLayout';
-import { CreditCardIcon, DollarSignIcon, ShoppingCartIcon, WalletIcon } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const WalletPage = () => {
@@ -32,7 +31,7 @@ const WalletPage = () => {
                                 <CardTitle>Balance</CardTitle>
                             </CardHeader>
                             <CardContent className="flex items-center justify-between">
-                                <div className="text-4xl font-bold">Rs 5,234.56</div>
+                                <div className="text-4xl font-bold">Rs 0</div>
                                 <div className='flex gap-3'>
                                     <Button onClick={() => navigate('/dashboard/withdraw')} variant="outline" size="sm">
                                         Withdraw
@@ -49,7 +48,7 @@ const WalletPage = () => {
                                     <CardTitle>Recent Transactions</CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="space-y-4">
+                                    {/* <div className="space-y-4">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-3">
                                                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
@@ -86,7 +85,7 @@ const WalletPage = () => {
                                             </div>
                                             <div className="text-gray-900 dark:text-gray-50">- Rs 1.00</div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </CardContent>
                                 <CardFooter>
                                     <Link to="/dashboard/transaction" className="text-sm font-medium text-blue-600 hover:underline">
@@ -99,7 +98,7 @@ const WalletPage = () => {
                                     <CardTitle>Payment Methods</CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="space-y-4">
+                                    {/* <div className="space-y-4">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-3">
                                                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
@@ -128,7 +127,7 @@ const WalletPage = () => {
                                                 Edit
                                             </Button>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </CardContent>
                                 <CardFooter>
                                     <Link to="#" className="text-sm font-medium text-blue-600 hover:underline">

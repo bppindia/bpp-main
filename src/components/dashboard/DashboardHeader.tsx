@@ -40,7 +40,7 @@ const DashboardHeader = () => {
                                 </Button>
                             </div>
                             <div className="flex items-center gap-2">
-                                <span className="text-lg font-medium text-gray-600">{userData.role}</span>
+                                <span className="text-lg font-medium text-gray-600">{userData?.role}</span>
                                 <Button
                                     variant="ghost"
                                     size="icon"
@@ -110,7 +110,7 @@ const DashboardHeader = () => {
                             variant="outline"
                             className="text-sm px-4 py-1 border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors duration-200"
                         >
-                            {userData.referralCount} Referrals
+                            {userData?.referralCount} Referrals
                         </Badge>
                     </div>
                 </div>

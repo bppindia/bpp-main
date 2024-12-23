@@ -109,7 +109,7 @@ const WithdrawPage = () => {
                         </CardHeader>
                         <CardContent>
                             <div className="grid gap-4">
-                                {withdrawals.map((withdrawal) => (
+                                {/* {withdrawals.map((withdrawal) => (
                                     <div
                                         key={withdrawal.id}
                                         className={`grid grid-cols-[1fr_auto] items-center gap-4 rounded-lg p-4 ${withdrawal.status === "paid" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"
@@ -121,7 +121,7 @@ const WithdrawPage = () => {
                                         </div>
                                         <p className="text-xs font-medium">{withdrawal.status === "paid" ? "Paid" : "Pending"}</p>
                                     </div>
-                                ))}
+                                ))} */}
                             </div>
                         </CardContent>
                     </Card>

@@ -1,6 +1,6 @@
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React from "react";
 import { FormWrapper } from "./FormWrapper";
 import { PasswordInput } from "@/components/features/password-input";
 
@@ -20,11 +20,23 @@ const CredentialsForm: React.FC<CredentialsFormProps> = ({
   referralCode,
   updateFields,
 }) => {
+  const [passwordError, setPasswordError] = useState("");
+
+  useEffect(() => {
+    if (password && confirmPassword && password !== confirmPassword) {
+      setPasswordError("Passwords do not match.");
+    } else {
+      setPasswordError("");
+    }
+  }, [password, confirmPassword]);
+
   return (
     <FormWrapper title="Credentials Details">
       <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
         <div>
-          <Label htmlFor="password">Password <span className="text-red-700">*</span></Label>
+          <Label htmlFor="password">
+            Password <span className="text-red-700">*</span>
+          </Label>
           <PasswordInput
             id="password"
             value={password}
@@ -33,26 +45,29 @@ const CredentialsForm: React.FC<CredentialsFormProps> = ({
           />
         </div>
         <div>
-          <Label htmlFor="confirmPassword">Confirm Password <span className="text-red-700">*</span></Label>
+          <Label htmlFor="confirmPassword">
+            Confirm Password <span className="text-red-700">*</span>
+          </Label>
           <PasswordInput
             id="confirmPassword"
             value={confirmPassword}
             onChange={(e) =>
               updateFields({ confirmPassword: e.target.value })
             }
-            autoComplete="confirmPassword"
+            autoComplete="confirm-password"
           />
+          {passwordError && (
+            <p className="text-red-600 text-xs">{passwordError}</p>
+          )}
         </div>
         <div>
-          <Label htmlFor="referralCode">Referal code ( Optional )</Label>
+          <Label htmlFor="referralCode">Referral Code (Optional)</Label>
           <Input
             id="referralCode"
             type="text"
-            placeholder="referal code"
+            placeholder="Referral code"
             value={referralCode}
-            onChange={(e) =>
-              updateFields({ referralCode: e.target.value })
-            }
+            onChange={(e) => updateFields({ referralCode: e.target.value })}
           />
         </div>
       </div>

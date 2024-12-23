@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutGrid, LogOut, User } from "lucide-react";
+import { Edit2, LayoutGrid, LogOut, User } from "lucide-react";
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -21,9 +21,12 @@ import {
   TooltipTrigger
 } from "@/components/ui/tooltip";
 import { useAuth } from '@/context/AuthContext';
+import { useSelector } from "react-redux";
 
 export function UserNav() {
   const { logout } = useAuth();
+  const { userData } = useSelector((state: any) => state.auth);
+
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -44,7 +47,9 @@ export function UserNav() {
               >
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="#" alt="Avatar" />
-                  <AvatarFallback className="bg-transparent">JD</AvatarFallback>
+                  <AvatarFallback className="bg-transparent">
+                    {userData?.firstName?.charAt(0)}{userData?.lastName?.charAt(0)}
+                  </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
@@ -56,22 +61,28 @@ export function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">Undefined</p>
+            <p className="text-sm font-medium leading-none">{userData?.firstName}</p>
             <p className="text-xs leading-none text-muted-foreground">
-            Null
+              {userData?.role}
             </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
-            <Link to="/dashboard" className="flex items-center">
+            <Link to="/dashboard/home" className="flex items-center">
               <LayoutGrid className="w-4 h-4 mr-3 text-muted-foreground" />
               Dashboard
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
-            <Link to="/account" className="flex items-center">
+            <Link to="/dashboard/Profile" className="flex items-center">
+              <Edit2 className="w-4 h-4 mr-3 text-muted-foreground" />
+              profile
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="hover:cursor-pointer" asChild>
+            <Link to="/dashboard/account" className="flex items-center">
               <User className="w-4 h-4 mr-3 text-muted-foreground" />
               Account
             </Link>
