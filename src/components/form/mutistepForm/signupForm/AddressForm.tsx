@@ -1,14 +1,14 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { FormWrapper } from "./FormWrapper";
-import { stateData } from "@/data/states";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { stateWithDistrictData } from "@/data/states";
+import { useState } from "react";
+import { FormWrapper } from "./FormWrapper";
 
 type AddressData = {
     addressLine1: string;
     addressLine2: string;
     cityOrVillage: string;
-    taluka: string;
     district: string;
     state: string;
     pincode: string;
@@ -22,12 +22,21 @@ export function AddressForm({
     addressLine1,
     addressLine2,
     cityOrVillage,
-    taluka,
     district,
     state,
     pincode,
     updateFields,
 }: AddressFormProps) {
+    const [districts, setDistricts] = useState<string[]>([]);
+
+    const handleStateChange = (selectedState: string) => {
+        updateFields({ state: selectedState, district: "" }); // Reset district when state changes
+        const stateData = stateWithDistrictData.states.find(
+            (s) => s.state === selectedState
+        );
+        setDistricts(stateData ? stateData.districts : []);
+    };
+
     return (
         <FormWrapper title="Address Details">
             <div className="grid gap-4">
@@ -38,6 +47,7 @@ export function AddressForm({
                     <Input
                         id="addressLine1"
                         placeholder="House/Flat No., Building Name, Street"
+                        name="addressLine1"
                         required
                         value={addressLine1}
                         onChange={(e) => updateFields({ addressLine1: e.target.value })}
@@ -49,6 +59,7 @@ export function AddressForm({
                     <Label htmlFor="addressLine2">Address Line 2</Label>
                     <Input
                         id="addressLine2"
+                        name="addressLine2"
                         placeholder="Area, Landmark"
                         value={addressLine2}
                         onChange={(e) => updateFields({ addressLine2: e.target.value })}
@@ -56,63 +67,69 @@ export function AddressForm({
                 </div>
 
                 {/* City/Village, Taluka, District Row */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <Label htmlFor="cityOrVillage">City/Village <span className="text-red-700">*</span></Label>
                         <Input
                             id="cityOrVillage"
                             placeholder="Enter city/village"
+                            name="city"
                             value={cityOrVillage}
                             required
                             onChange={(e) => updateFields({ cityOrVillage: e.target.value })}
                         />
                     </div>
                     <div>
-                        <Label htmlFor="taluka">Taluka/Block <span className="text-red-700">*</span></Label>
-                        <Input
-                            id="taluka"
-                            placeholder="Enter taluka"
-                            value={taluka}
-                            required
-                            onChange={(e) => updateFields({ taluka: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <Label htmlFor="district">District <span className="text-red-700">*</span></Label>
-                        <Input
-                            id="district"
-                            placeholder="Enter district"
-                            value={district}
-                            required
-                            onChange={(e) => updateFields({ district: e.target.value })}
-                        />
+                        <Label htmlFor="state">
+                            State <span className="text-red-700">*</span>
+                        </Label>
+                        <Select
+                            onValueChange={handleStateChange}
+                            defaultValue={state || ""}
+                        >
+                            <SelectTrigger id="state" name="state" className="w-full">
+                                <SelectValue placeholder="Select your state" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {stateWithDistrictData.states.map(({ state }) => (
+                                    <SelectItem key={state} value={state}>
+                                        {state}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                     </div>
                 </div>
 
                 {/* State and Pincode Row */}
                 <div className="grid grid-cols-2 gap-4">
                     <div>
-                        <Label htmlFor="state">State <span className="text-red-700">*</span></Label>
+                        <Label htmlFor="district">
+                            District <span className="text-red-700">*</span>
+                        </Label>
                         <Select
-                            onValueChange={(value) => updateFields({ state: value })}
-                            defaultValue={state || ""}
+                            onValueChange={(value) => updateFields({ district: value })}
+                            defaultValue={district || ""}
+                            disabled={!districts.length}
                         >
-                            <SelectTrigger id="state" className="w-full">
-                                <SelectValue placeholder="Select your state" />
+                            <SelectTrigger id="district" name="district" className="w-full">
+                                <SelectValue placeholder="Select your district" />
                             </SelectTrigger>
                             <SelectContent>
-                                {Object.entries(stateData).map(([stateCode, stateName]) => (
-                                    <SelectItem key={stateCode} value={stateName}>
-                                        {stateName}
+                                {districts.map((districtName) => (
+                                    <SelectItem key={districtName} value={districtName}>
+                                        {districtName}
                                     </SelectItem>
                                 ))}
                             </SelectContent>
                         </Select>
-                    </div>              <div>
+                    </div>
+                    <div>
                         <Label htmlFor="pincode">Pincode <span className="text-red-700">*</span></Label>
                         <Input
                             id="pincode"
                             placeholder="Enter pincode"
+                            name="pincode"
                             value={pincode}
                             required
                             onChange={(e) => updateFields({ pincode: e.target.value })}

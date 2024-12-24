@@ -82,19 +82,18 @@ export function RegistrationForm({
         <FormWrapper title="User Details">
             <div className="grid gap-2">
                 <div className="text-xs text-center text-muted-foreground font-semibold">
-                    * Providing your Aadhaar card details is mandatory for completing this process.
+                    * Providing your Aadhaar card details.
                 </div>
                 <div className="grid grid-cols-1 gap-4">
                     <div>
                         <Label htmlFor="aadhaarNumber">
-                            Aadhaar Number <span className="text-red-700">*</span>
+                            Aadhaar Number
                         </Label>
                         <Input
                             id="aadhaarNumber"
                             placeholder="eg 2345 6789 0123"
                             value={aadhaarNumber}
-                            required
-                            maxLength={12} // 12 digits + 2 spaces
+                            maxLength={12}
                             className={aadhaarError ? "border-red-500 focus:ring-red-500" : ""}
                             onChange={handleAadhaarChange}
                         />
@@ -108,7 +107,6 @@ export function RegistrationForm({
                         <FileInput
                             id="aadhaarFront"
                             label="Aadhaar Card Front"
-                            required
                             onChange={(file) => {
                                 if (file && !['image/jpeg', 'image/png', 'application/pdf'].includes(file.type)) {
                                     return;
@@ -124,7 +122,6 @@ export function RegistrationForm({
                         <FileInput
                             id="aadhaarBack"
                             label="Aadhaar Card Back"
-                            required
                             onChange={(file) => {
                                 if (file && !['image/jpeg', 'image/png', 'application/pdf'].includes(file.type)) {
                                     return;
@@ -143,9 +140,9 @@ export function RegistrationForm({
                     <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent h-[1px] w-full" />
                 </div>
                 <div className="text-xs text-center text-muted-foreground font-semibold">
-                    * Providing our Voter ID card details is optional.
+                    * Providing our Voter ID card details.
                 </div>
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 gap-1">
                     <div>
                         <Label htmlFor="voterId">Voter ID / Electoral Card</Label>
                         <Input
@@ -216,14 +213,14 @@ export function RegistrationForm({
                             checked={serveCommunity === true}
                             onCheckedChange={() => handleServeAccepted(true)}
                         />
-                        Yes
+                        <span className="ms-1">Yes</span>
                     </Label>
                     <Label>
                         <Checkbox
                             checked={serveCommunity === false}
                             onCheckedChange={() => handleServeAccepted(false)}
                         />
-                        No
+                        <span className="ms-1">No</span>
                     </Label>
                 </div>
                 <div className="text-xs text-center text-red-500 font-semibold">

@@ -1,4 +1,5 @@
 import bpplogo from '@/assets/images/logos/Bpp.png';
+import { LoadingButton } from '@/components/features/LoadingButton';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Toaster } from '@/components/ui/sonner';
@@ -14,7 +15,6 @@ import { EmailForm } from './EmailForm';
 import { OtpVerificationForm } from './OtpVerificationForm';
 import { PersonalDetailForm } from './PersonalDetailForm';
 import { RegistrationForm } from './RegistrationDetails';
-import { LoadingButton } from '@/components/features/LoadingButton';
 
 type RegistrationData = {
 
@@ -40,7 +40,6 @@ type RegistrationData = {
     addressLine1: string;    // First line of address
     addressLine2: string;    // Second line of address (optional)
     cityOrVillage: string;   // City or village name
-    taluka: string;          // Taluka/Block name
     district: string;        // District name
     state: string;           // State name
     pincode: string;         // Postal code
@@ -92,7 +91,6 @@ const INITIAL_DATA: RegistrationData = {
     addressLine1: "",
     addressLine2: "",
     cityOrVillage: "",
-    taluka: "",
     district: "",
     state: "",
     pincode: "",
@@ -158,8 +156,8 @@ const MultiStepForm = () => {
             const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
             const phoneRegex = /^(\+91)?[6-9]\d{9}$/;
 
-            const isEmail = data.email && emailRegex.test(data.email);
-            const isPhone = data.phone && phoneRegex.test(data.phone);
+            const isEmail = data?.email && emailRegex.test(data.email);
+            const isPhone = data?.phone && phoneRegex.test(data.phone);
 
             if (!isEmail && !isPhone) {
                 toast.error('Please enter a valid email or phone number');
@@ -171,7 +169,7 @@ const MultiStepForm = () => {
                 if (isEmail) {
                     await sendOtp(data.email!, 'email'); // Send email OTP
                 } else if (isPhone) {
-                    const formattedPhoneNumber = `+91${data.phone}`;
+                    const formattedPhoneNumber = data.phone;
                     await sendOtp(formattedPhoneNumber!, 'phoneNumber'); // Send phone OTP
                 }
                 next(); // Move to OTP verification step
@@ -180,8 +178,8 @@ const MultiStepForm = () => {
             }
         } else if (currentStepIndex === 1) {
             // Handle second step - Verify OTP
-            if (data.otpNumber.length !== 6) {
-                toast.error('Please enter a valid 6-digit OTP');
+            if (data.otpNumber.length !== 4) {
+                toast.error('Please enter a valid 4-digit OTP');
                 return;
             }
 
@@ -199,7 +197,7 @@ const MultiStepForm = () => {
             // Add validation for personal details
             const requiredFields = [
                 'firstName', 'lastName', 'dateOfBirth',
-                'gender', 'phone'
+                'gender'
             ];
 
             const missingFields = requiredFields.filter(field => !((data as any)[field]));
@@ -208,33 +206,43 @@ const MultiStepForm = () => {
                 toast.error(`Please fill in the following fields: ${missingFields.join(', ')}`);
                 return;
             }
-
-            next(); // Move to next step or final submission
+            const today = new Date();
+            const birthDate = new Date(data.dateOfBirth);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDifference = today.getMonth() - birthDate.getMonth();
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            if (age < 19) {
+                toast("Age must be 18 or older.");
+            } else if (data.phone && data.phone.length >= 10) {
+                next();
+            } else if (!data.phone || data.phone.length < 10) {
+                toast("Phone number must be at least 10 digits.");
+            } else {
+                next();
+            }
         } else if (isLastStep) {
             try {
-
                 setLoading(true);
 
                 const formData = new FormData();
-
                 // Append required fields
                 formData.append('title', data.title);
                 formData.append('firstName', data.firstName);
-
                 formData.append('lastName', data.lastName);
-                formData.append('email', data.email);
-                formData.append('phone', data.phone);
                 formData.append('dateOfBirth', data.dateOfBirth);
                 formData.append('gender', data.gender);
                 formData.append('age', String(data.age));
                 formData.append('addressLine1', data.addressLine1);
                 formData.append('cityOrVillage', data.cityOrVillage);
-                formData.append('taluka', data.taluka);
                 formData.append('district', data.district);
                 formData.append('state', data.state);
                 formData.append('pincode', data.pincode);
 
                 // Append optional fields if filled
+                if (data.email) formData.append('email', data.email);
+                if (data.phone) formData.append('phone', data.phone);
                 if (data.middleName) formData.append('middleName', data.middleName);
                 if (data.addressLine2) formData.append('addressLine2', data.addressLine2);
                 if (data.qualification) formData.append('qualification', data.qualification);

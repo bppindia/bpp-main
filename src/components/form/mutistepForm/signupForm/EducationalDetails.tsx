@@ -26,6 +26,7 @@ const EducationalDetailsForm: React.FC<EducationalDetailsFormProps> = ({
                 <Label htmlFor="qualification">Qualification</Label>
                 <Input
                     id="qualification"
+                    name="qualification"
                     required
                     placeholder="Enter your qualification"
                     value={qualification}
@@ -38,6 +39,7 @@ const EducationalDetailsForm: React.FC<EducationalDetailsFormProps> = ({
                 <Label htmlFor="profession">Select Your Professional Category</Label>
                 <Select
                     required
+                    name="profession"
                     onValueChange={(value) => updateFields({ profession: value })}
                     value={profession}
                 >
@@ -58,6 +60,7 @@ const EducationalDetailsForm: React.FC<EducationalDetailsFormProps> = ({
                 <Label htmlFor="position">Position</Label>
                 <Input
                     id="position"
+                    name="position"
                     required
                     placeholder="Enter your position"
                     value={position}

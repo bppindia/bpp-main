@@ -36,7 +36,7 @@ export function DatePicker({ date, setDate, endYear }: DatePickerProps) {
     const currentYear = new Date().getFullYear();
     const finalEndYear = endYear ?? currentYear;
     return Array.from(
-      { length: finalEndYear - 1950 + 1 },
+      { length: finalEndYear - 1910 + 1 },
       (_, i) => finalEndYear - i
     );
   }, [endYear]);

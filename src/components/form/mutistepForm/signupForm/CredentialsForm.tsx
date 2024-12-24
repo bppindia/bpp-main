@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FormWrapper } from "./FormWrapper";
 import { PasswordInput } from "@/components/features/password-input";
+import ReCAPTCHA from "react-google-recaptcha";
 
 type CredentialsData = {
   password: string;
@@ -21,6 +22,7 @@ const CredentialsForm: React.FC<CredentialsFormProps> = ({
   updateFields,
 }) => {
   const [passwordError, setPasswordError] = useState("");
+  const [captchaVerified, setCaptchaVerified] = useState(false);
 
   useEffect(() => {
     if (password && confirmPassword && password !== confirmPassword) {
@@ -30,47 +32,83 @@ const CredentialsForm: React.FC<CredentialsFormProps> = ({
     }
   }, [password, confirmPassword]);
 
+  const handleCaptchaChange = (value: string | null) => {
+    setCaptchaVerified(!!value);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!captchaVerified) {
+      alert("Please complete the CAPTCHA to proceed.");
+      return;
+    }
+
+    // Submit the form data
+    console.log({ password, confirmPassword, referralCode });
+  };
+
   return (
     <FormWrapper title="Credentials Details">
-      <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-        <div>
-          <Label htmlFor="password">
-            Password <span className="text-red-700">*</span>
-          </Label>
-          <PasswordInput
-            id="password"
-            value={password}
-            onChange={(e) => updateFields({ password: e.target.value })}
-            autoComplete="password"
-          />
+      <form onSubmit={handleSubmit}>
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+          <div>
+            <Label htmlFor="password">
+              Password <span className="text-red-700">*</span>
+            </Label>
+            <PasswordInput
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => updateFields({ password: e.target.value })}
+              autoComplete="password"
+            />
+          </div>
+          <div>
+            <Label htmlFor="confirmPassword">
+              Confirm Password <span className="text-red-700">*</span>
+            </Label>
+            <PasswordInput
+              id="confirmPassword"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) =>
+                updateFields({ confirmPassword: e.target.value })
+              }
+              autoComplete="confirm-password"
+            />
+            {passwordError && (
+              <p className="text-red-600 text-xs">{passwordError}</p>
+            )}
+          </div>
+          <div>
+            <Label htmlFor="referralCode">Referral Code (Optional)</Label>
+            <Input
+              id="referralCode"
+              name="referralCode"
+              type="text"
+              placeholder="Referral code"
+              value={referralCode}
+              onChange={(e) => updateFields({ referralCode: e.target.value })}
+            />
+          </div>
+          <div className="mt-4">
+            <ReCAPTCHA
+              sitekey="6Lf7ICApAAAAAIbqoBmcwf2BV3VcFJdazMoLF4Ql" 
+              onChange={handleCaptchaChange}
+            />
+          </div>
+          <div className="mt-4">
+            <button
+              type="submit"
+              disabled={!captchaVerified}
+              className={`btn ${captchaVerified ? "btn-primary" : "btn-disabled"}`}
+            >
+              Submit
+            </button>
+          </div>
         </div>
-        <div>
-          <Label htmlFor="confirmPassword">
-            Confirm Password <span className="text-red-700">*</span>
-          </Label>
-          <PasswordInput
-            id="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) =>
-              updateFields({ confirmPassword: e.target.value })
-            }
-            autoComplete="confirm-password"
-          />
-          {passwordError && (
-            <p className="text-red-600 text-xs">{passwordError}</p>
-          )}
-        </div>
-        <div>
-          <Label htmlFor="referralCode">Referral Code (Optional)</Label>
-          <Input
-            id="referralCode"
-            type="text"
-            placeholder="Referral code"
-            value={referralCode}
-            onChange={(e) => updateFields({ referralCode: e.target.value })}
-          />
-        </div>
-      </div>
+      </form>
     </FormWrapper>
   );
 };

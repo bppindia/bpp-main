@@ -85,8 +85,8 @@ export function OtpVerificationForm({ otpNumber, email, phone, updateFields }: O
             )}
             <div className="space-y-4">
                 <OtpStyledInput
-                    numInputs={6}
-                    inputType="number"
+                    numInputs={4}
+                    inputType="text"
                     value={otpNumber}
                     onChange={handleOtpComplete}
                 />

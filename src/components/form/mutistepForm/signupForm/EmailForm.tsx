@@ -41,7 +41,7 @@ export function EmailForm({ email, phone, updateFields }: EmailFormProps) {
             // Automatically prepend +91 if not already present
             const formattedPhoneNumber = value.startsWith("+91") ? value : `+91${value}`;
             setInputValue(formattedPhoneNumber); // Update local input state with +91
-            updateFields({ phone: value, email: "" });
+            updateFields({ phone: formattedPhoneNumber, email: "" });
         } else {
             updateFields({ email: "", phone: "" });
         }
@@ -81,6 +81,7 @@ export function EmailForm({ email, phone, updateFields }: EmailFormProps) {
                 <Input
                     autoFocus
                     type="text"
+                    name="email"
                     value={inputValue}
                     placeholder="Email or Phone Number"
                     onChange={(e) => handleInputChange(e.target.value)}

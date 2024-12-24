@@ -50,8 +50,8 @@ export function PersonalDetailForm({
     if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
-    if (age < 18) {
-      setError("Age must be 18 or older.");
+    if (age < 19) {
+      setError("Age must be 18 older.");
     } else {
       setError(null);
     }
@@ -95,6 +95,8 @@ export function PersonalDetailForm({
           <Input
             placeholder="First name"
             required
+            name="firstName"
+            autoComplete="given-name"
             value={firstName}
             onChange={(e) => updateFields({ firstName: e.target.value })}
           />
@@ -107,6 +109,7 @@ export function PersonalDetailForm({
           </Label>
           <Input
             placeholder="Middle name"
+            name="middleName"
             value={middleName}
             onChange={(e) => updateFields({ middleName: e.target.value })}
           />
@@ -119,6 +122,7 @@ export function PersonalDetailForm({
           <Input
             placeholder="Last name"
             required
+            name="lastName"
             value={lastName}
             onChange={(e) => updateFields({ lastName: e.target.value })}
           />
@@ -132,6 +136,7 @@ export function PersonalDetailForm({
           <Select
             onValueChange={(value) => updateFields({ gender: value })}
             value={gender}
+            name="gender"
             required
           >
             <SelectTrigger>
@@ -162,7 +167,7 @@ export function PersonalDetailForm({
                 age: calculateAge(date)
               });
             }}
-            endYear={2050}
+            endYear={2024}
           />
           {error && <div className="text-red-700 text-xs">{error}</div>}
         </div>
@@ -175,6 +180,7 @@ export function PersonalDetailForm({
           <Input
             type="number"
             placeholder="Age"
+            name="age"
             value={age}
             required
             readOnly
@@ -191,15 +197,18 @@ export function PersonalDetailForm({
             value={phone}
             maxLength={10}
             required
+            name="phoneNumber"
+            autoComplete="tel"
             onChange={(e) => updateFields({ phone: e.target.value })}
           />
         </div>
         <div className="col-span-6 md:col-span-6">
-          <Label>Email Address <span className="text-red-700">*</span></Label>
+          <Label>Email Address</Label>
           <Input
             placeholder="Enter email address"
             value={email}
-            required
+            autoComplete="email"
+            name="email"
             onChange={(e) => updateFields({ email: e.target.value })}
           />
         </div>
