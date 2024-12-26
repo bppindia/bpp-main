@@ -185,7 +185,7 @@ const MultiStepForm = () => {
 
             try {
                 // Verify OTP
-                const formattedPhoneNumber = `+91${data.phone}`;
+                const formattedPhoneNumber = data.phone;
                 const verificationTarget = data.email || formattedPhoneNumber;
                 const verificationType = data.email ? 'email' : 'phoneNumber';
                 await verifyOtp(verificationTarget!, data.otpNumber, verificationType);
