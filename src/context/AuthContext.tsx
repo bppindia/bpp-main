@@ -16,8 +16,8 @@ interface AuthContextType {
     isAuthenticated: boolean;
     login: (credentials: LoginCredentials) => Promise<void>;
     register: (registrationData: RegistrationData) => Promise<void>;
-    sendOtp: (contact: string, type: 'email' | 'phoneNumber') => Promise<void>;
-    verifyOtp: (contact: string, otpNumber: string, type: 'email' | 'phoneNumber') => Promise<void>;
+    sendOtp: (contact: string, type: 'email' | 'phone') => Promise<void>;
+    verifyOtp: (contact: string, otp: string, type: 'email' | 'phone') => Promise<void>;
     logout: () => void;
     loading: boolean;
 }
@@ -129,19 +129,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
 
     // Send OTP method
-    const sendOtp = async (contact: string, type: 'email' | 'phoneNumber') => {
+    const sendOtp = async (contact: string, type: 'email' | 'phone') => {
         try {
             setLoading(true);
             // Validate input based on type
             if (type === 'email' && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(contact)) {
                 throw new Error('Invalid email format');
             }
-            if (type === 'phoneNumber' && !/^(\+91)?[6-9]\d{9}$/.test(contact)) {
+            if (type === 'phone' && !/^(\+91)?[6-9]\d{9}$/.test(contact)) {
                 throw new Error('Invalid phone number format');
             }
 
             // Prepare payload based on type
-            const payload = type === 'email' ? { email: contact } : { phoneNumber: contact };
+            const payload = type === 'email' ? { email: contact } : { phone: contact };
 
             console.log(payload)
             // Send OTP request with dynamic payload
@@ -158,19 +158,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
 
     // Verify OTP method
-    const verifyOtp = async (contact: string, otpNumber: string, type: 'email' | 'phoneNumber') => {
+    const verifyOtp = async (contact: string, otp: string, type: 'email' | 'phone') => {
         try {
             setLoading(true);
             // Validate input based on type
             if (type === 'email' && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(contact)) {
                 throw new Error('Invalid email format');
             }
-            if (type === 'phoneNumber' && !/^(\+91)?[6-9]\d{9}$/.test(contact)) {
+            if (type === 'phone' && !/^(\+91)?[6-9]\d{9}$/.test(contact)) {
                 throw new Error('Invalid phone number format');
             }
 
             // Prepare payload based on type
-            const payload = type === 'email' ? { email: contact, otpNumber } : { phoneNumber: contact, otpNumber };
+            const payload = type === 'email' ? { email: contact, otp } : { phone: contact, otp };
 
             // Verify OTP request with dynamic payload
             const response = await postData('/validate-otp', payload);

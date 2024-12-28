@@ -1,6 +1,7 @@
 "use client";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import WarningDialog from "@/components/dialogs/WarningDialog";
 import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
 import MapChart from "@/components/maps/mapChart";
 import GoalsCarousel from "@/components/test/goalsSlider";
@@ -87,7 +88,12 @@ const DashboardPage: React.FC = () => {
         <div>
           <GoalsCarousel />
         </div>
+      {userData.approved? 
         <WelcomeDialog />
+        : 
+        <WarningDialog />
+      }  
+
       </ContentLayout>
     </DashboardLayout>
   );

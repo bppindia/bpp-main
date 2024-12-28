@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { DatePicker } from "@/components/DatePicker";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useState } from "react";
 import { FormWrapper } from "./FormWrapper";
 
 type PersonalDetailData = {
@@ -195,15 +195,15 @@ export function PersonalDetailForm({
           <Input
             placeholder="Enter phone number"
             value={phone}
-            maxLength={10}
+            maxLength={13}
             required
-            name="phoneNumber"
+            name="phone"
             autoComplete="tel"
             onChange={(e) => updateFields({ phone: e.target.value })}
           />
         </div>
         <div className="col-span-6 md:col-span-6">
-          <Label>Email Address</Label>
+          <Label>Email Address (optional)</Label>
           <Input
             placeholder="Enter email address"
             value={email}

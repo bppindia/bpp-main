@@ -10,7 +10,7 @@ type BusinessCommunityData = {
     dateOfBirth: string;
     age: string;
     gender: string;
-    phoneNumber?: string;
+    phone?: string;
     email?: string;
 };
 
@@ -22,7 +22,7 @@ export function BusinessCommunity({
     firstName,
     lastName,
     age,
-    phoneNumber,
+    phone,
     email,
     updateFields,
 }: PBusinessCommunityFormProps) {
@@ -100,13 +100,13 @@ export function BusinessCommunity({
                                 <Label>Phone Number <span className="text-red-700">*</span></Label>
                                 <Input
                                     placeholder="Enter phone number"
-                                    value={phoneNumber}
+                                    value={phone}
                                     required
-                                    onChange={(e) => updateFields({ phoneNumber: e.target.value })}
+                                    onChange={(e) => updateFields({ phone: e.target.value })}
                                 />
                             </div>
                         )}
-                        {phoneNumber && (
+                        {phone && (
                             <div>
                                 <Label>Email Address <span className="text-red-700">*</span></Label>
                                 <Input

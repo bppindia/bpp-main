@@ -64,7 +64,7 @@ const WelcomeDialog = () => {
                         🎉 Congratulations!!!
                     </DialogTitle>
                     <DialogDescription className="text-lg font-medium text-gray-700 text-center">
-                        You have successfully joined the BPP platform.
+                        You have successfully joined the Bharatiya Popular Party.
                     </DialogDescription>
                 </DialogHeader>
                 <div className="py-4 px-2 text-gray-600">

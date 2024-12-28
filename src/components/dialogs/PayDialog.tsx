@@ -18,13 +18,13 @@ const PayDialog = () => {
                 <DialogHeader>
                     <DialogTitle className="text-3xl font-bold text-center">Pay Now to use Our services</DialogTitle>
                     <DialogDescription className="font-semibold text-lg text-center mb-4">
-                        You have successfully joined the BPP platform.
+                        You have successfully joined the Bharatiya Popular Party.
                     </DialogDescription>
                 </DialogHeader>
                 <div className="py-4">
                     <p className="text-lg text-muted-foreground leading-relaxed">
-                        Bharatiya Public Party is committed to provide you with the benefits of Community Contribution. 
-                        By paying this nominal fee of ₹5, you will gain access to valuable services like counselling and 
+                        Bharatiya Public Party is committed to provide you with the benefits of Community Contribution.
+                        By paying this nominal fee of ₹5, you will gain access to valuable services like counselling and
                         support on medical, legal, educational and social issues.
                     </p>
                 </div>

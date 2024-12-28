@@ -1,4 +1,3 @@
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import img7 from "@/assets/images/banners/EMPLOYMENT & ECONOMIC GROWTH.jpeg";
 import img2 from "@/assets/images/banners/EQUAL OPPORTUNITY AND GENDER EQUALITY.jpeg";
 import img4 from "@/assets/images/banners/GAINST MUSCLE AND MONEY POWER.webp";
@@ -10,11 +9,10 @@ import img1 from "@/assets/images/banners/NATIONAL INTEGRITY.jpeg";
 import img10 from "@/assets/images/banners/QUALITY EDUCATION.jpg";
 import img9 from "@/assets/images/banners/UPLIFTMENT OF FARMERS.jpeg";
 import HeaderComponent from '@/components/HeaderComponent';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import Layout from '@/layout/Layout';
-import { BadgeDollarSign, Building2, Church, Factory, GraduationCap, Heart, Scale, Sword, Users, Wheat } from 'lucide-react'
+import { BadgeDollarSign, Building2, Church, Factory, GraduationCap, Heart, Scale, Sword, Users, Wheat } from 'lucide-react';
 import React, { FC } from 'react';
-
-
 
 interface Goal {
   title: string;
@@ -67,13 +65,13 @@ const Goals = () => {
       title: "EQUAL OPPORTUNITY AND GENDER EQUALITY",
       description: "BPP is committed to the task of building a developed democratic India based on principle of equal opportunity to all citizens. The party will lay special emphasis on improving the condition of socially and economically disadvantaged sections of society.",
       imgSrc: img2,
-       icon: Users
+      icon: Users
     },
     {
       title: "GOOD HEALTH AND WELL-BEING",
       description: "BPP will work to provide quality health facilities to all citizens, ensuring that every individual has access to health services that improve their quality of life.",
       imgSrc: img3,
-         icon: Heart
+      icon: Heart
     },
     {
       title: "AGAINST MUSCLE AND MONEY POWER",

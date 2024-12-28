@@ -98,7 +98,7 @@ const CredentialsForm: React.FC<CredentialsFormProps> = ({
               onChange={handleCaptchaChange}
             />
           </div>
-          <div className="mt-4">
+          {/* <div className="mt-4">
             <button
               type="submit"
               disabled={!captchaVerified}
@@ -106,7 +106,7 @@ const CredentialsForm: React.FC<CredentialsFormProps> = ({
             >
               Submit
             </button>
-          </div>
+          </div> */}
         </div>
       </form>
     </FormWrapper>

@@ -82,7 +82,7 @@ export function RegistrationForm({
         <FormWrapper title="User Details">
             <div className="grid gap-2">
                 <div className="text-xs text-center text-muted-foreground font-semibold">
-                    * Providing your Aadhaar card details.
+                    * Provide your Aadhaar card details.
                 </div>
                 <div className="grid grid-cols-1 gap-4">
                     <div>
@@ -140,7 +140,7 @@ export function RegistrationForm({
                     <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent h-[1px] w-full" />
                 </div>
                 <div className="text-xs text-center text-muted-foreground font-semibold">
-                    * Providing our Voter ID card details.
+                    * Provide your Voter ID card details.
                 </div>
                 <div className="grid grid-cols-1 gap-1">
                     <div>

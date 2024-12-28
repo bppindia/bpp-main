@@ -34,7 +34,7 @@ type RegistrationData = {
     age: number;             // User's age (can calculate from DOB)
 
     // OTP Verification
-    otpNumber: string;             // One-time password for verification email otp/ phone otp
+    otp: string;             // One-time password for verification email otp/ phone otp
 
     // Address Information
     addressLine1: string;    // First line of address
@@ -51,7 +51,7 @@ type RegistrationData = {
 
     // Registration Details
     aadhaarNumber: string;      // Aadhaar card number
-    voterID: string;         // Voter ID number
+    voterId: string;         // Voter ID number
     aadhaarFront: File | null;      // Aadhaar card file (File type)
     aadhaarBack: File | null;      // Aadhaar card file (File type)
     voterFront: File | null;         // Voter ID file (File type)
@@ -85,7 +85,7 @@ const INITIAL_DATA: RegistrationData = {
     age: 0,
 
     // OTP Verification
-    otpNumber: "",
+    otp: "",
 
     // Address Information
     addressLine1: "",
@@ -102,7 +102,7 @@ const INITIAL_DATA: RegistrationData = {
 
     // Registration Details
     aadhaarNumber: "",
-    voterID: "",
+    voterId: "",
     aadhaarFront: null,    // Aadhaar card file (File type)
     aadhaarBack: null,     // Aadhaar card file (File type)
     voterFront: null,     // Voter ID file (File type)
@@ -170,7 +170,7 @@ const MultiStepForm = () => {
                     await sendOtp(data.email!, 'email'); // Send email OTP
                 } else if (isPhone) {
                     const formattedPhoneNumber = data.phone;
-                    await sendOtp(formattedPhoneNumber!, 'phoneNumber'); // Send phone OTP
+                    await sendOtp(formattedPhoneNumber!, 'phone'); // Send phone OTP
                 }
                 next(); // Move to OTP verification step
             } catch (error) {
@@ -178,7 +178,7 @@ const MultiStepForm = () => {
             }
         } else if (currentStepIndex === 1) {
             // Handle second step - Verify OTP
-            if (data.otpNumber.length !== 4) {
+            if (data.otp.length !== 4) {
                 toast.error('Please enter a valid 4-digit OTP');
                 return;
             }
@@ -187,8 +187,8 @@ const MultiStepForm = () => {
                 // Verify OTP
                 const formattedPhoneNumber = data.phone;
                 const verificationTarget = data.email || formattedPhoneNumber;
-                const verificationType = data.email ? 'email' : 'phoneNumber';
-                await verifyOtp(verificationTarget!, data.otpNumber, verificationType);
+                const verificationType = data.email ? 'email' : 'phone';
+                await verifyOtp(verificationTarget!, data.otp, verificationType);
                 next(); // Move to the next step after verification
             } catch (error) {
                 console.error('Failed to verify OTP:', error);
@@ -256,7 +256,7 @@ const MultiStepForm = () => {
                 if (data.aadhaarNumber) formData.append('aadhaarNumber', data.aadhaarNumber);
                 if (data.voterFront) formData.append('voterFront', data.voterFront);
                 if (data.voterBack) formData.append('voterBack', data.voterBack);
-                if (data.voterID) formData.append('voterID', data.voterID);
+                if (data.voterId) formData.append('voterId', data.voterId);
 
                 // Append credentials
                 formData.append('password', data.password);

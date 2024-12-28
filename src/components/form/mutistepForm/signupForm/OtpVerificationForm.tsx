@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { FormWrapper } from "./FormWrapper";
 
 type OtpVerificationData = {
-    otpNumber: string;
+    otp: string;
     email?: string;
     phone?: string;
 };
@@ -16,7 +16,7 @@ type OtpVerificationProps = OtpVerificationData & {
     updateFields: (fields: Partial<OtpVerificationData>) => void;
 };
 
-export function OtpVerificationForm({ otpNumber, email, phone, updateFields }: OtpVerificationProps) {
+export function OtpVerificationForm({ otp, email, phone, updateFields }: OtpVerificationProps) {
     const [timer, setTimer] = useState(120);
     const [showResend, setShowResend] = useState(false);
     const { sendOtp } = useAuth();
@@ -27,7 +27,7 @@ export function OtpVerificationForm({ otpNumber, email, phone, updateFields }: O
                 await sendOtp(email, 'email'); // Send email OTP
             } else if (phone) {
                 const formattedPhoneNumber = `+91${phone}`;
-                await sendOtp(formattedPhoneNumber, 'phoneNumber'); // Send phone OTP
+                await sendOtp(formattedPhoneNumber, 'phone'); // Send phone OTP
             }
             setTimer(120);
             setShowResend(false);
@@ -55,7 +55,7 @@ export function OtpVerificationForm({ otpNumber, email, phone, updateFields }: O
     };
 
     const handleOtpComplete = (value: string) => {
-        updateFields({ otpNumber: value });
+        updateFields({ otp: value });
     };
 
     function maskEmail(email: string): string {
@@ -87,7 +87,7 @@ export function OtpVerificationForm({ otpNumber, email, phone, updateFields }: O
                 <OtpStyledInput
                     numInputs={4}
                     inputType="text"
-                    value={otpNumber}
+                    value={otp}
                     onChange={handleOtpComplete}
                 />
                 <div className="text-sm text-center text-gray-500">
