@@ -36,7 +36,7 @@ const GetToKnow = () => {
                                         <CardHeader>
                                         </CardHeader>
                                         <CardContent>
-                                            <p><span className='font-bold'>Bharatiya Popular Party</span> was founded in September 2024 by its President, who has been actively involved in social work for over a decade. The party stands as a symbol of progress, equality and sustainable development in India, guided by the principles of democracy, socialism and secularism.</p>
+                                            <p><span className='font-bold'>Bharatiya Popular Party</span> was founded in September 2024 by its <br/> <strong> President Shri Jaheer Bukhari,</strong> who has been actively involved in social work for over a decade. The party stands as a symbol of progress, equality and sustainable development in India, guided by the principles of democracy, socialism and secularism.</p>
                                             <p className="mt-4">Party's symbol MIKE symbolizes the party's commitment to open communication, transparency, and the free exchange of ideas, highlighting their desire to stay connected with the public.</p>
                                         </CardContent>
                                     </Card>
@@ -134,7 +134,7 @@ const GetToKnow = () => {
                                     <CardContent>
                                         <p className="mb-4">Join Our Team: Party is always looking for educated and passionate individuals who agrees to the commitment to change. Whether you're a professional, business holder, mentor or expert, we have opportunities for you to make a meaningful impact.</p>
                                         <p className="mb-4">Volunteer Positions: Support party's work and help shape the future by volunteering your time and skills. Whether it's managing or assisting in local initiatives, we welcome your contribution.</p>
-                                        <Button className="w-full sm:w-auto" onClick={() => navigate('/auth/signup')}>Join Us Today</Button>
+                                        <Button className="w-full sm:w-auto" onClick={() => navigate('/auth/signup')}>Join Now</Button>
                                     </CardContent>
                                 </Card>
                             </main>

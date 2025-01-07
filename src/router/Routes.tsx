@@ -1,4 +1,4 @@
-import { About } from '@/components/About';
+import About from '@/components/About';
 import Login from '@/components/form/loginForm/index';
 import BussinessCommunitySignup from '@/components/form/mutistepForm/bussinessCommunitySignup';
 import MultiStepForm from '@/components/form/mutistepForm/signupForm';

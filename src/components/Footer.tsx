@@ -10,25 +10,26 @@ const sections = [
   {
     title: 'About Us',
     links: [
-      { name: 'Bharatiya Popular Party Goals', href: '/about/bpp-goals' },
-      { name: 'Get To Know Bharatiya Popular Party', href: '/about/get-to-know-bpp' },
+      { name: 'Goals', href: '/about/bpp-goals' },
+      { name: 'Get To Know', href: '/about/get-to-know-bpp' },
       { name: 'Commitment to Progress', href: '/about/commitment-progress' },
       { name: 'Volunteer', href: '/about/volunteer' },
-      { name: 'Logo & Media Request', href: '/about/logo-media-request' },
     ],
   },
   {
-    title: 'Membership',
+    title: "Membership Area",
     links: [
-      { name: 'Join Now', href: '/auth/signup' },
-      { name: 'Membership Privilege', href: '/membership/membership-privilege' },
-      { name: 'Active Membership Term', href: '/membership/membership-term' },
-      { name: 'Sign in & Register', href: '/auth/login' },
-      { name: 'Membership Renewals', href: '/membership/renewals' },
+        { name: "Members Faq", href: "/membership/faq" },
+        { name: "Members Login", href: "/auth/login" },
+        { name: "Membership Privileges", href: "/membership/privileges" },
+        { name: "Wings", href: "/membership/wings" },
+        { name: "Code of Conduct", href: "/membership/code-of-conduct" }, 
+        { name: "Complaints", href: "/membership/complaints" }, 
+        { name: "Membership Renewals", href: "/membership/renewals" },
     ],
-  },
+},
   {
-    title: 'Business Community/Vendor',
+    title: 'Business Community',
     links: [
       { name: 'Vendor & Suppliers', href: '/business-community/vendor-suppliers' },
       { name: 'Business Community Join', href: '/business-community/join' },
@@ -54,6 +55,7 @@ const sections = [
     title: 'Others',
     links: [
       { name: 'Dashboard', href: '/dashboard/home' },
+      { name: 'Logo & Media Request', href: '/about/logo-media-request' },
     ],
   }
 ];

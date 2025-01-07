@@ -40,7 +40,7 @@ const Volunteer = () => {
                 Work towards for equal opportunities and improving access to education, healthcare and employment.
               </p>
               <Button className="bg-blue-800 text-white hover:bg-blue-600 text-lg px-8 py-6">
-                Join Us Today
+                Join Now
               </Button>
             </div>
           </div>

@@ -47,7 +47,7 @@ export function getMainMenuList(_pathname?: string): Group[] {
                     submenus: [
                         {
                             href: "/about/bpp-goals",
-                            label: "BPP Goals",
+                            label: "Goals",
                             description: `Learn about the goals that drive Bharatiya Popular Party's mission and vision`
                         },
                         {
@@ -65,57 +65,57 @@ export function getMainMenuList(_pathname?: string): Group[] {
                             label: "Volunteer",
                             description: `Explore exciting career opportunities at Bharatiya Popular Party.`
                         },
-                        {
-                            href: "/about/logo-media-request",
-                            label: "Logo & Media Request",
-                            description: `Request official Bharatiya Popular Party logos and media assets for use.`
-                        },
                     ]
                 }
             ]
         },
         {
-            groupLabel: "",
+            groupLabel: "Membership",
             menus: [
                 {
                     href: "/membership",
-                    label: "Membership",
+                    label: "Membership Area",
                     icon: Goal,
                     submenus: [
                         {
-                            href: "/membership/join-now",
-                            label: "Join Now",
-                            description: "Become a member and enjoy exclusive benefits.",
+                            label: "Members FAQ",
+                            href: "/membership/faq",
+                            description: "Find answers to common questions about membership.",
                         },
                         {
-                            label: "Membership Privilege",
-                            href: "/membership/membership-privilege",
-                            description: "Learn more about the privileges of being a member.",
-                        },
-                        {
-                            label: "Active Membership Term",
-                            href: "/membership/membership-term",
-                            description: "View details of your active membership term.",
-                        },
-                        {
-                            label: "Sign in & Register",
+                            label: "Members Login",
                             href: "/auth/login",
-                            description: "Sign in or register for membership.",
+                            description: "Log in to access your membership account.",
                         },
                         {
-                            label: "Membership Renewals",
+                            label: "Membership Privileges",
+                            href: "/membership/privileges",
+                            description: "Learn about the benefits and privileges of being a member.",
+                        },
+                        {
+                            label: "Wings",
+                            href: "/membership/wings",
+                            description: "Explore the different wings of the membership program.",
+                        },
+                        {
+                            label: "Code of Conduct",
+                            href: "/membership/code-of-conduct",
+                            description: "Understand the rules and ethical guidelines for members.",
+                        },
+                        {
+                            label: "Complaints",
+                            href: "/membership/complaints",
+                            description: "Submit and track your complaints related to membership.",
+                        },
+                        {
+                            label: "Renewals",
                             href: "/membership/renewals",
-                            description: "Renew your membership easily.",
+                            description: "Easily renew your membership online.",
                         },
-                        {
-                            label: "Forget Pin",
-                            href: "/auth/forgot-pin",
-                            description: "Recover your membership pin.",
-                        },
-                    ]
-                }
-            ]
-        },
+                    ],
+                },
+            ],
+        },        
         {
             groupLabel: "",
             menus: [

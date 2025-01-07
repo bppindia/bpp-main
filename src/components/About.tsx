@@ -1,6 +1,6 @@
 import bppflag from "@/assets/images/logos/bppflag.png";
 
-export const About = () => {
+const About = () => {
   return (
     <section id="about" className="container py-15 sm:py-15">
       <div className="bg-muted/50  rounded-lg py-12">
@@ -37,3 +37,5 @@ export const About = () => {
     </section>
   );
 };
+
+export default About;

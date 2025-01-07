@@ -121,7 +121,7 @@ const Goals = () => {
     <Layout>
       <HeaderComponent
         heading="Bharatiya Popular Party Goals"
-        text="BPP is dedicated to a united, prosperous India. We fight for equal opportunity, quality healthcare and education, industrial growth and upliftment of farmers. We believe in socialism, secularism and democracy and would uphold the sovereignty, unity and integrity of India."
+        text="Bharatiya Popular Party is dedicated to a united, prosperous India. We fight for equal opportunity, quality healthcare and education, industrial growth and upliftment of farmers. We believe in socialism, secularism and democracy and would uphold the sovereignty, unity and integrity of India."
         breadcrumbLinks={[
           { label: "Home", href: "/" },
           { label: "About", href: "/about" },
