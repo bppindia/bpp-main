@@ -36,17 +36,17 @@ const registrationSteps: ServiceProps[] = [
 const verificationSteps: ServiceProps[] = [
   {
     title: "5.	Acceptance Criteria",
-    description: "Concerns meeting the following criteria may be accepted:  The issue is deemed legitimate and falls under the relevant categories (health, education, legal, etc.), Supporting documents are complete and valid, the concern meets the community's needs and is in line with the BPP’s goals.",
+    description: "Concerns meeting the following criteria may be accepted:  The issue is deemed legitimate and falls under the relevant categories (health, education, legal, etc.), Supporting documents are complete and valid, the concern meets the community's needs and is in line with the Bharatiya Popular Party goals.",
     icon: <ClipboardCheck />,
   },
   {
     title: "6.	Rejection Criteria",
-    description: "Concerns may be rejected for reasons such as: Incomplete or fraudulent supporting documents., the issue does not fall within the scope of the categories served by BPP, the concern does not meet the established criteria for urgency or relevance.",
+    description: "Concerns may be rejected for reasons such as: Incomplete or fraudulent supporting documents., the issue does not fall within the scope of the categories served by Bharatiya Popular Party, the concern does not meet the established criteria for urgency or relevance.",
     icon: <Scale />,
   },
   {
-    title: "7.	Sole Discretion of BPP Administration",
-    description: "The decision to accept or reject concerns will be made at the *sole discretion* of the BPP administration. Administration will have the final authority to decide whether the concern should be addressed or not.",
+    title: "7.	Sole Discretion of Bharatiya Popular Party Administration",
+    description: "The decision to accept or reject concerns will be made at the *sole discretion* of the Bharatiya Popular Party administration. Administration will have the final authority to decide whether the concern should be addressed or not.",
     icon: <PanelLeftDashed />,
   },
 ];
@@ -101,7 +101,7 @@ export const CommunityProcess = () => {
           <div className="my-8">
             <h2 className="text-3xl md:text-4xl font-bold">Review by the Administration</h2>
             <p className="text-muted-foreground text-xl mt-4 mb-8">
-              The concern will be addresses and review by the BPP administration, that consist off State heads, district heads and rural, or block heads.
+              The concern will be addresses and review by the Bharatiya Popular Party administration, that consist off State heads, district heads and rural, or block heads.
               Administration will assess and accept or reject the case on the basis of urgency, relevance and verification.
             </p>
             <div className="flex flex-col gap-3">

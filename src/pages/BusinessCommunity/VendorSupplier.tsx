@@ -20,17 +20,17 @@ const VendorSupplier = () => {
                             <div className="flex items-center gap-3 mb-6">
                                 <HandshakeIcon className="h-8 w-8 text-blue-600 dark:text-blue-400" />
                                 <h1 className="text-3xl font-bold tracking-tight sm:text-4xl dark:text-white">
-                                    Vendors and Suppliers: Essential Partners in BPP's Mission
+                                    Vendors and Suppliers: Essential Partners in Bharatiya Popular Party's Mission
                                 </h1>
                             </div>
 
                             {/* Introduction */}
                             <div className="max-w-3xl mb-12 text-gray-700 dark:text-gray-300 space-y-4">
                                 <p>
-                                    At Bharatiya Popular Party, we are committed to create an <span className="font-bold">ecosystem of collaboration</span> where both members and vendors grow together. BPP is committed to facilitate an exchange of <span className="font-bold">needs and services</span>, benefiting both sides in meaningful ways.
+                                    At Bharatiya Popular Party, we are committed to create an <span className="font-bold">ecosystem of collaboration</span> where both members and vendors grow together. Bharatiya Popular Party is committed to facilitate an exchange of <span className="font-bold">needs and services</span>, benefiting both sides in meaningful ways.
                                 </p>
                                 <p>
-                                    We at BPP, recognize that our vendors and suppliers are the backbone of our ability to support the community. These trusted partners play a critical role in ensuring that our members receive the services and assistance they need—quickly, efficiently, and at reasonable rates.
+                                    We at Bharatiya Popular Party, recognize that our vendors and suppliers are the backbone of our ability to support the community. These trusted partners play a critical role in ensuring that our members receive the services and assistance they need—quickly, efficiently, and at reasonable rates.
                                 </p>
                                 <p>
                                     In times of urgency, our registered vendors and suppliers are committed to provide priority service to our community members. Whether it's medical care, home services, or other essential needs, our vendors will be equipped to respond promptly and professionally.
@@ -91,7 +91,7 @@ const VendorSupplier = () => {
                                     Together, we are building a community where <span className="font-bold">everyone benefits</span>—a place where needs are met, businesses grow, and community flourish.
                                 </p>
                                 <p className="text-gray-700 dark:text-gray-300 mt-4 font-medium">
-                                    Join BPP in creating a stronger, more connected community.
+                                    Join Bharatiya Popular Party in creating a stronger, more connected community.
                                 </p>
                             </div>
                         </div>

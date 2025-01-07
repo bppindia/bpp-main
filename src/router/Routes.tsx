@@ -95,7 +95,7 @@ const AppRoutes = () => {
                 </Route>
 
                 {/* Business Community Routes */}
-                <Route path="-join">
+                <Route path="business-community">
                     <Route path="vendor-suppliers" element={<VendorSupplier />} />
                     <Route path="ethics" element={<EthicsVendorsSuppliers />} />
                 </Route>

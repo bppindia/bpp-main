@@ -163,7 +163,7 @@ const Carousel: React.FC = () => {
                         <div className="title">UPHOLD </div>
                         <div className="topic">SECULARISM </div>
                         <div className="des">
-                        Bharatiya Popular Party firmly supports secularism and is opposed to the idea of a theocratic state.BPP will work to protect and promote religious harmony and ensure equal rights for all faiths.
+                        Bharatiya Popular Party firmly supports secularism and is opposed to the idea of a theocratic state. Bharatiya Popular Party will work to protect and promote religious harmony and ensure equal rights for all faiths.
                         </div>
                         <div className="buttons">
 
@@ -177,7 +177,7 @@ const Carousel: React.FC = () => {
                         <div className="title">INDUSTRIAL DEVELOPMENT </div>
                         <div className="topic">& INFRASTRUCTURE</div>
                         <div className="des">
-                        The goal of the BPP is to promote industrial development and build world-class infrastructure to drive economic development. By modernizing industries, encouraging research and development and enhancing transportation, energy and digital networks, the party aims to create a sustainable competitive economy.
+                        The goal of the Bharatiya Popular Party is to promote industrial development and build world-class infrastructure to drive economic development. By modernizing industries, encouraging research and development and enhancing transportation, energy and digital networks, the party aims to create a sustainable competitive economy.
                         </div>
                         <div className="buttons">
 
@@ -191,7 +191,7 @@ const Carousel: React.FC = () => {
                         <div className="title">EMPLOYMENT &</div>
                         <div className="topic">ECONOMIC GROWTH</div>
                         <div className="des">
-                        BPP is committed to promoting decent work and sustained economic growth by creating job opportunities, ensuring fair wages and improving working conditions for all citizens. The party aims to empower individuals particularly in rural and marginalized communities through skill development, entrepreneurship and access to employment.
+                        Bharatiya Popular Party is committed to promoting decent work and sustained economic growth by creating job opportunities, ensuring fair wages and improving working conditions for all citizens. The party aims to empower individuals particularly in rural and marginalized communities through skill development, entrepreneurship and access to employment.
                         </div>
                         <div className="buttons">
                             <Button onClick={()=> navigate('/auth/signup')}>REGISTER NOW</Button>
@@ -204,7 +204,7 @@ const Carousel: React.FC = () => {
                         <div className="title">JUSTICE, PEACE,</div>
                         <div className="topic">CALM AND PROSPERITY</div>
                         <div className="des">
-                        BPP  aims to create a peaceful, just, and prosperous society where all citizens have equal opportunities, security and access to resources. By this goal BPP will uphold individual rights as well as the right to privacy freedom of expression and access to information.
+                        Bharatiya Popular Party aims to create a peaceful, just, and prosperous society where all citizens have equal opportunities, security and access to resources. By this goal Bharatiya Popular Party will uphold individual rights as well as the right to privacy freedom of expression and access to information.
                         </div>
                         <div className="buttons">
 
@@ -218,7 +218,7 @@ const Carousel: React.FC = () => {
                         <div className="title">UPLIFTMENT OF</div>
                         <div className="topic">FARMERS</div>
                         <div className="des">
-                        BPP is dedicated to the upliftment of farmers by ensuring fair prices for their product, providing access to modern farming techniques and improving infrastructure in rural areas. The focus will be on increasing farmer’s income through better market access, sustainable agricultural practices and timely financial support.
+                        Bharatiya Popular Party is dedicated to the upliftment of farmers by ensuring fair prices for their product, providing access to modern farming techniques and improving infrastructure in rural areas. The focus will be on increasing farmer’s income through better market access, sustainable agricultural practices and timely financial support.
                         </div>
                         <div className="buttons">
                             <Button onClick={()=> navigate('/auth/signup')}>REGISTER NOW</Button>
@@ -231,7 +231,7 @@ const Carousel: React.FC = () => {
                         <div className="title">QUALITY</div>
                         <div className="topic">EDUCATION</div>
                         <div className="des">
-                        BPP believes that education is one of the most powerful and proven vehicles for sustainable development. The goal is to ensure that all girls and boys complete primary and secondary schooling. It also eliminate gender and wealth disparities and achieve universal access to a quality higher education. 
+                        Bharatiya Popular Party believes that education is one of the most powerful and proven vehicles for sustainable development. The goal is to ensure that all girls and boys complete primary and secondary schooling. It also eliminate gender and wealth disparities and achieve universal access to a quality higher education. 
                         </div>
                         <div className="buttons">
                             <Button onClick={()=> navigate('/auth/signup')}>REGISTER NOW</Button>

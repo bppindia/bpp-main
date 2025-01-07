@@ -211,29 +211,29 @@ export const Navbar = () => {
                           <div className="relative z-10 bg-black/50 -mx-6 -mb-6 p-6">
                             <div className="mb-2 text-lg font-medium text-white">{t('navigation.goals')}</div>
                             <p className="text-xs leading-tight text-gray-200">
-                              Learn about the goals that drive BPP's mission and vision.
+                              Learn about the goals that drive Bharatiya Popular Party mission and vision.
                             </p>
                           </div>
                         </Link>
                       </NavigationMenuLink>
                     </li>
                     <ListItem to="/about/get-to-know-bpp" title={t("navigation.GetToKnowBPP")}>
-                      Discover more about BPP, its values, and its journey.
+                      Discover more about Bharatiya Popular Party, its values, and its journey.
                     </ListItem>
                     <ListItem to="/about/Community-contribution" title={t("navigation.CommunityContribution")}>
-                      See how BPP is making a difference through charitable work.
+                      See how Bharatiya Popular Party is making a difference through charitable work.
                     </ListItem>
                     <ListItem
                       to="/about/commitment-progress"
                       title={t("navigation.CommitmentProgress")}
                     >
-                      Understand BPP's dedication to sustainability and environmental responsibility.
+                      Understand Bharatiya Popular Party's dedication to sustainability and environmental responsibility.
                     </ListItem>
                     <ListItem to="/about/volunteer" title={t("navigation.volunteer")}>
-                      Explore exciting career opportunities at BPP.
+                      Explore exciting career opportunities at Bharatiya Popular Party.
                     </ListItem>
                     <ListItem to="/about/logo-media-request" title={t("navigation.LogoMediaRequest")}>
-                      Request official BPP logos and media assets for use.
+                      Request official Bharatiya Popular Party logos and media assets for use.
                     </ListItem>
                   </ul>
                 </NavigationMenuContent>
@@ -274,7 +274,7 @@ export const Navbar = () => {
             </NavigationMenuList>
           </NavigationMenu>
           <div className="hidden lg:flex gap-2">
-            <Button className="bg-blue-600 hover:bg-blue-900" onClick={() => navigate("/auth/signup")}>Join BPP</Button>
+            <Button className="bg-blue-600 hover:bg-blue-900" onClick={() => navigate("/auth/signup")}>Join Bharatiya Popular Party</Button>
             <LanguageToggle />
             <ModeToggle />
           </div>

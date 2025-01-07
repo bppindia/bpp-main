@@ -12,11 +12,11 @@ const GetToKnow = () => {
     return (
         <Layout>
             <HeaderComponent 
-                heading="Get To Know BPP" 
-                text="Get To Know More About BPP" 
+                heading="Get To Know Bharatiya Popular Party" 
+                text="Get To Know More About Bharatiya Popular Party" 
                 breadcrumbLinks={[
                     { label: "About Us", href: "/about" },
-                    { label: "Get To Know BPP", href: "/about/get-to-know-bpp" }
+                    { label: "Get To Know Bharatiya Popular Party", href: "/about/get-to-know-bpp" }
                 ]}
                 imgUrl={GetToKnowImg}
             />
@@ -27,7 +27,7 @@ const GetToKnow = () => {
                         {/* Header Section */}
                         <div className="space-y-3">
                             <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-                                GET TO KNOW BPP
+                                GET TO KNOW Bharatiya Popular Party
                             </h1>
                             
                             <main className="container mx-auto px-4 py-8">

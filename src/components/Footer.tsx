@@ -10,8 +10,8 @@ const sections = [
   {
     title: 'About Us',
     links: [
-      { name: 'BPP Goals', href: '/about/bpp-goals' },
-      { name: 'Get To Know BPP', href: '/about/get-to-know-bpp' },
+      { name: 'Bharatiya Popular Party Goals', href: '/about/bpp-goals' },
+      { name: 'Get To Know Bharatiya Popular Party', href: '/about/get-to-know-bpp' },
       { name: 'Commitment to Progress', href: '/about/commitment-progress' },
       { name: 'Volunteer', href: '/about/volunteer' },
       { name: 'Logo & Media Request', href: '/about/logo-media-request' },
@@ -79,7 +79,7 @@ const Footer = () => {
                 Navi Mumbai, Maharashtra India
               </div>
               <div className='my-3 text-muted-foreground text-xs text-center md:text-left'>
-                Join the BPP's Platform and be a part of a dynamic and transparent community. Your voice matters, and together, we can drive meaningful change.
+                Join the Bharatiya Popular Party Platform and be a part of a dynamic and transparent community. Your voice matters, and together, we can drive meaningful change.
               </div>
             </div>
 

@@ -19,7 +19,7 @@ export const About = () => {
                 Vision
               </h2>
               <p className="text-xl text-muted-foreground mt-4">
-                BPP’s vision is: "Empowering communities through decentralized
+                Bharatiya Popular Party vision is: "Empowering communities through decentralized
                 solutions while driving combined progress." Our vision is to
                 create a society where local initiatives prosper with autonomy
                 and flexibility, yet contribute to a progressive national

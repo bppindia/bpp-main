@@ -62,7 +62,7 @@ const EthicsVendorsSuppliers = () => {
                                 <div>
                                     <h3 className="text-xl font-semibold dark:text-white">Sincerity in Service</h3>
                                     <p className="text-gray-700 dark:text-gray-300">
-                                        BPP vendors must be dedicated to providing the best possible services with professionalism and care, ensuring that members' needs are met diligently.
+                                    Bharatiya Popular Party vendors must be dedicated to providing the best possible services with professionalism and care, ensuring that members' needs are met diligently.
                                     </p>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@ const EthicsVendorsSuppliers = () => {
                     {/* Conclusion */}
                     <div className="border-t pt-8 dark:border-gray-700">
                         <p className="text-gray-700 dark:text-gray-300 text-lg">
-                            By adhering to these ethical guidelines, BPP vendors and suppliers help create a compassionate community that benefits both businesses and individuals alike.
+                            By adhering to these ethical guidelines, Bharatiya Popular Party vendors and suppliers help create a compassionate community that benefits both businesses and individuals alike.
                         </p>
                         <p className="text-gray-700 dark:text-gray-300 mt-4 font-medium">
                             Together, we can ensure that everyone in our network receives the support and care they deserve.

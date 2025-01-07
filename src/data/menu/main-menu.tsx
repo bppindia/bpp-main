@@ -48,27 +48,27 @@ export function getMainMenuList(_pathname?: string): Group[] {
                         {
                             href: "/about/bpp-goals",
                             label: "BPP Goals",
-                            description: `Learn about the goals that drive BPP's mission and vision`
+                            description: `Learn about the goals that drive Bharatiya Popular Party's mission and vision`
                         },
                         {
                             href: "/about/get-to-know-bpp",
                             label: "Get To Know",
-                            description: 'Discover more about BPP, its values, and its journey.'
+                            description: 'Discover more about Bharatiya Popular Party, its values, and its journey.'
                         },
                         {
                             href: "/about/commitment-progress",
                             label: "Commitment to Progress",
-                            description: `Understand BPP's dedication to sustainability and environmental responsibility.`
+                            description: `Understand Bharatiya Popular Party's dedication to sustainability and environmental responsibility.`
                         },
                         {
                             href: "/about/volunteer",
                             label: "Volunteer",
-                            description: `Explore exciting career opportunities at BPP.`
+                            description: `Explore exciting career opportunities at Bharatiya Popular Party.`
                         },
                         {
                             href: "/about/logo-media-request",
                             label: "Logo & Media Request",
-                            description: `Request official BPP logos and media assets for use.`
+                            description: `Request official Bharatiya Popular Party logos and media assets for use.`
                         },
                     ]
                 }
@@ -116,43 +116,43 @@ export function getMainMenuList(_pathname?: string): Group[] {
                 }
             ]
         },
-        // {
-        //     groupLabel: "",
-        //     menus: [
-        //         {
-        //             href: "/business-community",
-        //             label: "Business Community/Vendor",
-        //             icon: Goal,
-        //             submenus: [
-        //                 {
-        //                     label: "Vendor & Suppliers",
-        //                     href: "/business-community/vendor-suppliers",
-        //                     description: "Explore vendors and suppliers within the community.",
-        //                 },
-        //                 {
-        //                     label: "Business Community Join",
-        //                     href: "/business-community/join",
-        //                     description: "Join the business community and grow your network.",
-        //                 },
-        //                 {
-        //                     label: "Business/Vendor Disclosure",
-        //                     href: "/business-community/disclosure",
-        //                     description: "View important business/vendor disclosure information.",
-        //                 },
-        //                 {
-        //                     label: "Ethics Vendor Supplier",
-        //                     href: "/business-community/ethics",
-        //                     description: "Understand the ethics for vendors and suppliers.",
-        //                 },
-        //                 {
-        //                     label: "Supplier Inclusion",
-        //                     href: "/business-community/inclusion",
-        //                     description: "Learn about supplier inclusion initiatives.",
-        //                 }
-        //             ]
-        //         }
-        //     ]
-        // },
+        {
+            groupLabel: "",
+            menus: [
+                {
+                    href: "/business-community",
+                    label: "Business Community",
+                    icon: Goal,
+                    submenus: [
+                        {
+                            label: "Vendor & Suppliers",
+                            href: "/business-community/vendor-suppliers",
+                            description: "Explore vendors and suppliers within the community.",
+                        },
+                        {
+                            label: "Business Community Join",
+                            href: "/business-community/join",
+                            description: "Join the business community and grow your network.",
+                        },
+                        {
+                            label: "Business/Vendor Disclosure",
+                            href: "/business-community/disclosure",
+                            description: "View important business/vendor disclosure information.",
+                        },
+                        {
+                            label: "Ethics Vendor Supplier",
+                            href: "/business-community/ethics",
+                            description: "Understand the ethics for vendors and suppliers.",
+                        },
+                        {
+                            label: "Supplier Inclusion",
+                            href: "/business-community/inclusion",
+                            description: "Learn about supplier inclusion initiatives.",
+                        }
+                    ]
+                }
+            ]
+        },
         {
             groupLabel: "",
             menus: [

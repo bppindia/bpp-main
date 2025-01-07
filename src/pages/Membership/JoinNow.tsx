@@ -7,7 +7,7 @@ import Layout from '@/layout/Layout';
 export default function Join() {
     return (
         <Layout>
-           <HeaderComponent heading="Join BPP Membership" text="" breadcrumbLinks={[
+           <HeaderComponent heading="Join Bharatiya Popular Party Membership" text="" breadcrumbLinks={[
                 { label: "Membership", href: "/" },
                 { label: "Join Now", href: "/" },
             ]}
@@ -38,11 +38,11 @@ export default function Join() {
               Join Now
             </h3>
             <p className="text-muted-foreground lg:text-sm">
-            By joining, you gain access to essential resources and a network that is dedicated to meeting your needs. Whether it's access to priority services, education, health, employment, business opportunities, or community-driven support, BPP membership empowers you to stay informed and connected.
+            By joining, you gain access to essential resources and a network that is dedicated to meeting your needs. Whether it's access to priority services, education, health, employment, business opportunities, or community-driven support, Bharatiya Popular Party membership empowers you to stay informed and connected.
             </p>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button className="bg-blue-600">Join BPP Today</Button>
+            <Button className="bg-blue-600">Join Bharatiya Popular Party Today</Button>
           </div>
         </div>
       </div>

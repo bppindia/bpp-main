@@ -14,7 +14,7 @@ const MembershipPrivilege = () => {
         },
         {
             title: "Right to Stand for Election",
-            description: "Members who fulfill the eligibility criteria specified in the BPP constitution have the right to stand for election to any party position or office subject to the party's bylaws and election processes.",
+            description: "Members who fulfill the eligibility criteria specified in the Bharatiya Popular Party constitution have the right to stand for election to any party position or office subject to the party's bylaws and election processes.",
             icon: UserPlus
         },
         {
@@ -53,7 +53,7 @@ const MembershipPrivilege = () => {
         <Layout>
             <HeaderComponent
                 heading="Membership Privilege"
-                text="Rights and privileges of BPP members"
+                text="Rights and privileges of Bharatiya Popular Party members"
                 breadcrumbLinks={[
                     { label: "Home", href: "/" },
                     { label: "Membership", href: "/membership" },
@@ -110,7 +110,7 @@ const MembershipPrivilege = () => {
                             </p>
                         </div>
                         <Button size="lg" className="px-8">
-                            Join BPP Today
+                            Join Bharatiya Popular Party Today
                         </Button>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ export default function Newsletter() {
               Stay Informed with Bharatiya Popular Party
             </h3>
             <p className="mb-4 max-w-3xl text-md lg:text-md">
-              BPP is committed to keep you updated with the latest national news and important political
+            Bharatiya Popular Party is committed to keep you updated with the latest national news and important political
               developments. By subscribing, you'll receive timely and relevant updates straight to your inbox—
               no spam, just the facts and insights that matter most.
             </p>

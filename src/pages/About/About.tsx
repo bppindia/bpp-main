@@ -11,7 +11,7 @@ const About = () => {
           Empowering Communities Through Decentralization
           </h1>
           <p className="text-lg">
-           Objectives: BPP works on the concept of mass-connectivity. Our objective is to create connectivity among people at different levels of society and empower every individual by offering a transparent, and accessible way to contribute to the shaping of policies and decisions that impact our society. The Party intends to create an environment where every citizen has a voice, where transparency is the norm, and where decision-making is a collective process. The Party is aimed to ensure that all voices are heard, and all perspectives are considered.
+           Objectives: Bharatiya Popular Party works on the concept of mass-connectivity. Our objective is to create connectivity among people at different levels of society and empower every individual by offering a transparent, and accessible way to contribute to the shaping of policies and decisions that impact our society. The Party intends to create an environment where every citizen has a voice, where transparency is the norm, and where decision-making is a collective process. The Party is aimed to ensure that all voices are heard, and all perspectives are considered.
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-2">
@@ -23,7 +23,7 @@ const About = () => {
           <div className="flex flex-col justify-between gap-10 rounded-2xl bg-muted p-10">
             <p className="text-sm text-muted-foreground">OUR MISSION</p>
             <p className="text-lg font-medium">
-            BPP's mission is: "Our mission is to empower individuals by leveraging a decentralized society, giving the common man a central role in shaping the nation."
+            Bharatiya Popular Party's mission is: "Our mission is to empower individuals by leveraging a decentralized society, giving the common man a central role in shaping the nation."
             </p>
           </div>
         </div>
