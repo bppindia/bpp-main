@@ -1,5 +1,6 @@
 import { About } from '@/components/About';
 import Login from '@/components/form/loginForm/index';
+import BussinessCommunitySignup from '@/components/form/mutistepForm/bussinessCommunitySignup';
 import MultiStepForm from '@/components/form/mutistepForm/signupForm';
 import { useAuth } from '@/context/AuthContext';
 import CommitmentToProgress from '@/pages/About/CommitmentToProgress';
@@ -52,14 +53,12 @@ import PrivacyPolicy from '@/pages/PrivacyPolicy/PrivacyPolicy';
 import CustomerService from '@/pages/support/CustomerService';
 import TermsAndConditions from '@/pages/TermsAndCondtions/TermsAndCondtions';
 import Vision from '@/pages/Vision/Vision';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
-import BussinessCommunitySignup from '@/components/form/mutistepForm/bussinessCommunitySignup';
 
 const AppRoutes = () => {
     const { isAuthenticated } = useAuth();
     return (
-        <BrowserRouter>
             <Routes>
                 {/* Main Routes */}
                 <Route path="/" element={<Home />} />
@@ -161,7 +160,6 @@ const AppRoutes = () => {
                 {/* 404 Route */}
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
-        </BrowserRouter>
     );
 };
 
