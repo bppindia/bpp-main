@@ -55,6 +55,8 @@ import TermsAndConditions from '@/pages/TermsAndCondtions/TermsAndCondtions';
 import Vision from '@/pages/Vision/Vision';
 import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
+import MembershipFaq from '@/pages/Membership/MembershipFaq';
+import WingsPage from '@/pages/Membership/wings';
 
 const AppRoutes = () => {
     const { isAuthenticated } = useAuth();
@@ -87,9 +89,11 @@ const AppRoutes = () => {
 
                 {/* Membership Routes */}
                 <Route path="membership">
+                    <Route path="faq" element={<MembershipFaq />} />
                     <Route path="join-now" element={<Join />} />
                     <Route path="renewals" element={<MembershipRenewal />} />
-                    <Route path="membership-privilege" element={<MembershipPrivilege />} />
+                    <Route path="privileges" element={<MembershipPrivilege />} />
+                    <Route path="wings" element={<WingsPage />} />
                     <Route path="membership-term" element={<ActiveMembershipTerm />} />
                 </Route>
 

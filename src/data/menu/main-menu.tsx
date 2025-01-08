@@ -1,7 +1,6 @@
 import {
     Goal,
-    LayoutGrid,
-    LucideIcon,
+    LucideIcon
 } from 'lucide-react';
 
 type Submenu = {
@@ -26,17 +25,17 @@ type Group = {
 
 export function getMainMenuList(_pathname?: string): Group[] {
     return [
-        {
-            groupLabel: "",
-            menus: [
-                {
-                    href: "/",
-                    label: "Home",
-                    icon: LayoutGrid,
-                    submenus: []
-                }
-            ]
-        },
+        // {
+        //     groupLabel: "",
+        //     menus: [
+        //         {
+        //             href: "/",
+        //             label: "Home",
+        //             icon: LayoutGrid,
+        //             submenus: []
+        //         }
+        //     ]
+        // },
         {
             groupLabel: "",
             menus: [

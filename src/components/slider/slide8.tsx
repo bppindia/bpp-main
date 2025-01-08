@@ -1,34 +1,61 @@
 import { Church } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function Slide8() {
   return (
     <div className="relative w-full h-screen">
-      <div
+      <motion.div
+        initial={{ scale: 1.1, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1 }}
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url('/src/assets/images/banners/INDIA UPHOLD SECULARISM .jpeg')`,
         }}
       >
         <div className="absolute inset-0 bg-black/40"></div>
-      </div>
+      </motion.div>
 
       <div className="relative h-full flex flex-col justify-center px-8 md:px-16 lg:px-24">
-        <div className="flex items-center gap-4 mb-6 animate-in slide-in-from-left duration-1000">
-          <Church className="text-[#FF3A21]" size={48} />
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="flex items-center gap-4 mb-6"
+        >
+          <Church className="text-white" size={48} />
           <h2 className="text-white text-5xl font-bold">GOAL 5</h2>
-        </div>
+        </motion.div>
 
-        <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-in slide-in-from-right duration-1000">
+        <motion.h1
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+        >
           Uphold Secularism
-        </h1>
+        </motion.h1>
 
-        <p className="text-white text-xl max-w-2xl mb-8 animate-in fade-in duration-1000 delay-300">
+        <motion.p
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-white text-xl max-w-6xl mb-8"
+        >
           Bharatiya Popular Party firmly supports secularism and is opposed to the idea of a theocratic state. BPP will work to protect and promote religious harmony and ensure equal rights for all faiths.
-        </p>
+        </motion.p>
 
-        <button className="bg-[#FF3A21] hover:bg-[#FF3A21]/90 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors duration-300 w-fit animate-in slide-in-from-bottom duration-1000 delay-500">
-          Learn More
-        </button>
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+            <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+                        Learn More
+                    </button>
+        </motion.div>
       </div>
     </div>
   );

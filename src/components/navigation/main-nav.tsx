@@ -1,6 +1,10 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import bppLogo from "@/assets/logo/bppLogo.png";
+import { Button } from "@/components/ui/button";
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger
+} from "@/components/ui/collapsible";
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -16,15 +20,11 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger
-} from "@/components/ui/collapsible";
-import { ChevronDown, MenuIcon } from "lucide-react";
 import { getMainMenuList } from "@/data/menu/main-menu";
 import { cn } from "@/lib/utils";
+import { ChevronDown, MenuIcon } from "lucide-react";
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { LanguageToggle } from '../lang-toggle';
 import { ModeToggle } from '../mode-toggle';
 
@@ -61,11 +61,11 @@ const MainNav = () => {
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background">
-            <div className="container flex h-16 items-center justify-between px-4">
+            <div className="container flex h-16 items-center justify-between w-full max-w-full  md:max-w-7xl px-4">
                 {/* Logo */}
-                <Link to="/" className="flex items-center gap-2">
-                    <img src={bppLogo} className="h-14 w-14 object-contain" alt="BPP Logo" />
-                    <span className="text-xl font-bold font-oswald">Bharatiya Popular Party</span>
+                <Link to="/" className="flex items-center max-w-7xl gap-1">
+                    <img src={bppLogo} className="h-16 w-auto object-contain" alt="BPP Logo" />
+                    <span className="text-xl font-bold font-oswald md:text-xl sm:text-sm">Bharatiya Popular Party</span>
                 </Link>
 
                 {/* Desktop Navigation */}
@@ -77,12 +77,12 @@ const MainNav = () => {
                                     {menu.submenus?.length ? (
                                         <>
                                             <NavigationMenuTrigger>
-                                                <span className="flex items-center gap-1">
+                                                <span className="flex items-center text-xs">
                                                     {menu.label}
                                                 </span>
                                             </NavigationMenuTrigger>
                                             <NavigationMenuContent>
-                                                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
+                                                <ul className="grid w-[300px] gap-3 p-4 md:w-[650px] md:grid-cols-2">
                                                     {menu.submenus.map((submenu) => (
                                                         <ListItem
                                                             key={submenu.href}
@@ -97,7 +97,7 @@ const MainNav = () => {
                                     ) : (
                                         <Link
                                             to={menu.href}
-                                            className="inline-flex h-10 w-full items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50"
+                                            className="inline-flex h-8 w-full items-center justify-center rounded-md px-3 py-1 text-sm font-medium transition-colors hover:bg-accent  hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50"
                                         >
                                             {menu.label}
                                         </Link>
@@ -167,8 +167,8 @@ const MainNav = () => {
 
                 {/* Right Side Actions */}
                 <div className="hidden lg:flex items-center gap-2">
-                    <Button className="bg-blue-600 hover:bg-blue-700">
-                        <Link to="/auth/signup" className="text-white">Join BPP</Link>
+                    <Button className="bg-blue-600 hover:bg-blue-800">
+                        <Link to="/auth/signup" className="text-white text-xs">JOIN NOW</Link>
                     </Button>
                     <LanguageToggle />
                     <ModeToggle />

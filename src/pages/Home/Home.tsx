@@ -5,6 +5,7 @@ import { HomeSlider } from "@/components/slider/index";
 import VisionMission from "@/components/VisionMission";
 import { Helmet } from 'react-helmet-async';
 import Layout from "../../layout/Layout";
+import RecruitmentBanner from "@/components/others/become-partCard";
 
 function Home() {
   return (
@@ -32,9 +33,7 @@ function Home() {
         <PresidentMessage />
         <VisionMission />
         <CommunityContributionSection />
-        {/* <Join /> */}
-        {/* Decentralized Democracy, Centralized Progress */}
-        {/* add this button */}
+        <RecruitmentBanner />
         <Newsletter />
       </Layout>
     </>

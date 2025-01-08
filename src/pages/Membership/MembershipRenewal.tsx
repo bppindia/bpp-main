@@ -1,3 +1,4 @@
+import HeaderComponent from "@/components/HeaderComponent";
 import {
     Accordion,
     AccordionContent,
@@ -14,6 +15,16 @@ import { ArrowRight, CircleCheck, Clock } from "lucide-react";
 export default function MembershipRenewal() {
     return (
         <Layout>
+      <HeaderComponent
+        heading="Membership Renewals"
+        text="Membership Renewals"
+        breadcrumbLinks={[
+          { label: "Home", href: "/" },
+          { label: "Membership", href: "/membership" },
+          { label: "Renewals", href: "/membership/renewals" }
+        ]}
+        imgUrl={"null"} // Placeholder for header image
+      />
             <div className="min-h-screen bg-background">
                 {/* Header Section */}
                 <section className="py-16">
@@ -34,7 +45,7 @@ export default function MembershipRenewal() {
                     <div className="container">
                         <div className="mx-auto flex flex-col items-center gap-6 text-center">
                             <div className="flex flex-col items-stretch gap-6 md:flex-row">
-                                <Card className="flex w-80 flex-col justify-between text-left">
+                                <Card className="flex w-full flex-col justify-between text-left">
                                     <CardHeader>
                                         <CardTitle>
                                             <p>Primary Membership</p>
@@ -70,13 +81,13 @@ export default function MembershipRenewal() {
                                         </ul>
                                     </CardContent>
                                     <CardFooter className="mt-auto">
-                                        <Button className="w-full">
+                                        <Button className="bg-[#e85a32] hover:bg-[#e85a32] text-white w-full rounded-md">
                                             Get Primary Membership
                                             <ArrowRight className="ml-2 size-4" />
                                         </Button>
                                     </CardFooter>
                                 </Card>
-                                <Card className="flex w-80 flex-col justify-between text-left">
+                                <Card className="flex w-full flex-col justify-between text-left">
                                     <CardHeader>
                                         <CardTitle>
                                             <p>Active Membership</p>
@@ -116,7 +127,7 @@ export default function MembershipRenewal() {
                                         </ul>
                                     </CardContent>
                                     <CardFooter className="mt-auto">
-                                        <Button className="w-full">
+                                        <Button className="bg-[#e85a32] hover:bg-[#e85a32] text-white w-full rounded-md">
                                             Get Active Membership
                                             <ArrowRight className="ml-2 size-4" />
                                         </Button>
@@ -128,9 +139,9 @@ export default function MembershipRenewal() {
                 </section>
 
                 {/* Additional Information */}
-                <section className="py-12 bg-muted/50">
+                <section className="py-12">
                     <div className="container">
-                        <div className="max-w-3xl mx-auto">
+                        <div className="max-w-5xl mx-auto">
                             <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
                             <Accordion type="single" collapsible className="w-full">
                                 <AccordionItem value="item-1">
@@ -165,7 +176,10 @@ export default function MembershipRenewal() {
                                     <div>
                                         <h3 className="font-semibold mb-2">Need more information?</h3>
                                         <p className="text-muted-foreground">
-                                            Contact our membership support team at support@bpp.org or call us at +91 XXX XXX XXXX. We're here to help you understand your membership benefits and journey.
+                                            Contact our membership support team at support@bpp.org or call us at +91 9920200996.
+                                        </p>
+                                        <p className="text-muted-foreground">
+                                            We're here to help you understand your membership benefits and journey.
                                         </p>
                                     </div>
                                 </div>

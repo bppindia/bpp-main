@@ -9,7 +9,7 @@ import img1 from "@/assets/images/banners/NATIONAL INTEGRITY.jpeg";
 import img10 from "@/assets/images/banners/QUALITY EDUCATION.jpg";
 import img9 from "@/assets/images/banners/UPLIFTMENT OF FARMERS.jpeg";
 import HeaderComponent from '@/components/HeaderComponent';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import Layout from '@/layout/Layout';
 import { BadgeDollarSign, Building2, Church, Factory, GraduationCap, Heart, Scale, Sword, Users, Wheat } from 'lucide-react';
 import React, { FC } from 'react';
@@ -18,37 +18,37 @@ interface Goal {
   title: string;
   description: string;
   imgSrc: string;
-  icon: any; // Updated to accept the component reference
+  icon: any; 
 }
 
 const GoalCard: FC<Goal> = ({ title, description, imgSrc, icon }) => {
   return (
-    <Card
-      className="group transition-all duration-300 hover:scale-105 hover:shadow-2xl 
-      flex flex-col h-full overflow-hidden"
-    >
-      <CardHeader className="pb-1">
+    <Card className="flex flex-col h-full overflow-hidden bg-white border-none shadow-lg">
+      {/* Image Section */}
+      <div className="relative h-48 overflow-hidden">
+        <img
+          className="w-full h-full object-cover object-center"
+          src={imgSrc}
+          alt={title}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
+      </div>
+
+      <CardHeader className="space-y-4 pt-6">
         {/* Icon and Title */}
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-primary/10 text-primary rounded-full">
-            {React.createElement(icon, { size: 24 })}
+        <div className="flex items-center gap-4">
+          <div className="p-3 bg-primary/10 text-primary rounded-xl shadow-sm">
+            {React.createElement(icon, { size: 28 })}
           </div>
-          <h2 className="mb-1 text-lg text-left font-bold">{title}</h2>
+          <h2 className="text-md font-semibold text-left font-poppins tracking-tight">{title}</h2>
         </div>
       </CardHeader>
-      <CardContent className="text-left flex-grow">
-        <p className="leading-snug text-muted-foreground">{description}</p>
+
+      <CardContent className="flex-grow">
+        <p className="text-left text-sm leading-relaxed text-muted-foreground">
+          {description}
+        </p>
       </CardContent>
-      <CardFooter className="justify-end pb-0 pr-0 mt-auto">
-        <div className="w-full h-40">
-          <img
-            className="w-full h-full object-cover object-center rounded-tl-md 
-            transition-transform duration-300 group-hover:scale-110"
-            src={imgSrc}
-            alt={title}
-          />
-        </div>
-      </CardFooter>
     </Card>
   );
 };
@@ -131,7 +131,7 @@ const Goals = () => {
       />
       <section className="py-8">
         <div className="container">
-          <div className="mx-auto flex flex-col items-center gap-6 text-center">
+          <div className="mx-auto max-w-6xl flex flex-col items-center gap-6 text-center">
             <div className="grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {goals.map((goal, index) => (
                 <GoalCard

@@ -77,9 +77,7 @@ const MembershipPrivilege = () => {
                             </p>
                         </div>
                     </div>
-
                     <Separator className="my-8" />
-
                     <div className="grid gap-6 md:grid-cols-2">
                         {privileges.map((privilege, index) => (
                             <Card key={index} className="transition-all duration-300 hover:shadow-lg">
@@ -109,8 +107,8 @@ const MembershipPrivilege = () => {
                                 to its mission.
                             </p>
                         </div>
-                        <Button size="lg" className="px-8">
-                            Join Bharatiya Popular Party Today
+                        <Button className="bg-[#e85a32] hover:bg-[#e85a32] text-white px-6 py-2 rounded-full" size="lg">
+                            Join Now
                         </Button>
                     </div>
                 </div>

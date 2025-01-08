@@ -1,3 +1,4 @@
+import communtiyBackground from "@/assets/images/backgrounds/homepagebanner.png";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatePresence, motion } from "framer-motion";
@@ -50,14 +51,14 @@ const CommunityPage = ({ direction }: { direction: number }) => (
                         </p>
                         <Button
                             variant="destructive"
-                            className="bg-[#e4003b] hover:bg-[#c8003a] mt-4"
+                            className="bg-[#e85a32] hover:bg-[#e85a32] mt-4"
                         >
                             Join Our Community →
                         </Button>
                     </div>
-                    <div className="relative h-[400px] rounded-lg overflow-hidden">
+                    <div className="relative h-[340px] rounded-lg overflow-hidden">
                         <img
-                            src="https://placehold.co/800x600"
+                            src={communtiyBackground}
                             alt="Community members"
                             className="object-cover w-full h-full"
                         />
@@ -80,14 +81,14 @@ const CommonManPage = ({ direction }: { direction: number }) => (
                         </p>
                         <Button
                             variant="destructive"
-                            className="bg-[#e4003b] hover:bg-[#c8003a] mt-4"
+                            className="bg-[#e85a32] hover:bg-[#e85a32] mt-4"
                         >
                             Join Our Community →
                         </Button>
                     </div>
-                    <div className="relative h-[400px] rounded-lg overflow-hidden">
+                    <div className="relative h-[340px] rounded-lg overflow-hidden">
                         <img
-                            src="https://placehold.co/800x600"
+                            src="https://t3.ftcdn.net/jpg/06/55/37/80/360_F_655378099_vsRBlmC6U5Jl4JTMVjrD8tTI1piTf413.jpg"
                             alt="Common citizens"
                             className="object-cover w-full h-full"
                         />
@@ -110,14 +111,14 @@ const ProfessionalsPage = ({ direction }: { direction: number }) => (
                         </p>
                         <Button
                             variant="destructive"
-                            className="bg-[#e4003b] hover:bg-[#c8003a] mt-4"
+                            className="bg-[#e85a32] hover:bg-[#e85a32] mt-4"
                         >
                             Join Our Community →
                         </Button>
                     </div>
-                    <div className="relative h-[400px] rounded-lg overflow-hidden">
+                    <div className="relative h-[340px] rounded-lg overflow-hidden">
                         <img
-                            src="https://placehold.co/800x600"
+                            src="https://static.toiimg.com/thumb/msid-47318184,imgsize-21094,width-400,resizemode-4/47318184.jpg"
                             alt="Professional members"
                             className="object-cover w-full h-full"
                         />
@@ -140,14 +141,14 @@ const BusinessPage = ({ direction }: { direction: number }) => (
                         </p>
                         <Button
                             variant="destructive"
-                            className="bg-[#e4003b] hover:bg-[#c8003a] mt-4"
+                            className="bg-[#e85a32] hover:bg-[#e85a32] mt-4"
                         >
                             Join Our Community →
                         </Button>
                     </div>
-                    <div className="relative h-[400px] rounded-lg overflow-hidden">
+                    <div className="relative h-[340px] rounded-lg overflow-hidden">
                         <img
-                            src="https://placehold.co/800x600"
+                            src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnVzaW5lc3MlMjBjb21tdW5pdHl8ZW58MHx8MHx8fDA%3D"
                             alt="Business community members"
                             className="object-cover w-full h-full"
                         />
@@ -189,39 +190,39 @@ const CommunityContributionSection = () => {
     };
 
     return (
-        <div className="w-full max-w-7xl mx-auto p-4">
+        <div className="w-full max-w-7xl py-14 mx-auto p-4">
             <div className="flex flex-wrap gap-4 mb-8">
                 <Button
                     variant={currentPage === pages.community ? "destructive" : "secondary"}
-                    className={currentPage === pages.community ? "bg-[#e4003b] hover:bg-[#c8003a]" : ""}
+                    className={currentPage === pages.community ? "bg-[#e85a32] hover:bg-[#e85a32]" : ""}
                     onClick={() => navigateToPage(pages.community)}
                 >
                     Community Contribution
                 </Button>
                 <Button
                     variant={currentPage === pages.commonMan ? "destructive" : "secondary"}
-                    className={currentPage === pages.commonMan ? "bg-[#e4003b] hover:bg-[#c8003a]" : ""}
+                    className={currentPage === pages.commonMan ? "bg-[#e85a32] hover:bg-[#e85a32]" : ""}
                     onClick={() => navigateToPage(pages.commonMan)}
                 >
                     Common Man
                 </Button>
                 <Button
                     variant={currentPage === pages.professionals ? "destructive" : "secondary"}
-                    className={currentPage === pages.professionals ? "bg-[#e4003b] hover:bg-[#c8003a]" : ""}
+                    className={currentPage === pages.professionals ? "bg-[#e85a32] hover:bg-[#e85a32]" : ""}
                     onClick={() => navigateToPage(pages.professionals)}
                 >
                     Professionals
                 </Button>
                 <Button
                     variant={currentPage === pages.business ? "destructive" : "secondary"}
-                    className={currentPage === pages.business ? "bg-[#e4003b] hover:bg-[#c8003a]" : ""}
+                    className={currentPage === pages.business ? "bg-[#e85a32] hover:bg-[#e85a32]" : ""}
                     onClick={() => navigateToPage(pages.business)}
                 >
                     Business Community
                 </Button>
             </div>
 
-            <div className="relative h-[600px] overflow-hidden">
+            <div className="relative h-[340px] overflow-hidden">
                 <AnimatePresence mode="wait" initial={false}>
                     {renderPage()}
                 </AnimatePresence>
