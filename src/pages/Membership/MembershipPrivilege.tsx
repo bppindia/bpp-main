@@ -1,11 +1,12 @@
 import HeaderComponent from '@/components/HeaderComponent';
 import Layout from '@/layout/Layout';
 import { Users, Vote, UserPlus, FileText, Users2, ScrollText, Network, Award, Layout as LayoutIcon } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from 'react-router-dom';
 
 const MembershipPrivilege = () => {
+    const navigate = useNavigate()
     const privileges = [
         {
             title: "Right to Vote",
@@ -62,52 +63,67 @@ const MembershipPrivilege = () => {
                 imgUrl={"null"}
             />
 
-            <section className="py-12 bg-background">
-                <div className="container px-4 mx-auto max-w-7xl">
-                    <div className="flex items-center gap-4 mb-8">
-                        <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                            <Users className="h-6 w-6 text-primary" />
+            <section className="py-8 max-w-7xl mx-auto sm:py-12 bg-background dark:bg-slate-900 relative overflow-hidden">
+                {/* Background Pattern - adjusted for dark mode */}
+                <div className="absolute inset-0 pointer-events-none" />
+                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxIiBmaWxsPSIjZTg1YTMyIiBmaWxsLW9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==')] opacity-50 dark:opacity-30" />
+
+                <div className="container px-4 mx-auto max-w-7xl relative">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
+                        <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-[#e85a32] flex items-center justify-center shadow-lg">
+                            <Users className="h-7 w-7 sm:h-8 sm:w-8 text-white" />
                         </div>
                         <div>
-                            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-foreground">
+                            <h1 className="text-md sm:text-xl md:text-3xl font-bold tracking-tight text-foreground dark:text-white">
                                 Membership Privileges
                             </h1>
-                            <p className="text-lg text-muted-foreground mt-1">
+                            <p className="text-md sm:text-lg text-muted-foreground dark:text-gray-300 mt-2">
                                 Empowering Active Participation
                             </p>
                         </div>
                     </div>
-                    <Separator className="my-8" />
-                    <div className="grid gap-6 md:grid-cols-2">
+
+                    <Separator className="my-8 sm:my-12 bg-[#e85a32]/20 dark:bg-[#e85a32]/30" />
+
+                    <div className="space-y-8 sm:space-y-16">
                         {privileges.map((privilege, index) => (
-                            <Card key={index} className="transition-all duration-300 hover:shadow-lg">
-                                <CardContent className="pt-6">
-                                    <div className="flex gap-4">
-                                        <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                                            <privilege.icon className="h-5 w-5 text-primary" />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <h2 className="text-xl font-semibold tracking-tight">
-                                                {`${index + 1}. ${privilege.title}`}
-                                            </h2>
-                                            <p className="text-muted-foreground">
-                                                {privilege.description}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
+                            <div key={index} 
+                                className={`flex flex-col sm:flex-row gap-4 sm:gap-8 items-center sm:items-start
+                                    ${index % 2 === 0 ? 'sm:flex-row' : 'sm:flex-row-reverse'}
+                                    hover:transform hover:-translate-y-1 transition-all duration-300`}>
+                                <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-3xl 
+                                    bg-gradient-to-br from-[#e85a32] to-[#e85a32]/80 
+                                    flex items-center justify-center shadow-xl flex-shrink-0
+                                    ${index % 2 === 0 ? 'sm:rotate-3' : 'sm:-rotate-3'}`}>
+                                    <privilege.icon className="h-7 w-7 sm:h-7 sm:w-7 text-white" />
+                                </div>
+                                <div className="flex-1 space-y-3 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm p-4 sm:p-6 rounded-2xl shadow-sm">
+                                    <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-[#e85a32] dark:text-[#ff6b42] text-center sm:text-left">
+                                        {privilege.title}
+                                    </h2>
+                                    <p className="text-md sm:text-md text-muted-foreground dark:text-gray-300 leading-relaxed text-center sm:text-left">
+                                        {privilege.description}
+                                    </p>
+                                </div>
+                            </div>
                         ))}
                     </div>
 
-                    <div className="mt-12 text-center space-y-6">
-                        <div className="max-w-2xl mx-auto">
-                            <p className="text-lg text-muted-foreground">
+                    <div className="mt-12 sm:mt-16 text-center space-y-6 sm:space-y-8">
+                        <div className="max-w-2xl mx-auto px-4">
+                            <p className="text-md sm:text-lg text-muted-foreground dark:text-gray-300">
                                 By exercising these privileges, you are shaping the future of the party and contributing
                                 to its mission.
                             </p>
                         </div>
-                        <Button className="bg-[#e85a32] hover:bg-[#e85a32] text-white px-6 py-2 rounded-full" size="lg">
+                        <Button 
+                            className="bg-[#e85a32] hover:bg-[#e85a32]/90 text-white 
+                                px-8 sm:px-12 py-4 sm:py-4 rounded-md 
+                                text-sm sm:text-md font-semibold 
+                                w-full sm:w-auto" 
+                            size="lg" 
+                            onClick={()=> navigate('/auth/signup')}
+                            >
                             Join Now
                         </Button>
                     </div>

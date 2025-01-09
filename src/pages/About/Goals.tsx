@@ -1,13 +1,13 @@
-import img7 from "@/assets/images/banners/EMPLOYMENT & ECONOMIC GROWTH.jpeg";
-import img2 from "@/assets/images/banners/EQUAL OPPORTUNITY AND GENDER EQUALITY.jpeg";
-import img4 from "@/assets/images/banners/GAINST MUSCLE AND MONEY POWER.webp";
-import img3 from "@/assets/images/banners/GOOD HEALTH AND WELL-BEING.jpeg";
-import img5 from "@/assets/images/banners/INDIA UPHOLD SECULARISM .jpeg";
-import img6 from "@/assets/images/banners/INDUSTRIAL DEVELOPMENT & INFRASTRUCTURE.jpeg";
-import img8 from "@/assets/images/banners/JUSTICE, PEACE, CALM AND PROSPERITY.jpeg";
-import img1 from "@/assets/images/banners/NATIONAL INTEGRITY.jpeg";
-import img10 from "@/assets/images/banners/QUALITY EDUCATION.jpg";
-import img9 from "@/assets/images/banners/UPLIFTMENT OF FARMERS.jpeg";
+import img7 from "@/assets/images/backgrounds/sliders/EMPLOYMENT & ECONOMIC GROWTH.jpeg";
+import img2 from "@/assets/images/backgrounds/sliders/EQUAL OPPORTUNITY AND GENDER EQUALITY.jpeg";
+import img4 from "@/assets/images/backgrounds/sliders/GAINST MUSCLE AND MONEY POWER.webp";
+import img3 from "@/assets/images/backgrounds/sliders/GOOD HEALTH AND WELL-BEING.jpeg";
+import img5 from "@/assets/images/backgrounds/sliders/INDIA UPHOLD SECULARISM .jpeg";
+import img6 from "@/assets/images/backgrounds/sliders/INDUSTRIAL DEVELOPMENT & INFRASTRUCTURE.jpeg";
+import img8 from "@/assets/images/backgrounds/sliders/JUSTICE, PEACE, CALM AND PROSPERITY.jpeg";
+import img1 from "@/assets/images/backgrounds/sliders/NATIONAL INTEGRITY.jpeg";
+import img10 from "@/assets/images/backgrounds/sliders/QUALITY EDUCATION.jpg";
+import img9 from "@/assets/images/backgrounds/sliders/UPLIFTMENT OF FARMERS.jpeg";
 import HeaderComponent from '@/components/HeaderComponent';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import Layout from '@/layout/Layout';
@@ -23,7 +23,7 @@ interface Goal {
 
 const GoalCard: FC<Goal> = ({ title, description, imgSrc, icon }) => {
   return (
-    <Card className="flex flex-col h-full overflow-hidden bg-white border-none shadow-lg">
+    <Card className="flex flex-col h-full overflow-hidden bg-white dark:bg-gray-800 dark:border-gray-700 border">
       {/* Image Section */}
       <div className="relative h-48 overflow-hidden">
         <img
@@ -31,21 +31,21 @@ const GoalCard: FC<Goal> = ({ title, description, imgSrc, icon }) => {
           src={imgSrc}
           alt={title}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
+        <div className="absolute inset-0"></div>
       </div>
 
       <CardHeader className="space-y-4 pt-6">
         {/* Icon and Title */}
         <div className="flex items-center gap-4">
-          <div className="p-3 bg-primary/10 text-primary rounded-xl shadow-sm">
-            {React.createElement(icon, { size: 28 })}
+          <div className="p-3 bg-primary/10 text-primary rounded-xl shadow-sm dark:bg-primary/20">
+            {React.createElement(icon, { size: 28, className: "text-primary dark:text-white" })}
           </div>
-          <h2 className="text-md font-semibold text-left font-poppins tracking-tight">{title}</h2>
+          <h2 className="text-xl font-extrabold text-left font-poppins tracking-tight text-gray-900 dark:text-white">{title}</h2>
         </div>
       </CardHeader>
 
       <CardContent className="flex-grow">
-        <p className="text-left text-sm leading-relaxed text-muted-foreground">
+        <p className="text-left text-sm leading-relaxed text-muted-foreground dark:text-gray-300">
           {description}
         </p>
       </CardContent>

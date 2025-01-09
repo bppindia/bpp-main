@@ -1,34 +1,54 @@
-import bppflag from '@/assets/images/backgrounds/homepagebanner.png';
+import PartyPeoples from '@/assets/images/backgrounds/Party Peoples.png';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import bppLogo from "@/assets/logo/bppLogo.svg";
 
 export default function Newsletter() {
   return (
-    <>
-      <section
-        className="relative bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: `url(${bppflag})` }}
-      >
-        <div className="absolute inset-0 bg-black opacity-60"></div> {/* Black overlay with transparency */}
-        <div className="container py-8 md:py-11 relative z-10">
-          <div className="flex flex-col items-center text-center text-white">
-            <h3 className="mb-2 max-w-full text-2xl font-bold md:mb-2 md:text-4xl lg:mb-6">
+    <div 
+      className="w-full mx-auto p-7 bg-cover bg-center relative" 
+      style={{ backgroundImage: `url(${PartyPeoples})` }}
+    >
+      {/* Black overlay */}
+      <div className="absolute inset-0 bg-black opacity-50 rounded-xl"></div>
+      
+      <div className="relative rounded-xl max-w-7xl mx-auto flex flex-row">
+        {/* Left side - Content */}
+        <div className="flex-1 max-w-7xl pr-6">
+          <div className="text-white mb-6">
+            <p className="text-sm mb-2">Our newsletters</p>
+            <h2 className="text-2xl font-bold mb-4">
               Stay Informed with Bharatiya Popular Party
-            </h3>
-            <p className="mb-4 max-w-3xl text-md lg:text-md">
-            Bharatiya Popular Party is committed to keep you updated with the latest national news and important political
-              developments. By subscribing, you'll receive timely and relevant updates straight to your inbox—
-              no spam, just the facts and insights that matter most.
-            </p>
-            <div className="w-full md:max-w-lg">
-              <div className="flex flex-col justify-center gap-2 sm:flex-row">
-                <Input placeholder="Enter your email" className="text-black" />
-                <Button className="bg-blue-700">Subscribe</Button>
-              </div>
+            </h2>
+          </div>
+
+          <div className="text-white text-sm mb-6">
+            Get timely updates on national news and political developments. No spam, just the most relevant insights delivered to your inbox.
+          </div>
+          
+          <div className="space-y-4">
+            <div className="flex">
+              <Input 
+                type="email" 
+                placeholder="Enter your email" 
+                className="flex-1 rounded-r-none w-auto bg-white md:w-80 "
+              />
+              <Button 
+                className="rounded-l-none bg-[#e85a32] hover:bg-[#f5562a]"
+              >
+                Subscribe
+              </Button>
             </div>
           </div>
         </div>
-      </section>
-    </>
+        
+        {/* Right side - Illustration */}
+        <div className="hidden md:flex items-center justify-center flex-1">
+          <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center">
+            <img src={bppLogo} alt="Bharatiya Popular Party Logo" />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

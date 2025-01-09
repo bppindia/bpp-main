@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const RecruitmentBanner = () => {
+  const navigate = useNavigate()
   return (
     <Card className="relative mx-auto overflow-hidden w-full mb-8   max-w-7xl">
       {/* Background Image Container */}
@@ -30,6 +32,7 @@ const RecruitmentBanner = () => {
             {/* Call to Action Button */}
             <Button
               className="bg-[#e85a32] hover:bg-[#e85a32] text-white px-6 py-2 rounded-full"
+              onClick={()=> navigate('/auth/signup')}
             >
               Join Now
               <ArrowRight className="ml-2 h-4 w-4" />

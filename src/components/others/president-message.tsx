@@ -4,7 +4,7 @@ const PresidentMessage = () => {
         <div className="w-full max-w-5xl mx-auto font-poppins">
             <div className="p-8 md:p-12">
                 {/* Header */}
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-center mb-8 text-[#e85a32]">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-center mb-8 text-[#3b82f6]">
                     A Message from the Party's President
                 </h1>
 

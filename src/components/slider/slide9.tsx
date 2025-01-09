@@ -1,5 +1,6 @@
-import { Factory } from "lucide-react";
+import { BadgeDollarSign } from "lucide-react";
 import { motion } from "framer-motion";
+import Employment from '@/assets/images/backgrounds/sliders/EMPLOYMENT & ECONOMIC GROWTH.jpeg';
 
 export function Slide9() {
   return (
@@ -10,12 +11,11 @@ export function Slide9() {
         transition={{ duration: 1 }}
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('/src/assets/images/banners/INDUSTRIAL DEVELOPMENT & INFRASTRUCTURE.jpeg')`,
+          backgroundImage: `url(${Employment})`,
         }}
       >
         <div className="absolute inset-0 bg-black/40"></div>
       </motion.div>
-
       <div className="relative h-full flex flex-col justify-center px-8 md:px-16 lg:px-24">
         <motion.div
           initial={{ x: -100, opacity: 0 }}
@@ -23,17 +23,16 @@ export function Slide9() {
           transition={{ duration: 0.8 }}
           className="flex items-center gap-4 mb-6"
         >
-          <Factory className="text-white" size={48} />
-          <h2 className="text-white text-5xl font-bold">GOAL 6</h2>
+          <BadgeDollarSign className="text-white" size={48} />
+          <h2 className="text-white text-5xl font-bold">GOAL 7</h2>
         </motion.div>
-
         <motion.h1
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
         >
-          Industrial Development and Infrastructure
+          Employment and Economic Growth
         </motion.h1>
 
         <motion.p
@@ -42,7 +41,7 @@ export function Slide9() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-white text-xl max-w-6xl mb-8"
         >
-          The goal of the BPP is to promote industrial development and build world-class infrastructure to drive economic development. By modernizing industries, encouraging research and development and enhancing transportation, energy and digital networks, the party aims to create a sustainable competitive economy.
+          BPP is committed to promoting decent work and sustained economic growth by creating job opportunities, ensuring fair wages and improving working conditions for all citizens. The party aims to empower individuals particularly in rural and marginalized communities through skill development, entrepreneurship, and access to employment.
         </motion.p>
 
         <motion.div

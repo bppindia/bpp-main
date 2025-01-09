@@ -14,35 +14,38 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 const VisionMission = () => {
     return (
-        <section className="w-full container py-8 md:py-10">
+        <section className="max-w-7xl container py-8 md:py-10">
             <div className="container px-4 mx-auto">
                 <Tabs defaultValue="vision" className="w-full mx-auto">
                     <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm shadow-lg rounded-lg p-1">
                         <TabsTrigger
                             value="vision"
-                            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300"
+                            className="data-[state=active]:bg-[#e85a32] data-[state=active]:text-primary-foreground transition-all duration-300"
                         >
                             Vision
                         </TabsTrigger>
                         <TabsTrigger
                             value="mission"
-                            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300"
+                            className="data-[state=active]:bg-[#e85a32] data-[state=active]:text-primary-foreground transition-all duration-300"
                         >
                             Mission
                         </TabsTrigger>
                     </TabsList>
 
+
                     <TabsContent value="vision" className="mt-8">
                         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
                             <div className="order-2 lg:order-1">
                                 <div>
-                                    <span className="inline-block rounded-lg bg-gradient-to-r from-gray-900 to-gray-700 px-3 py-2 text-xs text-gray-50 dark:from-gray-50 dark:to-gray-200 dark:text-gray-900 shadow-md">
+                                    <span className="inline-block rounded-lg bg-[#e85a32] px-3 py-2 text-xs text-gray-50 dark:text-gray-900 shadow-md">
                                         Vision Statement
                                     </span>
+
+
                                     <h2 className="mt-4 scroll-m-20 font-bold border-b pb-4 text-3xl tracking-tight transition-colors first:mt-0 sm:text-4xl xl:text-5xl">
                                         Vision of{' '}
                                         <span className="block mt-2">
-                                            <span className="text-red-500 animate-in fade-in duration-500">Bharatiya</span>{' '}
+                                            <span className="text-[#e85a32] animate-in fade-in duration-500">Bharatiya</span>{' '}
                                             <span className="text-blue-500 animate-in fade-in duration-700">Popular</span>{' '}
                                             <span className="animate-in fade-in duration-1000">Party</span>
                                         </span>
@@ -75,29 +78,29 @@ const VisionMission = () => {
                             {/* Vision features section */}
                             <div className="space-y-2 lg:space-y-2 order-1 lg:order-2">
                                 {[
-                                   {
-                                    icon: <UsersRound />, // Represents grassroots and community
-                                    title: "Decentralized Governance",
-                                    description: "Party believes in decentralisation by shifting power from the center to the grassroots so that the decisions are made by those who are going to be affected the most and the policy making can be more relevant, effective, and responsive to local needs."
-                                },
-                                {
-                                    icon: <GraduationCapIcon />, // Represents knowledge and federalism
-                                    title: "Commitment to Federalism",
-                                    description: "Party is committed to federalism means recognizing and respecting the diversity of our nation. We value a system where regional and local governments have the authority to manage their affairs to best serve their communities, while still remaining united in our common national goals."
-                                },
-                                {
-                                    icon: <ShieldCheckIcon />, // Represents balance and integrity in governance
-                                    title: "Balanced Democracy",
-                                    description: "Party’s idea of true democracy is about balance and cooperation. We strongly believe in power-sharing and this structure involves multiple stakeholders like, central, regional, and local governments and ensures that no single group holds all the power."
-                                }
-                                
+                                    {
+                                        icon: <UsersRound />, // Represents grassroots and community
+                                        title: "Decentralized Governance",
+                                        description: "Party believes in decentralisation by shifting power from the center to the grassroots so that the decisions are made by those who are going to be affected the most and the policy making can be more relevant, effective, and responsive to local needs."
+                                    },
+                                    {
+                                        icon: <GraduationCapIcon />, // Represents knowledge and federalism
+                                        title: "Commitment to Federalism",
+                                        description: "Party is committed to federalism means recognizing and respecting the diversity of our nation. We value a system where regional and local governments have the authority to manage their affairs to best serve their communities, while still remaining united in our common national goals."
+                                    },
+                                    {
+                                        icon: <ShieldCheckIcon />, // Represents balance and integrity in governance
+                                        title: "Balanced Democracy",
+                                        description: "Party’s idea of true democracy is about balance and cooperation. We strongly believe in power-sharing and this structure involves multiple stakeholders like, central, regional, and local governments and ensures that no single group holds all the power."
+                                    }
+
                                 ].map((feature, index) => (
                                     <div
                                         key={index}
                                         className="flex p-4 rounded-xl hover:bg-white/50 dark:hover:bg-gray-800/50 transition-all duration-300 transform hover:-translate-y-1"
                                     >
-                                        <span className="flex-shrink-0 inline-flex justify-center items-center w-[46px] h-[46px] rounded-full border bg-primary text-primary-foreground shadow-lg">
-                                            {React.cloneElement(feature.icon, { className: "flex-shrink-0 w-5 h-5" })}
+                                        <span className="flex-shrink-0 inline-flex justify-center items-center w-[46px] h-[46px] rounded-full border bg-[#e85a32] text-white shadow-lg">
+                                            {React.cloneElement(feature.icon, { className: "flex-shrink-0 w-5 h-5 text-white" })}
                                         </span>
                                         <div className="ms-5 sm:ms-8">
                                             <h3 className="text-base sm:text-lg font-semibold">
@@ -143,8 +146,8 @@ const VisionMission = () => {
                                         key={index}
                                         className="flex p-4 rounded-xl hover:bg-white/50 dark:hover:bg-gray-800/50 transition-all duration-300 transform hover:-translate-y-1"
                                     >
-                                        <span className="flex-shrink-0 inline-flex justify-center items-center w-[46px] h-[46px] rounded-full border bg-primary text-primary-foreground shadow-lg">
-                                            {React.cloneElement(feature.icon, { className: "flex-shrink-0 w-5 h-5" })}
+                                        <span className="flex-shrink-0 inline-flex justify-center items-center w-[46px] h-[46px] rounded-full border bg-[#e85a32] text-white shadow-lg">
+                                            {React.cloneElement(feature.icon, { className: "flex-shrink-0 w-5 h-5 text-white" })}
                                         </span>
                                         <div className="ms-5 sm:ms-8">
                                             <h3 className="text-base sm:text-lg font-semibold">
@@ -159,13 +162,14 @@ const VisionMission = () => {
                             </div>
                             {/* Mission content */}
                             <div>
-                                <span className="inline-block rounded-lg bg-gradient-to-r from-gray-900 to-gray-700 px-3 py-2 text-xs text-gray-50 dark:from-gray-50 dark:to-gray-200 dark:text-gray-900 shadow-md">
-                                    Mission Statement
-                                </span>
+                            <span className="inline-block rounded-lg bg-[#e85a32] px-3 py-2 text-xs text-white shadow-md">
+    Mission Statement
+</span>
+                                
                                 <h2 className="mt-4 scroll-m-20 font-bold border-b pb-4 text-3xl tracking-tight transition-colors first:mt-0 sm:text-4xl xl:text-5xl">
                                     Mission of{' '}
                                     <span className="block mt-2">
-                                        <span className="text-red-500 animate-in fade-in duration-500">Bharatiya</span>{' '}
+                                        <span className="text-[#e85a32] animate-in fade-in duration-500">Bharatiya</span>{' '}
                                         <span className="text-blue-500 animate-in fade-in duration-700">Popular</span>{' '}
                                         <span className="animate-in fade-in duration-1000">Party</span>
                                     </span>

@@ -1,5 +1,6 @@
-import { Users } from "lucide-react";
+import { Heart } from "lucide-react";
 import { motion } from "framer-motion";
+import GoodHealth from '@/assets/images/backgrounds/sliders/GOOD HEALTH AND WELL-BEING.jpeg';
 
 export function Slide5() {
   return (
@@ -10,7 +11,7 @@ export function Slide5() {
         transition={{ duration: 1 }}
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('/src/assets/images/banners/EQUAL OPPORTUNITY AND GENDER EQUALITY.jpeg')`,
+          backgroundImage: `url(${GoodHealth})`,
         }}
       >
         <div className="absolute inset-0 bg-black/40"></div>
@@ -23,8 +24,8 @@ export function Slide5() {
           transition={{ duration: 0.8 }}
           className="flex items-center gap-4 mb-6"
         >
-          <Users className="text-white" size={48} />
-          <h2 className="text-white text-5xl font-bold">GOAL 2</h2>
+          <Heart className="text-white" size={48} />
+          <h2 className="text-white text-5xl font-bold">GOAL 3</h2>
         </motion.div>
 
         <motion.h1
@@ -33,7 +34,7 @@ export function Slide5() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
         >
-          Equal Opportunity and Gender Equality
+          Good Health and Well-Being
         </motion.h1>
 
         <motion.p
@@ -42,7 +43,7 @@ export function Slide5() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-white text-xl max-w-6xl mb-8"
         >
-          Bharatiya Popular Party is committed to the task of building a developed democratic India based on the principle of equal opportunity to all citizens. The party will lay special emphasis on improving the condition of socially and economically disadvantaged sections of society.
+          Bharatiya Popular Party will work to provide quality health facilities to all citizens, ensuring that every individual has access to health services that improve their quality of life.
         </motion.p>
 
         <motion.div
@@ -53,8 +54,8 @@ export function Slide5() {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
-                        Learn More
-                    </button>
+            Learn More
+          </button>
         </motion.div>
       </div>
     </div>

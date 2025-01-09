@@ -1,37 +1,63 @@
+import { Building2 } from "lucide-react";
+import { motion } from "framer-motion";
+import NationalIntegrity from '@/assets/images/backgrounds/sliders/NATIONAL INTEGRITY.jpeg';
+
 export function Slide3() {
-  return (
-    <div className="relative w-full h-screen">
-      <div
-        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?auto=format&fit=crop&q=80')`,
-        }}
-      >
-        <div className="absolute inset-0 bg-black/40"></div>
-      </div>
+    return (
+        <div className="relative w-full h-screen">
+            <motion.div
+                initial={{ scale: 1.1, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1 }}
+                className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+                style={{
+                    backgroundImage: `url(${NationalIntegrity})`,
+                  }}
+            >
+                <div className="absolute inset-0 bg-black/40"></div>
+            </motion.div>
 
-      <div className="relative h-full flex flex-col justify-center px-8 md:px-16 lg:px-24">
-        <div className="max-w-3xl">
-          <h1 className="text-white text-4xl md:text-5xl lg:text-7xl font-bold mb-8 animate-in slide-in-from-left duration-1000">
-            JOIN THE MOVEMENT
-          </h1>
+            <div className="relative h-full flex flex-col justify-center px-8 md:px-16 lg:px-24">
+                <motion.div
+                    initial={{ x: -100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.8 }}
+                    className="flex items-center gap-4 mb-6"
+                >
+                    <Building2 className="text-white" size={48} />
+                    <h2 className="text-white text-5xl font-bold">GOAL 1</h2>
+                </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 animate-in fade-in duration-1000 delay-300">
-            <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg">
-              <h3 className="text-white text-2xl font-semibold mb-2">Volunteer</h3>
-              <p className="text-white/90">Make a difference in your community by joining our volunteer programs</p>
+                <motion.h1
+                    initial={{ x: 100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+                >
+                    National Integrity
+                </motion.h1>
+
+                <motion.p
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    className="text-white text-xl max-w-6xl mb-8"
+                >
+                    Bharatiya Popular Party shall bear true faith and allegiance to the constitution of India as by law established, and to the principles of socialism, secularism and democracy and would uphold the sovereignty, unity and integrity of India.
+                </motion.p>
+
+                <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.6 }}
+                >
+                    <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+                        Learn More
+                    </button>
+                </motion.div>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg">
-              <h3 className="text-white text-2xl font-semibold mb-2">Donate</h3>
-              <p className="text-white/90">Support our initiatives through contributions and help us create change</p>
-            </div>
-          </div>
-
-          <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors duration-300 animate-in slide-in-from-bottom duration-1000 delay-500">
-            Get Involved Today
-          </button>
         </div>
-      </div>
-    </div>
-  );
+    );
 }

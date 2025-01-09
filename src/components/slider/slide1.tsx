@@ -1,4 +1,4 @@
-import bppBackground from '@/assets/images/backgrounds/background.png';
+import WelcomeBanner from '@/assets/images/backgrounds/sliders/WELCOME TO BPP.png';
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ export function Slide1() {
         transition={{ duration: 1 }}
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url(${bppBackground})`,
+          backgroundImage: `url(${WelcomeBanner})`,
         }}
       >
         <div className="absolute inset-0 bg-black/40"></div>

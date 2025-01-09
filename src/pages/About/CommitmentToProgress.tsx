@@ -51,13 +51,13 @@ const CommitmentToProgress = () => {
                 ]}
                 imgUrl={commitment}
             />
-            <section className="w-full py-12 max-w-7xl mx-auto bg-background">
+            <section className="max-w-7xl py-12 mx-auto bg-background">
                 <div className="container px-4 mx-auto">
                     <div className="space-y-4">
-                        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl text-foreground">
+                        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-foreground">
                             Commitment to Progress
-                        </h1>
-                        <p className="text-lg text-muted-foreground">
+                        </h1>   
+                        <p className="text-md text-muted-foreground">
                             Our dedication to fostering positive change and sustainable development
                         </p>
                     </div>

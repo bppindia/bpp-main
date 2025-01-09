@@ -1,5 +1,6 @@
-import { Heart } from "lucide-react";
+import { Sword } from "lucide-react";
 import { motion } from "framer-motion";
+import MoneyPower from '@/assets/images/backgrounds/sliders/GAINST MUSCLE AND MONEY POWER.webp';
 
 export function Slide6() {
   return (
@@ -10,7 +11,7 @@ export function Slide6() {
         transition={{ duration: 1 }}
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('/src/assets/images/banners/GOOD HEALTH AND WELL-BEING.jpeg')`,
+          backgroundImage: `url(${MoneyPower})`,
         }}
       >
         <div className="absolute inset-0 bg-black/40"></div>
@@ -23,8 +24,8 @@ export function Slide6() {
           transition={{ duration: 0.8 }}
           className="flex items-center gap-4 mb-6"
         >
-          <Heart className="text-white" size={48} />
-          <h2 className="text-white text-5xl font-bold">GOAL 3</h2>
+          <Sword className="text-white" size={48} />
+          <h2 className="text-white text-5xl font-bold">GOAL 4</h2>
         </motion.div>
 
         <motion.h1
@@ -33,7 +34,7 @@ export function Slide6() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
         >
-          Good Health and Well-Being
+          Against Muscle and Money Power
         </motion.h1>
 
         <motion.p
@@ -42,7 +43,7 @@ export function Slide6() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-white text-xl max-w-6xl mb-8"
         >
-          Bharatiya Popular Party will work to provide quality health facilities to all citizens, ensuring that every individual has access to health services that improve their quality of life.
+          Bharatiya Popular Party will work against the misuse of money and muscle power in democratic politics.
         </motion.p>
 
         <motion.div

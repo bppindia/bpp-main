@@ -1,5 +1,6 @@
-import { Sword } from "lucide-react";
+import { Church } from "lucide-react";
 import { motion } from "framer-motion";
+import Secularism from '@/assets/images/backgrounds/sliders/INDIA UPHOLD SECULARISM .jpeg';
 
 export function Slide7() {
   return (
@@ -10,7 +11,7 @@ export function Slide7() {
         transition={{ duration: 1 }}
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('/src/assets/images/banners/GAINST MUSCLE AND MONEY POWER.webp')`,
+          backgroundImage: `url(${Secularism})`,
         }}
       >
         <div className="absolute inset-0 bg-black/40"></div>
@@ -23,8 +24,8 @@ export function Slide7() {
           transition={{ duration: 0.8 }}
           className="flex items-center gap-4 mb-6"
         >
-          <Sword className="text-white" size={48} />
-          <h2 className="text-white text-5xl font-bold">GOAL 4</h2>
+          <Church className="text-white" size={48} />
+          <h2 className="text-white text-5xl font-bold">GOAL 5</h2>
         </motion.div>
 
         <motion.h1
@@ -33,7 +34,7 @@ export function Slide7() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
         >
-          Against Muscle and Money Power
+          Uphold Secularism
         </motion.h1>
 
         <motion.p
@@ -42,7 +43,7 @@ export function Slide7() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-white text-xl max-w-6xl mb-8"
         >
-          Bharatiya Popular Party will work against the misuse of money and muscle power in democratic politics.
+          Bharatiya Popular Party firmly supports secularism and is opposed to the idea of a theocratic state. BPP will work to protect and promote religious harmony and ensure equal rights for all faiths.
         </motion.p>
 
         <motion.div
@@ -52,9 +53,9 @@ export function Slide7() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
-            Learn More
-          </button>
+            <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+                        Learn More
+                    </button>
         </motion.div>
       </div>
     </div>

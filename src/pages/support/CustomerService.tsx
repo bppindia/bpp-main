@@ -1,16 +1,16 @@
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import Layout from "@/layout/Layout";
-import { Mail, Phone, MessageSquare, HelpCircle } from "lucide-react";
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import Layout from "@/layout/Layout";
+import { HelpCircle, Mail, MessageSquare, Phone } from "lucide-react";
 
 export default function CustomerService() {
     return (
@@ -51,7 +51,7 @@ export default function CustomerService() {
                             <h3 className="font-semibold text-lg">Call Us</h3>
                             <p className="text-muted-foreground">Available Mon-Fri, 9am-6pm</p>
                             <Button variant="outline" className="w-full">
-                                +91 XXX XXX XXXX
+                                +91 9920200996
                             </Button>
                         </CardContent>
                     </Card>

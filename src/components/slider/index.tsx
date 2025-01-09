@@ -2,17 +2,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useCallback, useEffect, useState } from "react";
 import { Slide1 } from "./slide1";
-import { Slide10 } from "./slide10";
-import { Slide11 } from "./slide11";
-import { Slide12 } from "./slide12";
-import { Slide13 } from "./slide13";
 import { Slide2 } from "./slide2";
+import { Slide3 } from "./slide3";
 import { Slide4 } from "./slide4";
 import { Slide5 } from "./slide5";
 import { Slide6 } from "./slide6";
 import { Slide7 } from "./slide7";
 import { Slide8 } from "./slide8";
 import { Slide9 } from "./slide9";
+import { Slide10 } from "./slide10";
+import { Slide11 } from "./slide11";
+import { Slide12 } from "./slide12";
 
 const SLIDE_DURATION = 5000;
 
@@ -37,7 +37,7 @@ export function HomeSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const slides = [Slide1, Slide2, Slide4, Slide5, Slide6, Slide7, Slide8, Slide9, Slide10, Slide11, Slide12, Slide13];
+  const slides = [Slide1, Slide2, Slide3, Slide4, Slide5, Slide6, Slide7, Slide8, Slide9, Slide10, Slide11, Slide12];
 
   const nextSlide = useCallback(() => {
     setDirection(1);
