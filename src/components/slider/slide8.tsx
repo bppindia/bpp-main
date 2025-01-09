@@ -1,8 +1,11 @@
 import { Factory } from "lucide-react";
 import { motion } from "framer-motion";
 import IndustryDevelopment from '@/assets/images/backgrounds/sliders/INDUSTRIAL DEVELOPMENT & INFRASTRUCTURE.jpeg';
+import { useNavigate } from "react-router-dom";
 
 export function Slide8() {
+  const navigate = useNavigate()
+
   return (
     <div className="relative w-full h-screen">
       <motion.div
@@ -53,7 +56,9 @@ export function Slide8() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+          <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+            onClick={()=> navigate('/about/bpp-goals')}
+          >
             Learn More
           </button>
         </motion.div>

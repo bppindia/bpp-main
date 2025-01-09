@@ -1,24 +1,37 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { ArrowUpToLine } from "lucide-react";
 
 export const ScrollToTop = () => {
   const [showTopBtn, setShowTopBtn] = useState(false);
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
+    // Automatically scroll to top on route change
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => {
       if (window.scrollY > 400) {
         setShowTopBtn(true);
       } else {
         setShowTopBtn(false);
       }
-    });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const goToTop = () => {
     window.scroll({
       top: 0,
       left: 0,
+      behavior: "smooth",
     });
   };
 

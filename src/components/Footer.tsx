@@ -5,6 +5,7 @@ import { FacebookIcon, InstagramIcon, LinkedinIcon, TwitterIcon } from 'lucide-r
 import { Link } from 'react-router-dom';
 import { LanguageToggle } from './lang-toggle';
 import { ModeToggle } from './mode-toggle';
+import { LoginToggle } from './login-toggle';
 
 const sections = [
   {
@@ -113,10 +114,10 @@ const Footer = () => {
                   </h3>
                   <ul className="space-y-2 text-xs text-muted-foreground text-center md:text-left">
                     <li className="font-normal hover:text-primary hover:underline">
-                      <Link to="/customer-support">BPP Member Services</Link>
+                      <Link to="/customer-support">Member Services</Link>
                     </li>
                     <li className="font-normal hover:text-primary hover:underline">
-                      <a href="#">BPP APP Technical Support</a>
+                      <a href="#">APP Technical Support</a>
                     </li>
                     <li className="font-normal hover:text-primary hover:underline">
                       <a href="#">Accessibility</a>
@@ -136,6 +137,7 @@ const Footer = () => {
               <div className='flex items-center space-x-4'>
                 <LanguageToggle />
                 <ModeToggle />
+                <LoginToggle />
               </div>
 
               {/* Social Media Icons */}

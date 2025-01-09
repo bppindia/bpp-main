@@ -1,8 +1,10 @@
 import { Church } from "lucide-react";
 import { motion } from "framer-motion";
 import Secularism from '@/assets/images/backgrounds/sliders/INDIA UPHOLD SECULARISM .jpeg';
+import { useNavigate } from "react-router-dom";
 
 export function Slide7() {
+  const navigate = useNavigate()
   return (
     <div className="relative w-full h-screen">
       <motion.div
@@ -53,7 +55,9 @@ export function Slide7() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-            <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+            <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+            onClick={()=> navigate('/about/bpp-goals')}
+            >
                         Learn More
                     </button>
         </motion.div>

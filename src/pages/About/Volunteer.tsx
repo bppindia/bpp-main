@@ -3,8 +3,10 @@ import HeaderComponent from "@/components/HeaderComponent";
 import { Button } from "@/components/ui/button";
 import Layout from "@/layout/Layout";
 import { Building2, Heart, Scale, Users } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 const Volunteer = () => {
+  const navigate = useNavigate()
   return (
     <Layout>
       <HeaderComponent
@@ -29,15 +31,17 @@ const Volunteer = () => {
               <p className="text-sm mb-3 text-gray-800 dark:text-gray-300">
                 The <span className="font-semibold">Bharatiya Popular Party (BPP)</span> invites you to join us as a <span className="font-semibold">volunteer</span> and contribute to building a stronger and prosperous Nation.
               </p>
-              <p className="text-sm mb-3 text-gray-800 dark:text-gray-300">
-                Should share and commit to the principles of <span className="font-semibold">democracy, secularism, and socialism</span>.
-              </p>
-              <p className="text-sm mb-3 text-gray-800 dark:text-gray-300">
-                Be a part of initiatives that uplift marginalized sections of society.
-              </p>
-              <p className="text-sm mb-3 text-gray-800 dark:text-gray-300">
-                Work towards for equal opportunities and improving access to education, healthcare and employment.
-              </p>
+                <ul className="list-disc list-inside text-sm mb-3 text-gray-800 dark:text-gray-300">
+                <li className="mb-2">
+                  Should share and commit to the principles of <span className="font-semibold">democracy, secularism, and socialism</span>.
+                </li>
+                <li className="mb-2">
+                  Be a part of initiatives that uplift marginalized sections of society.
+                </li>
+                <li className="mb-2">
+                  Work towards equal opportunities and improving access to education, healthcare, and employment.
+                </li>
+                </ul>
               <Button className="bg-[#e75a33] text-white hover:bg-[#e75a33] text-lg px-5 py-4">
                 Join Now
               </Button>
@@ -101,7 +105,9 @@ const Volunteer = () => {
             <p className="text-md mb-8 text-white-800 dark:text-gray-300">
               Your support holds the power to drive India’s development. Let us work together towards a world full of opportunities for growth and progress. Together, we can rebuild our nation and make it a better place to live, work, and thrive.
             </p>
-            <Button className="bg-white text-black hover:bg-white  hover:text-[#e75a33] text-sm px-4 py-3">
+            <Button className="bg-white text-black hover:bg-white  hover:text-[#e75a33] text-sm px-4 py-3"
+            onClick={()=> navigate('/membership/wings')}
+            >
               Become a Volunteer
             </Button>
           </div>

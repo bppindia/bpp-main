@@ -41,7 +41,7 @@ const PresidentMessage = () => {
 
                         {/* Signature Section */}
                         <div>
-                            <p className="text-xl font-semibold text-[#e85a32]">- Shri Jaheer Bukhari</p>
+                            <p className="text-xl font-semibold text-[#e85a32]">- Jaheer Bukhari</p>
                         </div>
                     </div>
                 </div>

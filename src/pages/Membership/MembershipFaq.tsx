@@ -54,7 +54,7 @@ export default function MembershipFaq() {
                 <CardTitle>Resources</CardTitle>
               </CardHeader>
               <CardContent>
-                <Button className="bg-[#e85a32] hover:bg-[#e85a32] text-white px-6 py-2 rounded-md">
+                <Button className="bg-[#e85a32] hover:bg-[#e85a32] text-white px-6 py-2 rounded-md" onClick={()=> navigate('/community-contribution/introduction')}>
                   View Resources <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
               </CardContent>
