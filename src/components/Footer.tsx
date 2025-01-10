@@ -53,6 +53,14 @@ const sections = [
     ],
   },
   {
+    title: 'Member Support',
+    links: [
+      { name: 'Member Services', href: '/customer-suppor' },
+      { name: 'APP Technical Support', href: '#' },
+      { name: 'Accessibility', href: '#' },
+    ],
+  },
+  {
     title: 'Others',
     links: [
       { name: 'Dashboard', href: '/dashboard/home' },
@@ -106,24 +114,6 @@ const Footer = () => {
                     </ul>
                   </div>
                 ))}
-
-                {/* Member Support Section */}
-                <div className="mx-auto w-full">
-                  <h3 className="mb-2 text-xs font-bold dark:text-white text-center md:text-left">
-                    Member Support
-                  </h3>
-                  <ul className="space-y-2 text-xs text-muted-foreground text-center md:text-left">
-                    <li className="font-normal hover:text-primary hover:underline">
-                      <Link to="/customer-support">Member Services</Link>
-                    </li>
-                    <li className="font-normal hover:text-primary hover:underline">
-                      <a href="#">APP Technical Support</a>
-                    </li>
-                    <li className="font-normal hover:text-primary hover:underline">
-                      <a href="#">Accessibility</a>
-                    </li>
-                  </ul>
-                </div>
               </div>
             </div>
           </div>
@@ -186,7 +176,7 @@ const Footer = () => {
           {/* Bottom Section - Responsive Layout */}
           <section className='grid grid-cols-1 md:grid-cols-12 my-3 text-center md:text-left'>
             <p className="text-xs text-muted-foreground md:col-span-4">
-              © 2024 Bharatiya Popular Party. All rights reserved.
+              © 2025 Bharatiya Popular Party. All rights reserved.
             </p>
             <div className='text-xs md:col-span-8 mt-4 md:mt-0'>
               <ul className="text-muted-foreground flex flex-wrap justify-center md:justify-around w-full md:w-3/4 mx-auto space-x-3 md:space-x-0">

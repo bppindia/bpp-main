@@ -60,6 +60,8 @@ import { ProtectedRoute } from './ProtectedRoute';
 import AutoScrollToTop from '@/components/auto-scroll-to-top';
 import CodeOfConduct from '@/pages/Membership/CodeOfConduct';
 import Complaints from '@/pages/Membership/Complaints';
+import VendorDisclosure from '@/pages/BusinessCommunity/VendorDisclosure';
+import SupplierInclusion from '@/pages/BusinessCommunity/SupplierInclusion';
 
 const AppRoutes = () => {
     const { isAuthenticated } = useAuth();
@@ -108,7 +110,9 @@ const AppRoutes = () => {
             {/* Business Community Routes */}
             <Route path="business-community">
                 <Route path="vendor-suppliers" element={<VendorSupplier />} />
+                <Route path="disclosure" element={<VendorDisclosure />} />
                 <Route path="ethics" element={<EthicsVendorsSuppliers />} />
+                <Route path="inclusion" element={<SupplierInclusion />} />
                 <Route path="join" element={<MultiStepForm />} />
             </Route>
 

@@ -10,12 +10,12 @@ const PresidentMessage = () => {
 
                 <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
                     {/* Image Column */}
-                    <div className="w-full lg:w-1/3 flex justify-center">
+                    <div className="w-full lg:w-1/4 flex justify-center">
                         <div className="relative">
                             <img
                                 src={sirPhoto}
                                 alt="Party President"
-                                className="w-sm max-w-32 lg:max-w-60"
+                                className="w-2xl max-w-48 lg:max-w-6xl"
                             />
                         </div>
                     </div>
@@ -41,7 +41,7 @@ const PresidentMessage = () => {
 
                         {/* Signature Section */}
                         <div>
-                            <p className="text-xl font-semibold text-[#e85a32]">- Jaheer Bukhari</p>
+                            <p className="text-xl font-semibold text-[#e85a32]">- Shri Jaheer Bukhari</p>
                         </div>
                     </div>
                 </div>

@@ -41,7 +41,7 @@ export function Slide1() {
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex justify-between align-middle items-center"
+          className="flex  flex-col justify-between align-middle"
         >
           <div className="mb-4">
             <h3 className="text-white text-3xl md:text-4xl lg:text-5xl font-semibold">
@@ -57,10 +57,10 @@ export function Slide1() {
             whileTap={{ scale: 0.95 }}
             className="flex mt-6"
           >
-            <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-6 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+            <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-6 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg"
               onClick={() => navigate('/auth/signup')}
             >
-              JOIN BPP CHANGE INDIA
+              JOIN BPP TO CHANGE INDIA
             </button>
           </motion.div>
         </motion.div>

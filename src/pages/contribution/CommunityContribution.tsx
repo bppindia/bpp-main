@@ -24,12 +24,17 @@ const CommunityContribution = () => {
                     </div>
                     <div className="my-2 text-gray-700 dark:text-gray-300 space-y-3">
                         <p>
-                            Bharatiya Popular Party Any Indian citizen, irrespective of caste, religion, or any other discrimination, who has attained the age of 18 and is willing to contribute to the community, is welcome to join us as a member
+                        Bharatiya Popular Party: Any Indian citizen, irrespective of caste, religion, or any other discrimination, who has attained the age of 18 and is willing to contribute to the community, is welcome to join us as a member
+                        </p>
+                    </div>
+                    <div className="my-2 text-gray-700 dark:text-gray-300 space-y-3">
+                        <p>
+                        Contributing to our community strengthens social bonds and fosters a sense of belonging.  Volunteering time, sharing expertise, or donating resources, no matter how small, can make a significant difference.  These acts of generosity create a ripple effect, inspiring others to participate and contribute.  Building a strong community requires collective effort and a shared vision for a better future.  Let's work together to make our community a thriving place for everyone.
                         </p>
                     </div>
 
                     {/* Section: Diverse Group */}
-                    <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
+                    <div className="grid md:grid-cols-2 gap-8 items-center my-12">
                         <div className="relative">
                             <img
                                 className="w-full rounded-md"
