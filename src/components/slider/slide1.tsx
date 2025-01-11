@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export function Slide1() {
   const navigate = useNavigate()
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full h-[80vh]">
       <motion.div
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -60,7 +60,7 @@ export function Slide1() {
             <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-6 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg"
               onClick={() => navigate('/auth/signup')}
             >
-              JOIN BPP TO CHANGE INDIA
+              JOIN BHARATIYA POPULAR PARTY TO CHANGE INDIA
             </button>
           </motion.div>
         </motion.div>

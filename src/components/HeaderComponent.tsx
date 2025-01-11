@@ -26,7 +26,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ heading, text, classN
     <>
       <div
         className={cn(
-          "relative flex justify-center items-center w-full text-white font-sans",
+          "relative flex justify-center items-center w-7xl text-white font-sans",
           "min-h-[200px]",
           "bg-cover bg-center bg-no-repeat",
           className
@@ -55,7 +55,7 @@ const HeaderComponent: React.FC<HeaderComponentProps> = ({ heading, text, classN
       {/* Breadcrumb section */}
       {breadcrumbLinks && breadcrumbLinks.length > 0 && (
         <div className="container">
-          <div className="font-bold mt-3 mx-auto">
+          <div className="font-bold mt-3 mx-auto max-w-7xl">
             <Breadcrumb>
               <BreadcrumbList>
                 {breadcrumbLinks.map((link, index) => (

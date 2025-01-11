@@ -8,7 +8,7 @@ export function Slide9() {
 
 
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full h-[80vh]">
       <motion.div
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

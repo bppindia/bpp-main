@@ -1,16 +1,10 @@
 import HeaderComponent from "@/components/HeaderComponent";
 import RecruitmentBanner from "@/components/others/become-partCard";
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from '@/components/ui/separator';
 import Layout from "@/layout/Layout";
-import { ArrowRight, CircleCheck, Clock } from "lucide-react";
+import { ArrowRight, CircleCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function MembershipRenewal() {
@@ -18,12 +12,12 @@ export default function MembershipRenewal() {
     return (
         <Layout>
             <HeaderComponent
-                heading="Membership Renewals"
-                text="Membership Renewals"
+                heading="Membership Upgrade & Renewals"
+                text="Membership Upgrade & Renewals"
                 breadcrumbLinks={[
                     { label: "Home", href: "/" },
                     { label: "Membership", href: "/membership" },
-                    { label: "Renewals", href: "/membership/renewals" }
+                    { label: "Upgrade & Renewals", href: "/membership/upgrade-renewals" }
                 ]}
                 imgUrl={"null"} // Placeholder for header image
             />
@@ -33,10 +27,10 @@ export default function MembershipRenewal() {
                     <div className="container">
                         <div className="mx-auto text-center space-y-4">
                             <h1 className="text-3xl font-bold mt-4 tracking-tight">
-                                Continue Your Journey with Bharatiya Popular Party
+                                Start Your Journey with Bharatiya Popular Party
                             </h1>
                             <p className="text-md text-muted-foreground">
-                                Renew your membership and be a vital part of our democratic process.
+                                Get your membership and be a vital part of our democratic process.
                             </p>
                         </div>
                     </div>
@@ -142,8 +136,19 @@ export default function MembershipRenewal() {
                     </div>
                 </section>
 
+
+                {/* membership Tab */}
+
+{/* 
+                <section className="py-3 max-w-5xl mx-auto">
+                    <div className="container">
+                        <MembersTab />
+                    </div>
+                </section> */}
+
+
                 {/* Additional Information */}
-                <section className="py-12">
+                {/* <section className="py-12">
                     <div className="container">
                         <div className="max-w-5xl mx-auto">
                             <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
@@ -189,7 +194,7 @@ export default function MembershipRenewal() {
                             </div>
                         </div>
                     </div>
-                </section>
+                </section> */}
                 <RecruitmentBanner />
             </div>
         </Layout>

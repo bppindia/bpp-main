@@ -1,5 +1,6 @@
 import {
     Goal,
+    LayoutGrid,
     LucideIcon
 } from 'lucide-react';
 
@@ -25,17 +26,6 @@ type Group = {
 
 export function getMainMenuList(_pathname?: string): Group[] {
     return [
-        // {
-        //     groupLabel: "",
-        //     menus: [
-        //         {
-        //             href: "/",
-        //             label: "Home",
-        //             icon: LayoutGrid,
-        //             submenus: []
-        //         }
-        //     ]
-        // },
         {
             groupLabel: "",
             menus: [
@@ -107,14 +97,25 @@ export function getMainMenuList(_pathname?: string): Group[] {
                             description: "Submit and track your complaints related to membership.",
                         },
                         {
-                            label: "Renewals",
-                            href: "/membership/renewals",
-                            description: "Easily renew your membership online.",
+                            label: "Upgrade & Renewals",
+                            href: "/membership/upgrade-renewals",
+                            description: "Easily Upgrade & renew your membership online.",
                         },
                     ],
                 },
             ],
-        },        
+        },
+        {
+            groupLabel: "",
+            menus: [
+                {
+                    href: "/membership/wings",
+                    label: "Wings",
+                    icon: LayoutGrid,
+                    submenus: []
+                }
+            ]
+        },     
         {
             groupLabel: "",
             menus: [

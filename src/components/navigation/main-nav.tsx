@@ -97,7 +97,7 @@ const MainNav = () => {
                                     ) : (
                                         <Link
                                             to={menu.href}
-                                            className="inline-flex h-8 w-full items-center justify-center rounded-md px-3 py-1 text-sm font-medium transition-colors hover:bg-accent  hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50"
+                                            className="inline-flex h-8 w-full items-center justify-center rounded-md px-3 py-1 text-xs font-medium transition-colors hover:bg-accent  hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50"
                                         >
                                             {menu.label}
                                         </Link>

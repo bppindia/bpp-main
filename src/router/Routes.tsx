@@ -47,7 +47,7 @@ import Join from '@/pages/Membership/JoinNow';
 import MembershipFaq from '@/pages/Membership/MembershipFaq';
 import MembershipPrivilege from '@/pages/Membership/MembershipPrivilege';
 import MembershipRenewal from '@/pages/Membership/MembershipRenewal';
-import WingsPage from '@/pages/Membership/wings';
+import WingsPage from '@/pages/wings/wings';
 import Mission from '@/pages/Mission/Mission';
 import PageNotFound from '@/pages/NotFound/PageNotFound';
 import { Payment } from '@/pages/Payment/Payment';
@@ -99,7 +99,7 @@ const AppRoutes = () => {
             <Route path="membership">
                 <Route path="faq" element={<MembershipFaq />} />
                 <Route path="join-now" element={<Join />} />
-                <Route path="renewals" element={<MembershipRenewal />} />
+                <Route path="upgrade-renewals" element={<MembershipRenewal />} />
                 <Route path="privileges" element={<MembershipPrivilege />} />
                 <Route path="wings" element={<WingsPage />} />
                 <Route path="membership-term" element={<ActiveMembershipTerm />} />
