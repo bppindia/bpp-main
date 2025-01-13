@@ -136,17 +136,6 @@ export default function MembershipRenewal() {
                     </div>
                 </section>
 
-
-                {/* membership Tab */}
-
-{/* 
-                <section className="py-3 max-w-5xl mx-auto">
-                    <div className="container">
-                        <MembersTab />
-                    </div>
-                </section> */}
-
-
                 {/* Additional Information */}
                 {/* <section className="py-12">
                     <div className="container">

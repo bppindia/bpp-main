@@ -1,5 +1,4 @@
 import { ContentLayout } from "@/components/admin-panel/content-layout"
-import MarqueNews from "@/components/features/MarqueNews"
 // import PayDialog from "@/components/dialogs/PayDialog"
 import MapChart from "@/components/maps/mapChart"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
@@ -32,9 +31,6 @@ const Contribution = () => {
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
-                <div>
-                    <MarqueNews />
-                </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 my-3 gap-4 w-full">
                     <Card className="w-full h-[500px] p-4">
 

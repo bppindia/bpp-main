@@ -21,41 +21,41 @@ interface Transaction {
 
 const Transactions: React.FC = () => {
     const initialTransactions: Transaction[] = [
-        {
-            id: 1,
-            date: "2023-06-01",
-            description: "Voting",
-            amount: -1200,
-            status: "Completed",
-        },
-        {
-            id: 2,
-            date: "2023-06-05",
-            description: "Upgrade Membership",
-            amount: -150.25,
-            status: "Completed",
-        },
-        {
-            id: 3,
-            date: "2023-06-10",
-            description: "Voting Received",
-            amount: 3500,
-            status: "Completed",
-        },
-        {
-            id: 5,
-            date: "2023-06-20",
-            description: "Online Purchase",
-            amount: -75.5,
-            status: "Completed",
-        },
-        {
-            id: 6,
-            date: "2023-06-25",
-            description: "Subscription Renewal",
-            amount: -9.99,
-            status: "Completed",
-        },
+        // {
+        //     id: 1,
+        //     date: "2023-06-01",
+        //     description: "Voting",
+        //     amount: -1200,
+        //     status: "Completed",
+        // },
+        // {
+        //     id: 2,
+        //     date: "2023-06-05",
+        //     description: "Upgrade Membership",
+        //     amount: -150.25,
+        //     status: "Completed",
+        // },
+        // {
+        //     id: 3,
+        //     date: "2023-06-10",
+        //     description: "Voting Received",
+        //     amount: 3500,
+        //     status: "Completed",
+        // },
+        // {
+        //     id: 5,
+        //     date: "2023-06-20",
+        //     description: "Online Purchase",
+        //     amount: -75.5,
+        //     status: "Completed",
+        // },
+        // {
+        //     id: 6,
+        //     date: "2023-06-25",
+        //     description: "Subscription Renewal",
+        //     amount: -9.99,
+        //     status: "Completed",
+        // },
     ];
 
     const [transactions] = useState<Transaction[]>(initialTransactions);

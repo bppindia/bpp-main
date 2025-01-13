@@ -82,11 +82,6 @@ export function getMainMenuList(_pathname?: string): Group[] {
                             description: "Learn about the benefits and privileges of being a member.",
                         },
                         {
-                            label: "Wings",
-                            href: "/membership/wings",
-                            description: "Explore the different wings of the membership program.",
-                        },
-                        {
                             label: "Code of Conduct",
                             href: "/membership/code-of-conduct",
                             description: "Understand the rules and ethical guidelines for members.",

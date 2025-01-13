@@ -89,6 +89,11 @@ export function getMenuList(_pathname?: string): Group[] {
           label: "Community Contribution",
           icon: HandCoins,
         },
+        {
+          href: "/dashboard/business-community",
+          label: "Business Community",
+          icon: HandCoins,
+        },
       ],
     },
   ];
