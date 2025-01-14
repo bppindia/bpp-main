@@ -35,7 +35,7 @@ export default function Complaints() {
             />
             <div className="max-w-7xl mx-auto p-6">
                 {/* Main Info Card */}
-                <Card className="mb-8 shadow-lg dark:bg-gray-800/50 backdrop-blur-sm border dark:border-gray-700">
+                <Card className="mb-8 dark:bg-gray-800/50 border dark:border-gray-700">
                     <CardContent className="p-8">
                         <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                             We are committed to resolving all complaints in a fair, timely and transparent manner and you
