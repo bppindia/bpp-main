@@ -44,7 +44,6 @@ const DownloadAppPage = () => {
                                     </Button>
                                 </div>
                             </div>
-
                             <div className="relative">
                                 <img
                                     src={bppPhone}

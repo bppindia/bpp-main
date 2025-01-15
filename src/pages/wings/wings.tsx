@@ -31,12 +31,12 @@ const WingsPage = () => {
             <div className="container max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {wings.map((wing, index) => (
-                        <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-md">
+                        <div key={index} className="bg-white text-sm dark:bg-gray-800 rounded-lg shadow-md">
                             <div className="bg-[#e85b33] text-white p-4 rounded-t-lg">
-                                <h3 className="text-xl font-bold">{wing.name}</h3>
+                                <h3 className="text-md font-bold">{wing.name}</h3>
                             </div>
                             <div className="p-6">
-                                <p className="text-gray-700 dark:text-gray-300">{wing.description}</p>
+                                <p className="text-gray-700 text-sm dark:text-gray-300">{wing.description}</p>
                             </div>
                         </div>
                     ))}
