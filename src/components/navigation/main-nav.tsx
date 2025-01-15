@@ -25,8 +25,9 @@ import { cn } from "@/lib/utils";
 import { ChevronDown, MenuIcon } from "lucide-react";
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LanguageToggle } from '../lang-toggle';
 import { ModeToggle } from '../mode-toggle';
+import { LanguageToggle } from './lang-toggle';
+import QRToggle from "./qr-toggle";
 
 const ListItem = React.forwardRef<
     React.ElementRef<typeof Link>,
@@ -61,7 +62,7 @@ const MainNav = () => {
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background">
-            <div className="container flex h-16 items-center justify-between w-full max-w-full  md:max-w-7xl px-4">
+            <div className="container flex h-16 items-center justify-between w-full max-w-full  md:max-w-full px-4 sm:justify-around">
                 {/* Logo */}
                 <Link to="/" className="flex items-center max-w-7xl gap-1">
                     <img src={bppLogo} className="h-16 w-auto object-contain" alt="BPP Logo" />
@@ -166,10 +167,11 @@ const MainNav = () => {
                 </div>
 
                 {/* Right Side Actions */}
-                <div className="hidden lg:flex items-center gap-2">
-                    <Button className="bg-blue-600 hover:bg-blue-800">
+                <div className="hidden lg:flex items-center gap-1">
+                    <Button className="bg-blue-600 h-8 hover:bg-blue-800">
                         <Link to="/auth/signup" className="text-white text-xs">JOIN NOW</Link>
                     </Button>
+                    <QRToggle />
                     <LanguageToggle />
                     <ModeToggle />
                 </div>

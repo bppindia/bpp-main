@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 export function Sidebar() {
   const sidebar = useStore(useSidebar, (x) => x);
   if (!sidebar) return null;
-  const { isOpen, toggleOpen, getOpenState, setIsHover, settings } = sidebar;
+  const { isOpen, toggleOpen, getOpenState, setIsHover, settings, isLock } = sidebar;
   return (
     <aside
       className={cn(
@@ -48,7 +48,7 @@ export function Sidebar() {
             </h1>
           </Link>
         </Button>
-        <Menu isOpen={getOpenState()} />
+        <Menu isOpen={getOpenState()} isLock={isLock} />
       </div>
     </aside>
   );

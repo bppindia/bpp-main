@@ -1,27 +1,28 @@
 "use client";
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Ellipsis, LogOut } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { getMenuList } from "@/data/menu-list";
+import { CollapseMenuButton } from "@/components/admin-panel/collapse-menu-button";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CollapseMenuButton } from "@/components/admin-panel/collapse-menu-button";
 import {
   Tooltip,
-  TooltipTrigger,
   TooltipContent,
-  TooltipProvider
+  TooltipProvider,
+  TooltipTrigger
 } from "@/components/ui/tooltip";
 import { useAuth } from '@/context/AuthContext';
+import { getMenuList } from "@/data/menu-list";
+import { cn } from "@/lib/utils";
+import { Ellipsis, LockKeyhole, LogOut } from "lucide-react";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface MenuProps {
   isOpen: boolean | undefined;
+  isLock: boolean | undefined;
 }
 
-export function Menu({ isOpen }: MenuProps) {
+export function Menu({ isOpen, isLock }: MenuProps) {
   const location = useLocation();
   const { logout } = useAuth();
-    const navigate = useNavigate()
+  const navigate = useNavigate()
   const menuList = getMenuList(location.pathname);
 
 
@@ -82,13 +83,13 @@ export function Menu({ isOpen }: MenuProps) {
                                 </span>
                                 <p
                                   className={cn(
-                                    "max-w-[200px] truncate",
+                                    "max-w-[200px] flex gap-2 truncate",
                                     isOpen === false
                                       ? "-translate-x-96 opacity-0"
                                       : "translate-x-0 opacity-100"
                                   )}
                                 >
-                                  {label}
+                                  {label} {isLock && <LockKeyhole size={18} />}
                                 </p>
                               </Link>
                             </Button>

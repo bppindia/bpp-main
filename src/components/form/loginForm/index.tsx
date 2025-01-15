@@ -29,12 +29,12 @@ const loginSchema = z.object({
     identifier: z
         .string()
         .nonempty('Email or phone number is required'),
-        // .refine(
-        //     (value) => /\S+@\S+\.\S+/.test(value) || /^\d{10}$/.test(value),
-        //     {
-        //         message: 'Enter a valid email or 10-digit phone number',
-        //     }
-        // ),
+    // .refine(
+    //     (value) => /\S+@\S+\.\S+/.test(value) || /^\d{10}$/.test(value),
+    //     {
+    //         message: 'Enter a valid email or 10-digit phone number',
+    //     }
+    // ),
     password: z.string().min(6, 'Password must be at least 6 characters long'),
 });
 
@@ -61,9 +61,20 @@ const Login = () => {
     async function onSubmit(values: LoginFormValues) {
         try {
             setIsLoading(true);
+
+            let identifier = values.identifier;
+            if (isPhone) {
+                identifier = `+91${identifier}`;
+                console.log(identifier)
+            }
+
+            console.log(identifier)
+
+
             const payload = isEmail
                 ? { email: values.identifier, password: values.password }
-                : { phone: values.identifier, password: values.password };
+                : { phone: identifier, password: values.password };
+
 
             await login(payload);
 

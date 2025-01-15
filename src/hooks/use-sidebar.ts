@@ -1,10 +1,11 @@
-import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
 import { produce } from "immer";
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type SidebarSettings = { disabled: boolean; isHoverOpen: boolean };
 type SidebarStore = {
   isOpen: boolean;
+  isLock: boolean;
   isHover: boolean;
   settings: SidebarSettings;
   toggleOpen: () => void;
@@ -18,6 +19,7 @@ export const useSidebar = create(
   persist<SidebarStore>(
     (set, get) => ({
       isOpen: true,
+      isLock: true,
       isHover: false,
       settings: { disabled: false, isHoverOpen: false },
       toggleOpen: () => {

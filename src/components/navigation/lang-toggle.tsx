@@ -20,8 +20,8 @@ export function LanguageToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="ghost mx-2 px-6">
-          <Globe />
+        <Button variant="ghost" size="icon" className="ghost flex gap-1 mx-2">
+          <Globe size={18} />
           <span>{currentLanguage.toUpperCase()}</span>
         </Button>
       </DropdownMenuTrigger>

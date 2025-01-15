@@ -62,6 +62,7 @@ import CodeOfConduct from '@/pages/Membership/CodeOfConduct';
 import Complaints from '@/pages/Membership/Complaints';
 import VendorDisclosure from '@/pages/BusinessCommunity/VendorDisclosure';
 import SupplierInclusion from '@/pages/BusinessCommunity/SupplierInclusion';
+import DownloadAppPage from '@/pages/download';
 
 const AppRoutes = () => {
     const { isAuthenticated } = useAuth();
@@ -173,6 +174,10 @@ const AppRoutes = () => {
                     </ProtectedRoute>
                 }
             />
+
+{/* independent pages */}
+            <Route path="/download-app" element={<DownloadAppPage />} />
+
 
             {/* 404 Route */}
             <Route path="*" element={<PageNotFound />} />

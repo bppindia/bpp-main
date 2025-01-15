@@ -32,7 +32,7 @@ export function SheetMenu() {
             </Link>
           </Button>
         </SheetHeader>
-        <Menu isOpen />
+        <Menu isOpen isLock />
       </SheetContent>
     </Sheet>
   );

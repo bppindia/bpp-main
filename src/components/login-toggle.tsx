@@ -5,9 +5,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useNavigate } from "react-router-dom";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function LoginToggle() {
   const navigate = useNavigate();
