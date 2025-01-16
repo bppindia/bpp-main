@@ -62,7 +62,7 @@ const MainNav = () => {
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background">
-            <div className="container flex h-16 items-center justify-between w-full max-w-full  md:max-w-full px-4 sm:justify-around">
+            <div className="container flex h-16 items-center justify-between w-full max-w-full  md:max-w-full px-4 sm:justify-between">
                 {/* Logo */}
                 <Link to="/" className="flex items-center max-w-7xl gap-1">
                     <img src={bppLogo} className="h-16 w-auto object-contain" alt="BPP Logo" />
