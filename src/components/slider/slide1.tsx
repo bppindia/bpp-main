@@ -23,7 +23,7 @@ export function Slide1() {
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-white text-3xl md:text-4xl lg:text-7xl font-bold mb-4"
+          className="text-white text-2xl md:text-3xl lg:text-6xl font-bold mb-4"
         >
           WELCOME TO
         </motion.h1>
@@ -32,7 +32,7 @@ export function Slide1() {
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-white text-3xl md:text-4xl lg:text-7xl font-bold mb-8"
+          className="text-white text-2xl md:text-3xl lg:text-6xl font-bold mb-8"
         >
           BHARATIYA POPULAR PARTY
         </motion.h2>
@@ -44,20 +44,18 @@ export function Slide1() {
           className="flex  flex-col justify-between align-middle"
         >
           <div className="mb-4">
-            <h3 className="text-white text-3xl md:text-4xl lg:text-5xl font-semibold">
+            <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-semibold">
               Community Contribution
             </h3>
-            <h3 className="text-white text-3xl md:text-4xl lg:text-5xl font-semibold">
+            <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-semibold">
               Begin the Change.
             </h3>
           </div>
 
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             className="flex mt-6"
           >
-            <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-6 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg"
+            <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-6 py-4 rounded-full text-xs font-semibold transition-all duration-300 shadow-lg"
               onClick={() => navigate('/auth/signup')}
             >
               JOIN BHARATIYA POPULAR PARTY TO CHANGE INDIA

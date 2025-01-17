@@ -1,4 +1,5 @@
 import CookieConsent from "@/components/CookieConsent";
+import FixedDownload from "@/components/features/fixed-download-banner";
 import Footer from "@/components/Footer";
 import MainNav from "@/components/navigation/main-nav";
 import { ScrollToTop } from "@/components/ScrollToTop";
@@ -19,6 +20,7 @@ const Layout = ({ children }: LayoutProps) => {
         <main>{children}</main>
         <Footer />
         <CookieConsent />
+        <FixedDownload />
         <ScrollToTop />
       </I18nextProvider>
     </div>

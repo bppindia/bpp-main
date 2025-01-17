@@ -23,7 +23,7 @@ export function Slide2() {
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-white text-4xl md:text-5xl lg:text-7xl font-bold mb-8"
+          className="text-white text-3xl md:text-4xl lg:text-6xl font-bold mb-8"
         >
           Community Contribution
         </motion.h1>
@@ -32,9 +32,9 @@ export function Slide2() {
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-white text-xl md:text-2xl lg:text-3xl max-w-3xl mb-12"
+          className="text-white text-sm md:text-lg lg:text-xl max-w-3xl mb-12"
         >
-          We Can't Help Everyone But Everyone Can Help Someone...
+          This Bharatiya Popular Party app empowers you to exchange financial assistance, essential guidance, consultation, support, and services with each-other whenever emergencies or urgent situations arise, ensuring no one is left behind in times of need. Click to download the 'Community-Contribution' app and be part of the change.
         </motion.p>
 
         <motion.div

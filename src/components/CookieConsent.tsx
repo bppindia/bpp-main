@@ -1,9 +1,9 @@
 "use client";
 
-import { CookieIcon } from "lucide-react";
-import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { CookieIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Button } from "./ui/button";
 
 export default function CookieConsent({ variant = "default", demo = false, onAcceptCallback = () => { }, onDeclineCallback = () => { } }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +45,7 @@ export default function CookieConsent({ variant = "default", demo = false, onAcc
 
     return (
         variant == "default" ? (
-            <div className={cn("fixed z-[200] bottom-0 left-0 right-0 sm:left-4 sm:bottom-4 w-full sm:max-w-md duration-700", !isOpen ? "transition-[opacity,transform] translate-y-8 opacity-0" : "transition-[opacity,transform] translate-y-0 opacity-100", hide && "hidden")}>
+            <div className={cn("fixed z-[200] bottom-0 right-0 sm:right-4 sm:bottom-4 w-full sm:max-w-lg duration-700", !isOpen ? "transition-[opacity,transform] translate-y-8 opacity-0" : "transition-[opacity,transform] translate-y-0 opacity-100", hide && "hidden")}>
                 <div className="dark:bg-card bg-background rounded-md m-3 border border-border shadow-lg">
                     <div className="grid gap-2">
                         <div className="border-b border-border h-14 flex items-center justify-between p-4">
@@ -54,17 +54,17 @@ export default function CookieConsent({ variant = "default", demo = false, onAcc
                         </div>
                         <div className="p-4">
                             <p className="text-sm font-normal text-start">
-                                We use cookies to ensure you get the best experience on our website. For more information on how we use cookies, please see our cookie policy.
-                                <br />
+                                We use "Strictly Necessary" cookies to keep our site reliable and secure. We’d like to set additional cookies to understand site usage, make site improvements, to remember your settings and to assist in our marketing efforts.
+                                {/* <br />
                                 <br />
                                 <span className="text-xs">By clicking "<span className="font-medium opacity-80">Accept</span>", you agree to our use of cookies.</span>
                                 <br />
-                                <a href="#" className="text-xs underline">Learn more.</a>
+                                <a href="#" className="text-xs underline">Learn more.</a> */}
                             </p>
                         </div>
-                        <div className="flex gap-2 p-4 py-5 border-t border-border dark:bg-background/20">
-                            <Button onClick={accept} className="w-full">Accept</Button>
-                            <Button onClick={decline} className="w-full" variant="secondary">Decline</Button>
+                        <div className="grid gap-2 p-4 py-5 border-t border-border dark:bg-background/20">
+                            <Button onClick={accept} className="w-full" size="sm">Accept Cookies & Continue</Button>
+                            <Button onClick={decline} className="w-full" size="sm" variant="secondary">Reject Additional Cookies</Button>
                         </div>
                     </div>
                 </div>
@@ -82,8 +82,11 @@ export default function CookieConsent({ variant = "default", demo = false, onAcc
                         </p>
                     </div>
                     <div className="p-3 flex items-center gap-2 mt-2 border-t">
-                        <Button onClick={accept} className="w-full h-9 rounded-full">accept</Button>
-                        <Button onClick={decline} className="w-full h-9 rounded-full" variant="outline">decline</Button>
+                        <Button onClick={accept} className="w-full h-9 rounded-full bg-blue-600 hover:bg-blue-900 text-white">accept</Button>
+                        <Button onClick={decline} className="w-full h-9 rounded-full bg-blue-600 hover:bg-blue-900 text-white">decline</Button>
+                        <div>
+                            <a href="#" className="underline">Manage Cookies</a>
+                        </div>
                     </div>
                 </div>
             </div>

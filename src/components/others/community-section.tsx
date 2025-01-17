@@ -205,7 +205,7 @@ const CommunityContributionSection = () => {
     };
 
     return (
-        <div className="w-full max-w-7xl py-14 mx-auto p-4">
+        <div className="w-full max-w-7xl py-8 mx-auto p-4">
             <div className="flex flex-wrap gap-4 mb-8">
                 <Button
                     variant={currentPage === pages.community ? "destructive" : "secondary"}
