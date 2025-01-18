@@ -198,8 +198,8 @@ const HowItWorks = () => {
                                 content: "The appeal will be reviewed by a higher body within the Bharatiya Popular Party. The final decision on the appeal will be communicated to the concerned member. This decision will be final and binding."
                             },
                             {
-                                title: "OATing",
-                                content: "Upon acceptance of the case, this will go to the pool for OATing. A criteria of 60/40 proportion will be followed. This means the 60% of community OATs should favour the requirement posted by the individual (or recipient)."
+                                title: "Voting",
+                                content: "Upon acceptance of the case, this will go to the pool for Voting. A criteria of 60/40 proportion will be followed. This means the 60% of community OATs should favour the requirement posted by the individual (or recipient)."
                             },
                             {
                                 title: "Professional Response",

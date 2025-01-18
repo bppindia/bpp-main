@@ -11,7 +11,7 @@ import { AnimatedShinyText } from '../ui/animated-shiny-text';
 import { Input } from '../ui/input';
 import NumberTicker from '../ui/number-ticker';
 
-const TestPage = () => {
+const DownloadSection = () => {
     const navigate = useNavigate();
 
     return (
@@ -79,31 +79,40 @@ const TestPage = () => {
                                 <img src={appQr} alt="App QR Code" />
                             </div>
                             <div className="space-y-2">
-                                <p className="text-gray-600 dark:text-gray-400">
+                                <p className="text-gray-600 font-bold text-xl dark:text-gray-400">
                                     Scan to Download App
                                 </p>
-                                <Button
-                                    onClick={() => window.location.href = 'https://bppdatabase.s3.ap-south-1.amazonaws.com/app/BPP.apk'}
-                                    className="flex items-center gap-3 justify-center p-4 bg-[#2196f3] hover:bg-[#1e40af] text-white"
-                                >
-                                    <FaAndroid className="w-6 h-6 text-white" />
-                                    <p className="text-left">Android<br />Download</p>
-                                </Button>
+                                <div className='flex gap-2'>
+
+                                    <Button
+                                        onClick={() => window.location.href = 'https://bppdatabase.s3.ap-south-1.amazonaws.com/app/BPP.apk'}
+                                        className="flex items-center gap-3 justify-center p-4 bg-[#2196f3] hover:bg-[#1e40af] text-white"
+                                    >
+                                        <FaAndroid className="w-6 h-6 text-white" />
+                                        <p className="text-left">Android<br />Download</p>
+                                    </Button>
+                                    <Button
+                                        className="flex items-center gap-3 justify-center p-4 bg-[#2196f3] hover:bg-[#1e40af] text-white" onClick={() => navigate('/download-app')}
+                                    >
+                                        <ArrowRightIcon className="w-6 h-6 text-white" />
+                                    </Button>
+                                </div>
                             </div>
                         </div>
 
                         {/* How it works Button */}
                         <div
                             className={cn(
-                                "group inline-block max-w-sm rounded-full border border-black/5 bg-neutral-100 text-base text-black transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800"
+                                "group inline-block max-w-sm rounded-full border border-black/5 bg-neutral-100 text-base text-black font-bold transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800"
                             )}
                             onClick={() => navigate('/community-contribution/how-it-works')}
                         >
                             <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-2 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
-                                <span className='text-sm'>✨ Community Contribution How it works</span>
+                                <span className="text-sm font-bold">✨ Community Contribution How it works</span>
                                 <ArrowRightIcon className="ml-1 h-5 w-5 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
                             </AnimatedShinyText>
                         </div>
+
 
                         {/* Signup Input */}
                         <div className="max-w-md">
@@ -125,4 +134,4 @@ const TestPage = () => {
     );
 };
 
-export default TestPage;
+export default DownloadSection;

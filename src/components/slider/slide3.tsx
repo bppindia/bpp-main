@@ -19,22 +19,22 @@ export function Slide3() {
                 <div className="absolute inset-0 bg-black/40"></div>
             </motion.div>
 
-            <div className="relative h-full flex flex-col justify-center px-8 md:px-16 lg:px-24">
+            <div className="relative h-full max-w-5xl mx-auto flex flex-col justify-center px-8 md:px-16 lg:px-24">
                 <motion.div
                     initial={{ x: -100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.8 }}
-                    className="flex items-center gap-4 mb-6"
+                    className="flex items-center gap-4 mb-3"
                 >
-                    <Building2 className="text-white" size={48} />
-                    <h2 className="text-white text-5xl font-bold">GOAL 1</h2>
+                    <Building2 className="text-white" size={30} />
+                    <h2 className="text-white text-3xl font-bold">GOAL 1</h2>
                 </motion.div>
 
                 <motion.h1
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="text-white text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+                    className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-6"
                 >
                     National Integrity
                 </motion.h1>
@@ -43,7 +43,7 @@ export function Slide3() {
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
-                    className="text-white text-xl max-w-6xl mb-8"
+                    className="text-white text-md  mb-4"
                 >
                     Bharatiya Popular Party shall bear true faith and allegiance to the constitution of India as by law established, and to the principles of socialism, secularism and democracy and would uphold the sovereignty, unity and integrity of India.
                 </motion.p>
@@ -55,7 +55,7 @@ export function Slide3() {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
                 >
-                    <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+                    <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-4 py-2  rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
                         onClick={() => navigate('/about/bpp-goals')}>
                         Learn More
                     </button>

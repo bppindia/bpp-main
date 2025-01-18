@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { ReactNode, useState } from 'react';
-import { useNavigate } from "react-router-dom";
 
 const pages = {
     community: "community",
@@ -29,7 +28,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, direction }) => (
             stiffness: 600,
             damping: 30
         }}
-        className="w-full absolute"
+        className="w-full absolute my-4"
     >
         {children}
     </motion.div>
@@ -37,7 +36,6 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, direction }) => (
 
 
 const CommunityPage = ({ direction }: { direction: number }) => {
-    const navigate = useNavigate()
     return (
         <PageWrapper direction={direction}>
             <Card className="border-0 shadow-sm">
@@ -49,13 +47,13 @@ const CommunityPage = ({ direction }: { direction: number }) => {
                             <p className="text-lg text-gray-700">
                                 Bharatiya Popular Party Any Indian citizen, irrespective of caste, religion, or any other discrimination, who has attained the age of 18 and is willing to contribute to the community, is welcome to join us as a member.
                             </p>
-                            <Button
+                            {/* <Button
                                 variant="destructive"
                                 className="bg-[#e85a32] hover:bg-[#e85a32] mt-4"
                                 onClick={() => navigate('/auth/signup')}
                             >
                                 Join Our Community →
-                            </Button>
+                            </Button> */}
                         </div>
                         <div className="relative h-[340px] rounded-lg overflow-hidden">
                             <img
@@ -72,7 +70,6 @@ const CommunityPage = ({ direction }: { direction: number }) => {
 };
 
 const CommonManPage = ({ direction }: { direction: number }) => {
-    const navigate = useNavigate()
 
     return (
         <PageWrapper direction={direction}>
@@ -84,13 +81,13 @@ const CommonManPage = ({ direction }: { direction: number }) => {
                             <p className="text-lg text-gray-700">
                                 The backbone of the party, the common man is the primary beneficiary of the party's efforts. It is for you that we fight for equitable development and opportunities. Your challenges and aspirations guide our mission, and together, we work to create a better future.
                             </p>
-                            <Button
+                            {/* <Button
                                 variant="destructive"
                                 className="bg-[#e85a32] hover:bg-[#e85a32] mt-4"
                                 onClick={() => navigate('/auth/signup')}
                             >
                                 Join Our Community →
-                            </Button>
+                            </Button> */}
                         </div>
                         <div className="relative h-[340px] rounded-lg overflow-hidden">
                             <img
@@ -107,7 +104,6 @@ const CommonManPage = ({ direction }: { direction: number }) => {
 };
 
 const ProfessionalsPage = ({ direction }: { direction: number }) => {
-    const navigate = useNavigate()
     return (
         <PageWrapper direction={direction}>
             <Card className="border-0 shadow-sm">
@@ -118,13 +114,13 @@ const ProfessionalsPage = ({ direction }: { direction: number }) => {
                             <p className="text-lg text-gray-700">
                                 Among the common people, there are the people with specialized expertise in various sectors and a passion to serve the community. These professionals step forward to contribute their knowledge, skills, and leadership to support the party's objectives. These are the professionals who bring practical solutions to real-world issues.
                             </p>
-                            <Button
+                            {/* <Button
                                 variant="destructive"
                                 className="bg-[#e85a32] hover:bg-[#e85a32] mt-4"
                                 onClick={() => navigate('/auth/signup')}
                             >
                                 Join Our Community →
-                            </Button>
+                            </Button> */}
                         </div>
                         <div className="relative h-[340px] rounded-lg overflow-hidden">
                             <img
@@ -141,7 +137,6 @@ const ProfessionalsPage = ({ direction }: { direction: number }) => {
 };
 
 const BusinessPage = ({ direction }: { direction: number }) => {
-    const navigate = useNavigate()
     return (
         <PageWrapper direction={direction}>
             <Card className="border-0 shadow-sm">
@@ -152,13 +147,13 @@ const BusinessPage = ({ direction }: { direction: number }) => {
                             <p className="text-lg text-gray-700">
                                 Businesses members including entrepreneurs and institutional leaders, must be registered with the party and shall be committed to supporting the community by providing products and services at reasonable prices. Their role is very important in building a sustainable, growing economy that benefits everyone.
                             </p>
-                            <Button
+                            {/* <Button
                                 variant="destructive"
                                 className="bg-[#e85a32] hover:bg-[#e85a32] mt-4"
                                 onClick={() => navigate('/auth/signup')}
                             >
                                 Join Our Community →
-                            </Button>
+                            </Button> */}
                         </div>
                         <div className="relative h-[340px] rounded-lg overflow-hidden">
                             <img

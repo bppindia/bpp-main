@@ -5,7 +5,7 @@ const PresidentMessage = () => {
         <div className="w-full max-w-5xl mx-auto font-poppins">
             <div className="my-3">
                 {/* Header */}
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-center mb-6 text-[#3b82f6]">
+                <h1 className="text-xl md:text-3xl lg:text-4xl font-semibold text-center mb-6 text-[#3b82f6]">
                     A Message from the Party's President
                 </h1>
 
@@ -18,6 +18,9 @@ const PresidentMessage = () => {
                                 alt="Party President"
                                 className="w-full"
                             />
+                        <div>
+                            <p className="text-md font-semibold text-[#e85a32]">- Shri Jaheer Bukhari</p>
+                        </div>
                         </div>
                     </div>
 
@@ -38,11 +41,6 @@ const PresidentMessage = () => {
                             <p className="text-sm mb-3 md:text-md leading-relaxed text-gray-800">
                             Together, let us begin the change and build a brighter, stronger future for all.
                             </p>
-
-                             {/* Signature Section */}
-                        <div>
-                            <p className="text-md font-semibold text-[#e85a32]">- Shri Jaheer Bukhari</p>
-                        </div>
                         </div>
                     </div>
                 </div>
