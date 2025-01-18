@@ -90,6 +90,9 @@ const HowItWorks = () => {
                         <p>
                             Community development and support will be driven by three main groups: the Common Man, Professionals, and Business Leaders. Together, these individuals create a system that addresses and solves community issues in a collaborative manner.
                         </p>
+                        <p>
+                        <span className="font-semibold">'Community-Contribution'</span> services will be available starting <span className="font-semibold">January 1st, 2026.</span>
+                        </p>
                     </div>
 
                     {/* Registration Section */}
