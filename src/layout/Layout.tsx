@@ -1,8 +1,8 @@
+import ChatSupport from "@/components/chat-support";
 import CookieConsent from "@/components/CookieConsent";
 import FixedDownload from "@/components/features/fixed-download-banner";
 import Footer from "@/components/Footer";
 import MainNav from "@/components/navigation/main-nav";
-import { ScrollToTop } from "@/components/ScrollToTop";
 import i18n from "@/modules/I18n/i18n";
 import { ReactNode } from "react";
 import { I18nextProvider } from "react-i18next";
@@ -21,7 +21,8 @@ const Layout = ({ children }: LayoutProps) => {
         <Footer />
         <CookieConsent />
         <FixedDownload />
-        <ScrollToTop />
+        {/* <ScrollToTop /> */}
+        <ChatSupport />
       </I18nextProvider>
     </div>
   );

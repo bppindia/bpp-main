@@ -26,15 +26,15 @@ export default function Mission() {
                             <Separator />
                             <div className="mt-8">
                                 <h3 className="text-md my-2 font-semibold">
-                                    Party’s mission is to reach the billions of Indians through the digital app by the end of 2025, enabling everyone to benefit from community contributions. The app will be operational in December 2024 and will start with registrations in January-2025, with the goal of attracting the maximum number of people to join in its first year. This will ensure nationwide participation.
+                                    Party’s mission is to reach the billions of Indians through the digital App by the end of 2025, enabling everyone to benefit from community contributions. The App will be operational in December 2024 and will start with registrations in January-2025, with the goal of attracting the maximum number of people to join in its first year. This will ensure nationwide participation.
                                 </h3>
 
                                 <h3 className="text-md my-2 font-semibold">
-                                    The mass download of the app will help start a movement of community contribution,
+                                    The mass download of the App will help start a movement of community contribution,
                                     benefiting people across India.
                                 </h3>
                                 <h3 className="text-md my-2 font-semibold">
-                                    In the next five years, while working through the app we aim to reach to the masses
+                                    In the next five years, while working through the App we aim to reach to the masses
                                     and letting them support each other with mutual contributions. Under this we invite
                                     the expert professionals also to be the part and active contributor of the community-
                                     contribution.
@@ -100,7 +100,7 @@ export default function Mission() {
                                                 <h3 className="text-xl font-bold">Gender Equality</h3>
                                             </div>
                                             <p className="text-gray-600 dark:text-gray-300">
-                                                Through this app we are committed to creating a platform where merit and
+                                                Through this App we are committed to creating a platform where merit and
                                                 community contribution drive the change, ensuring a brighter future for all.
                                             </p>
                                         </CardContent>

@@ -1,0 +1,77 @@
+{
+  "Slider": {
+    "Welcome": {
+      "tittle": "WELCOME TO",
+      "subTittle": "BHARATIYA POPULAR PARTY",
+      "description": "Community Contribution",
+      "description2": "Begin the Change.",
+      "button": "Join Bharatiya Popular Party To Change India"
+    },
+    "Contribution": {
+      "tittle": "Community Contribution",
+      "description": "This Bharatiya Popular Party App empowers you to exchange financial assistance, essential guidance, consultation, support, and services with each-other whenever emergencies or urgent situations arise, ensuring no one is left behind in times of need. Click to download the BPP App and be part of the change.",
+      "button": "Join Now",
+      "button2": "Download Now"
+    },
+    "Goal": {
+      "tittle": "GOAL 1",
+      "subTittle": "National Integrity",
+      "description": "Bharatiya Popular Party shall bear true faith and allegiance to the constitution of India as by law established, and to the principles of socialism, secularism and democracy and would uphold the sovereignty, unity and integrity of India.",
+      "button": "Learn More"
+    },
+    "Goal2": {
+      "tittle": "GOAL 2",
+      "subTittle": "Equal Opportunity and Gender Equality",
+      "description": "Bharatiya Popular Party is committed to the task of building a developed democratic India based on the principle of equal opportunity to all citizens. The party will lay special emphasis on improving the condition of socially and economically disadvantaged sections of society.",
+      "button": "Learn More"
+    },
+    "Goal3": {
+      "tittle": "GOAL 3",
+      "subTittle": "Good Health and Well-Being",
+      "description": "Bharatiya Popular Party will work to provide quality health facilities to all citizens, ensuring that every individual has access to health services that improve their quality of life.",
+      "button": "Learn More"
+    },
+    "Goal4": {
+      "tittle": "GOAL 4",
+      "subTittle": "Against Muscle and Money Power",
+      "description": "Bharatiya Popular Party will work against the misuse of money and muscle power in democratic politics.",
+      "button": "Learn More"
+    },
+    "Goal5": {
+      "tittle": "GOAL 5",
+      "subTittle": "Uphold Secularism",
+      "description": "Bharatiya Popular Party firmly supports secularism and is opposed to the idea of a theocratic state. BPP will work to protect and promote religious harmony and ensure equal rights for all faiths.",
+      "button": "Learn More"
+    },
+    "Goal6": {
+      "tittle": "GOAL 6",
+      "subTittle": "Industrial Development and Infrastructure",
+      "description": "The goal of the BPP is to promote industrial development and build world-class infrastructure to drive economic development. By modernizing industries, encouraging research and development, and enhancing transportation, energy, and digital networks, the party aims to create a sustainable competitive economy.",
+      "button": "Learn More"
+    },
+    "Goal7": {
+      "tittle": "GOAL 7",
+      "subTittle": "Employment and Economic Growth",
+      "description": "BPP is committed to promoting decent work and sustained economic growth by creating job opportunities, ensuring fair wages, and improving working conditions for all citizens. The party aims to empower individuals, particularly in rural and marginalized communities, through skill development, entrepreneurship, and access to employment.",
+      "button": "Learn More"
+    },
+    "Goal8": {
+      "title": "GOAL 8",
+      "subTitle": "Justice, Peace, Calm and Prosperity",
+      "description": "BPP aims to create a peaceful, just, and prosperous society where all citizens have equal opportunities, security, and access to resources. By this goal, BPP will uphold individual rights as well as the right to privacy, freedom of expression, and access to information.",
+      "button": "Learn More"
+    },
+    "Goal9": {
+      "title": "GOAL 9",
+      "subTitle": "Upliftment of Farmers",
+      "description": "BPP is dedicated to the upliftment of farmers by ensuring fair prices for their products, providing access to modern farming techniques, and improving infrastructure in rural areas. The focus will be on increasing farmers' income through better market access, sustainable agricultural practices, and timely financial support.",
+      "button": "Learn More"
+    },
+    "Goal10": {
+      "title": "GOAL 10",
+      "subTitle": "Quality Education",
+      "description": "BPP believes that education is one of the most powerful and proven vehicles for sustainable development. The goal is to ensure that all girls and boys complete primary and secondary schooling. It also aims to eliminate gender and wealth disparities and achieve universal access to quality higher education.",
+      "button": "Learn More"
+    }
+  }
+}

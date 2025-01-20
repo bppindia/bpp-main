@@ -57,7 +57,13 @@ export default {
     			'color-2': 'hsl(var(--color-2))',
     			'color-3': 'hsl(var(--color-3))',
     			'color-4': 'hsl(var(--color-4))',
-    			'color-5': 'hsl(var(--color-5))'
+    			'color-5': 'hsl(var(--color-5))',
+    			shiki: {
+    				light: 'var(--shiki-light)',
+    				'light-bg': 'var(--shiki-light-bg)',
+    				dark: 'var(--shiki-dark)',
+    				'dark-bg': 'var(--shiki-dark-bg)'
+    			}
     		},
     		borderRadius: {
     			lg: 'var(--radius)',
@@ -104,6 +110,14 @@ export default {
     				'30%, 60%': {
     					'background-position': 'calc(100% + var(--shiny-width)) 0'
     				}
+    			},
+    			'typing-dot-bounce': {
+    				'0%,40%': {
+    					transform: 'translateY(0)'
+    				},
+    				'20%': {
+    					transform: 'translateY(-0.25rem)'
+    				}
     			}
     		},
     		animation: {
@@ -111,7 +125,8 @@ export default {
     			'accordion-up': 'accordion-up 0.2s ease-out',
     			pulse: 'pulse var(--duration) ease-out infinite',
     			rainbow: 'rainbow var(--speed, 2s) infinite linear',
-    			'shiny-text': 'shiny-text 8s infinite'
+    			'shiny-text': 'shiny-text 8s infinite',
+    			'typing-dot-bounce': 'typing-dot-bounce 1.25s ease-out infinite'
     		}
     	}
     },

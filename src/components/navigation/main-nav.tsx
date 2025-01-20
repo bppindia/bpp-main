@@ -28,6 +28,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { ModeToggle } from '../mode-toggle';
 import { LanguageToggle } from './lang-toggle';
 import QRToggle from "./qr-toggle";
+import { useTranslation } from "react-i18next";
 
 const ListItem = React.forwardRef<
     React.ElementRef<typeof Link>,
@@ -59,6 +60,8 @@ const MainNav = () => {
     const location = useLocation();
     const menuList = getMainMenuList(location.pathname);
     const [isOpen, setIsOpen] = React.useState(false);
+    const { t } = useTranslation('common');
+
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background">
@@ -66,7 +69,7 @@ const MainNav = () => {
                 {/* Logo */}
                 <Link to="/" className="flex items-center max-w-7xl gap-1">
                     <img src={bppLogo} className="h-16 w-auto object-contain" alt="BPP Logo" />
-                    <span className="text-xl font-bold font-oswald md:text-xl sm:text-sm">Bharatiya Popular Party</span>
+                    <span className="text-xl font-bold font-oswald md:text-xl sm:text-sm">{t('PartyName.name')}</span>
                 </Link>
 
                 {/* Desktop Navigation */}

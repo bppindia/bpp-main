@@ -183,7 +183,7 @@ const CommunityContribution = () => {
                     The Community Contribution App Services will be operational on  <strong>01.01.2026</strong>, allowing a large number of citizens to join the party in this one year and to become part of the movement.
                 </p>
                 <p className="text-sm text-gray-700 mt-2">
-                    By joining, you will gain access to social, legal, and health services. The app will start accepting the payments also soon.
+                    By joining, you will gain access to social, legal, and health services. The App will start accepting the payments also soon.
                 </p>
             </div>
 

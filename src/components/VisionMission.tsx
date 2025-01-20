@@ -175,13 +175,13 @@ const VisionMission = () => {
                                     </span>
                                 </h2>
                                 <p className="mt-3 text-muted-foreground">
-                                    Party’s mission is to reach the billions of Indians through the digital app by the end of 2025, enabling everyone to benefit from community contributions. The app will be launched in December 2024, with the goal of attracting the maximum number of people to join in its first year. This will ensure nationwide participation.
+                                    Party’s mission is to reach the billions of Indians through the digital App by the end of 2025, enabling everyone to benefit from community contributions. The App will be launched in December 2024, with the goal of attracting the maximum number of people to join in its first year. This will ensure nationwide participation.
                                 </p>
                                 <p className="mt-3 text-muted-foreground">
-                                    The mass download of the app will help start a movement of community contribution, benefiting people across India.
+                                    The mass download of the App will help start a movement of community contribution, benefiting people across India.
                                 </p>
                                 <p className="mt-3 text-muted-foreground">
-                                    In the next five years, while working through the app we aim to reach to the masses and letting them support each other with mutual contributions. Under this we invite the expert professionals also to be the part and active contributor of the community-contribution.
+                                    In the next five years, while working through the App we aim to reach to the masses and letting them support each other with mutual contributions. Under this we invite the expert professionals also to be the part and active contributor of the community-contribution.
                                 </p>
                                 <p className="mt-3 text-muted-foreground">
                                     Members identified as most involved to the community, can be the potential candidates to stand as candidates in elections.

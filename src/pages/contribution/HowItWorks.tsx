@@ -91,22 +91,46 @@ const HowItWorks = () => {
                             Community development and support will be driven by three main groups: the Common Man, Professionals, and Business Leaders. Together, these individuals create a system that addresses and solves community issues in a collaborative manner.
                         </p>
                         <p>
-                        <span className="font-semibold">'Community-Contribution'</span> services will be available starting <span className="font-semibold">January 1st, 2026.</span>
+                            <span className="font-semibold">'Community-Contribution'</span> services will be available starting <span className="font-semibold">January 1st, 2026.</span>
                         </p>
                     </div>
 
                     {/* Registration Section */}
                     <div className="grid md:grid-cols-2 gap-8 my-12">
                         <div>
-                        <div>
-                            <h2 className="text-xl font-extrabold tracking-tight lg:text-2xl dark:text-white mb-4">
-                                Register your Case
-                            </h2>
-                            <p className="mt-3 text-md text-gray-600 dark:text-gray-400 mb-6">
-                                Every member of the community, or the primary member who has any concern to address can upload that on the app.
-                            </p>
-                            <div className="space-y-6">
-                                {registrationSteps.map(({ icon, title, description }) => (
+                            <div>
+                                <h2 className="text-xl font-extrabold tracking-tight lg:text-2xl dark:text-white mb-4">
+                                    Register your Case
+                                </h2>
+                                <p className="mt-3 text-md text-gray-600 dark:text-gray-400 mb-6">
+                                    Every member of the community, or the primary member who has any concern to address can upload that on the App.
+                                </p>
+                                <div className="space-y-6">
+                                    {registrationSteps.map(({ icon, title, description }) => (
+                                        <Card key={title} className="shadow-lg">
+                                            <CardHeader className="bg-[#e85b33] text-white p-4">
+                                                <div className="flex items-center gap-3">
+                                                    <span className="bg-white/20 p-2 rounded-full">
+                                                        {icon}
+                                                    </span>
+                                                    <CardTitle className="text-md font-bold">{title}</CardTitle>
+                                                </div>
+                                            </CardHeader>
+                                            <CardContent className="p-4 bg-white text-sm dark:bg-gray-800">
+                                                <p>{description}</p>
+                                            </CardContent>
+                                        </Card>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="space-y-3 mt-8">
+                                <h2 className="text-xl font-extrabold tracking-tight lg:text-2xl dark:text-white mb-4">
+                                    Review by the Administration
+                                </h2>
+                                <p className="mt-3 text-md text-gray-600 dark:text-gray-400 mb-6">
+                                    The concern will be addresses and review by the Bharatiya Popular Party administration, that consist off State heads, district heads and rural, or block heads. Administration will assess and accept or reject the case on the basis of urgency, relevance and verification.
+                                </p>
+                                {verificationSteps.map(({ icon, title, description }) => (
                                     <Card key={title} className="shadow-lg">
                                         <CardHeader className="bg-[#e85b33] text-white p-4">
                                             <div className="flex items-center gap-3">
@@ -122,30 +146,6 @@ const HowItWorks = () => {
                                     </Card>
                                 ))}
                             </div>
-                        </div>
-                        <div className="space-y-3 mt-8">
-                            <h2 className="text-xl font-extrabold tracking-tight lg:text-2xl dark:text-white mb-4">
-                                Review by the Administration
-                            </h2>
-                            <p className="mt-3 text-md text-gray-600 dark:text-gray-400 mb-6">
-                                The concern will be addresses and review by the Bharatiya Popular Party administration, that consist off State heads, district heads and rural, or block heads. Administration will assess and accept or reject the case on the basis of urgency, relevance and verification.
-                            </p>
-                            {verificationSteps.map(({ icon, title, description }) => (
-                                <Card key={title} className="shadow-lg">
-                                    <CardHeader className="bg-[#e85b33] text-white p-4">
-                                        <div className="flex items-center gap-3">
-                                            <span className="bg-white/20 p-2 rounded-full">
-                                                {icon}
-                                            </span>
-                                            <CardTitle className="text-md font-bold">{title}</CardTitle>
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent className="p-4 bg-white text-sm dark:bg-gray-800">
-                                        <p>{description}</p>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
                         </div>
                         <div className="relative">
                             <img
@@ -206,7 +206,7 @@ const HowItWorks = () => {
                             },
                             {
                                 title: "Professional Response",
-                                content: "Once a concern is approved, relevant Professional according to the specialised area, will address the concern. Based on app analysis professional will assess the situation and provide the necessary guidance, support, and solutions. Fees charges by the professional should be reasonable as this is a pure community service."
+                                content: "Once a concern is approved, relevant Professional according to the specialised area, will address the concern. Based on App analysis professional will assess the situation and provide the necessary guidance, support, and solutions. Fees charges by the professional should be reasonable as this is a pure community service."
                             },
                             {
                                 title: "Administration for the approval",
@@ -219,10 +219,6 @@ const HowItWorks = () => {
                             {
                                 title: "Community Fund Utilization",
                                 content: "Once the service is provided, payment will be made directly to the business or service provider, ensuring transparency and smooth transactions. The community fund will be used to make such payment to the professionals, businesses and to purchase services like medical care, scholarships, education, consultancy, etc."
-                            },
-                            {
-                                title: "Business Registration for payment",
-                                content: "Entities and business serving the case will have to be registered with the community app for payment execution."
                             },
                         ].map(({ title, content }) => (
                             <Card key={title} className="shadow-lg">

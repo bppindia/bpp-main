@@ -1,8 +1,5 @@
-import {
-    Goal,
-    LayoutGrid,
-    LucideIcon
-} from 'lucide-react';
+import { Goal, LayoutGrid, LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 type Submenu = {
     href: string;
@@ -25,76 +22,77 @@ type Group = {
 };
 
 export function getMainMenuList(_pathname?: string): Group[] {
+      const { t } = useTranslation('header');
     return [
         {
             groupLabel: "",
             menus: [
                 {
                     href: "/about",
-                    label: "About Us",
+                    label: t("AboutUs.label"),
                     icon: Goal,
                     submenus: [
                         {
                             href: "/about/bpp-goals",
-                            label: "Goals",
-                            description: `Learn about the goals that drive Bharatiya Popular Party's mission and vision`
+                            label: t("AboutUs.submenus.goals.label"),
+                            description: t("AboutUs.submenus.goals.description"),
                         },
                         {
                             href: "/about/get-to-know-bpp",
-                            label: "Get To Know",
-                            description: 'Discover more about Bharatiya Popular Party, its values, and its journey.'
+                            label: t("AboutUs.submenus.getToKnow.label"),
+                            description: t("AboutUs.submenus.getToKnow.description"),
                         },
                         {
                             href: "/about/commitment-progress",
-                            label: "Commitment to Progress",
-                            description: `Understand Bharatiya Popular Party's dedication to sustainability and environmental responsibility.`
+                            label: t("AboutUs.submenus.commitmentProgress.label"),
+                            description: t("AboutUs.submenus.commitmentProgress.description"),
                         },
                         {
                             href: "/about/volunteer",
-                            label: "Volunteer",
-                            description: `Explore exciting career opportunities at Bharatiya Popular Party.`
+                            label: t("AboutUs.submenus.volunteer.label"),
+                            description: t("AboutUs.submenus.volunteer.description"),
                         },
-                    ]
-                }
-            ]
+                    ],
+                },
+            ],
         },
         {
-            groupLabel: "Membership",
+            groupLabel: t("Membership.label"),
             menus: [
                 {
                     href: "/membership",
-                    label: "Membership Area",
+                    label: t("Membership.label"),
                     icon: Goal,
                     submenus: [
                         {
-                            label: "Members FAQ",
+                            label: t("Membership.submenus.faq.label"),
                             href: "/membership/faq",
-                            description: "Find answers to common questions about membership.",
+                            description: t("Membership.submenus.faq.description"),
                         },
                         {
-                            label: "Members Login",
+                            label: t("Membership.submenus.login.label"),
                             href: "/auth/login",
-                            description: "Log in to access your membership account.",
+                            description: t("Membership.submenus.login.description"),
                         },
                         {
-                            label: "Membership Privileges",
+                            label: t("Membership.submenus.privileges.label"),
                             href: "/membership/privileges",
-                            description: "Learn about the benefits and privileges of being a member.",
+                            description: t("Membership.submenus.privileges.description"),
                         },
                         {
-                            label: "Code of Conduct",
+                            label: t("Membership.submenus.codeOfConduct.label"),
                             href: "/membership/code-of-conduct",
-                            description: "Understand the rules and ethical guidelines for members.",
+                            description: t("Membership.submenus.codeOfConduct.description"),
                         },
                         {
-                            label: "Complaints",
+                            label: t("Membership.submenus.complaints.label"),
                             href: "/membership/complaints",
-                            description: "Submit and track your complaints related to membership.",
+                            description: t("Membership.submenus.complaints.description"),
                         },
                         {
-                            label: "Upgrade & Renewals",
+                            label: t("Membership.submenus.upgradeRenewals.label"),
                             href: "/membership/upgrade-renewals",
-                            description: "Easily Upgrade & renew your membership online.",
+                            description: t("Membership.submenus.upgradeRenewals.description"),
                         },
                     ],
                 },
@@ -105,46 +103,9 @@ export function getMainMenuList(_pathname?: string): Group[] {
             menus: [
                 {
                     href: "/membership/wings",
-                    label: "Wings",
+                    label: t("Wings.label"),
                     icon: LayoutGrid,
                     submenus: []
-                }
-            ]
-        },     
-        {
-            groupLabel: "",
-            menus: [
-                {
-                    href: "/business-community",
-                    label: "Business Community",
-                    icon: Goal,
-                    submenus: [
-                        {
-                            label: "Vendor & Suppliers",
-                            href: "/business-community/vendor-suppliers",
-                            description: "Explore vendors and suppliers within the community.",
-                        },
-                        {
-                            label: "Business Community Join",
-                            href: "/business-community/join",
-                            description: "Join the business community and grow your network.",
-                        },
-                        {
-                            label: "Business/Vendor Disclosure",
-                            href: "/business-community/disclosure",
-                            description: "View important business/vendor disclosure information.",
-                        },
-                        {
-                            label: "Ethics Vendor Supplier",
-                            href: "/business-community/ethics",
-                            description: "Understand the ethics for vendors and suppliers.",
-                        },
-                        {
-                            label: "Supplier Inclusion",
-                            href: "/business-community/inclusion",
-                            description: "Learn about supplier inclusion initiatives.",
-                        }
-                    ]
                 }
             ]
         },
@@ -152,23 +113,60 @@ export function getMainMenuList(_pathname?: string): Group[] {
             groupLabel: "",
             menus: [
                 {
-                    href: "/community-contribution",
-                    label: "Community Contribution",
+                    href: "/business-community",
+                    label: t("BusinessCommunity.label"),
                     icon: Goal,
                     submenus: [
                         {
-                            label: "Introduction",
-                            href: "/community-contribution/introduction",
-                            description: "community contribution",
+                            label: t("BusinessCommunity.submenus.vendorSuppliers.label"),
+                            href: "/business-community/vendor-suppliers",
+                            description: t("BusinessCommunity.submenus.vendorSuppliers.description"),
                         },
                         {
-                            label: "How it works",
-                            href: "/community-contribution/how-it-works",
-                            description: "Join the business community and grow your network.",
+                            label: t("BusinessCommunity.submenus.join.label"),
+                            href: "/business-community/join",
+                            description: t("BusinessCommunity.submenus.join.description"),
                         },
-                    ]
-                }
-            ]
+                        {
+                            label: t("BusinessCommunity.submenus.disclosure.label"),
+                            href: "/business-community/disclosure",
+                            description: t("BusinessCommunity.submenus.disclosure.description"),
+                        },
+                        {
+                            label: t("BusinessCommunity.submenus.ethics.label"),
+                            href: "/business-community/ethics",
+                            description: t("BusinessCommunity.submenus.ethics.description"),
+                        },
+                        {
+                            label: t("BusinessCommunity.submenus.inclusion.label"),
+                            href: "/business-community/inclusion",
+                            description: t("BusinessCommunity.submenus.inclusion.description"),
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            groupLabel: "",
+            menus: [
+                {
+                    href: "/community-contribution",
+                    label: t("CommunityContribution.label"),
+                    icon: Goal,
+                    submenus: [
+                        {
+                            label: t("CommunityContribution.submenus.introduction.label"),
+                            href: "/community-contribution/introduction",
+                            description: t("CommunityContribution.submenus.introduction.description"),
+                        },
+                        {
+                            label: t("CommunityContribution.submenus.howItWorks.label"),
+                            href: "/community-contribution/how-it-works",
+                            description: t("CommunityContribution.submenus.howItWorks.description"),
+                        },
+                    ],
+                },
+            ],
         },
     ];
 }

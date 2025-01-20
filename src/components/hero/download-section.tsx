@@ -15,7 +15,7 @@ const DownloadSection = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="w-full p-6 bg-background dark:bg-gray-900 transition-colors">
+        <div className="w-full  bg-background dark:bg-gray-900 transition-colors">
             <div className="p-6 md:p-12">
                 <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
                     {/* Left Column - Image Section */}
@@ -74,16 +74,15 @@ const DownloadSection = () => {
                         </h1>
 
                         {/* QR Code */}
-                        <div className="flex md:flex-row gap-6 items-center">
-                            <div className="w-40 h-40 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center border p-2">
-                                <img src={appQr} alt="App QR Code" />
+                        <div className="flex flex-col md:flex-row gap-6 items-center">
+                            <div className="w-32 h-32 md:w-40 md:h-40 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center border p-2">
+                                <img src={appQr} alt="App QR Code" className="max-w-full max-h-full" />
                             </div>
-                            <div className="space-y-2">
-                                <p className="text-gray-600 font-bold text-xl dark:text-gray-400">
+                            <div className="space-y-2 text-center md:text-left">
+                                <p className="text-gray-600 font-bold text-sm dark:text-gray-400">
                                     Scan to Download App
                                 </p>
-                                <div className='flex gap-2'>
-
+                                <div className='flex flex-row md:flex-row gap-2'>
                                     <Button
                                         onClick={() => window.location.href = 'https://bppdatabase.s3.ap-south-1.amazonaws.com/app/BPP.apk'}
                                         className="flex items-center gap-3 justify-center p-4 bg-[#2196f3] hover:bg-[#1e40af] text-white"

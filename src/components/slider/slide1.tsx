@@ -1,9 +1,11 @@
 import WelcomeBanner from '@/assets/images/backgrounds/sliders/WELCOME TO BPP.png';
 import { motion } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from "react-router-dom";
 
 export function Slide1() {
   const navigate = useNavigate()
+      const { t } = useTranslation('homePage');
   return (
     <div className="relative w-full h-[70vh] sm:h-[80vh]">
       <motion.div
@@ -25,7 +27,7 @@ export function Slide1() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-white text-3xl md:text-3xl lg:text-6xl font-bold"
         >
-          WELCOME TO
+  {t('Slider.Welcome.tittle')}
         </motion.h1>
         <motion.h1
           initial={{ x: 100, opacity: 0 }}
@@ -33,7 +35,7 @@ export function Slide1() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-white text-3xl md:text-3xl lg:text-6xl font-bold mb-4"
         >
-          BHARATIYA POPULAR PARTY
+         {t('Slider.Welcome.subTittle')}
         </motion.h1>
 
         <motion.div
@@ -44,10 +46,10 @@ export function Slide1() {
         >
           <div className="mb-4">
             <h3 className="text-white text-3xl md:text-3xl lg:text-4xl font-semibold">
-              Community Contribution
+            {t('Slider.Welcome.description')}
             </h3>
             <h3 className="text-white text-3xl md:text-3xl lg:text-4xl font-semibold">
-              Begin the Change.
+            {t('Slider.Welcome.description2')}
             </h3>
           </div>
 
@@ -57,7 +59,7 @@ export function Slide1() {
             <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-5 py-3 rounded-full text-xs font-semibold transition-all duration-300 shadow-lg"
               onClick={() => navigate('/auth/signup')}
             >
-              Join Bharatiya Popular Party To Change India
+                 {t('Slider.Welcome.button')}
             </button>
           </motion.div>
         </motion.div>

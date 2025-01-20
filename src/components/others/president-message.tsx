@@ -2,8 +2,8 @@ import sirPhoto from "@/assets/images/sirPhoto.png";
 
 const PresidentMessage = () => {
     return (
-        <div className="w-full max-w-5xl mx-auto font-poppins">
-            <div className="my-3">
+        <div className="w-full max-w-6xl mx-auto font-poppins">
+            <div className="mt-3">
                 {/* Header */}
                 <h1 className="text-xl md:text-3xl lg:text-4xl font-semibold text-center mb-6 text-[#3b82f6]">
                     A Message from the Party's President
@@ -20,6 +20,7 @@ const PresidentMessage = () => {
                             />
                         <div>
                             <p className="text-md font-semibold text-[#e85a32]">- Shri Jaheer Bukhari</p>
+                            <p className="text-md font-semibold text-[#e85a32] mx-3">President</p>
                         </div>
                         </div>
                     </div>
@@ -36,7 +37,7 @@ const PresidentMessage = () => {
                             </p>
 
                             <p className="text-sm mb-3 md:text-md leading-relaxed text-gray-800">
-                            To help create a stronger support system of 'Community-Contribution', I invite you to join the party’s app. This app will enable all to connect and exchange necessary financial and other supports to one another as we work towards achieving our common goals.
+                            To help create a stronger support system of 'Community-Contribution', I invite you to join the party’s App. This App will enable all to connect and exchange necessary financial and other supports to one another as we work towards achieving our common goals.
                             </p>
                             <p className="text-sm mb-3 md:text-md leading-relaxed text-gray-800">
                             Together, let us begin the change and build a brighter, stronger future for all.

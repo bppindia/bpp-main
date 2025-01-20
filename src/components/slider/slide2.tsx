@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 export function Slide2() {
   const navigate = useNavigate()
-
+  const { t } = useTranslation('homePage');
   return (
     <div className="relative w-full h-[70vh] sm:h-[80vh]">
       <motion.div
@@ -25,7 +26,7 @@ export function Slide2() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-white text-4xl md:text-4xl lg:text-6xl font-bold mb-4"
         >
-          Community Contribution
+        {t('Slider.Contribution.tittle')}
         </motion.h1>
 
         <motion.p
@@ -34,7 +35,7 @@ export function Slide2() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-white text-sm md:text-lg lg:text-lg max-w-3xl mb-12"
         >
-          This Bharatiya Popular Party app empowers you to exchange financial assistance, essential guidance, consultation, support, and services with each-other whenever emergencies or urgent situations arise, ensuring no one is left behind in times of need. Click to download the 'Community-Contribution' app and be part of the change.
+    {t('Slider.Contribution.description')}
         </motion.p>
 
         <motion.div
@@ -49,7 +50,7 @@ export function Slide2() {
             className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-4 py-2  rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
             onClick={()=> navigate('/auth/signup')}
           >
-            Join Now
+             {t('Slider.Contribution.button')}
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -57,7 +58,7 @@ export function Slide2() {
             className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-4 py-2  rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
             onClick={()=> navigate('/community-contribution/introduction')}
           >
-            Download Now
+             {t('Slider.Contribution.button2')}
           </motion.button>
         </motion.div>
       </div>
