@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import NewsCard from './test/news-card';
+import { useTranslation } from "react-i18next";
 
 export default function Newsletter() {
   const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ export default function Newsletter() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation('homePage');  // Load translations from homePage
 
   const validateEmail = (email: string) => {
     const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
@@ -20,12 +22,12 @@ export default function Newsletter() {
 
   const handleSubscribe = async () => {
     if (!email) {
-      setErrorMessage("Please enter an email address");
+      setErrorMessage(t("newsletter.error.emailRequired"));
       return;
     }
 
     if (!validateEmail(email)) {
-      setErrorMessage("Please enter a valid email address");
+      setErrorMessage(t("newsletter.error.invalidEmail"));
       return;
     }
 
@@ -35,8 +37,8 @@ export default function Newsletter() {
       await postData('subscribers', { email: email });
 
       toast({
-        title: "Success!",
-        description: "You have successfully subscribed to our newsletter.",
+        title: t("newsletter.success.title"),
+        description: t("newsletter.success.message"),
       });
 
       setIsSubscribed(true);
@@ -44,8 +46,8 @@ export default function Newsletter() {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Subscription failed",
-        description: "There was an error subscribing to the newsletter. Please try again."
+        title: t("newsletter.success.title"),
+        description: t("newsletter.error.subscriptionFailed")
       });
     } finally {
       setIsLoading(false);
@@ -57,7 +59,7 @@ export default function Newsletter() {
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-0">
         <Input
           type="email"
-          placeholder="Enter your email"
+          placeholder={t("newsletter.form.placeholder")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="flex-1 sm:rounded-r-none focus:ring-2 focus:ring-blue-500"
@@ -67,7 +69,7 @@ export default function Newsletter() {
           onClick={handleSubscribe}
           disabled={isLoading}
         >
-          {isLoading ? "Subscribing..." : "Subscribe"}
+          {isLoading ? t("newsletter.button.subscribing") : t("newsletter.button.subscribe")}
         </Button>
       </div>
 
@@ -76,7 +78,7 @@ export default function Newsletter() {
       )}
 
       {isSubscribed && (
-        <div className="text-green-500 text-sm mt-2">Thank you for subscribing!</div>
+        <div className="text-green-500 text-sm mt-2">{t("newsletter.success.thankYou")}</div>
       )}
     </div>
   );
@@ -92,26 +94,26 @@ export default function Newsletter() {
           </div>
           <div className="col-span-9 sm:col-span-10 space-y-4">
             <div>
-              <p className="text-sm text-muted-foreground mb-2">Our newsletters</p>
+              <p className="text-sm text-muted-foreground mb-2">{t('newsletter.heading')}</p>
               <h2 className="text-xl sm:text-2xl font-bold">
-                Stay Informed with Us
+               {t('newsletter.title')}
               </h2>
             </div>
             <div className="text-sm text-muted-foreground">
-              Get timely updates on national news and political developments. No spam, just the most relevant insights delivered to your inbox.
+              {t('newsletter.subtitle')}
             </div>
             {renderSubscribeForm()}
           </div>
         </div>
         <div className="hidden lg:block lg:col-span-5 space-y-4">
           <div>
-            <p className="text-sm text-muted-foreground mb-2">Our newsletters</p>
+            <p className="text-sm text-muted-foreground mb-2">{t('newsletter.heading')}</p>
             <h2 className="text-xl sm:text-2xl font-bold">
-              Stay Informed with Us
+            {t('newsletter.title')}
             </h2>
           </div>
           <div className="text-sm text-muted-foreground">
-            Get timely updates on national news and political developments. No spam, just the most relevant insights delivered to your inbox.
+          {t('newsletter.subtitle')}
           </div>
           {renderSubscribeForm()}
         </div>

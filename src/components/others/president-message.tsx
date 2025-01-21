@@ -1,12 +1,14 @@
 import sirPhoto from "@/assets/images/sirPhoto.png";
+import { useTranslation } from "react-i18next";
 
 const PresidentMessage = () => {
+    const { t } = useTranslation('homePage');
     return (
         <div className="w-full max-w-6xl mx-auto font-poppins">
             <div className="mt-3">
                 {/* Header */}
                 <h1 className="text-xl md:text-3xl lg:text-4xl font-semibold text-center mb-6 text-[#3b82f6]">
-                    A Message from the Party's President
+                   {t('PresidentMessage.heading')}
                 </h1>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 items-start">
@@ -18,10 +20,10 @@ const PresidentMessage = () => {
                                 alt="Party President"
                                 className="w-full"
                             />
-                        <div>
-                            <p className="text-md font-semibold text-[#e85a32]">- Shri Jaheer Bukhari</p>
-                            <p className="text-md font-semibold text-[#e85a32] mx-3">President</p>
-                        </div>
+                            <div>
+                                <p className="text-md font-semibold text-[#e85a32]">-    {t('PresidentMessage.presidentName')}</p>
+                                <p className="text-md font-semibold text-[#e85a32] mx-3">   {t('PresidentMessage.designation')}</p>
+                            </div>
                         </div>
                     </div>
 
@@ -29,18 +31,18 @@ const PresidentMessage = () => {
                     <div className="col-span-2 flex flex-col">
                         <div className="container">
                             <p className="text-sm mb-3 md:text-md leading-relaxed text-gray-800">
-                            I would like to extend a heartfelt thanks to you for your trust in joining the party. Your support is truly appreciated.
+                            {t('PresidentMessage.description')}
                             </p>
 
                             <p className="text-sm mb-3 md:text-md leading-relaxed text-gray-800">
-                            I promise to stay committed to the party's goals like creating jobs for all, empowering farmers, ensuring equality for everyone, and more. Above all, community contribution will always be at the top of our priorities.
+                            {t('PresidentMessage.description2')}
                             </p>
 
                             <p className="text-sm mb-3 md:text-md leading-relaxed text-gray-800">
-                            To help create a stronger support system of 'Community-Contribution', I invite you to join the party’s App. This App will enable all to connect and exchange necessary financial and other supports to one another as we work towards achieving our common goals.
+                            {t('PresidentMessage.description3')}
                             </p>
                             <p className="text-sm mb-3 md:text-md leading-relaxed text-gray-800">
-                            Together, let us begin the change and build a brighter, stronger future for all.
+                            {t('PresidentMessage.description4')}
                             </p>
                         </div>
                     </div>

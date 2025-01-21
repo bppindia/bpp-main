@@ -10,12 +10,14 @@ import { useNavigate } from 'react-router-dom';
 import { AnimatedShinyText } from '../ui/animated-shiny-text';
 import { Input } from '../ui/input';
 import NumberTicker from '../ui/number-ticker';
+import { useTranslation } from 'react-i18next';
 
 const DownloadSection = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation('homePage');
 
     return (
-        <div className="w-full  bg-background dark:bg-gray-900 transition-colors">
+        <div className="w-full bg-background dark:bg-gray-900 transition-colors">
             <div className="p-6 md:p-12">
                 <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
                     {/* Left Column - Image Section */}
@@ -44,8 +46,8 @@ const DownloadSection = () => {
                             }}
                         >
                             <TabsList className="grid w-full grid-cols-2">
-                                <TabsTrigger value="mobile">Mobile</TabsTrigger>
-                                <TabsTrigger value="desktop">Desktop</TabsTrigger>
+                                <TabsTrigger value="mobile"> {t('DownloadQr.section1')}</TabsTrigger>
+                                <TabsTrigger value="desktop"> {t('DownloadQr.section2')}</TabsTrigger>
                             </TabsList>
                         </Tabs>
                     </div>
@@ -61,16 +63,16 @@ const DownloadSection = () => {
                                         delay={3}
                                         className="text-blue-600 dark:text-white"
                                     />
-                                    {' '}USERS
+                                    {' '} {t('DownloadQr.header')}
                                 </h1>
                                 <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
-                                    REGISTERED WITH US
+                                    {t('DownloadQr.subheader')}
                                 </h2>
                             </div>
                         </div>
 
                         <h1 className="text-xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                            Community Contribution Financial Support Anywhere, Anytime.
+                            {t('DownloadQr.heading')}
                         </h1>
 
                         {/* QR Code */}
@@ -80,7 +82,7 @@ const DownloadSection = () => {
                             </div>
                             <div className="space-y-2 text-center md:text-left">
                                 <p className="text-gray-600 font-bold text-sm dark:text-gray-400">
-                                    Scan to Download App
+                                    {t('DownloadQr.scanTxt')}
                                 </p>
                                 <div className='flex flex-row md:flex-row gap-2'>
                                     <Button
@@ -88,7 +90,7 @@ const DownloadSection = () => {
                                         className="flex items-center gap-3 justify-center p-4 bg-[#2196f3] hover:bg-[#1e40af] text-white"
                                     >
                                         <FaAndroid className="w-6 h-6 text-white" />
-                                        <p className="text-left">Android<br />Download</p>
+                                        <p className="text-left">{t('DownloadQr.buttonTxt')}</p>
                                     </Button>
                                     <Button
                                         className="flex items-center gap-3 justify-center p-4 bg-[#2196f3] hover:bg-[#1e40af] text-white" onClick={() => navigate('/download-app')}
@@ -107,22 +109,21 @@ const DownloadSection = () => {
                             onClick={() => navigate('/community-contribution/how-it-works')}
                         >
                             <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-2 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
-                                <span className="text-sm font-bold">✨ Community Contribution How it works</span>
+                                <span className="text-sm font-bold">{t('DownloadQr.contribution')}</span>
                                 <ArrowRightIcon className="ml-1 h-5 w-5 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
                             </AnimatedShinyText>
                         </div>
-
 
                         {/* Signup Input */}
                         <div className="max-w-md">
                             <div className="flex gap-2">
                                 <Input
                                     type="text"
-                                    placeholder="Email/Phone number"
+                                    placeholder={t('DownloadQr.placeholder')}
                                     className="flex-1"
                                 />
                                 <Button onClick={() => navigate('/auth/signup')} className="bg-blue-600 hover:bg-blue-900 text-white">
-                                    Sign Up
+                                    {t('DownloadQr.button')}
                                 </Button>
                             </div>
                         </div>

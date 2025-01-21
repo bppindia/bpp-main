@@ -2,9 +2,11 @@ import { BadgeDollarSign } from "lucide-react";
 import { motion } from "framer-motion";
 import Employment from '@/assets/images/backgrounds/sliders/EMPLOYMENT & ECONOMIC GROWTH.jpeg';
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function Slide9() {
     const navigate = useNavigate();
+    const { t } = useTranslation('homePage');
 
     return (
         <div className="relative w-full h-[80vh]">
@@ -28,7 +30,7 @@ export function Slide9() {
                     className="flex items-center gap-4 mb-3"
                 >
                     <BadgeDollarSign className="text-white" size={30} />
-                    <h2 className="text-white text-3xl font-bold">GOAL 7</h2>
+                    <h2 className="text-white text-3xl font-bold"> {t('Slider.Goal7.tittle')}</h2>
                 </motion.div>
 
                 <motion.h1
@@ -37,7 +39,7 @@ export function Slide9() {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-6"
                 >
-                    Employment and Economic Growth
+                    {t('Slider.Goal7.subTittle')}
                 </motion.h1>
 
                 <motion.p
@@ -46,7 +48,7 @@ export function Slide9() {
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="text-white text-md mb-4"
                 >
-                    BPP is committed to promoting decent work and sustained economic growth by creating job opportunities, ensuring fair wages, and improving working conditions for all citizens. The party aims to empower individuals, particularly in rural and marginalized communities, through skill development, entrepreneurship, and access to employment.
+                  {t('Slider.Goal7.description')}
                 </motion.p>
 
                 <motion.div
@@ -60,7 +62,7 @@ export function Slide9() {
                         className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
                         onClick={() => navigate('/about/bpp-goals')}
                     >
-                        Learn More
+                      {t('Slider.Goal7.button')}
                     </button>
                 </motion.div>
             </div>

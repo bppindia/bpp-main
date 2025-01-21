@@ -2,9 +2,11 @@ import { Building2 } from "lucide-react";
 import { motion } from "framer-motion";
 import NationalIntegrity from '@/assets/images/backgrounds/sliders/NATIONAL INTEGRITY.jpeg';
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function Slide3() {
     const navigate = useNavigate()
+     const { t } = useTranslation('homePage');
     return (
         <div className="relative w-full h-[80vh]">
             <motion.div
@@ -27,7 +29,7 @@ export function Slide3() {
                     className="flex items-center gap-4 mb-3"
                 >
                     <Building2 className="text-white" size={30} />
-                    <h2 className="text-white text-3xl font-bold">GOAL 1</h2>
+                    <h2 className="text-white text-3xl font-bold"> {t('Slider.Goal.tittle')}</h2>
                 </motion.div>
 
                 <motion.h1
@@ -36,7 +38,7 @@ export function Slide3() {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-6"
                 >
-                    National Integrity
+                   {t('Slider.Goal.subTittle')}
                 </motion.h1>
 
                 <motion.p
@@ -45,7 +47,7 @@ export function Slide3() {
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="text-white text-md  mb-4"
                 >
-                    Bharatiya Popular Party shall bear true faith and allegiance to the constitution of India as by law established, and to the principles of socialism, secularism and democracy and would uphold the sovereignty, unity and integrity of India.
+                  {t('Slider.Goal.description')}
                 </motion.p>
 
                 <motion.div
@@ -57,7 +59,7 @@ export function Slide3() {
                 >
                     <button className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-4 py-2  rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
                         onClick={() => navigate('/about/bpp-goals')}>
-                        Learn More
+                        {t('Slider.Goal.button')}
                     </button>
                 </motion.div>
             </div>

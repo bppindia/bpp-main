@@ -2,9 +2,11 @@ import { GraduationCap } from "lucide-react";
 import { motion } from "framer-motion";
 import QualityEduction from '@/assets/images/backgrounds/sliders/QUALITY EDUCATION.jpg';
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function Slide12() {
     const navigate = useNavigate();
+    const { t } = useTranslation('homePage');
 
     return (
         <div className="relative w-full h-[80vh]">
@@ -28,7 +30,7 @@ export function Slide12() {
                     className="flex items-center gap-4 mb-3"
                 >
                     <GraduationCap className="text-white" size={30} />
-                    <h2 className="text-white text-3xl font-bold">GOAL 10</h2>
+                    <h2 className="text-white text-3xl font-bold">{t('Slider.Goal10.tittle')}</h2>
                 </motion.div>
 
                 <motion.h1
@@ -37,7 +39,7 @@ export function Slide12() {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-6"
                 >
-                    Quality Education
+                   {t('Slider.Goal10.subTittle')}
                 </motion.h1>
 
                 <motion.p
@@ -46,7 +48,7 @@ export function Slide12() {
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="text-white text-md mb-4"
                 >
-                    BPP believes that education is one of the most powerful and proven vehicles for sustainable development. The goal is to ensure that all girls and boys complete primary and secondary schooling. It also aims to eliminate gender and wealth disparities and achieve universal access to quality higher education.
+                   {t('Slider.Goal10.description')}
                 </motion.p>
 
                 <motion.div
@@ -60,7 +62,7 @@ export function Slide12() {
                         className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
                         onClick={() => navigate('/about/bpp-goals')}
                     >
-                        Learn More
+                      {t('Slider.Goal10.button')}
                     </button>
                 </motion.div>
             </div>

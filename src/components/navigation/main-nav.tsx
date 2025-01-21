@@ -60,7 +60,7 @@ const MainNav = () => {
     const location = useLocation();
     const menuList = getMainMenuList(location.pathname);
     const [isOpen, setIsOpen] = React.useState(false);
-    const { t } = useTranslation('common');
+    const { t } = useTranslation(['common', 'header']);
 
 
     return (
@@ -125,7 +125,7 @@ const MainNav = () => {
                                 <SheetTitle>
                                     <Link to="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
                                         <img src={bppLogo} className="h-8 w-8" alt="BPP Logo" />
-                                        <span className="font-bold font-oswald">Bharatiya Popular Party</span>
+                                        <span className="font-bold font-oswald">{t('PartyName.name')}</span>
                                     </Link>
                                 </SheetTitle>
                             </SheetHeader>
@@ -172,7 +172,8 @@ const MainNav = () => {
                 {/* Right Side Actions */}
                 <div className="hidden lg:flex items-center gap-1">
                     <Button className="bg-blue-600 h-8 hover:bg-blue-800">
-                        <Link to="/auth/signup" className="text-white text-xs">JOIN NOW</Link>
+                        <Link to="/auth/signup" className="text-white text-xs">
+                        {t('Join.label', { ns: 'header' })}</Link>
                     </Button>
                     <QRToggle />
                     <LanguageToggle />

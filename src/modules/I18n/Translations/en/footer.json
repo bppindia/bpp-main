@@ -1,0 +1,88 @@
+{
+  "Footer": {
+    "aboutUs": {
+      "title": "About Us",
+      "links": {
+        "goals": "Goals",
+        "getToKnow": "Get To Know",
+        "commitmentProgress": "Commitment to Progress",
+        "volunteer": "Volunteer"
+      }
+    },
+    "membershipArea": {
+      "title": "Membership Area",
+      "links": {
+        "membersFaq": "Members FAQ",
+        "membersLogin": "Members Login",
+        "membershipPrivileges": "Membership Privileges",
+        "wings": "Wings",
+        "codeOfConduct": "Code of Conduct",
+        "complaints": "Complaints",
+        "membershipRenewals": "Membership Renewals"
+      }
+    },
+    "businessCommunity": {
+      "title": "Business Community",
+      "links": {
+        "vendorSuppliers": "Vendor & Suppliers",
+        "businessCommunityJoin": "Business Community Join",
+        "businessVendorDisclosure": "Business/Vendor Disclosure",
+        "ethicsVendorSupplier": "Ethics Vendor Supplier",
+        "supplierInclusion": "Supplier Inclusion"
+      }
+    },
+    "communityContributions": {
+      "title": "Community Contributions",
+      "links": {
+        "introduction": "Introduction",
+        "howItWorks": "How it Works"
+      }
+    },
+    "updates": {
+      "title": "Updates",
+      "links": {
+        "updates": "Updates"
+      }
+    },
+    "memberSupport": {
+      "title": "Member Support",
+      "links": {
+        "memberServices": "Member Services",
+        "appTechnicalSupport": "APP Technical Support",
+        "accessibility": "Accessibility"
+      }
+    },
+    "others": {
+      "title": "Others",
+      "links": {
+        "dashboard": "Dashboard",
+        "logoMediaRequest": "Logo & Media Request"
+      }
+    },
+    "contactDetails": {
+      "name": "Bharatiya Popular Party",
+      "location": "Navi Mumbai, Maharashtra India",
+      "description": "Join the Bharatiya Popular Party Platform and be a part of a dynamic and transparent community. Your voice matters, and together, we can drive meaningful change.",
+      "copyright": "© 2025 Bharatiya Popular Party. All rights reserved."
+    },
+    "socialMedia": {
+      "twitter": "Twitter",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn"
+    },
+    "downloadApp": {
+      "text": "Download BPP App",
+      "android": "Download on Android"
+    },
+    "footerLinks": {
+      "siteMap": "Site Map",
+      "termsConditions": "Terms and Conditions",
+      "privacyPolicy": "Privacy Policy",
+      "cookies": "Cookies",
+      "feedback": "Feedback",
+      "disclaimer": "Disclaimer",
+      "contactUs": "Contact Us"
+    }
+  }
+}

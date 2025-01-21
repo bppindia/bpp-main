@@ -2,9 +2,12 @@ import { Users } from "lucide-react";
 import { motion } from "framer-motion";
 import EqualOpportunity from '@/assets/images/backgrounds/sliders/EQUAL OPPORTUNITY AND GENDER EQUALITY.jpeg';
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function Slide4() {
     const navigate = useNavigate();
+    const { t } = useTranslation('homePage');
+
     return (
         <div className="relative w-full h-[80vh]">
             <motion.div
@@ -27,7 +30,7 @@ export function Slide4() {
                     className="flex items-center gap-4 mb-3"
                 >
                     <Users className="text-white" size={30} />
-                    <h2 className="text-white text-3xl font-bold">GOAL 2</h2>
+                    <h2 className="text-white text-3xl font-bold">{t('Slider.Goal2.tittle')}</h2>
                 </motion.div>
 
                 <motion.h1
@@ -36,7 +39,7 @@ export function Slide4() {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-6"
                 >
-                    Equal Opportunity and Gender Equality
+                    {t('Slider.Goal2.subTittle')}
                 </motion.h1>
 
                 <motion.p
@@ -45,7 +48,7 @@ export function Slide4() {
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="text-white text-md mb-4"
                 >
-                    Bharatiya Popular Party is committed to the task of building a developed democratic India based on the principle of equal opportunity to all citizens. The party will lay special emphasis on improving the condition of socially and economically disadvantaged sections of society.
+                    {t('Slider.Goal2.description')}
                 </motion.p>
 
                 <motion.div
@@ -59,7 +62,7 @@ export function Slide4() {
                         className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
                         onClick={() => navigate('/about/bpp-goals')}
                     >
-                        Learn More
+                        {t('Slider.Goal2.button')}
                     </button>
                 </motion.div>
             </div>

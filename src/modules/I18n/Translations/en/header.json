@@ -89,5 +89,12 @@
         "description": "Join the business community and grow your network."
       }
     }
+  },
+  "Join": {
+    "label": "JOIN NOW"
+  },
+  "Download": {
+    "label": "Scan to Download App Android",
+    "button": "More Download Options"
   }
 }

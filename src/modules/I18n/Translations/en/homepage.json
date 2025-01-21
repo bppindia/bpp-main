@@ -56,22 +56,164 @@
       "button": "Learn More"
     },
     "Goal8": {
-      "title": "GOAL 8",
-      "subTitle": "Justice, Peace, Calm and Prosperity",
+      "tittle": "GOAL 8",
+      "subTittle": "Justice, Peace, Calm and Prosperity",
       "description": "BPP aims to create a peaceful, just, and prosperous society where all citizens have equal opportunities, security, and access to resources. By this goal, BPP will uphold individual rights as well as the right to privacy, freedom of expression, and access to information.",
       "button": "Learn More"
     },
     "Goal9": {
-      "title": "GOAL 9",
-      "subTitle": "Upliftment of Farmers",
+      "tittle": "GOAL 9",
+      "subTittle": "Upliftment of Farmers",
       "description": "BPP is dedicated to the upliftment of farmers by ensuring fair prices for their products, providing access to modern farming techniques, and improving infrastructure in rural areas. The focus will be on increasing farmers' income through better market access, sustainable agricultural practices, and timely financial support.",
       "button": "Learn More"
     },
     "Goal10": {
-      "title": "GOAL 10",
-      "subTitle": "Quality Education",
+      "tittle": "GOAL 10",
+      "subTittle": "Quality Education",
       "description": "BPP believes that education is one of the most powerful and proven vehicles for sustainable development. The goal is to ensure that all girls and boys complete primary and secondary schooling. It also aims to eliminate gender and wealth disparities and achieve universal access to quality higher education.",
       "button": "Learn More"
+    }
+  },
+  "PresidentMessage": {
+    "heading": "A Message from the Party's President",
+    "presidentName": "Shri Jaheer Bukhari",
+    "designation": "President",
+    "description": "I would like to extend a heartfelt thanks to you for your trust in joining the party. Your support is truly appreciated.",
+    "description2": "I promise to stay committed to the party's goals like creating jobs for all, empowering farmers, ensuring equality for everyone, and more. Above all, community contribution will always be at the top of our priorities.",
+    "description3": "To help create a stronger support system of 'Community-Contribution', I invite you to join the party’s App. This App will enable all to connect and exchange necessary financial and other supports to one another as we work towards achieving our common goals.",
+    "description4": "Together, let us begin the change and build a brighter, stronger future for all."
+  },
+  "DownloadQr": {
+    "header": "USERS",
+    "subheader": "REGISTERED WITH US",
+    "heading": "Community Contribution Financial Support Anywhere, Anytime.",
+    "scanTxt": "Scan to Download App",
+    "buttonTxt": "Andorid",
+    "buttonTxt2": "Download",
+    "contribution": "Community Contribution How it Works",
+    "section1": "Mobile",
+    "section2": "Desktop",
+    "placeholder": "Email/Phone Number",
+    "button": "Sign Up"
+  },
+  "VisionMission": {
+    "vision": {
+      "title": "Vision",
+      "visionStatement": {
+        "heading": "Vision Statement",
+        "heading2": "Vision of ",
+        "heading3": "Bharatiya",
+        "heading4": "Popular",
+        "heading5": "Party",
+        "text1": "At Bharatiya Popular Party (BPP), our vision is to introduce an innovative, decentralized mechanism within the party's power structure. We believe that decision-making should be more inclusive, transparent, and closer to the people. By empowering local communities and leaders, we aim to create a system where power is distributed equitably, encouraging greater participation, and responsiveness. This will ensure that every individual has a voice in the decision-making process, leading to a more democratic, fair, and effective governance structure.",
+        "text2": "We are driven by the belief that true democracy flourishes when governance is not centralized but shared across all levels, empowering local communities and respecting regional diversity."
+      },
+      "features": {
+        "title": "Vision Features",
+        "items": [
+          {
+            "title": "Decentralized Governance",
+            "description": "Party believes in decentralisation by shifting power from the center to the grassroots so that the decisions are made by those who are going to be affected the most and the policy making can be more relevant, effective, and responsive to local needs."
+          },
+          {
+            "title": "Commitment to Federalism",
+            "description": "Party is committed to federalism means recognizing and respecting the diversity of our nation. We value a system where regional and local governments have the authority to manage their affairs to best serve their communities, while still remaining united in our common national goals."
+          },
+          {
+            "title": "Balanced Democracy",
+            "description": "Party’s idea of true democracy is about balance and cooperation. We strongly believe in power-sharing and this structure involves multiple stakeholders like, central, regional, and local governments and ensures that no single group holds all the power."
+          }
+        ]
+      },
+      "link": {
+        "text": "learn more about our Vision"
+      }
+    },
+    "mission": {
+      "title": "Mission",
+      "missionStatement": {
+        "heading": "Mission Statement",
+        "heading2": "Mission of ",
+        "heading3": "Bharatiya",
+        "heading4": "Popular",
+        "heading5": "Party",
+        "text1": "Party’s mission is to reach the billions of Indians through the digital App by the end of 2025, enabling everyone to benefit from community contributions. The App will be launched in December 2024, with the goal of attracting the maximum number of people to join in its first year. This will ensure nationwide participation.",
+        "text2": "The mass download of the App will help start a movement of community contribution, benefiting people across India.",
+        "text3": "In the next five years, while working through the App we aim to reach to the masses and letting them support each other with mutual contributions. Under this we invite the expert professionals also to be the part and active contributor of the community-contribution.",
+        "text4": "Members identified as most involved to the community, can be the potential candidates to stand as candidates in elections."
+      },
+      "features": {
+        "title": "Mission Features",
+        "items": [
+          {
+            "title": "Youth Empowerment",
+            "description": "Empowering the youth with education and employment opportunities, providing them with the tools, resources, and opportunities to shape the future of our nation."
+          },
+          {
+            "title": "Quality Education for All",
+            "description": "Engaging educationists who are eager to bring about a change in the system and providing quality education for every citizen so that no one is left behind due to any barriers."
+          },
+          {
+            "icon": "ShieldCheck",
+            "title": "Political Integrity",
+            "description": "Eradicating the influence of muscle and money power in politics and governance, ensuring that merit, integrity, and community service drive decision-making."
+          },
+          {
+            "title": "Gender Equality",
+            "description": "Promoting gender equality by empowering women and marginalized groups by providing equal opportunities, rights, and treatment for all genders in every aspect of life."
+          }
+        ]
+      },
+      "link": {
+        "text": "learn more about our Mission"
+      }
+    }
+  } ,
+  "communityContribution": {
+    "joinCommunity": {
+      "title": "Join Our Community",
+      "subtitle": "Community Contribution Program",
+      "description": "Bharatiya Popular Party Any Indian citizen, irrespective of caste, religion, or any other discrimination, who has attained the age of 18 and is willing to contribute to the community, is welcome to join us as a member."
+    },
+    "commonMan": {
+      "title": "Common Man",
+      "description": "The backbone of the party, the common man is the primary beneficiary of the party's efforts. It is for you that we fight for equitable development and opportunities. Your challenges and aspirations guide our mission, and together, we work to create a better future."
+    },
+    "professionals": {
+      "title": "Professionals",
+      "description": "Among the common people, there are the people with specialized expertise in various sectors and a passion to serve the community. These professionals step forward to contribute their knowledge, skills, and leadership to support the party's objectives. These are the professionals who bring practical solutions to real-world issues."
+    },
+    "business": {
+      "title": "Business Community",
+      "description": "Businesses members including entrepreneurs and institutional leaders, must be registered with the party and shall be committed to supporting the community by providing products and services at reasonable prices. Their role is very important in building a sustainable, growing economy that benefits everyone."
+    },
+    "buttons": {
+      "communityContribution": "Community Contribution",
+      "commonMan": "Common Man",
+      "professionals": "Professionals",
+      "businessCommunity": "Business Community"
+    } 
+},
+"newsletter": {
+    "heading": "Our newsletters",
+    "title": "Stay Informed with Us",
+    "subtitle": "Get timely updates on national news and political developments. No spam, just the most relevant insights delivered to your inbox.",
+    "button": {
+      "subscribe": "Subscribe",
+      "subscribing": "Subscribing..."
+    },
+    "error": {
+      "emailRequired": "Please enter an email address",
+      "invalidEmail": "Please enter a valid email address",
+      "subscriptionFailed": "There was an error subscribing to the newsletter. Please try again."
+    },
+    "success": {
+      "title": "Success!",
+      "message": "You have successfully subscribed to our newsletter.",
+      "thankYou": "Thank you for subscribing!"
+    },
+    "form": {
+      "placeholder": "Enter your email"
     }
   }
 }

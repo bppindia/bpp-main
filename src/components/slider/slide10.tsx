@@ -2,9 +2,11 @@ import { Scale } from "lucide-react";
 import { motion } from "framer-motion";
 import justicePeace from '@/assets/images/backgrounds/sliders/JUSTICE, PEACE, CALM AND PROSPERITY.jpeg';
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function Slide10() {
     const navigate = useNavigate();
+    const { t } = useTranslation('homePage');
 
     return (
         <div className="relative w-full h-[80vh]">
@@ -28,7 +30,7 @@ export function Slide10() {
                     className="flex items-center gap-4 mb-3"
                 >
                     <Scale className="text-white" size={30} />
-                    <h2 className="text-white text-3xl font-bold">GOAL 8</h2>
+                    <h2 className="text-white text-3xl font-bold">{t('Slider.Goal8.tittle')}</h2>
                 </motion.div>
 
                 <motion.h1
@@ -37,7 +39,7 @@ export function Slide10() {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-6"
                 >
-                    Justice, Peace, Calm and Prosperity
+                  {t('Slider.Goal8.subTittle')}
                 </motion.h1>
 
                 <motion.p
@@ -46,7 +48,7 @@ export function Slide10() {
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="text-white text-md mb-4"
                 >
-                    BPP aims to create a peaceful, just, and prosperous society where all citizens have equal opportunities, security, and access to resources. By this goal, BPP will uphold individual rights as well as the right to privacy, freedom of expression, and access to information.
+                  {t('Slider.Goal8.description')}
                 </motion.p>
 
                 <motion.div
@@ -60,7 +62,7 @@ export function Slide10() {
                         className="bg-[#e85a32] hover:bg-[#d14f2c] text-white px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
                         onClick={() => navigate('/about/bpp-goals')}
                     >
-                        Learn More
+                       {t('Slider.Goal8.button')}
                     </button>
                 </motion.div>
             </div>
