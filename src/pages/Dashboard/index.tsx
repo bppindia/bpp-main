@@ -1,25 +1,25 @@
 "use client";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import WarningDialog from "@/components/dialogs/WarningDialog";
-import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
+// import WarningDialog from "@/components/dialogs/WarningDialog";
+// import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
 import MapChart from "@/components/maps/mapChart";
 import GoalsCarousel from "@/components/test/goalsSlider";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator
-} from "@/components/ui/breadcrumb";
+// import {
+//   Breadcrumb,
+//   BreadcrumbItem,
+//   BreadcrumbLink,
+//   BreadcrumbList,
+//   BreadcrumbPage,
+//   BreadcrumbSeparator
+// } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useSidebar } from "@/hooks/use-sidebar";
 import { useStore } from "@/hooks/use-store";
 import DashboardLayout from "@/layout/DashboardLayout";
 import { ActivityIcon, PlusIcon, User2Icon, UsersIcon } from 'lucide-react';
 import { useSelector } from "react-redux";
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { JSX } from "react/jsx-runtime";
 
 const DashboardPage: React.FC = () => {

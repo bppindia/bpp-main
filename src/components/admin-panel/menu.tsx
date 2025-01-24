@@ -11,7 +11,7 @@ import {
 import { useAuth } from '@/context/AuthContext';
 import { getMenuList } from "@/data/menu-list";
 import { cn } from "@/lib/utils";
-import { Ellipsis, LockKeyhole, LogOut } from "lucide-react";
+import { Ellipsis, LogOut } from "lucide-react";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface MenuProps {
@@ -27,6 +27,7 @@ export function Menu({ isOpen, isLock }: MenuProps) {
 
 
   const handleLogout = () => {
+    console.log(isLock)
     logout();
     navigate("/auth/login");
   };
@@ -90,7 +91,6 @@ export function Menu({ isOpen, isLock }: MenuProps) {
                                   )}
                                 >
                                   {label} 
-                                  {/* {isLock && <LockKeyhole size={18} />} */}
                                 </p>
                               </Link>
                             </Button>

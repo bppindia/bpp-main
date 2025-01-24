@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
 import { z } from 'zod';
 
-import { DatePicker } from '@/components/DatePicker';
+// import { DatePicker } from '@/components/DatePicker';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -435,7 +435,9 @@ function CaseRegistrationForm() {
                             >
                                 Type of Case*
                             </Label>
-                            <Select {...register('typeOfCase')}>
+                            <Select 
+                            // {...register('typeOfCase')}
+                            >
                                 <SelectTrigger>
                                     <SelectValue placeholder="Select a case type" />
                                 </SelectTrigger>
@@ -452,25 +454,26 @@ function CaseRegistrationForm() {
                                     <SelectItem value="Consumer Cases">Consumer Cases</SelectItem>
                                 </SelectContent>
                             </Select>
-                            {errors.typeOfCase && (
+                            {/* {errors.typeOfCase && (
                                 <span className="text-sm text-destructive">
                                     {errors.typeOfCase.message}
                                 </span>
-                            )}
+                            )} */}
                         </div>
                         <div>
                             <Label>
                                 Date of Dispute <span className="text-red-700">*</span>
                             </Label>
-                            <DatePicker 
-                                endYear={2024} setDate={function (date: Date | undefined): void {
+                            {/* <DatePicker 
+                                endYear={2024} 
+                                setDate={function (date: Date | undefined): void {
                                     throw new Error('Function not implemented.');
-                                } } date={undefined}                            />
-                            {errors.dateOfDispute && (
+                                } } date={undefined}                            /> */}
+                            {/* {errors.dateOfDispute && (
                                 <div className="text-red-700 text-xs">
                                     {errors.dateOfDispute.message}
                                 </div>
-                            )}
+                            )} */}
                         </div>
                     </div>
 
@@ -507,7 +510,7 @@ function CaseRegistrationForm() {
                             <Input
                                 type="file"
                                 id="additionalDocument"
-                                {...register('additionalDocument')}
+                                // {...register('additionalDocument')}
                                 className="block w-full p-2 border rounded-md"
                             />
                             {/* {errors.additionalDocument && (
@@ -529,23 +532,23 @@ function CaseRegistrationForm() {
                             <div className="flex items-center space-x-4">
                                 <Checkbox
                                     id="financialAidYes"
-                                    {...register('financialAid')}
+                                    // {...register('financialAid')}
                                     value="yes"
                                 />
                                 <Label htmlFor="financialAidYes">Yes</Label>
                                 <Checkbox
                                     id="financialAidNo"
-                                    {...register('financialAid')}
+                                    // {...register('financialAid')}
                                     value="no"
                                 />
                                 <Label htmlFor="financialAidNo">No</Label>
                             </div>
                             <div className='text-sm text-red-600'>financial Aid Currently unavailable</div>
-                            {errors.financialAid && (
+                            {/* {errors.financialAid && (
                                 <span className="text-sm text-destructive">
                                     {errors.financialAid.message}
                                 </span>
-                            )}
+                            )} */}
                         </div>
                     </div>
                 </div>
@@ -559,7 +562,7 @@ function CaseRegistrationForm() {
 
 function FundRequirementForm() {
     const {
-        register,
+        // register,
         formState: { errors },
     } = useFormContext<FundRequirementFormValues>();
 
@@ -579,12 +582,12 @@ function FundRequirementForm() {
                             </Label>
                             <Input
                                 id="totalCost"
-                                {...register('totalCost')}
+                                // {...register('totalCost')}
                                 className="block w-full p-2 border rounded-md"
                             />
-                            {errors.totalCost && (
+                            {/* {errors.totalCost && (
                                 <span className="text-sm text-destructive">{errors.totalCost.message}</span>
-                            )}
+                            )} */}
                         </div>
                     </div>
 
@@ -623,7 +626,7 @@ function FundRequirementForm() {
                         <div className="flex rounded-lg shadow-sm shadow-black/5">
                             <Input
                                 id="totalAmountRequested"
-                                {...register('totalAmountRequested')}
+                                // {...register('totalAmountRequested')}
                                 className="-me-px flex-1 rounded-e-none shadow-none focus-visible:z-10"
                                 placeholder="Total amount"
                             />
@@ -634,9 +637,9 @@ function FundRequirementForm() {
                                 <IndianRupee size={16} strokeWidth={2} aria-hidden="true" />
                             </button>
                         </div>
-                        {errors.totalAmountRequested && (
+                        {/* {errors.totalAmountRequested && (
                             <span className="text-sm text-destructive">{errors.totalAmountRequested.message}</span>
-                        )}
+                        )} */}
                     </div>
                 </div>
             </CardContent>

@@ -7,7 +7,7 @@ interface PopupDialogProps {
     body: React.ReactNode;
 }
 
-export const PopupDialog = ({isOpen, onOpenChange, url, body}: PopupDialogProps) => {
+export const PopupDialog = ({isOpen, onOpenChange, body}: PopupDialogProps) => {
     return(
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
             <DialogContent

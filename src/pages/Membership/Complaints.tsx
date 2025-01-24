@@ -16,9 +16,9 @@ export default function Complaints() {
         {
             icon: <Phone className="w-6 h-6" />,
             title: "Helpline",
-            description: "For urgent matters, you may also contact our Helpline No. 9920200996, available 24hours.",
+            description: "For urgent matters, you may also contact our Helpline No. 8828477674, available 24hours.",
             action: "Call Now",
-            link: "tel:9920200996"
+            link: "tel:8828477674"
         }
     ];
 

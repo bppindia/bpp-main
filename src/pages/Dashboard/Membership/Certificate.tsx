@@ -1,12 +1,12 @@
 import bppcard from '@/assets/images/BPPcard.png';
 import { ContentLayout } from "@/components/admin-panel/content-layout";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import DashboardLayout from "@/layout/DashboardLayout";
 import { QrCode } from "lucide-react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const MembershipCertificate = () => {
     const certificateUrl = bppcard;

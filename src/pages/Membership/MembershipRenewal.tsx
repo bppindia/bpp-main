@@ -173,7 +173,7 @@ export default function MembershipRenewal() {
                                     <div>
                                         <h3 className="font-semibold mb-2">Need more information?</h3>
                                         <p className="text-muted-foreground">
-                                            Contact our membership support team at support@bpp.org or call us at +91 9920200996.
+                                            Contact our membership support team at support@bpp.org or call us at +91 8828477674.
                                         </p>
                                         <p className="text-muted-foreground">
                                             We're here to help you understand your membership benefits and journey.

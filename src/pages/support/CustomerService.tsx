@@ -30,7 +30,7 @@ export default function CustomerService() {
                         <h3 className="font-semibold text-lg">Call Us</h3>
                         <p className="text-white/80 mb-4">Available Mon-Fri, 9am-6pm</p>
                         <Button variant="outline" className="w-full bg-white text-[#e85a32] font-bold">
-                            +91 9920200996
+                            +91 8828477674
                         </Button>
                     </div>
                     <div className="p-6 bg-[#e85a32] text-white rounded-lg shadow-lg hover:scale-105 transition-transform">
