@@ -10,7 +10,7 @@ const TrackingDetails = () => {
   return (
     <DashboardLayout>
       <ContentLayout title="Dashboard">
-        <Breadcrumb>
+        {/* <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
@@ -24,7 +24,7 @@ const TrackingDetails = () => {
               </BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
-        </Breadcrumb>
+        </Breadcrumb> */}
         
         <div className="grid gap-6 md:gap-8 lg:gap-10">
           <Card>

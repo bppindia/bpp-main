@@ -12,7 +12,7 @@ const WalletPage = () => {
         <main className="flex-1 p-6">
             <DashboardLayout>
                 <ContentLayout title="Dashboard">
-                    <Breadcrumb>
+                    {/* <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
                                 <BreadcrumbLink asChild>
@@ -24,7 +24,7 @@ const WalletPage = () => {
                                 <BreadcrumbPage>Profile</BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
-                    </Breadcrumb>
+                    </Breadcrumb> */}
                     <div className="grid gap-6 mt-3">
                         <Card>
                             <CardHeader>

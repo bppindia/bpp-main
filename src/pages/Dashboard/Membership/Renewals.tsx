@@ -9,7 +9,7 @@ const RenewalsPage = () => {
     return (
         <DashboardLayout>
             <ContentLayout title="Dashboard">
-                <Breadcrumb>
+                {/* <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
@@ -21,7 +21,7 @@ const RenewalsPage = () => {
                             <BreadcrumbPage>Renewal</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
-                </Breadcrumb>
+                </Breadcrumb> */}
                 <div className="mx-auto">
                     <h1 className="text-3xl my-5 font-bold mb-6">Upgrade Your Membership</h1>
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

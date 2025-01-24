@@ -13,7 +13,7 @@ const Track = () => {
     return (
         <DashboardLayout>
             <ContentLayout title="Dashboard">
-                <Breadcrumb>
+                {/* <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
@@ -27,7 +27,7 @@ const Track = () => {
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                     </BreadcrumbList>
-                </Breadcrumb>
+                </Breadcrumb> */}
                 <div className="max-w-2xl mx-auto p-6 sm:p-8 md:p-10">
                     <div className="flex flex-col items-center justify-center space-y-6">
                         <div className="space-y-2 text-center">

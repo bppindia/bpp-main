@@ -34,7 +34,7 @@ export function Sidebar() {
           variant="link"
           asChild
         >
-          <Link to="/dashboard" className="flex items-center gap-2">
+          <Link to="/dashboard/home" className="flex items-center gap-2">
             <img src={bppflag} className="h-8 w-auto" />
             <h1
               className={cn(

@@ -1,18 +1,24 @@
 import { ContentLayout } from "@/components/admin-panel/content-layout"
 // import PayDialog from "@/components/dialogs/PayDialog"
+import communityChart from '@/assets/images/community/community_contribution.png'
+import internalWorking from '@/assets/images/community/internalworking.png'
+import { PopupDialog } from "@/components/dialogs/popup-dialog"
 import MapChart from "@/components/maps/mapChart"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import DashboardLayout from "@/layout/DashboardLayout"
 import { ActivityIcon, PlusIcon, User2Icon, UsersIcon } from "lucide-react"
-import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { Checkbox } from "@/components/ui/checkbox"
 
 const Contribution = () => {
     return (
         <DashboardLayout>
             <ContentLayout title="Dashboard">
-                <Breadcrumb>
+                {/* <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
@@ -30,7 +36,7 @@ const Contribution = () => {
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                     </BreadcrumbList>
-                </Breadcrumb>
+                </Breadcrumb> */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 my-3 gap-4 w-full">
                     <Card className="w-full h-[500px] p-4">
 
@@ -46,6 +52,7 @@ const Contribution = () => {
                             <CommunityContribution />
                         </CardContent>
                     </Card>
+               
                 </div>
                 <div className="grid grid-cols-2 my-3 gap-4 w-full">
                     <Card>
@@ -53,39 +60,36 @@ const Contribution = () => {
                             <CardTitle className="text-2xl font-bold">Maharashtra</CardTitle>
                         </CardHeader>
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2 p-5">
-                            {/* Total Members */}
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                                     <CardTitle className="text-sm font-medium">Total Members</CardTitle>
-                                    <UsersIcon className="h-6 w-6 text-muted-foreground" /> {/* Icon for Total Members */}
+                                    <UsersIcon className="h-6 w-6 text-muted-foreground" />
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">5329</div>
-                                    <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+                                    <div className="text-2xl font-bold">0</div>
+                                    <p className="text-xs text-muted-foreground">+00% from last month</p>
                                 </CardContent>
                             </Card>
 
-                            {/* Active Members */}
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                                     <CardTitle className="text-sm font-medium">Primary Members</CardTitle>
-                                    <ActivityIcon className="h-6 w-6 text-muted-foreground" /> {/* Icon for Active Members */}
+                                    <ActivityIcon className="h-6 w-6 text-muted-foreground" />
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">+2350</div>
-                                    <p className="text-xs text-muted-foreground">+180.1% from last month</p>
+                                    <div className="text-2xl font-bold">0</div>
+                                    <p className="text-xs text-muted-foreground">+00% from last month</p>
                                 </CardContent>
                             </Card>
 
-                            {/* New Members This Month */}
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                                     <CardTitle className="text-sm font-medium">New Members This Month</CardTitle>
-                                    <PlusIcon className="h-6 w-6 text-muted-foreground" /> {/* Icon for New Members */}
+                                    <PlusIcon className="h-6 w-6 text-muted-foreground" />
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">+12,234</div>
-                                    <p className="text-xs text-muted-foreground">+19% from last month</p>
+                                    <div className="text-2xl font-bold">0</div>
+                                    <p className="text-xs text-muted-foreground">+00% from last month</p>
                                 </CardContent>
                             </Card>
 
@@ -93,13 +97,18 @@ const Contribution = () => {
                             <Card>
                                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                                     <CardTitle className="text-sm font-medium">Active Now</CardTitle>
-                                    <User2Icon className="h-6 w-6 text-muted-foreground" /> {/* Icon for Active Now */}
+                                    <User2Icon className="h-6 w-6 text-muted-foreground" />
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">+573</div>
-                                    <p className="text-xs text-muted-foreground">+201 since last hour</p>
+                                    <div className="text-2xl font-bold">+0</div>
+                                    <p className="text-xs text-muted-foreground">+0 since last hour</p>
                                 </CardContent>
                             </Card>
+                        </div>
+                    </Card>
+                    <Card>
+                        <div>
+                            <img src={internalWorking} />
                         </div>
                     </Card>
                     <div>
@@ -117,7 +126,8 @@ export default Contribution;
 
 
 const CommunityContribution = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [isDialogOpen, setDialogOpen] = useState(false);
     const steps = [
         "Raise Your Query",
         "Review & Approval",
@@ -174,29 +184,114 @@ const CommunityContribution = () => {
 
             <div className="mt-6 p-4 bg-gray-100 rounded-lg shadow-md">
                 <h3 className="text-lg font-bold text-gray-800">
-                    Community Contribution Launch Announcement
+                    Community Contribution Launch <br />
+                    Announcement
                 </h3>
                 <p className="text-sm text-gray-700 mt-2">
-                    Community Contribution is designed to help members share their support and expertise with each other.
+                    The Community Contribution App Services will be operational soon, depending
+                    upon the masses joining the party so that maximum benefit can be taken from the
+                    Party’s initiative.
                 </p>
                 <p className="text-sm text-gray-700 mt-2">
-                    The Community Contribution App Services will be operational on  <strong>01.01.2026</strong>, allowing a large number of citizens to join the party in this one year and to become part of the movement.
+                    Our target is to reach to the mass by 01.01.2026. allowing a large number of citizens to be the part of movement during this one year.
                 </p>
                 <p className="text-sm text-gray-700 mt-2">
-                    By joining, you will gain access to social, legal, and health services. The App will start accepting the payments also soon.
+                    Meanwhile, <span className="font-bold">Bharatiya Popular Party's Legal wing</span> is available for ‘Free Legal Guidance’ to its primary and active members. Because this is being provided by the party's wing so no voting is required for the purpose and can be started to avail by <span className="font-bold">01.02.2025.</span>
                 </p>
             </div>
+            <div>
 
+                <div className="grid grid-cols-2 gap-2">
+                    <Label className="my-2 font-bold text-blue-900 text-xl">Type of Support</Label>
+                    <Label className="my-2 font-bold text-blue-900 text-xl">Category</Label>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                    <Select defaultValue="select...">
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="BPP Support">BPP Support (Free)</SelectItem>
+                            <SelectItem value="Legal Cases" disabled>Legal Cases</SelectItem>
+                            <SelectItem value="Medical Cases" disabled>Medical Cases</SelectItem>
+                            <SelectItem value="Social Needs" disabled>Social Needs</SelectItem>
+                            <SelectItem value="Educational Cases" disabled>Educational Cases</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <Select defaultValue="select...">
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="Legal Assistance">Legal Assistance</SelectItem>
+                            <SelectItem value="Legal Aid" disabled>Legal Aid</SelectItem>
+                            {/* <SelectItem value="Criminal Cases">Criminal Cases</SelectItem>
+                <SelectItem value="Civil Cases">Civil Cases</SelectItem>
+                <SelectItem value="Constitutional Cases">Constitutional Cases</SelectItem>
+                <SelectItem value="Administrative Cases">Administrative Cases</SelectItem>
+                <SelectItem value="Family Law Cases">Family Law Cases</SelectItem>
+                <SelectItem value="Commercial Cases">Commercial Cases</SelectItem>
+                <SelectItem value="Labor and Employment Cases">Labor and Employment Cases</SelectItem>
+                <SelectItem value="Environmental Cases">Environmental Cases</SelectItem>
+                <SelectItem value="Property Cases">Property Cases</SelectItem>
+                <SelectItem value="Consumer Cases">Consumer Cases</SelectItem> */}
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div className="text-md">
+                    <a className="w-full mt-4 text-blue-700 cursor-pointer text-sm"
+                        onClick={() => setDialogOpen(true)}>Terms and Conditions</a>
+                </div>
+            </div>
             {/* Action Button */}
             <Button
-                className="w-full mt-4"
-                disabled
-                onClick={() => {
-                    navigate('/dashboard/register-case')
-                }}
-            >
+            onClick={() => navigate('/dashboard/register-case')}
+                className="w-full mt-4">
                 Get Started
             </Button>
+
+            <PopupDialog
+                isOpen={isDialogOpen}
+                onOpenChange={setDialogOpen}
+                url={communityChart}
+                body={
+                    <div className="space-y-4">
+                        <h2 className="text-2xl font-bold">Terms of Service</h2>
+                        <p>These Terms of Service (the “Terms”) are a binding contract between you and Bharatiya Popular Party,
+                            (“Bharatiya Popular Party,” “we” “our”) Your use of the Services in any way means that you agree to all
+                            of these Terms, and these Terms will remain in effect while you use the Services.</p>
+
+                        <p>Please read these Terms carefully. They cover important information about Services provided to you.</p>
+                        <ol className="list-decimal list-inside space-y-2">
+                            <li>The support provided is intended to assist members facing genuine concerns or issues. It is not a crowdfunding
+                                initiative and should not be construed as such.</li>
+                            <li>Each concern for support will be reviewed and evaluated individually by the Administrator of the Bharatiya
+                                Popular Party. Approval and the nature of assistance provided may vary based on the specifics of the case.</li>
+                            <li>The Bharatiya Popular party is not responsible for any failure or delays in the resolution of issues.</li>
+                            <li>Members must ensure that all information provided in their application is accurate and complete. False or
+                                misleading information may result in the rejection of the application or termination of support.</li>
+                            <li>All personal and case-related information shared will be treated with strict confidentiality.</li>
+                            <li>Members must comply with the verification process, including submitting necessary documents such as identity
+                                proof and details related to the issue.</li>
+                            <li>We provide your Personal Data to parties that help us provide the Services or perform functions.</li>
+                            <li>The Bharatiya Popular party is not liable for any adverse outcomes or consequences resulting from the
+                                assistance provided. Members are encouraged to seek independent advice where necessary.</li>
+                            <li>We do not knowingly collect or solicit Personal Data about children under 18 years of age.</li>
+                            <li>The Bharatiya Popular party provides support voluntarily and is not legally obligated to resolve any member’s
+                                issue.</li>
+                            <li>Bharatiya Popular party is also free to terminate (or suspend access to) your use of the Services or your account
+                                for any reason in our discretion, including your breach of these Terms.</li>
+                            <li>The organizing body reserves the right to modify or update these terms and conditions at any time. Members will
+                                be notified of significant changes as necessary.</li>
+                            <li>By seeking support, members acknowledge that they have read, understood, and agreed to these terms and
+                                conditions.</li>
+                        </ol>
+                        <p>If you have any questions, comments, or concerns regarding these terms or the
+                            Services, please contact us at:
+                            Email: bpp.headoffice@gmail.com</p>
+                    </div>
+                }
+            />
         </div>
     );
 };

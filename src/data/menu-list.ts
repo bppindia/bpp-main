@@ -41,10 +41,27 @@ export function getMenuList(_pathname?: string): Group[] {
           submenus: [],
         },
         {
+          href: "/dashboard/profile",
+          label: "Profile",
+          icon: SquarePen,
+          submenus: [],
+        },
+        {
+          href: "/dashboard/account",
+          label: "User Account",
+          icon: UserRoundPen,
+          submenus: [],
+        },
+        {
           href: "/dashboard/goal",
           label: "Goals",
           icon: Goal,
           submenus: [],
+        },
+        {
+          href: "/dashboard/wallet",
+          label: "Wallet",
+          icon: Wallet,
         },
         {
           href: "/dashboard/donate",
@@ -54,30 +71,30 @@ export function getMenuList(_pathname?: string): Group[] {
         },
       ],
     },
+    // {
+    //   groupLabel: "User Setting",
+    //   menus: [
+    //     {
+    //       href: "/dashboard/profile",
+    //       label: "Profile",
+    //       icon: SquarePen,
+    //       submenus: [],
+    //     },
+    //     {
+    //       href: "/dashboard/account",
+    //       label: "User Account",
+    //       icon: UserRoundPen,
+    //       submenus: [],
+    //     },
+    //     {
+    //       href: "/dashboard/wallet",
+    //       label: "Wallet",
+    //       icon: Wallet,
+    //     },
+    //   ],
+    // },
     {
-      groupLabel: "Profile",
-      menus: [
-        {
-          href: "/dashboard/profile",
-          label: "Profile",
-          icon: SquarePen,
-          submenus: [],
-        },
-        {
-          href: "/dashboard/account",
-          label: "Account",
-          icon: UserRoundPen,
-          submenus: [],
-        },
-        {
-          href: "/dashboard/wallet",
-          label: "Wallet",
-          icon: Wallet,
-        },
-      ],
-    },
-    {
-      groupLabel: "Membership Services",
+      groupLabel: "Services",
       menus: [
         {
           href: "/dashboard/membership",

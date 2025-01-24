@@ -300,11 +300,13 @@ const MultiStepForm = () => {
                 <Card className="mx-auto border-gray-300">
                     <CardHeader>
                         <div className="flex items-center justify-center text-xl font-bold text-blue-800">
-                            <img
-                                src={bpplogo}
-                                alt=""
-                                className="w-[120px] object-contain rounded-lg"
-                            />
+                            <Link to='/'>
+                                <img
+                                    src={bpplogo}
+                                    alt=""
+                                    className="w-[120px] object-contain rounded-lg"
+                                />
+                            </Link>
                         </div>
                         <h2 className="text-2xl font-black text-center text-neutral-800 dark:text-neutral-200">
                             <div>Welcome to</div>

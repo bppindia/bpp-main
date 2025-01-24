@@ -92,7 +92,7 @@ const GoalsPage = () => {
   return (
     <DashboardLayout>
       <ContentLayout title="Dashboard">
-        <Breadcrumb>
+        {/* <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
@@ -104,7 +104,7 @@ const GoalsPage = () => {
               <BreadcrumbPage>Goals</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
-        </Breadcrumb>
+        </Breadcrumb> */}
         <section>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-6">
             {goals.map((goal) => (

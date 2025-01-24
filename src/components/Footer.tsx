@@ -15,8 +15,12 @@ const Footer = () => {
     {
       title: t('Footer.aboutUs.title'),
       links: [
+        { name: t('Footer.aboutUs.links.about'), href: '/about' },
         { name: t('Footer.aboutUs.links.goals'), href: '/about/bpp-goals' },
+        { name: t('Footer.aboutUs.links.career'), href: '/career' },
         { name: t('Footer.aboutUs.links.getToKnow'), href: '/about/get-to-know-bpp' },
+        { name: t('Footer.aboutUs.links.privacy'), href: '/download-app' },
+        { name: t('Footer.aboutUs.links.download'), href: '/download-app' },
         { name: t('Footer.aboutUs.links.commitmentProgress'), href: '/about/commitment-progress' },
         { name: t('Footer.aboutUs.links.volunteer'), href: '/about/volunteer' },
       ],

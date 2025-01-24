@@ -80,7 +80,7 @@ const ProfilePage = () => {
     return (
         <DashboardLayout>
             <ContentLayout title="Dashboard">
-                <Breadcrumb>
+                {/* <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
@@ -92,7 +92,7 @@ const ProfilePage = () => {
                             <BreadcrumbPage>Profile</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
-                </Breadcrumb>
+                </Breadcrumb> */}
                 <div className="px-4 space-y-6 md:px-6 mt-3">
                     <header className="flex items-center justify-between">
                         {/* Left Section - Avatar and Details */}
@@ -371,7 +371,7 @@ const ProfilePage = () => {
                         {/* New Voter ID and Aadhar Number Update Card */}
 
                         <EditableCard
-                            title="Government IDs"
+                            title="Identity Proof"
                             description="Update your Voter ID and Aadhar number."
                             onSave={handleSave}
                         >
@@ -379,7 +379,7 @@ const ProfilePage = () => {
                                 <form className="grid gap-4">
                                     <div className="grid grid-cols-1 gap-2">
                                         <div>
-                                            <Label htmlFor="aadhar-number">Aadhar Number</Label>
+                                            <Label htmlFor="aadhar-number">Aaadhar Number</Label>
                                             <Input
                                                 id="aadhar-number"
                                                 placeholder={userData?.aadhaarNumber}

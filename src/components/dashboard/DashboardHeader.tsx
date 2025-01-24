@@ -117,6 +117,7 @@ const DashboardHeader = () => {
             <Button
               variant="default"
               className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+              onClick={() => navigate('/dashboard/community-contribution')}
             >
               <Gift className="h-4 w-4" />
               Community Contribution

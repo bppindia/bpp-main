@@ -1,9 +1,13 @@
 {
   "Footer": {
     "aboutUs": {
-      "title": "About Us",
+      "title": "About",
       "links": {
+        "about": "About Us",
         "goals": "Goals",
+        "career": "career",
+        "privacy": "Privacy",
+        "download": "download",
         "getToKnow": "Get To Know",
         "commitmentProgress": "Commitment to Progress",
         "volunteer": "Volunteer"

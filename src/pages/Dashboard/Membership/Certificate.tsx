@@ -15,7 +15,7 @@ const MembershipCertificate = () => {
     return (
         <DashboardLayout>
             <ContentLayout title="Dashboard">
-                <Breadcrumb>
+                {/* <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
@@ -27,7 +27,7 @@ const MembershipCertificate = () => {
                             <BreadcrumbPage>Membership Certificate</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
-                </Breadcrumb>
+                </Breadcrumb> */}
                 <section>
                     <div className="flex items-center justify-between mb-6">
                         <div className="my-4">

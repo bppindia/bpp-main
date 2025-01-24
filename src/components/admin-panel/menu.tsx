@@ -89,7 +89,8 @@ export function Menu({ isOpen, isLock }: MenuProps) {
                                       : "translate-x-0 opacity-100"
                                   )}
                                 >
-                                  {label} {isLock && <LockKeyhole size={18} />}
+                                  {label} 
+                                  {/* {isLock && <LockKeyhole size={18} />} */}
                                 </p>
                               </Link>
                             </Button>

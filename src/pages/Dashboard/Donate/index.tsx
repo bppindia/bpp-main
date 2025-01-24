@@ -13,7 +13,7 @@ const DonatePage = () => {
     return (
         <DashboardLayout>
             <ContentLayout title="Dashboard">
-                <Breadcrumb>
+                {/* <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
@@ -25,7 +25,7 @@ const DonatePage = () => {
                             <BreadcrumbPage>Donate</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
-                </Breadcrumb>
+                </Breadcrumb> */}
                 <main className="flex-1 bg-muted/40 py-8 px-4 md:px-6 lg:py-12">
                     <div className="container mx-auto ">
                         <div className="flex items-center justify-between mb-8">

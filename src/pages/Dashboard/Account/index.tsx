@@ -12,7 +12,7 @@ const AccountSettingsPage = () => {
     return (
         <DashboardLayout>
             <ContentLayout title="Dashboard">
-                <Breadcrumb>
+                {/* <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
@@ -30,7 +30,7 @@ const AccountSettingsPage = () => {
                             <BreadcrumbPage>Make Donation</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
-                </Breadcrumb>
+                </Breadcrumb> */}
                 <main className="flex-1 py-6 px-4 md:px-6 lg:py-8">
                     <div className="flex items-center justify-between mb-6">
                         <div>

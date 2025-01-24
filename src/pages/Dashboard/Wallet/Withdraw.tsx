@@ -53,7 +53,7 @@ const WithdrawPage = () => {
     return (
         <DashboardLayout>
             <ContentLayout title="Dashboard">
-                <Breadcrumb>
+                {/* <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
@@ -65,7 +65,7 @@ const WithdrawPage = () => {
                             <BreadcrumbPage>Withdraw</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
-                </Breadcrumb>
+                </Breadcrumb> */}
                 <div className="mx-auto w-full space-y-6">
                     <div className='my-6'>
                         <h1 className="text-3xl font-bold tracking-tight text-foreground">Withdraw Funds</h1>

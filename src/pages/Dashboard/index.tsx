@@ -32,7 +32,7 @@ const DashboardPage: React.FC = () => {
     <DashboardLayout>
       <ContentLayout title="Dashboard">
         <DashboardHeader />
-        <Breadcrumb>
+        {/* <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
@@ -44,7 +44,7 @@ const DashboardPage: React.FC = () => {
               <BreadcrumbPage>Dashboard</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
-        </Breadcrumb>
+        </Breadcrumb> */}
         <div className="grid grid-cols-1 lg:grid-cols-2 my-3 gap-4 w-full">
           <Card className="w-full h-[500px] p-4">
             <CardContent className="h-[calc(500px-4rem)]">
@@ -78,11 +78,11 @@ const DashboardPage: React.FC = () => {
         <div>
           <GoalsCarousel />
         </div>
-        {userData.approved ?
+        {/* {userData.approved ?
           <WelcomeDialog />
           :
           <WarningDialog />
-        }
+        } */}
 
       </ContentLayout>
     </DashboardLayout>

@@ -111,7 +111,7 @@ const Transactions: React.FC = () => {
     return (
         <DashboardLayout>
             <ContentLayout title="Dashboard">
-                <Breadcrumb>
+                {/* <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
@@ -123,7 +123,7 @@ const Transactions: React.FC = () => {
                             <BreadcrumbPage>Transaction</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
-                </Breadcrumb>
+                </Breadcrumb> */}
                 <div className="container mx-auto px-4 py-8">
                     <div className="mb-6 flex items-center justify-between">
                         <h1 className="text-2xl font-bold">Transaction History</h1>

@@ -13,7 +13,7 @@ const ProfessionalPage = () => {
     return (
         <DashboardLayout>
             <ContentLayout title="Dashboard">
-                <Breadcrumb>
+                {/* <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
                             <BreadcrumbLink asChild>
@@ -25,7 +25,7 @@ const ProfessionalPage = () => {
                             <BreadcrumbPage>Professional Profile</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
-                </Breadcrumb>
+                </Breadcrumb> */}
                 <div className="mt-4">
                     <div className="grid grid-cols-1 gap-6 mt-2 md:grid-cols-1 lg:grid-cols-1">
                         {/* Professional Profile Form */}
