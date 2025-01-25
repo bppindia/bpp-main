@@ -1,5 +1,4 @@
 import { ContentLayout } from "@/components/admin-panel/content-layout"
-// import PayDialog from "@/components/dialogs/PayDialog"
 import communityChart from '@/assets/images/community/community_contribution.png'
 import internalWorking from '@/assets/images/community/internalworking.png'
 import { PopupDialog } from "@/components/dialogs/popup-dialog"
@@ -12,34 +11,14 @@ import DashboardLayout from "@/layout/DashboardLayout"
 import { ActivityIcon, PlusIcon, User2Icon, UsersIcon } from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-// import { Checkbox } from "@/components/ui/checkbox"
+import { defineStepper } from "@stepperize/react"
 
 const Contribution = () => {
     return (
         <DashboardLayout>
             <ContentLayout title="Dashboard">
-                {/* <Breadcrumb>
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="/">Home</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Dashboard</BreadcrumbPage>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbLink>
-                                <Link to="/dashboard/community-contribution">Community Contribution</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb> */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 my-3 gap-4 w-full">
                     <Card className="w-full h-[500px] p-4">
-
                         <CardContent className="h-[calc(500px-4rem)]">
                             <MapChart SelectedTab='state' state='maharashtra' dist='raigarh' />
                         </CardContent>
@@ -52,7 +31,6 @@ const Contribution = () => {
                             <CommunityContribution />
                         </CardContent>
                     </Card>
-               
                 </div>
                 <div className="grid grid-cols-2 my-3 gap-4 w-full">
                     <Card>
@@ -123,64 +101,24 @@ const Contribution = () => {
 export default Contribution;
 
 
+const steps = [
+    { id: 'raiseQuery', label: 'Raise Your Query' },
+    { id: 'reviewApproval', label: 'Review & Approval' },
+    { id: 'votes', label: 'Votes' },
+    { id: 'results', label: 'Results' },
+    { id: 'executions', label: 'Executions' },
+];
+
+const { useStepper, steps: stepperSteps, utils } = defineStepper(...steps);
 
 
 const CommunityContribution = () => {
     const navigate = useNavigate();
     const [isDialogOpen, setDialogOpen] = useState(false);
-    const steps = [
-        "Raise Your Query",
-        "Review & Approval",
-        "Votes",
-        "Results",
-        "Executions"
-    ];
-
-    const currentStep = 0;
 
     return (
         <div className="space-y-4">
-            {/* Stepper */}
-            <div className="relative space-y-4">
-                {/* Progress Bar */}
-                <div className="relative h-3 bg-gray-200 rounded-full">
-                    <div
-                        className="absolute h-full bg-primary rounded-full transition-all"
-                        style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
-                    ></div>
-                    {/* Overlay Numbers */}
-                    <div className="absolute inset-0 flex justify-between">
-                        {steps.map((step, index) => (
-                            <div
-                                key={step}
-                                className="relative flex items-center justify-center w-8 h-8 bg-white rounded-full shadow-lg"
-                                style={{
-                                    left: '30px',
-                                    transform: "translateY(-30%) translateX(-90%)",
-                                }}
-                            >
-                                <div
-                                    className={`w-full h-full flex items-center justify-center rounded-full font-medium ${index <= currentStep
-                                        ? "bg-primary text-white"
-                                        : "bg-gray-300 text-gray-600"
-                                        }`}
-                                >
-                                    {index + 1}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Step Labels */}
-                <div className="flex justify-between">
-                    {steps.map((step) => (
-                        <span key={step} className="text-sm font-medium max-w-[100px]">
-                            {step}
-                        </span>
-                    ))}
-                </div>
-            </div>
+            <Stepper />
 
             <div className="mt-6 p-4 bg-gray-100 rounded-lg shadow-md">
                 <h3 className="text-lg font-bold text-gray-800">
@@ -199,8 +137,8 @@ const CommunityContribution = () => {
                     Meanwhile, <span className="font-bold">Bharatiya Popular Party's Legal wing</span> is available for ‘Free Legal Guidance’ to its primary and active members. Because this is being provided by the party's wing so no voting is required for the purpose and can be started to avail by <span className="font-bold">01.02.2025.</span>
                 </p>
             </div>
-            <div>
 
+            <div>
                 <div className="grid grid-cols-2 gap-2">
                     <Label className="my-2 font-bold text-blue-900 text-xl">Type of Support</Label>
                     <Label className="my-2 font-bold text-blue-900 text-xl">Category</Label>
@@ -225,16 +163,6 @@ const CommunityContribution = () => {
                         <SelectContent>
                             <SelectItem value="Legal Assistance">Legal Assistance</SelectItem>
                             <SelectItem value="Legal Aid" disabled>Legal Aid</SelectItem>
-                            {/* <SelectItem value="Criminal Cases">Criminal Cases</SelectItem>
-                <SelectItem value="Civil Cases">Civil Cases</SelectItem>
-                <SelectItem value="Constitutional Cases">Constitutional Cases</SelectItem>
-                <SelectItem value="Administrative Cases">Administrative Cases</SelectItem>
-                <SelectItem value="Family Law Cases">Family Law Cases</SelectItem>
-                <SelectItem value="Commercial Cases">Commercial Cases</SelectItem>
-                <SelectItem value="Labor and Employment Cases">Labor and Employment Cases</SelectItem>
-                <SelectItem value="Environmental Cases">Environmental Cases</SelectItem>
-                <SelectItem value="Property Cases">Property Cases</SelectItem>
-                <SelectItem value="Consumer Cases">Consumer Cases</SelectItem> */}
                         </SelectContent>
                     </Select>
                 </div>
@@ -243,10 +171,11 @@ const CommunityContribution = () => {
                         onClick={() => setDialogOpen(true)}>Terms and Conditions</a>
                 </div>
             </div>
-            {/* Action Button */}
+
             <Button
-            onClick={() => navigate('/dashboard/register-case')}
-                className="w-full mt-4">
+                onClick={() => navigate('/dashboard/register-case')}
+                className="w-full mt-4"
+            >
                 Get Started
             </Button>
 
@@ -292,6 +221,47 @@ const CommunityContribution = () => {
                     </div>
                 }
             />
+        </div>
+    );
+};
+
+export const Stepper = () => {
+    const stepper = useStepper();
+    const currentIndex = utils.getIndex(stepper.current.id);
+
+    return (
+        <div className="relative space-y-4">
+            <div className="relative h-3 bg-gray-200 rounded-full">
+                <div className="absolute h-full bg-primary rounded-full transition-all"></div>
+                <div className="absolute inset-0 flex justify-between">
+                    {stepperSteps.map((step, index) => (
+                        <div
+                            key={step.id}
+                            className="relative flex items-center justify-center w-8 h-8 bg-white rounded-full shadow-lg"
+                            style={{
+                                left: '30px',
+                                transform: "translateY(-30%) translateX(-90%)",
+                            }}
+                        >
+                            <div
+                                className={`w-full h-full flex items-center justify-center rounded-full font-medium ${index <= currentIndex
+                                    ? "bg-primary text-white"
+                                    : "bg-gray-300 text-gray-600"
+                                    }`}
+                            >
+                                {index + 1}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="flex justify-between">
+                {stepperSteps.map((step) => (
+                    <span key={step.id} className="text-sm font-medium max-w-[100px]">
+                        {step.label}
+                    </span>
+                ))}
+            </div>
         </div>
     );
 };

@@ -42,7 +42,7 @@ const VendorSupplier = () => {
                                 </div>
                             </div>
                             <button className="mt-8 px-6 py-3 bg-[#e85a32] text-white rounded-lg hover:bg-[#e85a32]/90 transition-colors flex items-center gap-2"
-                                onClick={() => navigate('/auth/signup')}
+                                onClick={() => navigate('/auth/business-community-join')}
                             >
                                 Join Now
                                 <ChevronRight className="h-4 w-4" />
