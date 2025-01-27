@@ -1,17 +1,16 @@
-import { ContentLayout } from "@/components/admin-panel/content-layout"
-import communityChart from '@/assets/images/community/community_contribution.png'
 import internalWorking from '@/assets/images/community/internalworking.png'
-import { PopupDialog } from "@/components/dialogs/popup-dialog"
+import { ContentLayout } from "@/components/admin-panel/content-layout"
 import MapChart from "@/components/maps/mapChart"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import DashboardLayout from "@/layout/DashboardLayout"
+import { defineStepper } from "@stepperize/react"
 import { ActivityIcon, PlusIcon, User2Icon, UsersIcon } from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { defineStepper } from "@stepperize/react"
+import TermsDialog from './TermsDialog'
 
 const Contribution = () => {
     return (
@@ -85,8 +84,8 @@ const Contribution = () => {
                         </div>
                     </Card>
                     <Card>
-                        <div>
-                            <img src={internalWorking} />
+                        <div className="cursor-pointer">
+                            <img src={internalWorking} alt="Internal Working" />
                         </div>
                     </Card>
                     <div>
@@ -102,11 +101,10 @@ export default Contribution;
 
 
 const steps = [
-    { id: 'raiseQuery', label: 'Raise Your Query' },
+    { id: 'caseRegistration', label: 'Case Registration' },
     { id: 'reviewApproval', label: 'Review & Approval' },
-    { id: 'votes', label: 'Votes' },
-    { id: 'results', label: 'Results' },
-    { id: 'executions', label: 'Executions' },
+    { id: 'verification', label: 'Verification' },
+    { id: 'completion', label: 'Completion' },
 ];
 
 const { useStepper, steps: stepperSteps, utils } = defineStepper(...steps);
@@ -115,6 +113,10 @@ const { useStepper, steps: stepperSteps, utils } = defineStepper(...steps);
 const CommunityContribution = () => {
     const navigate = useNavigate();
     const [isDialogOpen, setDialogOpen] = useState(false);
+
+    const [typeOfSupport, setTypeOfSupport] = useState<string | null>(null);
+
+    const [category, setCategory] = useState<string | null>(null);
 
     return (
         <div className="space-y-4">
@@ -144,7 +146,7 @@ const CommunityContribution = () => {
                     <Label className="my-2 font-bold text-blue-900 text-xl">Category</Label>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
-                    <Select defaultValue="select...">
+                    <Select defaultValue="select..." onValueChange={(value) => setTypeOfSupport(value)}>
                         <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select..." />
                         </SelectTrigger>
@@ -156,7 +158,7 @@ const CommunityContribution = () => {
                             <SelectItem value="Educational Cases" disabled>Educational Cases</SelectItem>
                         </SelectContent>
                     </Select>
-                    <Select defaultValue="select...">
+                    <Select defaultValue="select..." onValueChange={(value) => setCategory(value)}>
                         <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select..." />
                         </SelectTrigger>
@@ -175,52 +177,12 @@ const CommunityContribution = () => {
             <Button
                 onClick={() => navigate('/dashboard/register-case')}
                 className="w-full mt-4"
+                disabled={!typeOfSupport || !category}
             >
                 Get Started
             </Button>
 
-            <PopupDialog
-                isOpen={isDialogOpen}
-                onOpenChange={setDialogOpen}
-                url={communityChart}
-                body={
-                    <div className="space-y-4">
-                        <h2 className="text-2xl font-bold">Terms of Service</h2>
-                        <p>These Terms of Service (the “Terms”) are a binding contract between you and Bharatiya Popular Party,
-                            (“Bharatiya Popular Party,” “we” “our”) Your use of the Services in any way means that you agree to all
-                            of these Terms, and these Terms will remain in effect while you use the Services.</p>
-
-                        <p>Please read these Terms carefully. They cover important information about Services provided to you.</p>
-                        <ol className="list-decimal list-inside space-y-2">
-                            <li>The support provided is intended to assist members facing genuine concerns or issues. It is not a crowdfunding
-                                initiative and should not be construed as such.</li>
-                            <li>Each concern for support will be reviewed and evaluated individually by the Administrator of the Bharatiya
-                                Popular Party. Approval and the nature of assistance provided may vary based on the specifics of the case.</li>
-                            <li>The Bharatiya Popular party is not responsible for any failure or delays in the resolution of issues.</li>
-                            <li>Members must ensure that all information provided in their application is accurate and complete. False or
-                                misleading information may result in the rejection of the application or termination of support.</li>
-                            <li>All personal and case-related information shared will be treated with strict confidentiality.</li>
-                            <li>Members must comply with the verification process, including submitting necessary documents such as identity
-                                proof and details related to the issue.</li>
-                            <li>We provide your Personal Data to parties that help us provide the Services or perform functions.</li>
-                            <li>The Bharatiya Popular party is not liable for any adverse outcomes or consequences resulting from the
-                                assistance provided. Members are encouraged to seek independent advice where necessary.</li>
-                            <li>We do not knowingly collect or solicit Personal Data about children under 18 years of age.</li>
-                            <li>The Bharatiya Popular party provides support voluntarily and is not legally obligated to resolve any member’s
-                                issue.</li>
-                            <li>Bharatiya Popular party is also free to terminate (or suspend access to) your use of the Services or your account
-                                for any reason in our discretion, including your breach of these Terms.</li>
-                            <li>The organizing body reserves the right to modify or update these terms and conditions at any time. Members will
-                                be notified of significant changes as necessary.</li>
-                            <li>By seeking support, members acknowledge that they have read, understood, and agreed to these terms and
-                                conditions.</li>
-                        </ol>
-                        <p>If you have any questions, comments, or concerns regarding these terms or the
-                            Services, please contact us at:
-                            Email: bpp.headoffice@gmail.com</p>
-                    </div>
-                }
-            />
+            <TermsDialog isOpen={isDialogOpen} onOpenChange={setDialogOpen} />
         </div>
     );
 };

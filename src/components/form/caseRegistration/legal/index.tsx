@@ -102,15 +102,20 @@ export function LegalCaseRegistration() {
                         </div>
                     </CardContent>
                     <CardFooter className="flex justify-end gap-4">
-                        {!stepper.isLast ? (
-                            <>
-                                <Button variant="secondary" onClick={stepper.prev} disabled={stepper.isFirst}>
-                                    Back
-                                </Button>
-                                <Button type="submit">{stepper.isLast ? 'Complete' : 'Next'}</Button>
-                            </>
+                        {!stepper.isFirst && (
+                            <Button variant="secondary" onClick={stepper.prev}>
+                                Back
+                            </Button>
+                        )}
+                        {stepper.isLast ? (
+                            <Button type="submit">Submit</Button>
                         ) : (
-                            <Button onClick={stepper.reset}>Reset</Button>
+                            <Button type="submit">Next</Button>
+                        )}
+                        {stepper.isLast && (
+                            <Button variant="outline" onClick={stepper.reset}>
+                                Reset
+                            </Button>
                         )}
                     </CardFooter>
                 </Card>

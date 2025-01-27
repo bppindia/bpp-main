@@ -14,7 +14,7 @@ const GetToKnow = () => {
         <Layout>
             <HeaderComponent
                 heading="Get To Know"
-                text="Learn more about our vision and mission"
+                text="Your Partner in Progress – Get to Know BPP"
                 breadcrumbLinks={[
                     { label: "About Us", href: "/about" },
                     { label: "Get To Know BPP", href: "/about/get-to-know-bpp" }

@@ -1,58 +1,168 @@
 import { z } from 'zod';
 
 export const membersInfoSchema = z.object({
-    // firstName: z.string().min(1, 'First Name is required'),
-    // middleName: z.string().optional(),
-    // lastName: z.string().min(1, 'Last Name is required'),
-    // phone: z.string().min(10, 'Phone number is required'),
-    // email: z.string().email('Invalid email address'),
-    // dateOfBirth: z.string().optional(),
-    // aadhaarCard: z.string().min(12, 'Aadhaar Card number is required'),
-    // voterId: z.string().min(10, 'Voter ID is required'),
+    firstName: z
+        .string()
+        .min(1, { message: 'First Name is required' })
+        .max(50, { message: 'First Name must not exceed 50 characters' }),
+    middleName: z
+        .string()
+        .max(50, { message: 'Middle Name must not exceed 50 characters' })
+        .optional(),
+    lastName: z
+        .string()
+        .min(1, { message: 'Last Name is required' })
+        .max(50, { message: 'Last Name must not exceed 50 characters' }),
+    phone: z
+        .string()
+        .regex(/^\d{10}$/, { message: 'Phone number must be exactly 10 digits' }),
+    email: z
+        .string()
+        .email({ message: 'Invalid email address' }),
+    dateOfBirth: z
+        .string()
+        .regex(/^\d{4}-\d{2}-\d{2}$/, { message: 'Date of Birth must be in YYYY-MM-DD format' })
+        .optional(),
+    aadhaarCard: z
+        .string()
+        .regex(/^\d{12}$/, { message: 'Aadhaar Card number must be exactly 12 digits' }),
+    voterId: z
+        .string()
+        .regex(/^[a-zA-Z0-9]{10}$/, { message: 'Voter ID must be exactly 10 alphanumeric characters' }),
 });
+
+
+
 
 export const caseRegisterSchema = z.object({
-    // typeOfSupport: z.string().min(1, 'Type of Support is required'),
-    // category: z.string().min(1, 'Category is required'),
-    // typeOfCase: z.string().min(1, 'Type of Case is required'),
-    // dateOfDispute: z.string().min(1, 'Date of Dispute is required'),
-    // briefYourCase: z.string().min(1, 'Brief your case is required'),
-    // additionalDocument: z.string().optional(),
-    // financialAid: z.string().optional(),
+    typeOfSupport: z
+        .string()
+        .min(1, { message: "Type of Support is required" })
+        .max(100, { message: "Type of Support must not exceed 100 characters" }),
+    category: z
+        .string()
+        .min(1, { message: "Category is required" })
+        .max(100, { message: "Category must not exceed 100 characters" }),
+    typeOfCase: z
+        .string()
+        .min(1, { message: "Type of Case is required" }),
+    dateOfDispute: z
+        .string()
+        .regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Date of Dispute must be in YYYY-MM-DD format" }),
+    briefYourCase: z
+        .string()
+        .min(1, { message: "Brief your case is required" })
+        .max(500, { message: "Brief your case must not exceed 500 characters" }),
+    additionalDocument: z
+        .instanceof(FileList)
+        .optional()
+        .superRefine((files, ctx) => {
+            if (files && files.length > 0) {
+                const file = files[0];
+                if (file.size > 5 * 1024 * 1024) {
+                    ctx.addIssue({
+                        code: z.ZodIssueCode.custom,
+                        message: "File size must not exceed 5MB"
+                    });
+                }
+                if (!["application/pdf", "image/jpeg", "image/png"].includes(file.type)) {
+                    ctx.addIssue({
+                        code: z.ZodIssueCode.custom,
+                        message: "Only PDF, JPG, or PNG files are allowed"
+                    });
+                }
+            }
+        }),
+    financialAid: z
+        .enum(["yes", "no"])
+        .default("no"),
 });
+
+
 
 export const fundRequirementSchema = z.object({
-    // totalCost: z.string().min(1, 'Total cost is required'),
-    // category: z.string().min(1, 'Category is required'),
-    // selfPercentage: z.string().optional(),
-    // selfAmount: z.string().optional(),
-    // familyFriendsPercentage: z.string().optional(),
-    // familyFriendsAmount: z.string().optional(),
-    // workplacePercentage: z.string().optional(),
-    // workplaceAmount: z.string().optional(),
-    // otherInstitutesPercentage: z.string().optional(),
-    // otherInstitutesAmount: z.string().optional(),
-    // totalAmountRequested: z.string().min(1, 'Total amount requested is required'),
+    totalCost: z
+        .number()
+        .min(1, 'Total cost is required')
+        .positive('Total cost must be a positive number'),
+    selfPercentage: z
+        .string()
+        .regex(/^\d+(\.\d{1,2})?$/, 'Self percentage must be a valid number')
+        .default('0'),
+    selfAmount: z
+        .number()
+        .min(0, 'Self amount cannot be negative')
+        .default(0),
+    familyFriendsPercentage: z
+        .string()
+        .regex(/^\d+(\.\d{1,2})?$/, 'Family & Friends percentage must be a valid number')
+        .default('0'),
+    familyFriendsAmount: z
+        .number()
+        .min(0, 'Family & Friends amount cannot be negative')
+        .default(0),
+    workplacePercentage: z
+        .string()
+        .regex(/^\d+(\.\d{1,2})?$/, 'Workplace percentage must be a valid number')
+        .default('0'),
+    workplaceAmount: z
+        .number()
+        .min(0, 'Workplace amount cannot be negative')
+        .default(0),
+    otherInstitutesPercentage: z
+        .string()
+        .regex(/^\d+(\.\d{1,2})?$/, 'Other Institutes percentage must be a valid number')
+        .default('0'),
+    otherInstitutesAmount: z
+        .number()
+        .min(0, 'Other Institutes amount cannot be negative')
+        .default(0),
+    totalAmountRequested: z
+        .number()
+        .min(0, 'Total amount requested cannot be negative')
+        .refine((val) => val >= 0, {
+            message: 'Total amount requested must be a positive number',
+        })
+}).refine((data) => {
+    const totalAmount = data.selfAmount + data.familyFriendsAmount +
+        data.workplaceAmount + data.otherInstitutesAmount;
+    return totalAmount <= data.totalCost;
+}, {
+    message: "Total of all amounts cannot exceed the total cost",
 });
 
+
+
 export const beneficiarySchema = z.object({
-    // lawFirms: z.boolean().optional(),
-    // independentAdvocate: z.boolean().optional(),
-    // nameOfLawFirm: z.string().min(1, 'Name of Law Firm is required'),
-    // nameOfAdvocate: z.string().min(1, 'Name of Advocate is required'),
-    // enrollmentNumber: z.string().min(1, 'Enrollment Number is required'),
-    // stateBarCouncil: z.string().min(1, 'State Bar Council is required'),
-    // gstNumber: z.string().optional(),
+    beneficiaryType: z.enum(["lawFirms", "independentAdvocate"]),
+    nameOfLawFirm: z.string().optional(),
+    nameOfAdvocate: z.string().nonempty("Name of Advocate is required"),
+    enrollmentNumber: z.string().nonempty("Enrollment Number is required"),
+    stateBarCouncil: z.string().nonempty("State Bar Council is required"),
+    gstNumber: z.string().optional(),
+    bankName: z.string().nonempty("Bank Name is required"),
+    accountNumber: z.string().nonempty("Account Number is required"),
+    accountHolderName: z.string().nonempty("Account Holder Name is required"),
+    ifscCode: z.string().nonempty("IFSC Code is required"),
 });
 
 export const locationSchema = z.object({
-    // lawFirms: z.boolean().optional(),
-    // independentAdvocate: z.boolean().optional(),
-    // nameOfLawFirm: z.string().min(1, 'Name of Law Firm is required'),
-    // nameOfAdvocate: z.string().min(1, 'Name of Advocate is required'),
-    // enrollmentNumber: z.string().min(1, 'Enrollment Number is required'),
-    // stateBarCouncil: z.string().min(1, 'State Bar Council is required'),
-    // gstNumber: z.string().optional(),
+    state: z
+        .string()
+        .min(1, { message: "State is required" })
+        .max(100, { message: "State must be less than 100 characters" }),
+    district: z
+        .string()
+        .min(1, { message: "District is required" })
+        .max(100, { message: "District must be less than 100 characters" }),
+    pincode: z
+        .string()
+        .regex(/^\d{6}$/, { message: "Pincode must be a 6-digit number" }),
+    agreement: z
+        .boolean()
+        .refine((value) => value === true, {
+            message: "You must agree to the terms and conditions",
+        }),
 });
 
 export type MembersInfoFormValues = z.infer<typeof membersInfoSchema>;

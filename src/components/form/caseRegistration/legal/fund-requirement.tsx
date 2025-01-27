@@ -6,6 +6,7 @@ import { FundRequirementFormValues } from '@/schema/caseRegistrationSchema/legal
 import { IndianRupee } from 'lucide-react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { PercentageAmountInput } from './PercentageAmountInput';
+import { useEffect } from 'react';
 
 export function FundRequirementForm() {
     const {
@@ -15,23 +16,24 @@ export function FundRequirementForm() {
         formState: { errors },
     } = useFormContext<FundRequirementFormValues>();
 
-    // Watch the total cost and other fields
     const totalCost = useWatch({ control, name: 'totalCost' });
-    const selfAmount = useWatch({ control, name: 'selfAmount' });
-    const familyFriendsAmount = useWatch({ control, name: 'familyFriendsAmount' });
-    const workplaceAmount = useWatch({ control, name: 'workplaceAmount' });
-    const otherInstitutesAmount = useWatch({ control, name: 'otherInstitutesAmount' });
+    const selfAmount = useWatch({ control, name: 'selfAmount' }) || 0;
+    const familyFriendsAmount = useWatch({ control, name: 'familyFriendsAmount' }) || 0;
+    const workplaceAmount = useWatch({ control, name: 'workplaceAmount' }) || 0;
+    const otherInstitutesAmount = useWatch({ control, name: 'otherInstitutesAmount' }) || 0;
 
-    // Calculate percentages and remaining amount
-    const calculatePercentage = (amount: number) => {
-        if (!totalCost || totalCost <= 0) return 0;
+    const calculatePercentage = (amount: number): string => {
+        if (!totalCost || totalCost <= 0) return '0';
         return ((amount / totalCost) * 100).toFixed(2);
     };
 
-    const remainingAmount =
-        totalCost - (selfAmount || 0) - (familyFriendsAmount || 0) - (workplaceAmount || 0) - (otherInstitutesAmount || 0);
+    const totalAmount = selfAmount + familyFriendsAmount + workplaceAmount + otherInstitutesAmount;
+    const remainingAmount = totalCost - totalAmount;
 
-    // Enable/disable fields based on total cost
+    useEffect(() => {
+        setValue('totalAmountRequested', totalAmount);
+    }, [totalAmount, setValue]);
+
     const isTotalCostEntered = !!totalCost && totalCost > 0;
 
     return (
@@ -43,17 +45,32 @@ export function FundRequirementForm() {
             </CardHeader>
             <CardContent>
                 <div className="space-y-4 text-start">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <Label htmlFor="totalCost" className="block text-sm font-medium text-primary">
-                                Total cost of your case*
-                            </Label>
-                            <Input
-                                id="totalCost"
-                                className="block w-full p-2 border rounded-md"
-                                {...register('totalCost', { valueAsNumber: true })}
-                            />
-                        </div>
+                    <div>
+                        <Label htmlFor="totalCost" className="block text-sm font-medium text-primary">
+                            Total cost of your case*
+                        </Label>
+                        <Input
+                            id="totalCost"
+                            className="block w-full p-2 border rounded-md"
+                            type="number"
+                            min="0"
+                            {...register('totalCost', { 
+                                valueAsNumber: true,
+                                onChange: (e) => {
+                                    const value = parseFloat(e.target.value);
+                                    if (!value || value <= 0) {
+                                        setValue('selfAmount', 0);
+                                        setValue('familyFriendsAmount', 0);
+                                        setValue('workplaceAmount', 0);
+                                        setValue('otherInstitutesAmount', 0);
+                                        setValue('totalAmountRequested', 0);
+                                    }
+                                }
+                            })}
+                        />
+                        {errors.totalCost && (
+                            <span className="text-sm text-destructive">{errors.totalCost.message}</span>
+                        )}
                     </div>
 
                     <PercentageAmountInput
@@ -104,27 +121,26 @@ export function FundRequirementForm() {
                         <Label htmlFor="totalAmountRequested" className="block text-sm font-medium text-primary">
                             Total amount requested*
                         </Label>
-                        <div className="flex rounded-lg shadow-sm shadow-black/5">
+                        <div className="flex rounded-lg shadow-sm">
                             <Input
                                 id="totalAmountRequested"
-                                className="-me-px flex-1 rounded-e-none shadow-none focus-visible:z-10"
-                                placeholder="Total amount"
-                                value={totalCost - remainingAmount}
+                                className="-me-px flex-1 rounded-e-none"
+                                value={remainingAmount.toFixed(2)}
                                 readOnly
+                                {...register('totalAmountRequested', { valueAsNumber: true })}
                             />
-                            <button
-                                className="inline-flex w-9 items-center justify-center rounded-e-lg border border-input bg-background text-sm text-muted-foreground/80 outline-offset-2 transition-colors hover:bg-accent hover:text-accent-foreground focus:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
-                                aria-label="Total amount"
-                            >
-                                <IndianRupee size={16} strokeWidth={2} aria-hidden="true" />
-                            </button>
+                            <div className="inline-flex w-9 items-center justify-center rounded-e-lg border border-input bg-background">
+                                <IndianRupee size={16} strokeWidth={2} />
+                            </div>
                         </div>
-                    </div>
-
-                    <div>
-                        <Label className="block text-sm font-medium text-primary">
-                            Remaining Amount: {remainingAmount}
-                        </Label>
+                        {errors.totalAmountRequested && (
+                            <span className="text-sm text-destructive">{errors.totalAmountRequested.message}</span>
+                        )}
+                        {remainingAmount > 0 && (
+                            <div className="mt-2 text-sm text-amber-600">
+                                Remaining amount: ₹{remainingAmount.toFixed(2)}
+                            </div>
+                        )}
                     </div>
                 </div>
             </CardContent>

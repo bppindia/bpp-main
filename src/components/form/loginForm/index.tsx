@@ -95,11 +95,13 @@ const Login = () => {
                     <Card className="mx-auto w-full max-w-lg">
                         <CardHeader className="items-center">
                             <div className="flex items-center justify-center text-xl font-bold text-blue-800">
-                                <img
-                                    src={bppLogo}
-                                    alt="BPP Logo"
-                                    className="w-[130px] md:w-[140px] object-contain rounded-lg"
-                                />
+                                <Link to='/'>
+                                    <img
+                                        src={bppLogo}
+                                        alt=""
+                                        className="w-[120px] object-contain rounded-lg"
+                                    />
+                                </Link>
                             </div>
                             <h2 className="font-black text-2xl text-neutral-800 text-center dark:text-neutral-200">
                                 <div>Welcome Back to{' '}</div>
