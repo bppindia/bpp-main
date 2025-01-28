@@ -28,7 +28,7 @@ export function LegalCaseRegistration() {
     const stepper = useStepper();
 
     const form = useForm({
-        mode: 'onBlur',
+        mode: 'all',
         resolver: zodResolver(stepper.current.schema),
     });
 
@@ -60,7 +60,7 @@ export function LegalCaseRegistration() {
                                 {stepper.all.map((step, index, array) => (
                                     <React.Fragment key={step.id}>
                                         <li className="flex items-center gap-4 flex-shrink-0">
-                                            <Button
+                                            {/* <Button
                                                 type="button"
                                                 role="tab"
                                                 variant={index <= currentIndex ? 'default' : 'secondary'}
@@ -77,11 +77,11 @@ export function LegalCaseRegistration() {
                                                 }}
                                             >
                                                 {index + 1}
-                                            </Button>
+                                            </Button> */}
                                         </li>
                                         {index < array.length - 1 && (
                                             <Separator
-                                                className={`flex-1 ${index < currentIndex ? 'bg-primary' : 'bg-muted'}`}
+                                                className={`flex-1 ${index < currentIndex ? 'bg-primary' : 'bg-muted'} h-3`}
                                             />
                                         )}
                                     </React.Fragment>

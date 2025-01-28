@@ -85,6 +85,7 @@
     "react-router-dom": "^6.28.0",
     "react-simple-maps": "^3.0.0",
     "recharts": "^2.13.3",
+    "redux-persist": "^6.0.0",
     "remark-gfm": "^4.0.0",
     "shiki": "^1.28.0",
     "sonner": "^1.7.2",
