@@ -1,7 +1,6 @@
 import HeaderComponent from "@/components/HeaderComponent";
 import Layout from "@/layout/Layout";
 
-
 const PrivacyPolicy = () => {
   return (
     <Layout>
@@ -18,91 +17,128 @@ const PrivacyPolicy = () => {
         <div className="space-y-8">
           <div>
             <h1 className="text-3xl font-bold">Privacy Policy</h1>
-            <p className="mt-2 text-muted-foreground italic">Last updated on January 14, 2025.</p>
+            <p className="mt-2 text-muted-foreground italic">Last updated on January 25, 2025.</p>
             <div className="my-3 text-muted-foreground">
-              Your privacy is important to <span className="text-blue-700 font-semibold">www.bppindia.com</span> This privacy statement provides information about the personal information that the App collects, and the ways in which the App uses that personal information.
+              Welcome to BPP - Community Contribution (the “App”), owned and operated by Bharatiya Popular Party. Your privacy is important to us, and this privacy policy explains how we collect, use, and protect your personal information. By using our App, you agree to the terms outlined in this privacy policy.
             </div>
           </div>
           <div>
-            <h2 className="text-2xl font-bold">Personal information collection</h2>
+            <h2 className="text-2xl font-bold">1. Information We Collect</h2>
             <p className="mt-2 text-muted-foreground">
-              The App may collect and use the following kinds of personal information:
+              We may collect the following types of personal information:
             </p>
-            <ul className="mt-4 space-y-2 text-muted-foreground">
-              <li>
-                information about your use of this App
-              </li>
-              <li>
-                information that you provide using for the purpose of registering with the App
-              </li>
-              <li>
-                information about the consultations you seek or provide over this App.
-              </li>
-              <li>
-                information about the contributions you seek out over this App.
-              </li>
-              <li>
-                information about the contributions you provide over this App.
-              </li>
+            <h3 className="mt-4 text-xl font-semibold">Information You Provide:</h3>
+            <ul className="mt-2 space-y-2 text-muted-foreground">
+              <li>Registration details such as name, email, phone number, and demographic data.</li>
+              <li>Data related to consultations, contributions, or other interactions within the app.</li>
+            </ul>
+            <h3 className="mt-4 text-xl font-semibold">Automatically Collected Information:</h3>
+            <ul className="mt-2 space-y-2 text-muted-foreground">
+              <li>App usage data, such as features accessed and interaction patterns.</li>
+              <li>Device information, including device ID, operating system, and IP address.</li>
+            </ul>
+            <h3 className="mt-4 text-xl font-semibold">Sensitive Data:</h3>
+            <ul className="mt-2 space-y-2 text-muted-foreground">
+              <li>Contributions or opinions that may relate to political views.</li>
             </ul>
           </div>
           <div>
-            <h2 className="text-2xl font-bold">Permissible Age</h2>
+            <h2 className="text-2xl font-bold">2. How We Use Your Information</h2>
             <p className="mt-2 text-muted-foreground">
-              Being a political party and as per party's constitution, we are not intended for users under the age of 18, If we become aware that a person registering and sharing personal information is under the Permissible Age, we will disapprove & delete the account and any related information as soon as possible. If you believe we might have any information from or about a user under the Permissible Age, please contact us at <a href="mailto:bpp.headoffice@gmail.com" className="underline text-blue-600">bpp.headoffice@gmail.com</a>
-            </p>
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold">Data Usage</h2>
-            <p className="mt-2 text-muted-foreground">
-              We use the personal information we collect for the following purposes:
+              We use the information collected for the following purposes:
             </p>
             <ul className="mt-4 space-y-2 text-muted-foreground">
-              <li>
-                administer this App
-              </li>
-              <li>
-                enable your access to and use of the App services
-              </li>
+              <li>To administer and improve the App.</li>
+              <li>To enable you to register, contribute, or seek consultations within the app.</li>
+              <li>To personalize your experience and provide relevant content or features.</li>
+              <li>To communicate with you, such as sending updates, notifications, or responses to your inquiries.</li>
             </ul>
           </div>
           <div>
-            <h2 className="text-2xl font-bold">Data Security</h2>
+            <h2 className="text-2xl font-bold">3. Data Sharing and Disclosure</h2>
             <p className="mt-2 text-muted-foreground">
-              The App will take reasonable technical and organisational precautions to prevent the loss, misuse or alteration of your personal information.
-            </p>
-            <p className="mt-2 text-muted-foreground">
-              We take reasonable measures to protect your personal information from unauthorized access, use, or
-              disclosure. This includes using encryption, access controls, and other security measures to protect your
-              data.
-            </p>
-            <p className="mt-2 text-muted-foreground">
-              The App will store all the personal information you provide on its secure servers.
-            </p>
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold">User Rights</h2>
-            <p className="mt-2 text-muted-foreground">
-              You have the following rights with respect to your personal information:
+              We do not sell or share your personal data with third parties except:
             </p>
             <ul className="mt-4 space-y-2 text-muted-foreground">
-              <li>
-                <span className="font-medium">Access:</span> You can access to the personal information.
-              </li>
-              <li>
-                <span className="font-medium">Correction:</span> You can request that we correct any inaccurate or incomplete personal information.
-              </li>
-              <li>
-                <span className="font-medium">Deletion:</span> If you would like to review, change or delete personal information we have collected from you, or permanently delete your account, please contact us at  <a href="mailto:bpp.headoffice@gmail.com" className="underline text-blue-600">bpp.headoffice@gmail.com</a>
-              </li>
+              <li>To comply with legal obligations or court orders.</li>
+              <li>When necessary to operate and provide the app’s services (e.g., secure payment processing or analytics).</li>
+              <li>With your explicit consent for specific services or features.</li>
             </ul>
           </div>
           <div>
-            <h2 className="text-2xl font-bold">Contact Us</h2>
+            <h2 className="text-2xl font-bold">4. Permissible Age</h2>
             <p className="mt-2 text-muted-foreground">
-              If you have any questions or concerns about our privacy policy or the way we handle your personal information,</p>
-            <p className="text-muted-foreground">
-              please contact us at <a href="mailto:bpp.headoffice@gmail.com" className="underline text-blue-600">bpp.headoffice@gmail.com</a>
+              As per the party’s constitution, this app is not intended for users under the age of 18.
+            </p>
+            <p className="mt-2 text-muted-foreground">
+              If we become aware that an underage user has registered, we will delete the account and associated data promptly.
+            </p>
+            <p className="mt-2 text-muted-foreground">
+              Parents or guardians can contact us at <a href="mailto:bpp.headoffice@gmail.com" className="underline text-blue-600">bpp.headoffice@gmail.com</a> to report any underage accounts.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">5. Data Retention</h2>
+            <p className="mt-2 text-muted-foreground">
+              We retain personal information as long as it is required to provide services or as mandated by law. If you wish to delete your account or personal data, please contact us at <a href="mailto:bpp.headoffice@gmail.com" className="underline text-blue-600">bpp.headoffice@gmail.com</a>. Requests for deletion will be processed within 30 days.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">6. Data Security</h2>
+            <p className="mt-2 text-muted-foreground">
+              We take strict measures to protect your data, including:
+            </p>
+            <ul className="mt-4 space-y-2 text-muted-foreground">
+              <li><span className="font-medium">Encryption:</span> Secure transmission of data using SSL protocols.</li>
+              <li><span className="font-medium">Access Controls:</span> Restricting access to personal information to authorized personnel only.</li>
+              <li><span className="font-medium">Regular Audits:</span> Periodic security reviews to identify and address vulnerabilities.</li>
+            </ul>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">7. Your Rights</h2>
+            <p className="mt-2 text-muted-foreground">
+              You have the following rights regarding your personal information:
+            </p>
+            <ul className="mt-4 space-y-2 text-muted-foreground">
+              <li><span className="font-medium">Access:</span> View the personal data we hold about you.</li>
+              <li><span className="font-medium">Correction:</span> Request corrections to inaccurate or incomplete data.</li>
+              <li><span className="font-medium">Deletion:</span> Request permanent deletion of your data and account.</li>
+            </ul>
+            <p className="mt-2 text-muted-foreground">
+              To exercise these rights, email us at <a href="mailto:bpp.headoffice@gmail.com" className="underline text-blue-600">bpp.headoffice@gmail.com</a>.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">8. Consent and Updates</h2>
+            <p className="mt-2 text-muted-foreground">
+              By using the App, you consent to the collection and use of your information as outlined in this policy.
+            </p>
+            <p className="mt-2 text-muted-foreground">
+              We will notify users of any material changes to this privacy policy through in-app notifications or emails.
+            </p>
+            <p className="mt-2 text-muted-foreground">
+              The “Last Updated” date will reflect the most recent changes.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">9. Compliance with Laws</h2>
+            <p className="mt-2 text-muted-foreground">
+              This privacy policy is governed by Indian laws, including the Digital Personal Data Protection Act, 2023. We comply with all applicable laws related to data privacy and protection.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">10. Contact Us</h2>
+            <p className="mt-2 text-muted-foreground">
+              If you have any questions, concerns, or requests related to this privacy policy or the way we handle your data, please contact us:
+            </p>
+            <p className="mt-2 text-muted-foreground">
+              Email: <a href="mailto:bpp.headoffice@gmail.com" className="underline text-blue-600">bpp.headoffice@gmail.com</a>
+            </p>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">11. Disclaimer</h2>
+            <p className="mt-2 text-muted-foreground">
+              We are committed to maintaining your trust and safeguarding your privacy. However, no system is completely secure, and we cannot guarantee absolute security. Use of the app is at your own risk.
             </p>
           </div>
         </div>
