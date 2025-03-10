@@ -1,20 +1,20 @@
-import { memo, useState, useMemo } from "react";
-import {
-    ZoomableGroup,
-    ComposableMap,
-    Geographies,
-    Geography,
-    GeographyProps
-} from "react-simple-maps";
+import india from '@/assets/maps/india.json';
+import gujarat from '@/assets/maps/states/gujarat.json';
+import maharashtra from '@/assets/maps/states/maharashtra.json';
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
-import maharashtra from '@/assets/maps/states/maharashtra.json';
-import gujarat from '@/assets/maps/states/gujarat.json';
-import india from '@/assets/maps/india.json';
+import { memo, useMemo, useState } from "react";
+import {
+    ComposableMap,
+    Geographies,
+    Geography,
+    GeographyProps,
+    ZoomableGroup
+} from "react-simple-maps";
 
 type StateType = 'maharashtra' | 'gujarat';
 type TabType = 'state' | 'national';
@@ -65,6 +65,27 @@ const projectionConfig: ProjectionConfigs = {
 const MapChart: React.FC<MapChartProps> = ({ SelectedTab, state, dist }) => {
     const [openTooltip, setOpenTooltip] = useState<string>("");
 
+    // Responsive projection config
+    const getProjectionConfig = useMemo(() => {
+        const baseConfig: ProjectionConfigs = {
+            state: {
+                maharashtra: {
+                    scale: window.innerWidth < 640 ? 2000 : 4000,
+                    center: [77, 18.5]
+                },
+                gujarat: {
+                    scale: window.innerWidth < 640 ? 2000 : 4000,
+                    center: [71, 22.5]
+                }
+            },
+            national: {
+                scale: window.innerWidth < 640 ? 500 : 1000,
+                center: [78.9629, 22.5937]
+            }
+        };
+        return baseConfig;
+    }, []);
+
     const mapData = useMemo(() => {
         if (SelectedTab === 'state' && state) {
             switch (state) {
@@ -89,17 +110,17 @@ const MapChart: React.FC<MapChartProps> = ({ SelectedTab, state, dist }) => {
 
     const currentProjection = useMemo((): ProjectionConfig => {
         if (SelectedTab === 'state' && state) {
-            return projectionConfig.state[state] || projectionConfig.state.maharashtra;
+            return getProjectionConfig.state[state] || getProjectionConfig.state.maharashtra;
         }
-        return projectionConfig.national;
+        return getProjectionConfig.national;
     }, [SelectedTab, state]);
 
     const getFillColor = (geo: GeographyProps['geography']): string => {
         const properties = geo.properties as GeoProperty;
         if (dist && properties.district?.toLowerCase() === dist.toLowerCase()) {
-            return "#0EA5E9"; // Highlight color for selected district
+            return "#0EA5E9";
         }
-        return "#D1D5DB"; // Default color
+        return "#D1D5DB";
     };
 
     return (
@@ -107,8 +128,16 @@ const MapChart: React.FC<MapChartProps> = ({ SelectedTab, state, dist }) => {
             <ComposableMap
                 projection="geoMercator"
                 projectionConfig={currentProjection}
+                className="w-full h-full"
             >
-                <ZoomableGroup>
+                <ZoomableGroup
+                    minZoom={1}
+                    maxZoom={5}
+                    translateExtent={[
+                        [-window.innerWidth, -window.innerHeight],
+                        [window.innerWidth * 2, window.innerHeight * 2]
+                    ]}
+                >
                     <Geographies geography={mapData}>
                         {({ geographies }) =>
                             geographies.map((geo) => {
@@ -126,15 +155,15 @@ const MapChart: React.FC<MapChartProps> = ({ SelectedTab, state, dist }) => {
                                                             fill: getFillColor(geo),
                                                             outline: "none",
                                                             stroke: "#FFFFFF",
-                                                            strokeWidth: 0.5
+                                                            strokeWidth: window.innerWidth < 640 ? 0.3 : 0.5
                                                         },
                                                         hover: {
-                                                            fill: dist && (geo.properties as GeoProperty).district?.toLowerCase() === dist.toLowerCase() 
+                                                            fill: dist && (geo.properties as GeoProperty).district?.toLowerCase() === dist.toLowerCase()
                                                                 ? "#0EA5E9"
-                                                                : "#60A5FA", 
+                                                                : "#60A5FA",
                                                             outline: "none",
                                                             stroke: "#FFFFFF",
-                                                            strokeWidth: 0.5,
+                                                            strokeWidth: window.innerWidth < 640 ? 0.3 : 0.5,
                                                             cursor: "pointer"
                                                         },
                                                         pressed: {

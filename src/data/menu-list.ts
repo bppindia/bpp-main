@@ -1,8 +1,10 @@
 import {
+  Briefcase,
   Goal,
   HandCoins,
   HandHelping,
   LayoutGrid,
+  Lock,
   LucideIcon,
   SquarePen,
   UserRoundPen,
@@ -69,6 +71,12 @@ export function getMenuList(_pathname?: string): Group[] {
           icon: HandHelping,
           submenus: [],
         },
+        {
+          href: "/dashboard/referal",
+          label: "Referals",
+          icon: HandHelping,
+          submenus: [],
+        },
       ],
     },
     // {
@@ -109,7 +117,12 @@ export function getMenuList(_pathname?: string): Group[] {
         {
           href: "/dashboard/business-community",
           label: "Business Community",
-          icon: HandCoins,
+          icon: Briefcase,
+        },
+        {
+          href: "/dashboard/privacy-policy",
+          label: "Privacy Policy",
+          icon: Lock,
         },
       ],
     },

@@ -1,219 +1,195 @@
 import { postData } from "@/api/apiClient";
 import { clearCredentials, setCredentials } from "@/features/auth/authSlice";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
 interface User {
-    username?: string;
-    email?: string;
-    phone?: string;
+  lastName: any;
+  firstName: any;
+  referralCode: string;
+  username?: string;
+  email?: string;
+  phone?: string;
 }
 
 interface AuthContextType {
-    user: User | null;
-    isAuthenticated: boolean;
-    login: (credentials: LoginCredentials) => Promise<void>;
-    register: (registrationData: RegistrationData) => Promise<void>;
-    sendOtp: (contact: string, type: 'email' | 'phone') => Promise<void>;
-    verifyOtp: (contact: string, otp: string, type: 'email' | 'phone') => Promise<void>;
-    logout: () => void;
-    loading: boolean;
+  user: User | null;
+  isAuthenticated: boolean;
+  login: (credentials: LoginCredentials) => Promise<void>;
+  register: (registrationData: RegistrationData) => Promise<void>;
+  sendOtp: (identifier: string) => Promise<void>;
+  verifyOtp: (identifier: string, otp: string) => Promise<void>;
+  logout: () => void;
+  loading: boolean;
 }
 
 interface RegistrationData {
-    title: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    dateOfBirth: string;
-    gender: string;
-    age: string;
-    addressLine1: string;
-    addressLine2: string;
-    cityOrVillage: string;
-    taluka: string;
-    district: string;
-    state: string;
-    pincode: string;
-    qualification: string;
-    profession: string;
-    position: string;
-    aadhaarNumber: string;
-    voterId: string;
-    aadhaarCard: File | null;
-    voterCard: File | null;
-    password: string;
-    referralCode: string;
+  title: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  dateOfBirth: string;
+  gender: string;
+  age: number | string;
+  addressLine1: string;
+  addressLine2: string;
+  cityOrVillage: string;
+  district: string;
+  state: string;
+  pincode: string;
+  qualification: string;
+  profession: string;
+  position: string;
+  aadhaarNumber: string;
+  voterId: string;
+  aadhaarFront: File | null;
+  aadhaarBack: File | null;
+  voterFront: File | null;
+  voterBack: File | null;
+  password: string;
+  confirmPassword?: string;
+  referralCode: string;
+  identifier: string;
+  otp: string;
 }
 
 interface LoginCredentials {
-    email?: string;
-    phone?: string;
-    password: string;
+  email?: string;
+  phone?: string;
+  password: string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Provider component
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(
-        Cookies.get('userDetails') ? JSON.parse(Cookies.get('userDetails') || '{}') : null
-    );
-    const [loading, setLoading] = useState(false);
-    const dispatch = useDispatch();
+  const [user, setUser] = useState<User | null>(
+    Cookies.get("userDetails") ? JSON.parse(Cookies.get("userDetails") || "{}") : null
+  );
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
-    // Login method
-    const login = async (credentials: LoginCredentials) => {
-        try {
-            setLoading(true);
-            const response = await postData("/login", credentials);
+  const login = async (credentials: LoginCredentials) => {
+    try {
+      setLoading(true);
+      const response = await postData("/auth/login", credentials);
+      dispatch(setCredentials({ token: response.token, data: response.data }));
+      Cookies.set("authToken", response.token, { expires: 4 });
+      Cookies.set("userDetails", JSON.stringify(response.data), { expires: 4 });
+      setUser({ username: response.data.username, email: response.data.email, phone: response.data.phone });
+      toast.success("Login Successful!", { description: "Redirecting to the dashboard..." });
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || "Login failed. Please check your credentials.";
+      const errorDetails = error.response?.data?.errors?.map((e: any) => e.msg).join(", ") || "";
+      toast.error(`${errorMessage}${errorDetails ? `: ${errorDetails}` : ""}`);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            // Dispatch to Redux store
-            dispatch(setCredentials({
-                token: response.token,
-                data: response.data
-            }));
-
-            // Still set cookies if needed
-            Cookies.set('authToken', response.token, { expires: 4 });
-            setUser({ username: response.data.username, email: response.data.email });
-             toast.success('Login Successful!', {
-                description: 'Redirecting to the dashboard...',
-            });
-        } catch (error) {
-            toast.error("Login failed. Please check your credentials.");
-            throw error;
-        } finally {
-            setLoading(false);
+  const register = async (registrationData: RegistrationData) => {
+    try {
+      setLoading(true);
+      const formData = new FormData();
+      (Object.keys(registrationData) as Array<keyof RegistrationData>).forEach((key) => {
+        const value = registrationData[key];
+        if (key === "confirmPassword") return; // Skip confirmPassword
+        if (value instanceof File) {
+          formData.append(key, value, value.name);
+        } else if (value !== null && value !== undefined) {
+          formData.append(key, String(value));
         }
-    };
+      });
 
+      const response = await postData("/auth/register", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      dispatch(setCredentials({ token: response.token, data: response.data }));
+      Cookies.set("authToken", response.token, { expires: 4 });
+      Cookies.set("userDetails", JSON.stringify(response.data), { expires: 4 });
+      setUser({ 
+        email: response.email, 
+        phone: response.phone,
+        username: response.firstName ? `${response.firstName} ${response.lastName || ''}`.trim() : undefined 
+      });
+      toast.success("Registration successful!", { description: "Welcome aboard!" });
+      return response;
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || "Registration failed";
+      const errorDetails = error.response?.data?.errors?.map((e: any) => e.msg).join(", ") || "";
+      toast.error(`${errorMessage}${errorDetails ? `: ${errorDetails}` : ""}`);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    // Register method
-    const register = async (registrationData: RegistrationData) => {
-        try {
-            setLoading(true);
+  const sendOtp = async (identifier: string) => {
+    try {
+      setLoading(true);
+      const payload = { identifier };
+      await postData("/auth/register/send-otp", payload); // Fixed endpoint
+      toast.success(`OTP sent successfully to your ${identifier.includes("@") ? "email" : "phone"}!`);
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || "Failed to send OTP";
+      const errorDetails = error.response?.data?.errors?.map((e: any) => e.msg).join(", ") || "";
+      toast.error(`${errorMessage}${errorDetails ? `: ${errorDetails}` : ""}`);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            // Create FormData object
-            const formData = new FormData();
+  const verifyOtp = async (identifier: string, otp: string) => {
+    try {
+      setLoading(true);
+      const payload = { identifier, otp };
+      await postData("/auth/register/verify-otp", payload);
+      toast.success("OTP verified successfully!");
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || "Failed to verify OTP";
+      const errorDetails = error.response?.data?.errors?.map((e: any) => e.msg).join(", ") || "";
+      toast.error(`${errorMessage}${errorDetails ? `: ${errorDetails}` : ""}`);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            // Iterate through all keys in registrationData
-            (Object.keys(registrationData) as Array<keyof RegistrationData>).forEach(key => {
-                const value = registrationData[key];
+  const logout = () => {
+    Cookies.remove("authToken");
+    Cookies.remove("userDetails");
+    setUser(null);
+    dispatch(clearCredentials());
+    toast.success("Logged out successfully");
+  };
 
-                // Special handling for File objects
-                if (value instanceof File) {
-                    formData.append(key, value, value.name);
-                }
-                // For other primitive types
-                else if (value !== null && value !== undefined) {
-                    formData.append(key, String(value));
-                }
-            });
-
-            // Update postData to handle FormData
-            const response = await postData("/signup", formData);
-            toast.success("Registration successful!", response);
-        } catch (error) {
-            // toast.error("Registration failed");
-            // throw error;
-            toast.success("Registration successful!");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-
-    // Send OTP method
-    const sendOtp = async (contact: string, type: 'email' | 'phone') => {
-        try {
-            setLoading(true);
-            // Validate input based on type
-            if (type === 'email' && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(contact)) {
-                throw new Error('Invalid email format');
-            }
-            if (type === 'phone' && !/^(\+91)?[6-9]\d{9}$/.test(contact)) {
-                throw new Error('Invalid phone number format');
-            }
-
-            // Prepare payload based on type
-            const payload = type === 'email' ? { email: contact } : { phone: contact };
-
-            console.log(payload)
-            // Send OTP request with dynamic payload
-            await postData('/send-otp', payload);
-            toast.success(`OTP sent successfully to your ${type}!`);
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Failed to send OTP';
-            toast.error(errorMessage);
-            throw error;
-        } finally {
-            setLoading(false);
-        }
-    };
-
-
-    // Verify OTP method
-    const verifyOtp = async (contact: string, otp: string, type: 'email' | 'phone') => {
-        try {
-            setLoading(true);
-            // Validate input based on type
-            if (type === 'email' && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(contact)) {
-                throw new Error('Invalid email format');
-            }
-            if (type === 'phone' && !/^(\+91)?[6-9]\d{9}$/.test(contact)) {
-                throw new Error('Invalid phone number format');
-            }
-
-            // Prepare payload based on type
-            const payload = type === 'email' ? { email: contact, otp } : { phone: contact, otp };
-
-            // Verify OTP request with dynamic payload
-            const response = await postData('/validate-otp', payload);
-            Cookies.set('authToken', response.token, { expires: 4 });
-            toast.success('OTP verified successfully!');
-            return response;
-        } catch (error) {
-            toast.error('Please Enter Valid OTP');
-            throw error;
-        } finally {
-            setLoading(false);
-        }
-    };
-
-
-    const logout = () => {
-        Cookies.remove('authToken');
-        dispatch(clearCredentials());
-        toast.success("Logged out successfully");
-    };
-
-    return (
-        <AuthContext.Provider
-            value={{
-                user,
-                isAuthenticated: !!Cookies.get('authToken'),
-                login,
-                register,
-                sendOtp,
-                verifyOtp,
-                logout,
-                loading,
-            }}
-        >
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated: !!Cookies.get("authToken"),
+        login,
+        register,
+        sendOtp,
+        verifyOtp,
+        logout,
+        loading,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = (): AuthContextType => {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error("useAuth must be used within an AuthProvider");
-    }
-    return context;
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };

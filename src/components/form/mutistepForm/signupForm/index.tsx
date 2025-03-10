@@ -17,363 +17,268 @@ import { PersonalDetailForm } from './PersonalDetailForm';
 import { RegistrationForm } from './RegistrationDetails';
 
 type RegistrationData = {
-
-    termsAccepted?: boolean;
-    partyObjectivesAccepted?: boolean;
-    serveCommunityAccepted?: boolean
-
-    // Personal Details
-    title: string;           // e.g., Mr., Ms., Dr.
-    firstName: string;       // User's first name
-    middleName: string;      // User's middle name (optional)
-    lastName: string;        // User's last name
-    email: string;           // User's email address
-    phone: string;           // User's phone number
-    dateOfBirth: string;     // Date of birth (format: YYYY-MM-DD)
-    gender: string;          // Male, Female, Other
-    age: number;             // User's age (can calculate from DOB)
-
-    // OTP Verification
-    otp: string;             // One-time password for verification email otp/ phone otp
-
-    // Address Information
-    addressLine1: string;    // First line of address
-    addressLine2: string;    // Second line of address (optional)
-    cityOrVillage: string;   // City or village name
-    district: string;        // District name
-    state: string;           // State name
-    pincode: string;         // Postal code
-
-    // Educational Details
-    qualification: string;   // Highest qualification (e.g., Bachelor's)
-    profession: string;      // Current profession (e.g., Engineer)
-    position: string;        // Current position (e.g., Manager)
-
-    // Registration Details
-    aadhaarNumber: string;      // Aadhaar card number
-    voterId: string;         // Voter ID number
-    aadhaarFront: File | null;      // Aadhaar card file (File type)
-    aadhaarBack: File | null;      // Aadhaar card file (File type)
-    voterFront: File | null;         // Voter ID file (File type)
-    voterBack: File | null;         // Voter ID file (File type)
-
-
-    // Credentials Information
-    password: string;       //password 
-    confirmPassword: string;  // Account password
-
-    // referral Code 
-    referralCode: string,    //optional field
+  termsAccepted?: boolean;
+  partyObjectivesAccepted?: boolean;
+  serveCommunityAccepted?: boolean;
+  title: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  dateOfBirth: string;
+  gender: string;
+  age: number;
+  otp: string;
+  addressLine1: string;
+  addressLine2: string;
+  cityOrVillage: string;
+  district: string;
+  state: string;
+  pincode: string;
+  qualification: string;
+  profession: string;
+  position: string;
+  aadhaarNumber: string;
+  voterId: string;
+  aadhaarFront: File | null;
+  aadhaarBack: File | null;
+  voterFront: File | null;
+  voterBack: File | null;
+  password: string;
+  confirmPassword: string;
+  referralCode: string;
 };
-
 
 const INITIAL_DATA: RegistrationData = {
-
-    termsAccepted: false,
-    partyObjectivesAccepted: false,
-    serveCommunityAccepted: false,
-
-    // Personal Details
-    title: "",
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    dateOfBirth: "",
-    gender: "",
-    age: 0,
-
-    // OTP Verification
-    otp: "",
-
-    // Address Information
-    addressLine1: "",
-    addressLine2: "",
-    cityOrVillage: "",
-    district: "",
-    state: "",
-    pincode: "",
-
-    // Educational Details
-    qualification: "",
-    profession: "",
-    position: "",
-
-    // Registration Details
-    aadhaarNumber: "",
-    voterId: "",
-    aadhaarFront: null,    // Aadhaar card file (File type)
-    aadhaarBack: null,     // Aadhaar card file (File type)
-    voterFront: null,     // Voter ID file (File type)
-    voterBack: null,
-
-    // Credentials Information
-    password: "",
-    confirmPassword: "",
-
-    // referral Code 
-    referralCode: "", //optional field
+  termsAccepted: false,
+  partyObjectivesAccepted: false,
+  serveCommunityAccepted: false,
+  title: "",
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  dateOfBirth: "",
+  gender: "",
+  age: 0,
+  otp: "",
+  addressLine1: "",
+  addressLine2: "",
+  cityOrVillage: "",
+  district: "",
+  state: "",
+  pincode: "",
+  qualification: "",
+  profession: "",
+  position: "",
+  aadhaarNumber: "",
+  voterId: "",
+  aadhaarFront: null,
+  aadhaarBack: null,
+  voterFront: null,
+  voterBack: null,
+  password: "",
+  confirmPassword: "",
+  referralCode: "",
 };
 
-
 const MultiStepForm = () => {
-    const [data, setData] = useState(INITIAL_DATA);
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-    const { sendOtp, verifyOtp } = useAuth();
+  const [data, setData] = useState(INITIAL_DATA);
+  const navigate = useNavigate();
+  const { sendOtp, verifyOtp, register, loading } = useAuth();
 
-    //Function that update the fields inside FormData
-    function updateFields(fields: Partial<RegistrationData>) {
-        setData(prev => {
-            return { ...prev, ...fields }
-        })
+  function updateFields(fields: Partial<RegistrationData>) {
+    setData((prev) => ({ ...prev, ...fields }));
+  }
+
+  const { currentStepIndex, step, isFirstStep, isLastStep, back, next } = useMultiStepForm([
+    <EmailForm {...data} updateFields={updateFields} />,
+    <OtpVerificationForm {...data} updateFields={updateFields} />,
+    <PersonalDetailForm {...data} updateFields={updateFields} />,
+    <AddressForm {...data} updateFields={updateFields} />,
+    <RegistrationForm {...data} updateFields={updateFields} />,
+    ...(data.serveCommunityAccepted ? [<EducationalDetailsForm {...data} updateFields={updateFields} />] : []),
+    <CredentialsForm {...data} updateFields={updateFields} />,
+  ]);
+
+  const onSubmitHandler = async (e: FormEvent) => {
+    e.preventDefault();
+
+    // Step 0: Send OTP
+    if (currentStepIndex === 0) {
+      if (!data.termsAccepted || !data.partyObjectivesAccepted) {
+        toast.error("Please accept all terms and conditions");
+        return;
+      }
+
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      const phoneRegex = /^(\+91)?[6-9]\d{9}$/;
+
+      const isEmail = data.email && emailRegex.test(data.email);
+      const isPhone = data.phone && phoneRegex.test(data.phone);
+
+      if (!isEmail && !isPhone) {
+        toast.error("Please enter a valid email or phone number");
+        return;
+      }
+
+      try {
+        const identifier = isEmail ? data.email : (data.phone.startsWith("+91") ? data.phone : `+91${data.phone}`);
+        await sendOtp(identifier);
+        next();
+      } catch (error: any) {
+        console.error("Failed to send OTP:", error.message);
+        toast.error(error.message || "Failed to send OTP");
+      }
     }
 
-    const { currentStepIndex, step, isFirstStep, isLastStep, back, next } =
-        useMultiStepForm([
-            <EmailForm {...data} updateFields={updateFields} />,
-            <OtpVerificationForm {...data} updateFields={updateFields} />,
-            <PersonalDetailForm {...data} updateFields={updateFields} />,
-            <AddressForm {...data} updateFields={updateFields} />,
-            <RegistrationForm {...data} updateFields={updateFields} />,
-            ...(data.serveCommunityAccepted ? [<EducationalDetailsForm {...data} updateFields={updateFields} />] : []),
-            <CredentialsForm {...data} updateFields={updateFields} />,
-        ]);
+    // Step 1: Verify OTP
+    else if (currentStepIndex === 1) {
+      if (!data.otp || data.otp.length !== 4) {
+        toast.error("Please enter a valid 4-digit OTP");
+        return;
+      }
 
-
-    const onSubmitHandler = async (e: FormEvent) => {
-        e.preventDefault();
-
-        if (currentStepIndex === 0) {
-            // Handle first step - Send OTP
-            if (!data.termsAccepted || !data.partyObjectivesAccepted) {
-                toast.error('Please accept all terms and conditions');
-                return;
-            }
-
-            // Validate either email or phone
-            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-            const phoneRegex = /^(\+91)?[6-9]\d{9}$/;
-
-            const isEmail = data?.email && emailRegex.test(data.email);
-            const isPhone = data?.phone && phoneRegex.test(data.phone);
-
-            if (!isEmail && !isPhone) {
-                toast.error('Please enter a valid email or phone number');
-                return;
-            }
-
-            try {
-                // Determine whether to send OTP to email or phone
-                if (isEmail) {
-                    await sendOtp(data.email!, 'email'); // Send email OTP
-                } else if (isPhone) {
-                    const formattedPhoneNumber = data.phone;
-                    await sendOtp(formattedPhoneNumber!, 'phone'); // Send phone OTP
-                }
-                next(); // Move to OTP verification step
-            } catch (error) {
-                toast.error('Failed to send OTP');
-            }
-        } else if (currentStepIndex === 1) {
-            // Handle second step - Verify OTP
-            if (data.otp.length !== 4) {
-                toast.error('Please enter a valid 4-digit OTP');
-                return;
-            }
-
-            try {
-                // Verify OTP
-                const formattedPhoneNumber = data.phone;
-                const verificationTarget = data.email || formattedPhoneNumber;
-                const verificationType = data.email ? 'email' : 'phone';
-                await verifyOtp(verificationTarget!, data.otp, verificationType);
-                next(); // Move to the next step after verification
-            } catch (error) {
-                console.error('Failed to verify OTP:', error);
-            }
-        } else if (currentStepIndex === 2) {
-            // Add validation for personal details
-            const requiredFields = [
-                'firstName', 'lastName', 'dateOfBirth',
-                'gender'
-            ];
-
-            const missingFields = requiredFields.filter(field => !((data as any)[field]));
-
-            if (missingFields.length > 0) {
-                toast.error(`Please fill in the following fields: ${missingFields.join(', ')}`);
-                return;
-            }
-            const today = new Date();
-            const birthDate = new Date(data.dateOfBirth);
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const monthDifference = today.getMonth() - birthDate.getMonth();
-            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            if (age < 19) {
-                toast("Age must be 18 or older.");
-            } else if (data.phone && data.phone.length >= 10) {
-                next();
-            } else if (!data.phone || data.phone.length < 10) {
-                toast("Phone number must be at least 10 digits.");
-            } else {
-                next();
-            }
-        } else if (isLastStep) {
-            try {
-                setLoading(true);
-
-                const formData = new FormData();
-                // Append required fields
-                formData.append('title', data.title);
-                formData.append('firstName', data.firstName);
-                formData.append('lastName', data.lastName);
-                formData.append('dateOfBirth', data.dateOfBirth);
-                formData.append('gender', data.gender);
-                formData.append('age', String(data.age));
-                formData.append('addressLine1', data.addressLine1);
-                formData.append('cityOrVillage', data.cityOrVillage);
-                formData.append('district', data.district);
-                formData.append('state', data.state);
-                formData.append('pincode', data.pincode);
-
-                // Append optional fields if filled
-                if (data.email) formData.append('email', data.email);
-                if (data.phone) formData.append('phone', data.phone);
-                if (data.middleName) formData.append('middleName', data.middleName);
-                if (data.addressLine2) formData.append('addressLine2', data.addressLine2);
-                if (data.qualification) formData.append('qualification', data.qualification);
-                if (data.profession) formData.append('profession', data.profession);
-                if (data.position) formData.append('position', data.position);
-                if (data.referralCode) formData.append('referralCode', data.referralCode);
-
-                // Append files if they exist
-                if (data.aadhaarFront) formData.append('aadhaarFront', data.aadhaarFront);
-                if (data.aadhaarBack) formData.append('aadhaarBack', data.aadhaarBack);
-                if (data.aadhaarNumber) formData.append('aadhaarNumber', data.aadhaarNumber);
-                if (data.voterFront) formData.append('voterFront', data.voterFront);
-                if (data.voterBack) formData.append('voterBack', data.voterBack);
-                if (data.voterId) formData.append('voterId', data.voterId);
-
-                // Append credentials
-                formData.append('password', data.password);
-
-                // Make API request
-                const response = await fetch('https://api.bppindia.com:8443/api/v1/signup', {
-                    method: 'POST',
-                    body: formData,
-                });
-
-
-                if (response.ok) {
-                    const result = await response.json();
-                    console.log(result, 'Registration successful');
-                    toast.success("Registration Successful! Redirecting to the Login page...");
-                    setTimeout(() => {
-                        navigate('/auth/login');
-                    }, 3000);
-                } else {
-                    const errorData = await response.json();
-                    console.error("Registration failed:", errorData);
-                    toast.error(errorData.message || "Registration failed. Please try again.");
-                    setLoading(false);
-                }
-            } catch (error) {
-                console.error("Registration failed:", error);
-                toast.error("Registration failed. Please try again.");
-                setLoading(false);
-            }
-        } else if (!isLastStep) {
-            setLoading(false);
-
-            return next();
-        }
+      try {
+        const identifier = data.email || (data.phone.startsWith("+91") ? data.phone : `+91${data.phone}`);
+        await verifyOtp(identifier, data.otp);
+        next();
+      } catch (error: any) {
+        console.error("Failed to verify OTP:", error.message);
+        toast.error(error.message || "Failed to verify OTP");
+      }
     }
 
+    // Step 2: Personal Details
+    else if (currentStepIndex === 2) {
+      const requiredFields = ["firstName", "lastName", "dateOfBirth", "gender"];
+      const missingFields = requiredFields.filter((field) => !data[field as keyof RegistrationData]);
 
-    return (
-        <section className="flex items-center justify-center h-screen mx-autorounded-none md:rounded-3xl md:p-8 py-10">
-            <div>
-                <Card className="mx-auto border-gray-300">
-                    <CardHeader>
-                        <div className="flex items-center justify-center text-xl font-bold text-blue-800">
-                            <Link to='/'>
-                                <img
-                                    src={bpplogo}
-                                    alt=""
-                                    className="w-[120px] object-contain rounded-lg"
-                                />
-                            </Link>
-                        </div>
-                        <h2 className="text-2xl font-black text-center text-neutral-800 dark:text-neutral-200">
-                            <div>Welcome to</div>
-                            <div style={{ color: '#79A5F2' }}>Bharatiya Popular Party</div>
-                        </h2>
-                    </CardHeader>
-                    <CardContent>
-                        <form className="space-y-4" onSubmit={onSubmitHandler}>
-                            <div className="grid">
-                                {step}
+      if (missingFields.length > 0) {
+        toast.error(`Please fill in: ${missingFields.join(", ")}`);
+        return;
+      }
 
-                                {isFirstStep && (
-                                    <Button type="submit">
-                                        Next
-                                    </Button>
-                                )}
-                                {currentStepIndex === 1 && (
-                                    <Button type="submit" className="w-full">
-                                        Verify OTP
-                                    </Button>
-                                )}
+      const today = new Date();
+      const birthDate = new Date(data.dateOfBirth);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
 
-                                {currentStepIndex === 2 && (
-                                    <div className="flex justify-between gap-2">
-                                        <Button type="submit" className='w-full'>
-                                            Next
-                                        </Button>
-                                    </div>
-                                )}
+      if (age < 18) {
+        toast.error("You must be 18 or older to register");
+        return;
+      }
 
-                                {isLastStep && (
-                                    <div className="flex justify-between gap-2">
-                                        <Button type="button" className='w-full' onClick={back}>
-                                            Back
-                                        </Button>
-                                        <LoadingButton loading={loading} type="submit" className="w-full">
-                                            Finish
-                                        </LoadingButton>
-                                    </div>
-                                )}
-                                {!isFirstStep && currentStepIndex !== 1 && currentStepIndex !== 2 && !isLastStep && (
-                                    <>
-                                        <div className="flex justify-between gap-2">
-                                            <Button type="button" className='w-full' onClick={back}>
-                                                Back
-                                            </Button>
-                                            <Button type="submit" className='w-full'>
-                                                Next
-                                            </Button>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                        </form>
-                    </CardContent>
-                </Card>
-                <div className="flex justify-center mt-3 gap-1 text-sm">
-                    <Link to='/auth/business-community-join' className="font-semibold underline">sign up as a business</Link>{' '}
-                    <p>or</p>{' '}
-                    <Link to="/auth/login" className="font-semibold underline">
-                        log in
-                    </Link>
-                </div>
-                <Toaster />
+      if (!data.phone || !/^(\+91)?[6-9]\d{9}$/.test(data.phone)) {
+        toast.error("Please enter a valid 10-digit phone number");
+        return;
+      }
+
+      updateFields({ age });
+      next();
+    }
+
+    // Final Step: Register
+    else if (isLastStep) {
+      if (data.password !== data.confirmPassword) {
+        toast.error("Passwords do not match");
+        return;
+      }
+
+      try {
+        const identifier = data.email || (data.phone.startsWith("+91") ? data.phone : `+91${data.phone}`);
+        const registrationData = {
+          ...data,
+          identifier,
+          otp: data.otp,
+          phone: data.phone.startsWith("+91") ? data.phone : `+91${data.phone}`,
+        };
+
+        await register(registrationData);
+        toast.success("Registration Successful! Redirecting to login...", {
+          duration: 3000,
+        });
+        setTimeout(() => navigate("/auth/login"), 3000);
+      } catch (error: any) {
+        console.error("Registration failed:", error.message);
+        toast.error(error.message || "Registration failed");
+      }
+    }
+
+    // Intermediate Steps
+    else {
+      next();
+    }
+  };
+
+  return (
+    <section className="flex items-center justify-center h-screen mx-auto rounded-none md:rounded-3xl md:p-8 py-10">
+      <div>
+        <Card className="mx-auto border-gray-300">
+          <CardHeader>
+            <div className="flex items-center justify-center text-xl font-bold text-blue-800">
+              <Link to="/">
+                <img src={bpplogo} alt="BPP Logo" className="w-[120px] object-contain rounded-lg" />
+              </Link>
             </div>
-        </section>
-    );
+            <h2 className="text-2xl font-black text-center text-neutral-800 dark:text-neutral-200">
+              <div>Welcome to</div>
+              <div style={{ color: "#79A5F2" }}>Bharatiya Popular Party</div>
+            </h2>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-4" onSubmit={onSubmitHandler}>
+              <div className="grid">
+                {step}
+                <div className="flex justify-between gap-2 mt-4">
+                  {!isFirstStep && (
+                    <Button type="button" onClick={back} className="w-full">
+                      Back
+                    </Button>
+                  )}
+                  {isFirstStep && (
+                    <Button type="submit" className="w-full" disabled={loading}>
+                      Next
+                    </Button>
+                  )}
+                  {currentStepIndex === 1 && (
+                    <Button type="submit" className="w-full" disabled={loading}>
+                      Verify OTP
+                    </Button>
+                  )}
+                  {!isFirstStep && !isLastStep && currentStepIndex !== 1 && (
+                    <Button type="submit" className="w-full" disabled={loading}>
+                      Next
+                    </Button>
+                  )}
+                  {isLastStep && (
+                    <LoadingButton type="submit" loading={loading} className="w-full">
+                      Finish
+                    </LoadingButton>
+                  )}
+                </div>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+        <div className="flex justify-center mt-3 gap-1 text-sm">
+          <Link to="/auth/business-community-join" className="font-semibold underline">
+            sign up as a business
+          </Link>{" "}
+          <p>or</p>{" "}
+          <Link to="/auth/login" className="font-semibold underline">
+            log in
+          </Link>
+        </div>
+        <Toaster />
+      </div>
+    </section>
+  );
 };
 
 export default MultiStepForm;

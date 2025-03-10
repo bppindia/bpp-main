@@ -16,3 +16,21 @@ html {
 .font-poppins {
   font-family: "Poppins", sans-serif;
 }
+
+
+.map-container {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 640px) {
+  .map-container {
+    min-height: 300px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .map-container {
+    min-height: 400px;
+  }
+}

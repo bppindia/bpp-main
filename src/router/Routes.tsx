@@ -34,6 +34,7 @@ import ReferralPage from '@/pages/Dashboard/Membership/Referral';
 import RenewalsPage from '@/pages/Dashboard/Membership/Renewals';
 import ProfilePage from '@/pages/Dashboard/Profile';
 import ProfessionalPage from '@/pages/Dashboard/Profile/professional';
+import Referral from '@/pages/Dashboard/Referal/Refferal';
 import Track from '@/pages/Dashboard/Track';
 import TrackingDetails from '@/pages/Dashboard/Track/TrackingDetails';
 import WalletPage from '@/pages/Dashboard/Wallet';
@@ -161,6 +162,7 @@ const AppRoutes = () => {
                                 <Route path="renewal" element={<RenewalsPage />} />
                                 <Route path="certificate" element={<MembershipCertificate />} />
                                 <Route path="donate" element={<DonatePage />} />
+                                <Route path="referal" element={<Referral />} />
                                 <Route path="add-donation" element={<DonationPage />} />
                                 <Route path="register-case" element={<CaseRegistrationForm />} />
                                 <Route path="community-contribution" element={<Contribution />} />
@@ -168,6 +170,7 @@ const AppRoutes = () => {
                                 <Route path="track" element={<Track />} />
                                 <Route path="track-details" element={<TrackingDetails />} />
                                 <Route path="payment-gateway" element={<Payment />} />
+                                <Route path="privacy-policy" element={<PrivacyPolicy />} />
 
                                 {/* membership */}
                                 <Route path="membership" element={<Membership />} />

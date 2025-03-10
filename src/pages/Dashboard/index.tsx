@@ -1,25 +1,14 @@
 "use client";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
-// import WarningDialog from "@/components/dialogs/WarningDialog";
-// import WelcomeDialog from "@/components/dialogs/WelcomeDialog";
 import MapChart from "@/components/maps/mapChart";
 import GoalsCarousel from "@/components/test/goalsSlider";
-// import {
-//   Breadcrumb,
-//   BreadcrumbItem,
-//   BreadcrumbLink,
-//   BreadcrumbList,
-//   BreadcrumbPage,
-//   BreadcrumbSeparator
-// } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useSidebar } from "@/hooks/use-sidebar";
 import { useStore } from "@/hooks/use-store";
 import DashboardLayout from "@/layout/DashboardLayout";
 import { ActivityIcon, PlusIcon, User2Icon, UsersIcon } from 'lucide-react';
 import { useSelector } from "react-redux";
-// import { Link } from 'react-router-dom';
 import { JSX } from "react/jsx-runtime";
 
 const DashboardPage: React.FC = () => {
@@ -32,26 +21,14 @@ const DashboardPage: React.FC = () => {
     <DashboardLayout>
       <ContentLayout title="Dashboard">
         <DashboardHeader />
-        {/* <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link to="/">Home</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Dashboard</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb> */}
         <div className="grid grid-cols-1 lg:grid-cols-2 my-3 gap-4 w-full">
-          <Card className="w-full h-[500px] p-4">
-            <CardContent className="h-[calc(500px-4rem)]">
+          {/* Removed fixed height and added responsive classes */}
+          <Card className="w-full aspect-[4/3] lg:aspect-auto lg:h-[60vh] max-h-[600px] p-4">
+            <CardContent className="h-full p-0">
               <MapChart SelectedTab='national' state={userData?.state || null} />
             </CardContent>
           </Card>
-          <Card>
+          <Card className="w-full">
             <CardHeader>
               <CardTitle className="text-2xl font-bold">{userData?.state}</CardTitle>
             </CardHeader>
@@ -78,12 +55,6 @@ const DashboardPage: React.FC = () => {
         <div>
           <GoalsCarousel />
         </div>
-        {/* {userData.approved ?
-          <WelcomeDialog />
-          :
-          <WarningDialog />
-        } */}
-
       </ContentLayout>
     </DashboardLayout>
   );
@@ -103,17 +74,4 @@ const StatCard: React.FC<{ title: string, value: string, percentage: string, ico
     </CardContent>
   </Card>
 );
-
-// const ActivityItem: React.FC<{ icon: JSX.Element, title: string, description: string, time: string }> = ({ icon, title, description, time }) => (
-//   <div className="flex items-center justify-between">
-//     <div className="flex items-center gap-3">
-//       {icon}
-//       <div>
-//         <p className="font-medium">{title}</p>
-//         <p className="text-xs text-muted-foreground">{description}</p>
-//       </div>
-//     </div>
-//     <p className="text-xs text-muted-foreground">{time}</p>
-//   </div>
-// );
 
