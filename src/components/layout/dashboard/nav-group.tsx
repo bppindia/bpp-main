@@ -34,9 +34,9 @@ export function NavGroup({ title, items }: NavGroup) {
   const navigate = useNavigate();
 
   const handleNavigation = (url: string, e: React.MouseEvent) => {
-    e.preventDefault(); 
-    navigate(url); 
-    setOpenMobile(false); 
+    e.preventDefault();
+    navigate(url);
+    setOpenMobile(false);
   };
 
   return (
@@ -55,23 +55,24 @@ export function NavGroup({ title, items }: NavGroup) {
 }
 
 const NavBadge = ({ children }: { children: ReactNode }) => (
-  <Badge className="rounded-full px-1 py-0 text-xs">{children}</Badge>
+  <Badge className="px-1 py-0 text-xs rounded-full">{children}</Badge>
 );
 
-const SidebarMenuLink = ({ 
-  item, 
-  href, 
-  onNavigate 
-}: { 
-  item: NavLink; 
-  href: string; 
+const SidebarMenuLink = ({
+  item,
+  href,
+  onNavigate
+}: {
+  item: NavLink;
+  href: string;
   onNavigate: (url: string, e: React.MouseEvent) => void;
 }) => (
   <SidebarMenuItem>
-    <SidebarMenuButton 
-      asChild 
-      isActive={checkIsActive(href, item)} 
+    <SidebarMenuButton
+      asChild
+      isActive={checkIsActive(href, item)}
       tooltip={item.title}
+      className={checkIsActive(href, item) ? 'bg-gray-200' : ''} // Add light gray background when active
     >
       <a
         href={typeof item.url === 'string' ? item.url : undefined}
@@ -85,23 +86,26 @@ const SidebarMenuLink = ({
   </SidebarMenuItem>
 );
 
-const SidebarMenuCollapsible = ({ 
-  item, 
-  href, 
-  onNavigate 
-}: { 
-  item: NavCollapsible; 
+const SidebarMenuCollapsible = ({
+  item,
+  href,
+  onNavigate
+}: {
+  item: NavCollapsible;
   href: string;
   onNavigate: (url: string, e: React.MouseEvent) => void;
 }) => (
-  <Collapsible 
-    asChild 
-    defaultOpen={checkIsActive(href, item, true)} 
+  <Collapsible
+    asChild
+    defaultOpen={checkIsActive(href, item, true)}
     className="group/collapsible"
   >
     <SidebarMenuItem>
       <CollapsibleTrigger asChild>
-        <SidebarMenuButton tooltip={item.title}>
+        <SidebarMenuButton
+          tooltip={item.title}
+          className={checkIsActive(href, item, true) ? 'bg-gray-200' : ''} // Highlight main item if any sub-item is active
+        >
           {item.icon && <item.icon />}
           <span>{item.title}</span>
           {item.badge && <NavBadge>{item.badge}</NavBadge>}
@@ -112,9 +116,10 @@ const SidebarMenuCollapsible = ({
         <SidebarMenuSub>
           {item.items.map((subItem) => (
             <SidebarMenuSubItem key={subItem.title}>
-              <SidebarMenuSubButton 
-                asChild 
+              <SidebarMenuSubButton
+                asChild
                 isActive={checkIsActive(href, subItem)}
+                className={checkIsActive(href, subItem) ? 'bg-gray-200' : ''} // Highlight active sub-item
               >
                 <a
                   href={String(subItem.url)}
@@ -133,21 +138,22 @@ const SidebarMenuCollapsible = ({
   </Collapsible>
 );
 
-const SidebarMenuCollapsedDropdown = ({ 
-  item, 
-  href, 
-  onNavigate 
-}: { 
-  item: NavCollapsible; 
+const SidebarMenuCollapsedDropdown = ({
+  item,
+  href,
+  onNavigate
+}: {
+  item: NavCollapsible;
   href: string;
   onNavigate: (url: string, e: React.MouseEvent) => void;
 }) => (
   <SidebarMenuItem>
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <SidebarMenuButton 
-          tooltip={item.title} 
+        <SidebarMenuButton
+          tooltip={item.title}
           isActive={checkIsActive(href, item)}
+          className={checkIsActive(href, item) ? 'bg-gray-200' : ''} // Highlight when collapsed
         >
           {item.icon && <item.icon />}
           <span>{item.title}</span>
@@ -159,13 +165,13 @@ const SidebarMenuCollapsedDropdown = ({
         <DropdownMenuLabel>{item.title} {item.badge && `(${item.badge})`}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {item.items.map((sub) => (
-          <DropdownMenuItem 
-            key={`${sub.title}-${sub.url}`} 
+          <DropdownMenuItem
+            key={`${sub.title}-${sub.url}`}
             asChild
+            className={checkIsActive(href, sub) ? 'bg-gray-200' : ''} // Highlight active sub-item in dropdown
           >
             <a
               href={typeof sub.url === 'string' ? sub.url : undefined}
-              className={checkIsActive(href, sub) ? 'bg-secondary' : ''}
               onClick={(e) => onNavigate(sub.url as string, e)}
             >
               {sub.icon && <sub.icon />}

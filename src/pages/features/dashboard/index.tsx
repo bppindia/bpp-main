@@ -28,25 +28,24 @@ export default function Goals() {
 
   return (
     <>
-      <HeaderNav />
       <Main fixed>
-        <div className='mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4'>
+        <div className='flex flex-col items-start justify-between gap-4 mb-6 md:flex-row md:items-center'>
           <div className="flex items-center gap-4 mt-2">
-            <Avatar className="h-16 w-16">
+            <Avatar className="w-16 h-16">
               <AvatarImage src={userData.avatar} alt={`${userData.firstName} ${userData.lastName}`} />
               <AvatarFallback>{userData.firstName[0]}{userData.lastName[0]}</AvatarFallback>
             </Avatar>
             <div>
-              <h1 className='text-2xl md:text-3xl font-bold tracking-tight'>
+              <h1 className='text-2xl font-bold tracking-tight md:text-3xl'>
                 Welcome, {userData.firstName}
               </h1>
-              <p className="text-muted-foreground text-sm">Your party dashboard overview</p>
+              <p className="text-sm text-muted-foreground">Your party dashboard overview</p>
             </div>
           </div>
           <div className='flex items-center gap-2'>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline">Actions <TrendingUp className="ml-2 h-4 w-4" /></Button>
+                <Button variant="outline">Actions <TrendingUp className="w-4 h-4 ml-2" /></Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem>G</DropdownMenuItem>
@@ -67,13 +66,13 @@ export default function Goals() {
             <TabsTrigger value='notifications'>Notifications</TabsTrigger>
           </TabsList>
         </Tabs>
-        <div className='my-4 flex items-end justify-between sm:my-0 sm:items-center'>
+        <div className='flex items-end justify-between my-4 sm:my-0 sm:items-center'>
           <div className='flex flex-col gap-4 sm:my-3 sm:flex-row'>
 
           </div>
         </div>
         <Separator className='shadow' />
-        <div className='faded-bottom no-scrollbar grid gap-4 overflow-auto pb-16 pt-4 mx-auto w-full max-w-full'>
+        <div className='grid w-full max-w-full gap-4 pt-4 pb-16 mx-auto overflow-auto faded-bottom no-scrollbar'>
 
         </div>
       </Main>

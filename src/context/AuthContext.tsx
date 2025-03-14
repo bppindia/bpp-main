@@ -6,12 +6,14 @@ import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
 interface User {
-  lastName: any;
-  firstName: any;
+  lastName?: string;
+  firstName?: string;
   referralCode: string;
   username?: string;
   email?: string;
   phone?: string;
+  isVerified: boolean; // Add verification status
+  membershipType: 'primary' | 'business' | null; // Add membership type
 }
 
 interface AuthContextType {
@@ -23,6 +25,7 @@ interface AuthContextType {
   verifyOtp: (identifier: string, otp: string) => Promise<void>;
   logout: () => void;
   loading: boolean;
+  updateVerification: (isVerified: boolean) => void; // Add method to update verification
 }
 
 interface RegistrationData {
@@ -76,10 +79,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       setLoading(true);
       const response = await postData("/auth/login", credentials);
+      const userData: User = {
+        username: response.data.username,
+        email: response.data.email,
+        phone: response.data.phone,
+        referralCode: response.data.referralCode || '',
+        firstName: response.data.firstName,
+        lastName: response.data.lastName,
+        isVerified: response.data.isVerified || false, // Assume API returns this
+        membershipType: response.data.membershipType || 'primary', // Default to primary
+      };
       dispatch(setCredentials({ token: response.token, data: response.data }));
       Cookies.set("authToken", response.token, { expires: 4 });
-      Cookies.set("userDetails", JSON.stringify(response.data), { expires: 4 });
-      setUser({ username: response.data.username, email: response.data.email, phone: response.data.phone });
+      Cookies.set("userDetails", JSON.stringify(userData), { expires: 4 });
+      setUser(userData);
       toast.success("Login Successful!", { description: "Redirecting to the dashboard..." });
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || "Login failed. Please check your credentials.";
@@ -97,7 +110,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const formData = new FormData();
       (Object.keys(registrationData) as Array<keyof RegistrationData>).forEach((key) => {
         const value = registrationData[key];
-        if (key === "confirmPassword") return; // Skip confirmPassword
+        if (key === "confirmPassword") return;
         if (value instanceof File) {
           formData.append(key, value, value.name);
         } else if (value !== null && value !== undefined) {
@@ -108,14 +121,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const response = await postData("/auth/register", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      const userData: User = {
+        email: response.data.email,
+        phone: response.data.phone,
+        username: response.data.firstName ? `${response.data.firstName} ${response.data.lastName || ''}`.trim() : undefined,
+        referralCode: response.data.referralCode || '',
+        firstName: response.data.firstName,
+        lastName: response.data.lastName,
+        isVerified: response.data.isVerified || false, // Assume API returns this
+        membershipType: response.data.membershipType || 'primary', // Default to primary
+      };
       dispatch(setCredentials({ token: response.token, data: response.data }));
       Cookies.set("authToken", response.token, { expires: 4 });
-      Cookies.set("userDetails", JSON.stringify(response.data), { expires: 4 });
-      setUser({ 
-        email: response.email, 
-        phone: response.phone,
-        username: response.firstName ? `${response.firstName} ${response.lastName || ''}`.trim() : undefined 
-      });
+      Cookies.set("userDetails", JSON.stringify(userData), { expires: 4 });
+      setUser(userData);
       toast.success("Registration successful!", { description: "Welcome aboard!" });
       return response;
     } catch (error: any) {
@@ -132,7 +151,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       setLoading(true);
       const payload = { identifier };
-      await postData("/auth/register/send-otp", payload); // Fixed endpoint
+      await postData("/auth/register/send-otp", payload);
       toast.success(`OTP sent successfully to your ${identifier.includes("@") ? "email" : "phone"}!`);
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || "Failed to send OTP";
@@ -168,6 +187,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     toast.success("Logged out successfully");
   };
 
+  const updateVerification = (isVerified: boolean) => {
+    if (user) {
+      const updatedUser = { ...user, isVerified };
+      setUser(updatedUser);
+      Cookies.set("userDetails", JSON.stringify(updatedUser), { expires: 4 });
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -179,6 +206,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         verifyOtp,
         logout,
         loading,
+        updateVerification,
       }}
     >
       {children}

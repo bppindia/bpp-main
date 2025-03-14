@@ -18,12 +18,13 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
 import { ScrollArea } from './ui/scroll-area';
-import { sidebarData } from './layout/dashboard/data/sidebar-data';
+import { useSidebarData } from './layout/dashboard/data/sidebar-data'; // Import the hook
 
 export function CommandMenu() {
   const navigate = useNavigate();
   const { setTheme } = useTheme();
   const { open, setOpen } = useSearch();
+  const sidebarData = useSidebarData(); // Use the hook to get filtered sidebar data
 
   const runCommand = React.useCallback(
     (command: () => unknown) => {
@@ -37,12 +38,15 @@ export function CommandMenu() {
     <CommandDialog modal open={open} onOpenChange={setOpen}>
       <CommandInput placeholder="Type a command or search..." />
       <CommandList>
-        <ScrollArea type="hover" className="h-72 pr-1">
+        <ScrollArea type="hover" className="pr-1 h-72">
           <CommandEmpty>No results found.</CommandEmpty>
           {sidebarData.navGroups.map((group) => (
             <CommandGroup key={group.title} heading={group.title}>
               {group.items.map((navItem, i) => {
-                if (navItem.url)
+                // Skip disabled items
+                if (navItem.disabled) return null;
+
+                if (navItem.url) {
                   return (
                     <CommandItem
                       key={`${navItem.url}-${i}`}
@@ -51,27 +55,33 @@ export function CommandMenu() {
                         runCommand(() => navigate(navItem.url));
                       }}
                     >
-                      <div className="mr-2 flex h-4 w-4 items-center justify-center">
+                      <div className="flex items-center justify-center w-4 h-4 mr-2">
                         <IconArrowRightDashed className="size-2 text-muted-foreground/80" />
                       </div>
                       {navItem.title}
                     </CommandItem>
                   );
+                }
 
-                return navItem.items?.map((subItem, i) => (
-                  <CommandItem
-                    key={`${subItem.url}-${i}`}
-                    value={subItem.title}
-                    onSelect={() => {
-                      runCommand(() => navigate(subItem.url));
-                    }}
-                  >
-                    <div className="mr-2 flex h-4 w-4 items-center justify-center">
-                      <IconArrowRightDashed className="size-2 text-muted-foreground/80" />
-                    </div>
-                    {subItem.title}
-                  </CommandItem>
-                ));
+                return navItem.items?.map((subItem, j) => {
+                  // Skip disabled sub-items
+                  if (subItem.disabled) return null;
+
+                  return (
+                    <CommandItem
+                      key={`${subItem.url}-${j}`}
+                      value={subItem.title}
+                      onSelect={() => {
+                        runCommand(() => navigate(subItem.url));
+                      }}
+                    >
+                      <div className="flex items-center justify-center w-4 h-4 mr-2">
+                        <IconArrowRightDashed className="size-2 text-muted-foreground/80" />
+                      </div>
+                      {subItem.title}
+                    </CommandItem>
+                  );
+                });
               })}
             </CommandGroup>
           ))}
@@ -94,3 +104,5 @@ export function CommandMenu() {
     </CommandDialog>
   );
 }
+
+export default CommandMenu;

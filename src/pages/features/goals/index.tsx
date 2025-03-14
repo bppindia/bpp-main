@@ -6,13 +6,8 @@ import { goals } from './data/goals';
 const GoalsPage = () => {
   return (
     <>
-      {/* ===== Top Heading ===== */}
-      <HeaderNav/>
-
-      {/* ===== Content ===== */}
       <Main fixed>
-        <section>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-6">
+          <div className="grid grid-cols-2 gap-4 mt-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {goals.map((goal) => (
               <Card
                 key={goal.number}
@@ -22,15 +17,15 @@ const GoalsPage = () => {
                   <div className="flex flex-col h-full">
                     {/* Header with number */}
                     <div className="flex items-center p-3">
-                      <span className="text-2xl font-bold mr-2">{goal.number}</span>
+                      <span className="mr-2 text-2xl font-bold">{goal.number}</span>
                     </div>
 
                     {/* Icon and content */}
-                    <div className="p-4 flex flex-col items-center text-center">
+                    <div className="flex flex-col items-center p-4 text-center">
                       <div className="mb-3">
                         <goal.icon size={40} color={goal.iconColor} />
                       </div>
-                      <h3 className="text-sm font-bold mb-2 leading-tight">
+                      <h3 className="mb-2 text-sm font-bold leading-tight">
                         {goal.title}
                       </h3>
                       <p className="text-xs opacity-90">
@@ -42,7 +37,6 @@ const GoalsPage = () => {
               </Card>
             ))}
           </div>
-        </section>
       </Main>
     </>
   );

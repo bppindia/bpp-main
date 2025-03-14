@@ -22,7 +22,7 @@ function Referral() {
       membershipType: "Life Member",
     },
     {
-      name: "Jane Appleseed",
+      name: "Jane Appleseed",Referal
       date: "1 week ago",
       status: "Pending",
       membershipNo: "Pending",
@@ -70,7 +70,7 @@ function Referral() {
   return (
     <DashboardLayout>
       <ContentLayout title="Referral Program" children={undefined} />
-      <main className="flex-1 py-6 px-4 md:px-6 lg:py-8">
+      <main className="flex-1 px-4 py-6 md:px-6 lg:py-8">
         <div className="container mx-auto">
           <header className="flex items-center justify-between mb-8">
             <div>
@@ -81,7 +81,7 @@ function Referral() {
             </div>
             <Button>Invite Supporters</Button>
           </header>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <Card>
               <CardHeader>
                 <CardTitle>Your Referral Link</CardTitle>
@@ -89,11 +89,11 @@ function Referral() {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
-                  <div className="bg-gray-200 dark:bg-gray-800 rounded-md px-4 py-2 flex-1 mr-4 truncate">
+                  <div className="flex-1 px-4 py-2 mr-4 truncate bg-gray-200 rounded-md dark:bg-gray-800">
                     {referralLink || "Generating link..."}
                   </div>
                   <Button variant="outline" size="icon" onClick={copyToClipboard} disabled={!referralLink}>
-                    <CopyIcon className="h-5 w-5" />
+                    <CopyIcon className="w-5 h-5" />
                     <span className="sr-only">Copy referral link</span>
                   </Button>
                 </div>
@@ -115,7 +115,7 @@ function Referral() {
                         </Avatar>
                         <div>
                           <div className="font-medium">{referral.name}</div>
-                          <div className="text-gray-500 dark:text-gray-400 text-sm">
+                          <div className="text-sm text-gray-500 dark:text-gray-400">
                             Joined {referral.date}
                           </div>
                         </div>
@@ -141,21 +141,21 @@ function Referral() {
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="font-medium">Total Referrals</div>
-                      <div className="text-gray-500 dark:text-gray-400 text-sm">All-time referrals</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">All-time referrals</div>
                     </div>
                     <div className="text-2xl font-bold">{earnings.total}</div>
                   </div>
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="font-medium">Pending Approvals</div>
-                      <div className="text-gray-500 dark:text-gray-400 text-sm">Awaiting verification</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">Awaiting verification</div>
                     </div>
                     <div className="text-2xl font-bold">{earnings.pending}</div>
                   </div>
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="font-medium">Active Members</div>
-                      <div className="text-gray-500 dark:text-gray-400 text-sm">Confirmed members</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">Confirmed members</div>
                     </div>
                     <div className="text-2xl font-bold">{earnings.paid}</div>
                   </div>
@@ -165,7 +165,7 @@ function Referral() {
           </div>
 
           <div className="mt-8">
-            <h2 className="text-xl font-bold mb-4">Referral History</h2>
+            <h2 className="mb-4 text-xl font-bold">Referral History</h2>
             <Card>
               <CardContent>
                 <Table>
@@ -205,25 +205,25 @@ function Referral() {
           </div>
 
           <section className="mt-8">
-            <h2 className="text-xl font-bold mb-4">How It Works</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
-                <UserPlusIcon className="h-10 w-10 mb-4 text-primary" />
-                <h3 className="text-lg font-semibold mb-2">Invite Supporters</h3>
+            <h2 className="mb-4 text-xl font-bold">How It Works</h2>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              <div className="p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <UserPlusIcon className="w-10 h-10 mb-4 text-primary" />
+                <h3 className="mb-2 text-lg font-semibold">Invite Supporters</h3>
                 <p className="text-gray-500 dark:text-gray-400">
                   Share your unique referral link to invite people to join Bharatiya Popular Party.
                 </p>
               </div>
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
-                <UsersIcon className="h-10 w-10 mb-4 text-primary" />
-                <h3 className="text-lg font-semibold mb-2">Build Community</h3>
+              <div className="p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <UsersIcon className="w-10 h-10 mb-4 text-primary" />
+                <h3 className="mb-2 text-lg font-semibold">Build Community</h3>
                 <p className="text-gray-500 dark:text-gray-400">
                   Each new member strengthens our party and amplifies our voice.
                 </p>
               </div>
-              <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
-                <AwardIcon className="h-10 w-10 mb-4 text-primary" />
-                <h3 className="text-lg font-semibold mb-2">Earn Recognition</h3>
+              <div className="p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <AwardIcon className="w-10 h-10 mb-4 text-primary" />
+                <h3 className="mb-2 text-lg font-semibold">Earn Recognition</h3>
                 <p className="text-gray-500 dark:text-gray-400">
                   Top recruiters may receive party honors and special roles.
                 </p>

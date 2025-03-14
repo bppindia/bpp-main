@@ -18,7 +18,7 @@ const DashboardPage: React.FC = () => {
   return (
     <div>
       <DashboardHeader />
-      <div className="grid grid-cols-1 lg:grid-cols-2 my-3 gap-4 w-full">
+      <div className="grid w-full grid-cols-1 gap-4 my-3 lg:grid-cols-2">
         {/* Removed fixed height and added responsive classes */}
         <Card className="w-full aspect-[4/3] lg:aspect-auto lg:h-[60vh] max-h-[600px] p-4">
           <CardContent className="h-full p-0">
@@ -29,11 +29,11 @@ const DashboardPage: React.FC = () => {
           <CardHeader>
             <CardTitle className="text-2xl font-bold">{userData?.state}</CardTitle>
           </CardHeader>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 p-5">
-            <StatCard title="Total Members" value="0" percentage="+0%" icon={<UsersIcon className="h-6 w-6 text-muted-foreground" />} />
-            <StatCard title="Active Members" value="+0" percentage="+0%" icon={<ActivityIcon className="h-6 w-6 text-muted-foreground" />} />
-            <StatCard title="New Members This Month" value="+0" percentage="+0%" icon={<PlusIcon className="h-6 w-6 text-muted-foreground" />} />
-            <StatCard title="Active Now" value="+0" percentage="+0 since last hour" icon={<User2Icon className="h-6 w-6 text-muted-foreground" />} />
+          <div className="grid grid-cols-1 gap-6 p-5 sm:grid-cols-2 lg:grid-cols-2">
+            <StatCard title="Total Members" value="0" percentage="+0%" icon={<UsersIcon className="w-6 h-6 text-muted-foreground" />} />
+            <StatCard title="Active Members" value="+0" percentage="+0%" icon={<ActivityIcon className="w-6 h-6 text-muted-foreground" />} />
+            <StatCard title="New Members This Month" value="+0" percentage="+0%" icon={<PlusIcon className="w-6 h-6 text-muted-foreground" />} />
+            <StatCard title="Active Now" value="+0" percentage="+0 since last hour" icon={<User2Icon className="w-6 h-6 text-muted-foreground" />} />
           </div>
         </Card>
         <div className="lg:col-span-2">

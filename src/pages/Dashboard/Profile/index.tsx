@@ -1,500 +1,470 @@
-import bppFlag from '@/assets/images/logos/bppflag.png'
-import { ContentLayout } from '@/components/admin-panel/content-layout'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Separator } from '@/components/ui/separator'
-import { Switch } from '@/components/ui/switch'
-import { Textarea } from '@/components/ui/textarea'
-import DashboardLayout from '@/layout/DashboardLayout'
-import { useTheme } from '@/provider/theme-provider'
-import { Camera, ClipboardCopy, Edit2 } from 'lucide-react'
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-// import { Link } from 'react-router-dom'
-import { toast } from 'sonner'
+import { z } from 'zod';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Link, useNavigate } from 'react-router-dom';
+import { cn } from '@/lib/utils';
+import { toast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { HeaderNav } from '@/components/layout/dashboard/header-nav';
+import { Main } from '@/components/layout/dashboard/main';
+import { useEffect, useState } from 'react';
 
+// Zod schema with fields from ProfilePage
+const profileFormSchema = z.object({
+    firstName: z.string().min(2, { message: 'First name must be at least 2 characters.' }),
+    middleName: z.string().optional(),
+    lastName: z.string().min(2, { message: 'Last name must be at least 2 characters.' }),
+    dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, { message: 'Date must be in YYYY-MM-DD format.' }),
+    age: z.number().min(18, { message: 'Age must be at least 18.' }).max(120),
+    gender: z.enum(['male', 'female', 'other'], { required_error: 'Please select a gender.' }),
+    addressLine1: z.string().min(5, { message: 'Address Line 1 is required.' }),
+    addressLine2: z.string().optional(),
+    cityOrVillage: z.string().min(2, { message: 'City or village is required.' }),
+    state: z.string().min(2, { message: 'State is required.' }),
+    pincode: z.string().regex(/^\d{6}$/, { message: 'Pincode must be 6 digits.' }),
+    country: z.string().default('India'),
+    email: z.string().email({ message: 'Please enter a valid email.' }),
+    phone: z.string().regex(/^\d{10}$/, { message: 'Phone number must be 10 digits.' }),
+    bio: z.string().min(4, { message: 'Bio must be at least 4 characters.' }).max(160),
+    urls: z
+        .array(
+            z.object({
+                value: z.string().url({ message: 'Please enter a valid URL.' }),
+            })
+        )
+        .optional(),
+});
 
-interface EditableCardProps {
-    title: string;
-    description?: string;
-    children: React.ReactNode;
-    onSave: () => void;
-}
+type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-const EditableCard: React.FC<EditableCardProps> = ({ title, description, children, onSave }) => {
-    const [isEditing, setIsEditing] = useState(false);
+// Default values (fetched from API later)
+const defaultValues: Partial<ProfileFormValues> = {
+    firstName: '',
+    lastName: '',
+    dateOfBirth: '',
+    age: 18,
+    gender: 'male',
+    addressLine1: '',
+    cityOrVillage: '',
+    state: '',
+    pincode: '',
+    country: 'India',
+    email: '',
+    phone: '',
+    bio: 'I am a supporter of the party.',
+    urls: [{ value: '' }],
+};
 
-    const handleSave = () => {
-        onSave();
-        setIsEditing(false);
-        toast.success('Changes saved successfully!');
+// Mock API calls (replace with real endpoints)
+const fetchProfile = async (): Promise<ProfileFormValues> => {
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
+    return {
+        firstName: 'John',
+        middleName: 'A',
+        lastName: 'Doe',
+        dateOfBirth: '1990-01-01',
+        age: 33,
+        gender: 'male',
+        addressLine1: '123 Main St',
+        addressLine2: 'Apt 4B',
+        cityOrVillage: 'Mumbai',
+        state: 'Maharashtra',
+        pincode: '400001',
+        country: 'India',
+        email: 'john.doe@example.com',
+        phone: '9876543210',
+        bio: 'I am a dedicated party member.',
+        urls: [{ value: 'https://johndoe.com' }],
+    };
+};
+
+const updateProfile = async (data: ProfileFormValues): Promise<void> => {
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
+    console.log('Profile updated:', data);
+};
+
+export default function Profile() {
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+
+    const form = useForm<ProfileFormValues>({
+        resolver: zodResolver(profileFormSchema),
+        defaultValues,
+        mode: 'onChange',
+    });
+
+    const { fields, append } = useFieldArray({
+        name: 'urls',
+        control: form.control,
+    });
+
+    // Fetch profile data on mount
+    useEffect(() => {
+        const loadProfile = async () => {
+            try {
+                const profileData = await fetchProfile();
+                form.reset(profileData);
+            } catch (error) {
+                toast({
+                    title: 'Error',
+                    description: 'Failed to load profile data.',
+                    variant: 'destructive',
+                });
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadProfile();
+    }, [form]);
+
+    // Handle form submission
+    const onSubmit = async (data: ProfileFormValues) => {
+        try {
+            await updateProfile(data);
+            toast({
+                title: 'Profile Updated',
+                description: 'Your profile has been successfully updated.',
+            });
+        } catch (error) {
+            toast({
+                title: 'Error',
+                description: 'Failed to update profile.',
+                variant: 'destructive',
+            });
+        }
     };
 
     return (
-        <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-                <div>
-                    <CardTitle className='text-xl'>{title}</CardTitle>
-                    {description && <CardDescription className='mt-2'>{description}</CardDescription>}
-                </div>
-
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setIsEditing(!isEditing)}
-                >
-                    <Edit2 className="h-4 w-4" />
-                </Button>
-            </CardHeader>
-            <CardContent>
-                {React.Children.map(children, child =>
-                    React.isValidElement(child) ? React.cloneElement(child as React.ReactElement<any>, { disabled: !isEditing }) : child
-                )}
-            </CardContent>
-            {isEditing && (
-                <CardFooter className="border-t p-6">
-                    <Button onClick={handleSave}>Save Changes</Button>
-                </CardFooter>
-            )}
-        </Card>
-    );
-};
-
-
-
-const ProfilePage = () => {
-    const { userData } = useSelector((state: any) => state.auth);
-    const { setTheme } = useTheme();
-    // const [profileImage, setProfileImage] = useState("https://github.com/shadcn.png");
-    const profileImage = "https://github.com/shadcn.png"
-
-    function handleSave(): void {
-        throw new Error('Function not implemented.')
-    }
-
-    return (
-        <DashboardLayout>
-            <ContentLayout title="Dashboard">
-                {/* <Breadcrumb>
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="/">Dashboard</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Profile</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb> */}
-                <div className="px-4 space-y-6 md:px-6 mt-3">
-                    <header className="flex items-center justify-between">
-                        {/* Left Section - Avatar and Details */}
-                        <div className="flex items-center space-x-6">
-                            {/* Profile Image */}
-                            <div className="relative">
-                                <Avatar className="w-20 h-20">
-                                    <AvatarImage src={profileImage} alt="Profile" />
-                                    <AvatarFallback>SM</AvatarFallback>
-                                </Avatar>
-                                <label
-                                    htmlFor="profile-image-upload"
-                                    className="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2 cursor-pointer shadow-md"
-                                >
-                                    <Camera size={16} />
-                                    <input
-                                        type="file"
-                                        id="profile-image-upload"
-                                        className="hidden"
-                                        accept="image/*"
-                                    />
-                                </label>
-                            </div>
-
-                            {/* User Details */}
-                            <div className="space-y-2">
-                                <h1 className="text-xl font-bold text-gray-800">
-                                    {userData?.firstName} {userData?.lastName}
-                                </h1>
-                                <p className="text-sm text-gray-500">{userData?.role || 'N/A'}</p>
-                                {userData?.referralCode && (
-                                    <div className="flex items-center space-x-2">
-                                        <span className="text-sm text-gray-600">
-                                            Referral Code: <span className="font-medium">{userData.referralCode}</span>
-                                        </span>
-                                        <button
-                                            onClick={() => {
-                                                navigator.clipboard.writeText(userData.referralCode || '');
-                                                toast.success('Referral code copied to clipboard!');
-                                            }}
-                                            className="text-primary hover:text-primary-dark transition"
-                                            title="Copy Referral Code"
-                                        >
-                                            <ClipboardCopy size={16} />
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
+        <>
+            <HeaderNav />
+            <Main fixed>
+                <div className="container py-8 mx-auto">
+                    <div className="flex flex-col items-start justify-between gap-4 mb-8 md:flex-row md:items-center">
+                        <div>
+                            <h1 className="text-2xl font-bold">Profile Settings</h1>
+                            <p className="text-muted-foreground">Manage your profile information for the political party.</p>
                         </div>
-
-                        {/* Right Section - Flag */}
-                        <div className="flex-shrink-0">
-                            <img
-                                src={bppFlag}
-                                alt="BPP Flag"
-                                className="w-28 h-28 object-contain"
-                            />
-                        </div>
-                    </header>
-
-
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2">
-                        {/* Existing Profile Information Card */}
-                        <EditableCard
-                            title="Profile Information"
-                            description="Update your account's profile information"
-                            onSave={handleSave}
-                        >
-                            <form className="grid gap-4">
-                                <div className="grid grid-cols-3 gap-2">
-                                    <div>
-
-                                        <Label htmlFor="firstName">First Name</Label>
-                                        <Input id="firstName" defaultValue={userData?.firstName} />
-                                    </div>
-                                    <div>
-                                        <Label htmlFor="middleName">Middle Name</Label>
-                                        <Input id="middleName" defaultValue={userData?.middleName} />
-                                    </div>
-                                    <div>
-                                        <Label htmlFor="lastName">Last Name</Label>
-                                        <Input id="lastName" defaultValue={userData?.lastName} />
-                                    </div>
-
-                                </div>
-                                <div className='grid grid-cols-2  gap-2'>
-                                    <div>
-                                        <Label htmlFor="dateOfBirth">Date of Birth</Label>
-                                        <Input id="dateOfBirth" defaultValue={userData?.dateOfBirth} />
-                                    </div>
-                                    <div>
-                                        <Label htmlFor="age">age</Label>
-                                        <Input id="age" defaultValue={userData?.age} />
-                                    </div>
-                                </div>
-                                <div>
-                                    <Label htmlFor="gender">gender</Label>
-                                    <Input id="gender" defaultValue={userData?.gender} />
-                                </div>
-
-                                <Separator />
-                                <CardTitle className='my-2'>Address Information</CardTitle>
-                                <CardDescription>Update your current residential address.</CardDescription>
-                                <div className="grid mt-5 gap-2">
-                                    <Label htmlFor="street-address">Address Line 1</Label>
-                                    <Input id="street-address" placeholder={userData?.addressLine1} />
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="street-address">Address Line 2</Label>
-                                    <Input id="street-address" placeholder={userData?.addressLine2} />
-                                </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="city">City</Label>
-                                        <Input id="city" placeholder={userData?.cityOrVillage} />
-                                    </div>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="state">State</Label>
-                                        <Input id="state" placeholder={userData?.state} />
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="postal-code">Postal Code</Label>
-                                        <Input id="postal-code" placeholder={userData?.pincode} />
-                                    </div>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="country">Country</Label>
-                                        <Input id="country" placeholder="India" />
-                                    </div>
-                                </div>
-
-                            </form>
-                        </EditableCard>
-                        {userData?.profession && (
-                            <EditableCard
-                                title="Professional Details"
-                                description="Need to be update your Profession *"
-                                onSave={handleSave}
-                            >
-                                <div>
-                                    <h3 className="text-lg font-semibold">Education Details</h3>
-                                    <Separator className="my-4" />
-                                    <form>
-                                        <div className="grid grid-cols-12 gap-4">
-                                            <div className="grid gap-2 col-span-8">
-                                                <Label htmlFor="university">Name of University / Institution / Organization *</Label>
-                                                <Input
-                                                    id="university"
-                                                    placeholder={userData?.qualification || "e.g., Harvard University, Oxford University"}
-                                                />
-                                            </div>
-                                            <div className="grid gap-2 col-span-4">
-                                                <Label htmlFor="passout">Passout Year</Label>
-                                                <Input
-                                                    id="passout"
-                                                    placeholder="e.g., 2019, 2020, 2021"
-                                                />
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <div>
-                                    <h3 className="text-lg font-semibold">Professional Details</h3>
-                                    <Separator className="my-4" />
-                                    <form className="space-y-4">
-                                        <div className="grid grid-cols-12 gap-4">
-                                            <div className="grid gap-2 col-span-5">
-                                                <Label>Professional Categories</Label>
-                                                <Input
-                                                    id="profession"
-                                                    placeholder="Select category"
-                                                    disabled
-                                                    value={userData?.profession}
-                                                />
-                                            </div>
-                                            <div className="grid gap-2 col-span-4">
-                                                <Label htmlFor="profession">Current Profession / Position</Label>
-                                                <Input
-                                                    id="profession"
-                                                    placeholder="e.g., Senior Surgeon, Software Engineer"
-                                                />
-                                            </div>
-                                            <div className="grid gap-2 col-span-3">
-                                                <Label htmlFor="experience">Years of Experience</Label>
-                                                <Input
-                                                    id="experience"
-                                                    placeholder="e.g., 5, 10, 15+"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="grid gap-2">
-                                            <Label htmlFor="summary">Tell me your Professional Summary</Label>
-                                            <Textarea
-                                                id="summary"
-                                                rows={3}
-                                                placeholder="e.g., Experienced cardiac surgeon with 10+ years of practice..."
-                                            />
-                                            <span className="text-xs text-muted-foreground">500/500 limit</span>
-                                        </div>
-                                    </form>
-                                </div>
-
-
-                                <h3 className="text-lg font-semibold">Upload Documents</h3>
-                                <Separator className="my-4" />
-                                <div className="grid grid-cols-2 gap-2">
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="degree">Professional Degree *</Label>
-                                        <Input type="file" id="degree" />
-                                    </div>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="experience-cert">Experience Certificate (if any)</Label>
-                                        <Input type="file" id="experience-cert" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3 className="text-lg font-semibold mb-4">Terms & Conditions</h3>
-                                    <Separator className="my-4" />
-                                    <ul className="list-disc pl-5 text-sm">
-                                        <li>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec venenatis metus.
-                                        </li>
-                                        <li>
-                                            Quisque volutpat velit eu sapien auctor, in ultrices augue tincidunt.
-                                        </li>
-                                        <li>
-                                            Ut malesuada, sem sit amet vulputate pretium, tortor enim efficitur risus, at scelerisque est metus id leo.
-                                        </li>
-                                    </ul>
-                                </div>
-
-                            </EditableCard>
-                        )}
-
-
-
-                        <EditableCard
-                            title="Contact Information"
-                            description="Update your email and phone number."
-                            onSave={handleSave}
-                        >
-                            <CardContent>
-                                <form className="grid gap-4">
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="contact-email">Email Address</Label>
-                                        <Input
-                                            id="contact-email"
-                                            type="email"
-                                            placeholder={userData?.email}
-                                        />
-                                    </div>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="phone-number">Phone Number</Label>
-                                        <div className="flex gap-2">
-                                            <Input
-                                                id="country-code"
-                                                defaultValue="+91"
-                                                className="w-20"
-                                            />
-                                            <Input
-                                                id="phone-number"
-                                                type="tel"
-                                                placeholder={userData?.phone}
-                                                className="flex-1"
-                                            />
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </CardContent>
-                        </EditableCard>
-
-
-                        {/* New Voter ID and Aadhar Number Update Card */}
-
-                        <EditableCard
-                            title="Identity Proof"
-                            description="Update your Voter ID and Aadhar number."
-                            onSave={handleSave}
-                        >
-                            <CardContent>
-                                <form className="grid gap-4">
-                                    <div className="grid grid-cols-1 gap-2">
-                                        <div>
-                                            <Label htmlFor="aadhar-number">Aaadhar Number</Label>
-                                            <Input
-                                                id="aadhar-number"
-                                                placeholder={userData?.aadhaarNumber}
-                                                pattern="[0-9]{12}"
-                                            />
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <div>
-                                                <Label htmlFor="documents">Upload Aadhaar Front</Label>
-                                                <Input type="file" id="documents" placeholder="Upload certifications, resumes, or proofs" multiple />
-                                            </div>
-                                            <div>
-                                                <Label htmlFor="documents">Upload Aadhaar Back</Label>
-                                                <Input type="file" id="documents" placeholder="Upload certifications, resumes, or proofs" multiple />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="grid grid-cols-1 gap-2">
-                                        <div>
-                                            <Label htmlFor="voter-id">Voter ID Number</Label>
-                                            <Input
-                                                id="voter-id"
-                                                placeholder={userData?.voterID}
-                                                pattern="[A-Z]{3}[0-9]{7}"
-                                            />
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <div>
-                                                <Label htmlFor="documents">Upload Voter Front</Label>
-                                                <Input type="file" id="documents" placeholder="Upload certifications, resumes, or proofs" multiple />
-                                            </div>
-                                            <div>
-                                                <Label htmlFor="documents">Upload Voter Back</Label>
-                                                <Input type="file" id="documents" placeholder="Upload certifications, resumes, or proofs" multiple />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </CardContent>
-                        </EditableCard>
-
-
-                        {/* Existing Notification Settings Card */}
-                        <EditableCard
-                            title="Notification Settings"
-                            description="Manage your account's notification preferences."
-                            onSave={handleSave}
-                        >
-                            <CardContent>
-                                <form className="grid gap-4">
-                                    <div className="flex items-center justify-between">
-                                        <div>
-                                            <p className="font-medium">Email Notifications</p>
-                                            <p className="text-sm text-muted-foreground">
-                                                Receive email notifications for important updates.
-                                            </p>
-                                        </div>
-                                        <Switch id="email-notifications" />
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                        <div>
-                                            <p className="font-medium">Push Notifications</p>
-                                            <p className="text-sm text-muted-foreground">
-                                                Receive push notifications for real-time updates.
-                                            </p>
-                                        </div>
-                                        <Switch id="push-notifications" />
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                        <div>
-                                            <p className="font-medium">SMS Notifications</p>
-                                            <p className="text-sm text-muted-foreground">Receive SMS notifications for critical alerts.</p>
-                                        </div>
-                                        <Switch id="sms-notifications" />
-                                    </div>
-                                </form>
-                            </CardContent>
-                        </EditableCard>
-                        <EditableCard
-                            title="Preferences"
-                            description="Need to be update your Profession *"
-                            onSave={handleSave}
-                        >
-                            <CardContent className="grid gap-4">
-                                <div className="grid gap-2">
-                                    <Label htmlFor="theme">Theme</Label>
-                                    <Select defaultValue="light" onValueChange={(value: 'light' | 'dark' | 'system') => setTheme(value)}>
-                                        <SelectTrigger className="w-full">
-                                            <SelectValue placeholder="Select theme" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="light">Light</SelectItem>
-                                            <SelectItem value="dark">Dark</SelectItem>
-                                            <SelectItem value="system">System</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="language">Language</Label>
-                                    <Select defaultValue="en">
-                                        <SelectTrigger className="w-full">
-                                            <SelectValue placeholder="Select language" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="en">English</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                            </CardContent>
-                        </EditableCard>
+                        <Button type="submit" form="profile-form" disabled={form.formState.isSubmitting || loading}>
+                            {form.formState.isSubmitting ? 'Saving...' : 'Update Profile'}
+                        </Button>
                     </div>
-                </div>
-            </ContentLayout>
-        </DashboardLayout>
-    )
-}
 
-export default ProfilePage;
+                    {loading ? (
+                        <div className="text-center text-muted-foreground">Loading profile...</div>
+                    ) : (
+                        <Form {...form}>
+                            <form id="profile-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                                {/* Personal Information */}
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Personal Information</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                                        <FormField
+                                            control={form.control}
+                                            name="firstName"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>First Name</FormLabel>
+                                                    <FormControl>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="middleName"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Middle Name</FormLabel>
+                                                    <FormControl>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="lastName"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Last Name</FormLabel>
+                                                    <FormControl>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="dateOfBirth"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Date of Birth</FormLabel>
+                                                    <FormControl>
+                                                        <Input type="date" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="age"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Age</FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            type="number"
+                                                            {...field}
+                                                            onChange={e => field.onChange(parseInt(e.target.value, 10))}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="gender"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Gender</FormLabel>
+                                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                        <FormControl>
+                                                            <SelectTrigger>
+                                                                <SelectValue placeholder="Select gender" />
+                                                            </SelectTrigger>
+                                                        </FormControl>
+                                                        <SelectContent>
+                                                            <SelectItem value="male">Male</SelectItem>
+                                                            <SelectItem value="female">Female</SelectItem>
+                                                            <SelectItem value="other">Other</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </CardContent>
+                                </Card>
+
+                                {/* Address Information */}
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Address Information</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="grid gap-4 md:grid-cols-2">
+                                        <FormField
+                                            control={form.control}
+                                            name="addressLine1"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Address Line 1</FormLabel>
+                                                    <FormControl>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="addressLine2"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Address Line 2</FormLabel>
+                                                    <FormControl>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="cityOrVillage"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>City/Village</FormLabel>
+                                                    <FormControl>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="state"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>State</FormLabel>
+                                                    <FormControl>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="pincode"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Pincode</FormLabel>
+                                                    <FormControl>
+                                                        <Input {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="country"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Country</FormLabel>
+                                                    <FormControl>
+                                                        <Input {...field} disabled />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </CardContent>
+                                </Card>
+
+                                {/* Contact Information */}
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Contact Information</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="grid gap-4 md:grid-cols-2">
+                                        <FormField
+                                            control={form.control}
+                                            name="email"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Email</FormLabel>
+                                                    <FormControl>
+                                                        <Input type="email" {...field} />
+                                                    </FormControl>
+                                                    <FormDescription>
+                                                        You can manage verified emails in <Link to="/settings/email">email settings</Link>.
+                                                    </FormDescription>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="phone"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Phone Number</FormLabel>
+                                                    <FormControl>
+                                                        <div className="flex gap-2">
+                                                            <Input value="+91" disabled className="w-16" />
+                                                            <Input {...field} />
+                                                        </div>
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </CardContent>
+                                </Card>
+
+                                {/* Bio and URLs */}
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Bio and Social Links</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="grid gap-4">
+                                        <FormField
+                                            control={form.control}
+                                            name="bio"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Bio</FormLabel>
+                                                    <FormControl>
+                                                        <Textarea
+                                                            placeholder="Tell us a little bit about yourself"
+                                                            className="resize-none"
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                    <FormDescription>
+                                                        You can <span>@mention</span> other users and organizations.
+                                                    </FormDescription>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <div className="space-y-4">
+                                            {fields.map((field, index) => (
+                                                <FormField
+                                                    control={form.control}
+                                                    key={field.id}
+                                                    name={`urls.${index}.value`}
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormLabel className={cn(index !== 0 && 'sr-only')}>
+                                                                URLs
+                                                            </FormLabel>
+                                                            <FormDescription className={cn(index !== 0 && 'sr-only')}>
+                                                                Add links to your website, blog, or social media profiles.
+                                                            </FormDescription>
+                                                            <FormControl>
+                                                                <Input {...field} placeholder="https://example.com" />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            ))}
+                                            <Button
+                                                type="button"
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => append({ value: '' })}
+                                            >
+                                                Add URL
+                                            </Button>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </form>
+                        </Form>
+                    )}
+                </div>
+            </Main>
+        </>
+    );
+}

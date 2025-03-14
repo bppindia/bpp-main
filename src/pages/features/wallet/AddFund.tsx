@@ -1,37 +1,13 @@
-import { ContentLayout } from "@/components/admin-panel/content-layout"
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import DashboardLayout from "@/layout/DashboardLayout"
 import { ArrowLeftIcon, CreditCardIcon } from "lucide-react"
 import {  useNavigate } from "react-router-dom"
 
 const AddFund = () => {
     const navigate = useNavigate()
     return (
-        <DashboardLayout>
-            <ContentLayout title="Dashboard">
-                {/* <Breadcrumb>
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="/">Dashboard</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>..
-                            <BreadcrumbLink asChild>
-                                <Link to="/dashboard/wallet">Wallet</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Add Fund</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb> */}
         <main className="flex flex-col flex-1 gap-4 p-4 md:gap-8 md:p-6">
             <div className="flex items-center gap-4">
                 <Button variant="outline" size="icon">
@@ -55,7 +31,7 @@ const AddFund = () => {
             <Card>
                 <CardContent>
                     <div className="grid gap-4 p-6">
-                        {/* <div>
+                        <div>
                             <CardTitle>Choose amount</CardTitle>
                             <CardDescription>Select the amount you want to add to your account.</CardDescription>
                             <div className="grid gap-2 md:gap-4">
@@ -76,7 +52,7 @@ const AddFund = () => {
                                     <span className="ml-2">Rs 250.00</span>
                                 </Label>
                             </div>
-                        </div> */}
+                        </div>
                         <div>
                             <CardTitle className="mb-2 text-2xl font-bold">Payment method</CardTitle>
                             <CardDescription>Add a new payment method or select an existing one.</CardDescription>
@@ -128,16 +104,14 @@ const AddFund = () => {
                         </div>
                     </div>
                 </CardContent>
-                {/* <CardFooter className="flex gap-4">
+                <CardFooter className="flex gap-4">
                     <Button>Pay Rs 25.00</Button>
                     <Button>Pay Rs 50.00</Button>
                     <Button>Pay Rs 100.00</Button>
                     <Button>Pay Rs 250.00</Button>
-                </CardFooter> */}
+                </CardFooter>
             </Card>
         </main>
-        </ContentLayout>
-        </DashboardLayout>
     )
 }
 
