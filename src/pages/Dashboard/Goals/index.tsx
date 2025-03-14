@@ -1,9 +1,9 @@
-import { ContentLayout } from "@/components/admin-panel/content-layout"
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import { Card, CardContent } from "@/components/ui/card"
-import DashboardLayout from "@/layout/DashboardLayout"
-import { BadgeDollarSign, Building2, Church, Factory, GraduationCap, Heart, Scale, Sword, Users, Wheat } from 'lucide-react'
-// import { Link } from "react-router-dom"
+import { Header } from "@/components/layout/dashboard/header";
+import { Main } from "@/components/layout/dashboard/main";
+import { ProfileDropdown } from "@/components/profile-dropdown";
+import { ThemeSwitch } from "@/components/theme-switch";
+import { Card, CardContent } from "@/components/ui/card";
+import { BadgeDollarSign, Building2, Church, Factory, GraduationCap, Heart, Scale, Sword, Users, Wheat } from 'lucide-react';
 
 const goals = [
   {
@@ -90,55 +90,52 @@ const goals = [
 
 const GoalsPage = () => {
   return (
-    <DashboardLayout>
-      <ContentLayout title="Dashboard">
-        {/* <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link to="/">Dashboard</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Goals</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb> */}
-        <section>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-6">
-            {goals.map((goal) => (
-              <Card
-                key={goal.number}
-                className={`${goal.bgColor} text-white hover:scale-105 transition-transform duration-200 cursor-pointer overflow-hidden`}
-              >
-                <CardContent className="p-0">
-                  <div className="flex flex-col h-full">
-                    {/* Header with number */}
-                    <div className="flex items-center p-3">
-                      <span className="text-2xl font-bold mr-2">{goal.number}</span>
-                    </div>
-                    
-                    {/* Icon and content */}
-                    <div className="p-4 flex flex-col items-center text-center">
-                      <div className="mb-3">
-                        <goal.icon size={40} color={goal.iconColor} />
-                      </div>
-                      <h3 className="text-sm font-bold mb-2 leading-tight">
-                        {goal.title}
-                      </h3>
-                      <p className="text-xs opacity-90">
-                        {goal.description}
-                      </p>
-                    </div>
+    <>
+    {/* ===== Top Heading ===== */}
+         <Header>
+           {/* <Search /> */}
+           <div className='ml-auto flex items-center gap-4'>
+             <ThemeSwitch />
+             <ProfileDropdown />
+           </div>
+         </Header>
+   
+         {/* ===== Content ===== */}
+         <Main fixed>
+      <section>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-6">
+          {goals.map((goal) => (
+            <Card
+              key={goal.number}
+              className={`${goal.bgColor} text-white hover:scale-105 transition-transform duration-200 cursor-pointer overflow-hidden`}
+            >
+              <CardContent className="p-0">
+                <div className="flex flex-col h-full">
+                  {/* Header with number */}
+                  <div className="flex items-center p-3">
+                    <span className="text-2xl font-bold mr-2">{goal.number}</span>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-      </ContentLayout>
-    </DashboardLayout>
+
+                  {/* Icon and content */}
+                  <div className="p-4 flex flex-col items-center text-center">
+                    <div className="mb-3">
+                      <goal.icon size={40} color={goal.iconColor} />
+                    </div>
+                    <h3 className="text-sm font-bold mb-2 leading-tight">
+                      {goal.title}
+                    </h3>
+                    <p className="text-xs opacity-90">
+                      {goal.description}
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+      </Main>
+    </>
   )
 }
 

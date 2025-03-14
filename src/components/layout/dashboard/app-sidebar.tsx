@@ -1,9 +1,10 @@
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@/components/ui/sidebar';
-import { NavGroup } from '@/components/layout/dashboard/nav-group';
+import { NavGroup } from '@/components/layout/dashboard/nav-group'; // Updated import
 import { NavUser } from '@/components/layout/dashboard/nav-user';
 import { sidebarData } from './data/sidebar-data';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { Command } from 'lucide-react'; 
+import { Command } from 'lucide-react';
+import React from 'react';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user, navGroups } = sidebarData;
@@ -15,7 +16,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" className="cursor-default">
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <Command className="size-4" /> 
+                <Command className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">bppindia</span>
@@ -36,3 +37,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     </Sidebar>
   );
 }
+
+export default React.memo(AppSidebar);

@@ -1,9 +1,25 @@
-import AdminPanelLayout from "@/components/admin-panel/admin-panel-layout";
+import { AppSidebar } from '@/components/layout/dashboard/app-sidebar';
+import { Main } from '@/components/layout/dashboard/main';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { SearchProvider } from '@/context/search-context';
+import { Outlet } from 'react-router-dom';
 
-export default function DashboardLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
-  return <AdminPanelLayout>{children}</AdminPanelLayout>;
+function DashboardLayout() {
+  return (
+    <SearchProvider>
+    <SidebarProvider>
+      <div className="flex w-full max-w-full min-h-screen">
+        <AppSidebar />
+        <div className="flex flex-col w-full max-w-full">
+          {/* <Header fixed /> */}
+          <Main fixed>
+            <Outlet />
+          </Main>
+        </div>
+      </div>
+    </SidebarProvider>
+    </SearchProvider>
+  );
 }
+
+export default DashboardLayout;

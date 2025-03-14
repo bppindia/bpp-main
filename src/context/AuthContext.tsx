@@ -1,5 +1,5 @@
 import { postData } from "@/api/apiClient";
-import { clearCredentials, setCredentials } from "@/features/auth/authSlice";
+import { clearCredentials, setCredentials } from "@/store/authSlice";
 import Cookies from "js-cookie";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
