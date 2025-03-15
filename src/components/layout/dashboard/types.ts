@@ -1,4 +1,4 @@
-import { LinkProps } from "react-router-dom";
+import { LinkProps } from 'react-router-dom';
 
 interface User {
   name: string;
@@ -12,15 +12,15 @@ interface BaseNavItem {
   icon?: React.ElementType;
 }
 
-type NavLink = BaseNavItem & {
+interface NavLink extends BaseNavItem {
   url: LinkProps['to'];
   items?: never;
-};
+}
 
-type NavCollapsible = BaseNavItem & {
-  items: (BaseNavItem & { url: LinkProps['to'] })[];
+interface NavCollapsible extends BaseNavItem {
+  items: NavLink[];
   url?: never;
-};
+}
 
 type NavItem = NavCollapsible | NavLink;
 
@@ -31,7 +31,9 @@ interface NavGroup {
 
 interface SidebarData {
   user: User;
+  dashboard: NavLink;
   navGroups: NavGroup[];
+  helpCenter: NavLink;
 }
 
-export type { SidebarData, NavGroup, NavItem, NavCollapsible, NavLink };
+export type { SidebarData, NavGroup, NavItem, NavCollapsible, NavLink, User };

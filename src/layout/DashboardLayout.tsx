@@ -12,9 +12,9 @@ function DashboardLayout() {
         <div className="flex w-full max-w-full min-h-screen">
           <AppSidebar />
           <div className="flex flex-col w-full max-w-full">
-            <HeaderNav /> {/* Move HeaderNav here, fixed by default */}
+            <HeaderNav /> 
             <Main fixed>
-              <Outlet /> {/* Pages render here */}
+              <Outlet />
             </Main>
           </div>
         </div>

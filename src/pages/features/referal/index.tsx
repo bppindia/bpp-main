@@ -29,7 +29,7 @@ interface Earnings {
 const fetchReferralData = async (userId: string) => {
     await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
     return {
-        referralLink: `https://bharatiyaparty.org/refer/${userId}`,
+        referralLink: `https://bppindia.com/refer/${userId}`,
         referrals: [
             { name: 'John Doe', date: '2 days ago', status: 'Joined' as 'Joined', membershipNo: 'BPP-2025-001', membershipType: 'Life Member' as 'Life Member' },
             { name: 'Jane Appleseed', date: '1 week ago', status: 'Pending' as 'Pending', membershipNo: 'Pending', membershipType: 'Annual Member' as 'Annual Member' },
@@ -87,7 +87,7 @@ export default function Referral() {
                     {/* Header */}
                     <div className="flex flex-col items-start justify-between gap-4 mb-8 sm:flex-row sm:items-center">
                         <div>
-                            <h1 className="text-2xl font-bold">Referral Program</h1>
+                            <h1 className="text-2xl font-bold">Referrals</h1>
                             <p className="text-sm text-muted-foreground">
                                 Invite supporters to join Bharatiya Popular Party and grow our community.
                             </p>

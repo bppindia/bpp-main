@@ -22,7 +22,7 @@ const DashboardPage: React.FC = () => {
         {/* Removed fixed height and added responsive classes */}
         <Card className="w-full aspect-[4/3] lg:aspect-auto lg:h-[60vh] max-h-[600px] p-4">
           <CardContent className="h-full p-0">
-            <MapChart SelectedTab='national' state={userData?.state || null} />
+            <MapChart state={userData?.state || null} />
           </CardContent>
         </Card>
         <Card className="w-full">

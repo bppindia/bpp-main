@@ -17,14 +17,16 @@ import {
   CommandList,
   CommandSeparator,
 } from '@/components/ui/command';
-import { ScrollArea } from './ui/scroll-area';
-import { useSidebarData } from './layout/dashboard/data/sidebar-data'; // Import the hook
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { useSidebarData } from '@/components/layout/dashboard/data/sidebar-data';
+import { NavGroup, NavItem, NavLink, NavCollapsible } from '@/components/layout/dashboard/types';
 
 export function CommandMenu() {
   const navigate = useNavigate();
   const { setTheme } = useTheme();
   const { open, setOpen } = useSearch();
-  const sidebarData = useSidebarData(); // Use the hook to get filtered sidebar data
+  const sidebarData = useSidebarData();
+  const { dashboard, navGroups, helpCenter } = sidebarData;
 
   const runCommand = React.useCallback(
     (command: () => unknown) => {
@@ -40,62 +42,81 @@ export function CommandMenu() {
       <CommandList>
         <ScrollArea type="hover" className="pr-1 h-72">
           <CommandEmpty>No results found.</CommandEmpty>
-          {sidebarData.navGroups.map((group) => (
-            <CommandGroup key={group.title} heading={group.title}>
-              {group.items.map((navItem, i) => {
-                // Skip disabled items
-                if (navItem.disabled) return null;
 
-                if (navItem.url) {
+          {/* Standalone Dashboard */}
+          <CommandGroup heading="">
+            <CommandItem
+              value={dashboard.title}
+              onSelect={() => runCommand(() => navigate(dashboard.url))}
+            >
+              <div className="flex items-center justify-center w-4 h-4 mr-2">
+                <IconArrowRightDashed className="size-2 text-muted-foreground/80" />
+              </div>
+              {dashboard.title}
+            </CommandItem>
+          </CommandGroup>
+
+          {/* Navigation Groups */}
+          {navGroups.map((group: NavGroup) => (
+            <CommandGroup key={group.title} heading={group.title}>
+              {group.items.map((navItem: NavItem, i: number) => {
+                if ('url' in navItem) {
+                  const linkItem = navItem as NavLink; // Type assertion
                   return (
                     <CommandItem
-                      key={`${navItem.url}-${i}`}
-                      value={navItem.title}
-                      onSelect={() => {
-                        runCommand(() => navigate(navItem.url));
-                      }}
+                      key={`${linkItem.url}-${i}`}
+                      value={linkItem.title}
+                      onSelect={() => runCommand(() => navigate(linkItem.url))}
                     >
                       <div className="flex items-center justify-center w-4 h-4 mr-2">
                         <IconArrowRightDashed className="size-2 text-muted-foreground/80" />
                       </div>
-                      {navItem.title}
+                      {linkItem.title}
                     </CommandItem>
                   );
                 }
-
-                return navItem.items?.map((subItem, j) => {
-                  // Skip disabled sub-items
-                  if (subItem.disabled) return null;
-
-                  return (
-                    <CommandItem
-                      key={`${subItem.url}-${j}`}
-                      value={subItem.title}
-                      onSelect={() => {
-                        runCommand(() => navigate(subItem.url));
-                      }}
-                    >
-                      <div className="flex items-center justify-center w-4 h-4 mr-2">
-                        <IconArrowRightDashed className="size-2 text-muted-foreground/80" />
-                      </div>
-                      {subItem.title}
-                    </CommandItem>
-                  );
-                });
+                const collapsibleItem = navItem as NavCollapsible; // Type assertion
+                return collapsibleItem.items?.map((subItem: NavLink, j: number) => (
+                  <CommandItem
+                    key={`${subItem.url}-${j}`}
+                    value={subItem.title}
+                    onSelect={() => runCommand(() => navigate(subItem.url))}
+                  >
+                    <div className="flex items-center justify-center w-4 h-4 mr-2">
+                      <IconArrowRightDashed className="size-2 text-muted-foreground/80" />
+                    </div>
+                    {subItem.title}
+                  </CommandItem>
+                ));
               })}
             </CommandGroup>
           ))}
+
+          {/* Standalone Help Center */}
+          <CommandGroup heading="">
+            <CommandItem
+              value={helpCenter.title}
+              onSelect={() => runCommand(() => navigate(helpCenter.url))}
+            >
+              <div className="flex items-center justify-center w-4 h-4 mr-2">
+                <IconArrowRightDashed className="size-2 text-muted-foreground/80" />
+              </div>
+              {helpCenter.title}
+            </CommandItem>
+          </CommandGroup>
+
           <CommandSeparator />
           <CommandGroup heading="Theme">
             <CommandItem onSelect={() => runCommand(() => setTheme('light'))}>
-              <IconSun /> <span>Light</span>
+              <IconSun className="mr-2" />
+              <span>Light</span>
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme('dark'))}>
-              <IconMoon className="scale-90" />
+              <IconMoon className="mr-2 scale-90" />
               <span>Dark</span>
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme('system'))}>
-              <IconDeviceLaptop />
+              <IconDeviceLaptop className="mr-2" />
               <span>System</span>
             </CommandItem>
           </CommandGroup>

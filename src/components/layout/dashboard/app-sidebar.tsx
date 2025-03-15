@@ -1,14 +1,14 @@
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@/components/ui/sidebar';
+import bppLogo from '@/assets/logo/bppLogo.svg';
+import { useSidebarData } from '@/components/layout/dashboard/data/sidebar-data';
 import { NavGroup } from '@/components/layout/dashboard/nav-group';
 import { NavUser } from '@/components/layout/dashboard/nav-user';
-import { useSidebarData } from './data/sidebar-data'; // Import the hook
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import bppLogo from '@/assets/logo/bppLogo.svg';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail } from '@/components/ui/sidebar';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const sidebarData = useSidebarData(); // Use the hook to get filtered sidebar data
-  const { user, navGroups } = sidebarData;
+  const sidebarData = useSidebarData();
+  const { user, dashboard, navGroups, helpCenter } = sidebarData;
 
   return (
     <Sidebar collapsible="icon" variant="sidebar" className="z-40" {...props}>
@@ -27,9 +27,31 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        {navGroups.map((props) => (
-          <NavGroup key={props.title} {...props} />
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link to={dashboard.url}>
+                <dashboard.icon className="w-5 h-5 ml-2" />
+                <span>{dashboard.title}</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+
+        {navGroups.map((group : any) => (
+          <NavGroup key={group.title} {...group} />
         ))}
+
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link to={helpCenter.url}>
+                <helpCenter.icon className="w-5 h-5 ml-2" />
+                <span>{helpCenter.title}</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />

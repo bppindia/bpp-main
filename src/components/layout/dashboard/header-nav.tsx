@@ -1,9 +1,9 @@
+import { Notifications } from '@/components/features/Notifications'
 import { ProfileDropdown } from '@/components/profile-dropdown'
+import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { Header } from './header'
 import { TopNav } from './top-nav'
-import { Search } from '@/components/search'
-import { Notifications } from '@/components/features/Notifications'
 
 const topNav = [
   { title: 'Overview', href: '/dashboard/overview', isActive: true },

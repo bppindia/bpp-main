@@ -12,8 +12,8 @@ interface User {
   username?: string;
   email?: string;
   phone?: string;
-  isVerified: boolean; // Add verification status
-  membershipType: 'primary' | 'business' | null; // Add membership type
+  isVerified: boolean; 
+  membershipType: 'primary' | 'active' | 'executive' | null;
 }
 
 interface AuthContextType {
@@ -25,7 +25,7 @@ interface AuthContextType {
   verifyOtp: (identifier: string, otp: string) => Promise<void>;
   logout: () => void;
   loading: boolean;
-  updateVerification: (isVerified: boolean) => void; // Add method to update verification
+  updateVerification: (isVerified: boolean) => void;
 }
 
 interface RegistrationData {

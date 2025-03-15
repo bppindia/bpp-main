@@ -1,3 +1,4 @@
+// src/AppRoutes.tsx
 import AutoScrollToTop from '@/components/auto-scroll-to-top';
 import Login from '@/components/form/loginForm/index';
 import BussinessCommunitySignup from '@/components/form/mutistepForm/bussinessCommunitySignup';
@@ -33,6 +34,16 @@ import WithdrawPage from '@/pages/Dashboard/Wallet/Withdraw';
 import DownloadAppPage from '@/pages/download';
 import Dashboard from '@/pages/features/dashboard';
 import Goals from '@/pages/features/goals';
+import NationalIntegrity from '@/pages/features/goals/components/NationalIntegrity'; // Updated path
+import EqualOpportunity from '@/pages/features/goals/components/EqualOpportunity';
+import GoodHealth from '@/pages/features/goals/components/GoodHealth';
+import AgainstMuscle from '@/pages/features/goals/components/AgainstMuscle';
+import UpholdSecularism from '@/pages/features/goals/components/UpholdSecularism';
+import IndustrialDev from '@/pages/features/goals/components/IndustrialDev';
+import EmploymentGrowth from '@/pages/features/goals/components/EmploymentGrowth';
+import JusticePeace from '@/pages/features/goals/components/JusticePeace';
+import UpliftFarmers from '@/pages/features/goals/components/UpliftFarmers';
+import QualityEducation from '@/pages/features/goals/components/QualityEducation';
 import Home from '@/pages/Home/Home';
 import CollaborativeNetwork from '@/pages/join/CollaborativeNetwork';
 import TransparentDecisionMaking from '@/pages/join/DecisionMaking';
@@ -64,6 +75,8 @@ import ComingSoon from '@/components/coming-soon';
 import Referral from '@/pages/features/referal';
 import PopupManager from '@/components/features/PopupManager';
 import SupplierInclusion from '@/pages/BusinessCommunity/SupplierInclusion';
+import Events from '@/pages/features/events';
+import SettingsAccount from '@/pages/features/settings/account';
 
 const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
@@ -150,8 +163,28 @@ const AppRoutes = () => {
           }
         >
           <Route index element={<Dashboard />} />
-          <Route path="goal" element={<Goals />} />
+
+          {/* Goals Routes */}
+          <Route path="goal">
+            <Route index element={<Goals />} /> {/* Main Goals Page */}
+            <Route path="1" element={<NationalIntegrity />} />
+            <Route path="2" element={<EqualOpportunity />} />
+            <Route path="3" element={<GoodHealth />} />
+            <Route path="4" element={<AgainstMuscle />} />
+            <Route path="5" element={<UpholdSecularism />} />
+            <Route path="6" element={<IndustrialDev />} />
+            <Route path="7" element={<EmploymentGrowth />} />
+            <Route path="8" element={<JusticePeace />} />
+            <Route path="9" element={<UpliftFarmers />} />
+            <Route path="10" element={<QualityEducation />} />
+          </Route>
+
           <Route path="wallet" element={<Wallet />} />
+          <Route path="events" element={<Events />} />
+
+
+
+
           <Route path="donate" element={<ProtectedRoute isAuthenticated={isAuthenticated} requiredVerification><Donate /></ProtectedRoute>} />
           <Route path="referral" element={<ProtectedRoute isAuthenticated={isAuthenticated} requiredVerification><Referral /></ProtectedRoute>} />
           <Route path="profile" element={<Profile />} />

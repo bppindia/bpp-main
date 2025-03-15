@@ -89,9 +89,9 @@ export function NavUser({
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to='/settings'>
+                <Link to='/dashboard/wallet'>
                   <CreditCard />
-                  Billing
+                  Wallet
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
