@@ -1,33 +1,17 @@
 import bppcard from '@/assets/images/BPPcard.png';
-import { ContentLayout } from "@/components/admin-panel/content-layout";
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import DashboardLayout from "@/layout/DashboardLayout";
 import { QrCode } from "lucide-react";
-// import { Link } from "react-router-dom";
+
 
 const MembershipCertificate = () => {
     const certificateUrl = bppcard;
     const certificatePreviewUrl = bppcard;
 
     return (
-        <DashboardLayout>
-            <ContentLayout title="Dashboard">
-                {/* <Breadcrumb>
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="/">Dashboard</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Membership Certificate</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb> */}
+        <>
+            <>
                 <section>
                     <div className="flex items-center justify-between mb-6">
                         <div className="my-4">
@@ -89,8 +73,8 @@ const MembershipCertificate = () => {
                     </div>
                 </section>
                 {/* <PayDialog /> */}
-            </ContentLayout>
-        </DashboardLayout>
+            </>
+        </>
     );
 };
 

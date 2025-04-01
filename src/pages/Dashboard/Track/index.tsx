@@ -1,33 +1,15 @@
-import { ContentLayout } from '@/components/admin-panel/content-layout'
 import { Badge } from "@/components/ui/badge"
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Input } from '@/components/ui/input'
-import DashboardLayout from '@/layout/DashboardLayout'
 import { PlusIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 const Track = () => {
     const navigate = useNavigate()
     return (
-        <DashboardLayout>
-            <ContentLayout title="Dashboard">
-                {/* <Breadcrumb>
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="/">Dashboard</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="/dashboard/track">Track</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb> */}
+        <>
+            <>
                 <div className="max-w-2xl mx-auto p-6 sm:p-8 md:p-10">
                     <div className="flex flex-col items-center justify-center space-y-6">
                         <div className="space-y-2 text-center">
@@ -139,8 +121,8 @@ const Track = () => {
                         </div>
                     </div>
                 </main>
-            </ContentLayout>
-        </DashboardLayout>
+            </>
+        </>
     )
 }
 

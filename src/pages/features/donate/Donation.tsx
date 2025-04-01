@@ -1,14 +1,10 @@
-import { ContentLayout } from '@/components/admin-panel/content-layout';
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import DashboardLayout from '@/layout/DashboardLayout';
 import { Lock } from 'lucide-react';
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
 
 const DonationPage: React.FC = () => {
     const [donationAmount, setDonationAmount] = useState(20);
@@ -21,27 +17,9 @@ const DonationPage: React.FC = () => {
     const totalDonation = donationAmount + (coverFees ? 0.6 : 0);
 
     return (
-        <DashboardLayout>
-            <ContentLayout title="Dashboard">
-                {/* <Breadcrumb>
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="/">Dashboard</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="/dashboard/donate">Donate</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Make Donation</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb> */}
+        <>
+            <>
+
                 <main className="flex-1 py-6 px-4 md:px-6 lg:py-8">
                     <div className="container mx-auto">
                         <div className="flex items-center justify-between mb-6">
@@ -159,8 +137,8 @@ const DonationPage: React.FC = () => {
                         </div>
                     </div>
                 </main>
-            </ContentLayout>
-        </DashboardLayout>
+            </>
+        </>
     );
 };
 

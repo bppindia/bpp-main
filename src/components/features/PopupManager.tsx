@@ -6,11 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/AuthContext";
 import { usePopup } from "@/context/popup-context";
-import { cn } from "@/lib/utils";
-import { Users, CreditCard } from "lucide-react";
+import { CreditCard } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import bppLogo from '@/assets/logo/bppLogo.svg'
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -26,9 +24,8 @@ const paymentSchema = z.object({
 });
 
 export const PopupManager: React.FC = () => {
-  const { user, fetchUserData, updateUser } = useAuth();
+  const { user, fetchUserData } = useAuth();
   const { showVerificationPopup, setShowVerificationPopup, showPaymentPopup, setShowPaymentPopup, paymentSubmitted, setPaymentSubmitted } = usePopup();
-  const navigate = useNavigate();
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [paymentData, setPaymentData] = useState({
     accountName: "",

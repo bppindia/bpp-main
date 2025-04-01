@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { HeaderNav } from '@/components/layout/dashboard/header-nav';
 import { Main } from '@/components/layout/dashboard/main';
 import { SVGProps } from 'react';
 
@@ -57,7 +56,7 @@ export default function Referral() {
             }
 
             try {
-                const data = await fetchReferralData(user.id); // Use user ID or referral code
+                const data = await fetchReferralData(String(user.id)); // Ensure user ID is a string
                 setReferralLink(data.referralLink);
                 setReferrals(data.referrals);
                 setEarnings(data.earnings);

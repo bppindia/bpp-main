@@ -1,31 +1,12 @@
-import { ContentLayout } from '@/components/admin-panel/content-layout'
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import DashboardLayout from '@/layout/DashboardLayout'
 import { VoteIcon } from 'lucide-react'
-// import { Link } from 'react-router-dom'
 
 const TrackingDetails = () => {
   return (
-    <DashboardLayout>
-      <ContentLayout title="Dashboard">
-        {/* <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link to="/">Dashboard</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link to="/dashboard/track">Track</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb> */}
-        
+    <>
+      <>
+      
         <div className="grid gap-6 md:gap-8 lg:gap-10">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -142,8 +123,8 @@ const TrackingDetails = () => {
             </CardContent>
           </Card>
         </div>
-      </ContentLayout>
-    </DashboardLayout>
+      </>
+    </>
   )
 }
 

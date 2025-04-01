@@ -1,11 +1,9 @@
 import internalWorking from '@/assets/images/community/internalworking.png'
-import { ContentLayout } from "@/components/admin-panel/content-layout"
 import MapChart from "@/components/maps/mapChart"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import DashboardLayout from "@/layout/DashboardLayout"
 import { defineStepper } from "@stepperize/react"
 import { ActivityIcon, PlusIcon, User2Icon, UsersIcon } from "lucide-react"
 import { useState } from "react"
@@ -14,8 +12,8 @@ import TermsDialog from './TermsDialog'
 
 const Contribution = () => {
     return (
-        <DashboardLayout>
-            <ContentLayout title="Dashboard">
+        <>
+            <>
                 <div className="grid grid-cols-1 lg:grid-cols-2 my-3 gap-4 w-full">
                     <Card className="w-full h-[500px] p-4">
                         <CardContent className="h-[calc(500px-4rem)]">
@@ -91,9 +89,9 @@ const Contribution = () => {
                     <div>
                     </div>
                 </div>
-            </ContentLayout>
+            </>
             {/* <PayDialog /> */}
-        </DashboardLayout>
+        </>
     )
 }
 

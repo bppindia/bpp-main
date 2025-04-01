@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { HeaderNav } from "@/components/layout/dashboard/header-nav";
 import { Main } from "@/components/layout/dashboard/main";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";

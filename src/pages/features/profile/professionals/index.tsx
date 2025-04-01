@@ -1,14 +1,11 @@
 import { z } from 'zod';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link, useNavigate } from 'react-router-dom';
-import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -23,7 +20,6 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { HeaderNav } from '@/components/layout/dashboard/header-nav';
 import { Main } from '@/components/layout/dashboard/main';
 import { useEffect, useState } from 'react';
 
@@ -93,7 +89,6 @@ const updateProfessionalProfile = async (data: ProfessionalProfileValues): Promi
 };
 
 export default function ProfessionalProfile() {
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
 
     const form = useForm<ProfessionalProfileValues>({

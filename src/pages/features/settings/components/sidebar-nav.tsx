@@ -44,7 +44,7 @@ export default function SidebarNav({
           <SelectContent>
             {items.map((item) => (
               <SelectItem key={item.href} value={item.href}>
-                <div className='flex gap-x-4 px-2 py-1'>
+                <div className='flex px-2 py-1 gap-x-4'>
                   <span className='scale-125'>{item.icon}</span>
                   <span className='text-md'>{item.title}</span>
                 </div>
@@ -55,9 +55,8 @@ export default function SidebarNav({
       </div>
 
       <ScrollArea
-        orientation='horizontal'
         type='always'
-        className='hidden w-full min-w-40 bg-background px-1 py-2 md:block'
+        className='hidden w-full px-1 py-2 min-w-40 bg-background md:block'
       >
         <nav
           className={cn(

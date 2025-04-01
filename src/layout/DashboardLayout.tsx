@@ -1,4 +1,3 @@
-import PopupManager from '@/components/features/PopupManager';
 import { AppSidebar } from '@/components/layout/dashboard/app-sidebar';
 import { HeaderNav } from '@/components/layout/dashboard/header-nav';
 import { Main } from '@/components/layout/dashboard/main';
@@ -17,7 +16,6 @@ function DashboardLayout() {
             <Main fixed>
               <Outlet />
             </Main>
-            {/* <PopupManager /> */}
           </div>
         </div>
       </SidebarProvider>

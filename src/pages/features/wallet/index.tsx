@@ -1,4 +1,3 @@
-import { HeaderNav } from '@/components/layout/dashboard/header-nav';
 import { Main } from '@/components/layout/dashboard/main';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';

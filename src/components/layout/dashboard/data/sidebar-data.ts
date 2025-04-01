@@ -27,6 +27,7 @@ const baseSidebarData: SidebarData = {
     name: 'Swapnil Mahadik',
     email: 'mswapnil218@gmail.com',
     avatar: '/avatars/shadcn.jpg',
+    role: ''
   },
   dashboard: {
     title: 'Dashboard',

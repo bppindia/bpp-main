@@ -1,27 +1,10 @@
-import { ContentLayout } from '@/components/admin-panel/content-layout'
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import DashboardLayout from '@/layout/DashboardLayout'
-// import { Link } from 'react-router-dom'
 
 const RenewalsPage = () => {
     return (
-        <DashboardLayout>
-            <ContentLayout title="Dashboard">
-                {/* <Breadcrumb>
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="/">Dashboard</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Renewal</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb> */}
+        <>
+            <>
                 <div className="mx-auto">
                     <h1 className="text-3xl my-5 font-bold mb-6">Upgrade Your Membership</h1>
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -80,8 +63,8 @@ const RenewalsPage = () => {
                     </div>
                 </div>
                 {/* <PayDialog /> */}
-            </ContentLayout>
-        </DashboardLayout>
+            </>
+        </>
     )
 }
 

@@ -1,11 +1,9 @@
-import { ContentLayout } from "@/components/admin-panel/content-layout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useAuth } from "@/context/AuthContext"; // Assuming you have user data in AuthContext
-import DashboardLayout from "@/layout/DashboardLayout";
 import { SVGProps, useEffect, useState } from "react";
 import { JSX } from "react/jsx-runtime";
 import { toast } from "sonner";
@@ -13,7 +11,7 @@ import { toast } from "sonner";
 function Referral() {
   const { user } = useAuth(); // Get user data from AuthContext
   const [referralLink, setReferralLink] = useState("");
-  const [referrals, setReferrals] = useState([
+  const [referrals] = useState([
     {
       name: "John Doe",
       date: "2 days ago",
@@ -36,7 +34,7 @@ function Referral() {
       membershipType: "Life Member",
     },
   ]); // Mock data, replace with API call
-  const [earnings, setEarnings] = useState({
+  const [earnings] = useState({
     total: 3,
     pending: 1,
     paid: 2,
@@ -68,8 +66,7 @@ function Referral() {
   };
 
   return (
-    <DashboardLayout>
-      <ContentLayout title="Referral Program" children={undefined} />
+    <>
       <main className="flex-1 px-4 py-6 md:px-6 lg:py-8">
         <div className="container mx-auto">
           <header className="flex items-center justify-between mb-8">
@@ -232,7 +229,7 @@ function Referral() {
           </section>
         </div>
       </main>
-    </DashboardLayout>
+    </>
   );
 }
 

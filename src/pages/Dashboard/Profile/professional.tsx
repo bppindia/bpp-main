@@ -1,31 +1,14 @@
-import { ContentLayout } from '@/components/admin-panel/content-layout';
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import DashboardLayout from '@/layout/DashboardLayout';
-// import { Link } from 'react-router-dom';
 
 const ProfessionalPage = () => {
     return (
-        <DashboardLayout>
-            <ContentLayout title="Dashboard">
-                {/* <Breadcrumb>
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="/">Dashboard</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Professional Profile</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb> */}
+        <>
+            <>
                 <div className="mt-4">
                     <div className="grid grid-cols-1 gap-6 mt-2 md:grid-cols-1 lg:grid-cols-1">
                         {/* Professional Profile Form */}
@@ -132,14 +115,14 @@ const ProfessionalPage = () => {
                                     </div>
                                 </form>
                             </CardContent>
-                            <CardFooter className="border-t p-6">
+                            <CardFooter className="p-6 border-t">
                                 <Button>Save Changes</Button>
                             </CardFooter>
                         </Card>
                     </div>
                 </div>
-            </ContentLayout>
-        </DashboardLayout>
+            </>
+        </>
     );
 };
 

@@ -64,6 +64,7 @@ interface StateProjections {
 interface MapChartProps {
     state: string;
     dist?: string;
+    SelectedTab?: string;
 }
 
 interface GeoProperty {
@@ -349,7 +350,7 @@ const MapChart: React.FC<MapChartProps> = ({ state, dist }) => {
 
             {/* Popup Card for District Data */}
             {selectedDistrict && (
-                <div className="absolute top-4 right-4 z-10 w-64">
+                <div className="absolute z-10 w-64 top-4 right-4">
                     <Card>
                         <CardHeader>
                             <CardTitle>{selectedDistrict}</CardTitle>

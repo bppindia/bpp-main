@@ -1,9 +1,6 @@
-import { ContentLayout } from "@/components/admin-panel/content-layout";
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import DashboardLayout from "@/layout/DashboardLayout";
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 
@@ -11,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 const DonatePage = () => {
     const navigate = useNavigate()
     return (
-        <DashboardLayout>
-            <ContentLayout title="Dashboard">
+        <>
+            <>
                 {/* <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -101,8 +98,8 @@ const DonatePage = () => {
                     </div>
                 </main>
                 {/* <PayDialog /> */}
-            </ContentLayout>
-        </DashboardLayout>
+            </>
+        </>
     )
 }
 

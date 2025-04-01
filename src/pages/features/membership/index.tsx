@@ -1,11 +1,11 @@
 // src/pages/membership/Membership.tsx
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Main } from '@/components/layout/dashboard/main';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from '@/hooks/use-toast';
-import { QrCode, Download, Calendar, User, Award, Shield, Users, Clock } from 'lucide-react';
+import { QrCode, Download, Calendar, User, Award, Users, Clock } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import bppcard from '@/assets/images/BPPcard.png';
 import bppLogo from '@/assets/logo/bppLogo.svg';
@@ -20,7 +20,7 @@ interface MembershipData {
   referralCount: number; // Added
 }
 
-const fetchMembershipData = async (userId: string): Promise<MembershipData> => {
+const fetchMembershipData = async (): Promise<MembershipData> => {
   await new Promise(resolve => setTimeout(resolve, 1000));
   return {
     membershipType: 'primary',
@@ -78,9 +78,9 @@ export default function Membership() {
   useEffect(() => {
     const loadMembership = async () => {
       try {
-        const data = await fetchMembershipData(user?.email || '');
-        if (user?.membershipType) {
-          data.membershipType = user.membershipType === 'primary' ? 'primary' : user.membershipType === 'business' ? 'active' : 'executive';
+        const data = await fetchMembershipData();
+        if (user?.membership) {
+          data.membershipType = user.membership === 'primary' ? 'primary' : user.membership === 'business' ? 'active' : 'executive';
         }
         setMembershipData(data);
       } catch (error) {
@@ -109,7 +109,7 @@ export default function Membership() {
   if (loading || !membershipData) {
     return (
       <Main fixed>
-        <div className="text-center text-muted-foreground py-10">Loading membership details...</div>
+        <div className="py-10 text-center text-muted-foreground">Loading membership details...</div>
       </Main>
     );
   }
@@ -126,27 +126,27 @@ export default function Membership() {
 
   return (
     <Main fixed>
-      <div className="mx-auto w-full">
-        <h1 className="text-3xl font-bold mb-6">Membership Details</h1>
+      <div className="w-full mx-auto">
+        <h1 className="mb-6 text-3xl font-bold">Membership Details</h1>
 
         {/* Enhanced Badge-like Membership Card */}
         <Card className={`${currentMembership.color} mb-8 shadow-md rounded-lg relative overflow-hidden border-2`}>
           {/* Background SVG Shade */}
           <div
-            className="absolute inset-0 opacity-10 bg-no-repeat bg-center bg-contain"
+            className="absolute inset-0 bg-center bg-no-repeat bg-contain opacity-10"
             style={{ backgroundImage: `url(${bppLogo})` }}
           />
-          <CardContent className="relative p-6 flex flex-col items-center sm:flex-row sm:items-start gap-6">
+          <CardContent className="relative flex flex-col items-center gap-6 p-6 sm:flex-row sm:items-start">
             {/* Badge Circle */}
             <div
               className={`w-24 h-24 sm:w-32 sm:h-32 rounded-full flex items-center justify-center bg-gradient-to-br ${currentMembership.badgeColor} shadow-md border-4 border-white`}
             >
-              <Award className="w-12 h-12 sm:w-16 sm:h-16 text-white" />
+              <Award className="w-12 h-12 text-white sm:w-16 sm:h-16" />
             </div>
 
             {/* Card Details */}
             <div className="flex-1 text-center sm:text-left">
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex items-center justify-between mb-2">
                 <h2 className="text-2xl font-bold">{currentMembership.title}</h2>
                 <span
                   className={`text-xs px-2 py-1 rounded-full ${isActive ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`}
@@ -155,33 +155,33 @@ export default function Membership() {
                 </span>
               </div>
              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <p className="text-sm text-muted-foreground flex items-center justify-center sm:justify-start">
+                  <p className="flex items-center justify-center text-sm text-muted-foreground sm:justify-start">
                     <User className="w-4 h-4 mr-2" /> Membership Number
                   </p>
                   <p className="font-mono font-bold">{membershipData.membershipNumber}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground flex items-center justify-center sm:justify-start">
+                  <p className="flex items-center justify-center text-sm text-muted-foreground sm:justify-start">
                     <Calendar className="w-4 h-4 mr-2" /> Joining Date
                   </p>
                   <p>{new Date(membershipData.joinDate).toLocaleDateString()}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground flex items-center justify-center sm:justify-start">
+                  <p className="flex items-center justify-center text-sm text-muted-foreground sm:justify-start">
                     <Calendar className="w-4 h-4 mr-2" /> Expiry Date
                   </p>
                   <p>{new Date(membershipData.expiryDate).toLocaleDateString()}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground flex items-center justify-center sm:justify-start">
+                  <p className="flex items-center justify-center text-sm text-muted-foreground sm:justify-start">
                     <Users className="w-4 h-4 mr-2" /> Referral Count
                   </p>
                   <p className="font-bold">{membershipData.referralCount}</p>
                 </div>
                 <div className="sm:col-span-2">
-                  <p className="text-sm text-muted-foreground flex items-center justify-center sm:justify-start">
+                  <p className="flex items-center justify-center text-sm text-muted-foreground sm:justify-start">
                     <Clock className="w-4 h-4 mr-2" /> Days Remaining
                   </p>
                   <div className="flex items-center gap-2">
@@ -195,11 +195,11 @@ export default function Membership() {
                   </div>
                 </div>
               </div>
-              <div className="mt-4 flex flex-col sm:flex-row gap-2 justify-center sm:justify-start">
+              <div className="flex flex-col justify-center gap-2 mt-4 sm:flex-row sm:justify-start">
                 <Button variant="outline" className="w-full sm:w-auto">
                   Renew Membership
                 </Button>
-                <Button variant="ghost" className="w-full sm:w-auto flex items-center gap-2">
+                <Button variant="ghost" className="flex items-center w-full gap-2 sm:w-auto">
                   <QrCode className="w-4 h-4" /> View Certificate
                 </Button>
               </div>
@@ -209,7 +209,7 @@ export default function Membership() {
 
         {/* Membership Benefits */}
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Benefits</h2>
+          <h2 className="mb-4 text-2xl font-semibold">Benefits</h2>
           <Card>
             <CardContent className="pt-6">
               <ul className="space-y-3">
@@ -234,7 +234,7 @@ export default function Membership() {
 
         {/* Membership Certificate */}
         <section>
-          <h2 className="text-2xl font-semibold mb-4">Membership Certificate</h2>
+          <h2 className="mb-4 text-2xl font-semibold">Membership Certificate</h2>
           <div className="grid gap-6 sm:grid-cols-2">
             <Card>
               <CardContent className="flex flex-col items-center pt-6 space-y-4">
@@ -251,7 +251,7 @@ export default function Membership() {
                     <img
                       src={membershipData.certificateUrl}
                       alt="Certificate Preview"
-                      className="w-full h-40 object-contain rounded-md blur-sm hover:blur-none cursor-pointer transition-all"
+                      className="object-contain w-full h-40 transition-all rounded-md cursor-pointer blur-sm hover:blur-none"
                     />
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-[600px]">

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -103,7 +103,6 @@ const updateProfile = async (data: ProfileFormValues): Promise<void> => {
 };
 
 export default function Profile() {
-    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
 
     const form = useForm<ProfileFormValues>({

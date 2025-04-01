@@ -1,12 +1,8 @@
-import { ContentLayout } from '@/components/admin-panel/content-layout'
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import DashboardLayout from '@/layout/DashboardLayout'
 import { useState } from 'react'
-// import { Link } from 'react-router-dom'
 
 const WithdrawPage = () => {
 
@@ -51,21 +47,9 @@ const WithdrawPage = () => {
     }
 
     return (
-        <DashboardLayout>
-            <ContentLayout title="Dashboard">
-                {/* <Breadcrumb>
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="/">Dashboard</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Withdraw</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb> */}
+        <>
+            <>
+              
                 <div className="mx-auto w-full space-y-6">
                     <div className='my-6'>
                         <h1 className="text-3xl font-bold tracking-tight text-foreground">Withdraw Funds</h1>
@@ -127,8 +111,8 @@ const WithdrawPage = () => {
                     </Card>
                 </div>
                 </div>
-            </ContentLayout>
-        </DashboardLayout>
+            </>
+        </>
     )
 }
 

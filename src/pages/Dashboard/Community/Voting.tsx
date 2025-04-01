@@ -28,8 +28,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { User, Building2, FileText, CreditCard } from "lucide-react";
-import DashboardLayout from "@/layout/DashboardLayout";
-import { ContentLayout } from "@/components/admin-panel/content-layout";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -194,8 +192,8 @@ const Voting: React.FC = () => {
     ];
 
     return (
-        <DashboardLayout>
-            <ContentLayout title="Dashboard">
+        <>
+            <>
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -297,8 +295,8 @@ const Voting: React.FC = () => {
                         </div>
                     </div>
                 </main>
-            </ContentLayout>
-        </DashboardLayout>
+            </>
+        </>
     );
 };
 

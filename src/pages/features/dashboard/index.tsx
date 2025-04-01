@@ -96,7 +96,7 @@ export default function Dashboard() {
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
-          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             <MemberStats
               totalIndia={dashboardData?.totalMembersIndia || 0}
               totalState={dashboardData?.totalMembersState || 0}
@@ -116,7 +116,7 @@ export default function Dashboard() {
             />
           </div>
           
-          <div className="grid gap-4 grid-cols-1 lg:grid-cols-7">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-7">
             <div className="lg:col-span-4">
               <StateMap
                 state={user.address?.state || 'Unknown'}
@@ -124,7 +124,7 @@ export default function Dashboard() {
                 totalMembers={dashboardData?.totalMembersState || 0}
               />
             </div>
-            <div className="lg:col-span-3 space-y-4">
+            <div className="space-y-4 lg:col-span-3">
               <Overview contributions={dashboardData?.wallet?.recentTransactions || []} />
               <ProfessionalsStats
                 total={dashboardData?.totalProfessionalsState || 0}

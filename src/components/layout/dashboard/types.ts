@@ -2,6 +2,7 @@ import { LinkProps } from 'react-router-dom';
 
 interface User {
   name: string;
+  role: string;
   email: string;
   avatar: string;
 }

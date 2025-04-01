@@ -1,4 +1,3 @@
-// src/context/AuthContext.tsx
 import { postData } from "@/api/apiClient";
 import { clearCredentials, setCredentials } from "@/store/authSlice";
 import Cookies from "js-cookie";
@@ -6,8 +5,20 @@ import React, { createContext, ReactNode, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
+// Type guard for File objects
+function isFile(value: unknown): value is File {
+  return value instanceof File ||
+    (typeof value === 'object' &&
+      value !== null &&
+      'name' in value &&
+      'size' in value &&
+      'type' in value);
+}
+
 // User interface aligned with backend schema
 interface User {
+  avatar: string;
+  id(id: any): unknown;
   _id: string;
   title?: string;
   firstName: string;
@@ -32,6 +43,7 @@ interface User {
   isVerified: boolean;
   wallet?: string; // ObjectId reference
   membership?: string; // ObjectId reference
+  membershipType?: 'primary' | 'business' | null;
   professional?: string | null; // ObjectId reference
   referralCode?: string;
   referredBy?: string; // ObjectId reference
@@ -102,7 +114,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       setLoading(true);
       const response = await postData("/auth/login", credentials);
-      const userData: User = response.data; // Expect full user data from backend
+      const userData: User = response.data;
       dispatch(setCredentials({ token: response.token, data: userData }));
       Cookies.set("authToken", response.token, { expires: 4, secure: true, sameSite: "strict" });
       Cookies.set("userDetails", JSON.stringify(userData), { expires: 4, secure: true, sameSite: "strict" });
@@ -121,7 +133,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const register = async (registrationData: RegistrationData) => {
     try {
       setLoading(true);
-      // const csrfToken = await fetchCsrfToken(); // Fetch CSRF token before registration
 
       const formData = new FormData();
       const {
@@ -141,7 +152,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // Append all fields to FormData
       Object.entries(rest).forEach(([key, value]) => {
         if (value !== null && value !== undefined) {
-          formData.append(key, value instanceof File ? value : String(value));
+          formData.append(key, isFile(value) ? value : String(value));
         }
       });
 
@@ -159,14 +170,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (voterFront) formData.append("voterFront", voterFront);
       if (voterBack) formData.append("voterBack", voterBack);
 
-      // Append CSRF token
-      // formData.append("_csrf", csrfToken); // Default field name for csurf
-
       const response = await postData("/auth/register", formData);
 
       // Map response data to User interface
       const userData: User = {
         _id: response.data._id,
+        avatar: response.data.avatar || "",
+        id: (id: any) => id,
         title: response.data.title,
         firstName: response.data.firstName,
         lastName: response.data.lastName,
@@ -183,6 +193,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         isVerified: response.data.isVerified || false,
         wallet: response.data.wallet,
         membership: response.data.membership,
+        membershipType: response.data.membershipType || null,
         professional: response.data.professional || null,
         referralCode: response.data.referralCode || "",
         referredBy: response.data.referredBy || undefined,
@@ -263,9 +274,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const fetchUserData = async () => {
     try {
       setLoading(true);
-      const response = await postData("/users/me", {}, {
-        headers: { Authorization: `Bearer ${Cookies.get("authToken")}` },
-      });
+      const response = await postData("/users/me", {}, {});
       const userData: User = response.data;
       setUser(userData);
       Cookies.set("userDetails", JSON.stringify(userData), { expires: 4, secure: true, sameSite: "strict" });

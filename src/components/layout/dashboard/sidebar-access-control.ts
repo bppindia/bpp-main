@@ -55,12 +55,11 @@ export function getAccessibleSidebarData(
           if (!hasAccess) return null;
 
           if ('items' in item) {
-            const filteredSubItems = item.items
-              .filter((subItem) => accessRules[subItem.title]?.includes(userType))
+            const filteredSubItems = item.items?.filter((subItem) => accessRules[subItem.title]?.includes(userType))
               .map((subItem) => ({
                 ...subItem,
                 disabled: !isVerified && verificationRequired.includes(subItem.title),
-              }));
+              })) ?? [];
             return filteredSubItems.length > 0 ? { ...item, items: filteredSubItems } : null;
           }
 
@@ -83,8 +82,8 @@ export function getAccessibleSidebarData(
 
   return {
     user,
-    dashboard: filteredDashboard,
+    dashboard: filteredDashboard || { title: '', url: '', disabled: true },
     navGroups: filteredNavGroups,
-    helpCenter: filteredHelpCenter,
+    helpCenter: filteredHelpCenter || { title: '', url: '', disabled: true },
   };
 }

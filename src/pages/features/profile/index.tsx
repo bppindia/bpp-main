@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -23,9 +23,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { HeaderNav } from '@/components/layout/dashboard/header-nav';
-import { Main } from '@/components/layout/dashboard/main';
 import { useEffect, useState } from 'react';
+import { Main } from '@/components/layout/dashboard/main';
 
 // Zod schema
 const profileFormSchema = z.object({
@@ -102,7 +101,6 @@ const updateProfile = async (data: ProfileFormValues): Promise<void> => {
 };
 
 export default function Profile() {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   const form = useForm<ProfileFormValues>({

@@ -1,15 +1,10 @@
 import React, { useMemo, useState } from 'react'
-// import { Link } from 'react-router-dom'
 import { FilterIcon, ListOrderedIcon } from 'lucide-react'
-
-import { ContentLayout } from '@/components/admin-panel/content-layout'
 import { Badge } from '@/components/ui/badge'
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import DashboardLayout from '@/layout/DashboardLayout'
 
 interface Transaction {
     id: number;
@@ -109,8 +104,8 @@ const Transactions: React.FC = () => {
     const numPending = filteredTransactions.filter((tx) => tx.status === 'Pending').length;
 
     return (
-        <DashboardLayout>
-            <ContentLayout title="Dashboard">
+        <>
+            <>
                 {/* <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -236,8 +231,8 @@ const Transactions: React.FC = () => {
                         </CardContent>
                     </Card>
                 </div>
-            </ContentLayout>
-        </DashboardLayout>
+            </>
+        </>
     )
 }
 

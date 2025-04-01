@@ -1,38 +1,15 @@
 import bppcard from '@/assets/images/BPPcard.png'
-import { ContentLayout } from "@/components/admin-panel/content-layout"
-// import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import DashboardLayout from "@/layout/DashboardLayout"
 import { QrCode } from "lucide-react"
-// import { Link } from "react-router-dom"
 
 const Membership = () => {
     const certificateUrl = bppcard;
     const certificatePreviewUrl = bppcard;
     return (
-        <DashboardLayout>
-            <ContentLayout title="Dashboard">
-                {/* <Breadcrumb>
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="/">Home</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Dashboard</BreadcrumbPage>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbLink>
-                                <Link to="/dashboard/membership">Membership</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb> */}
+        <>
+          <>
                 <div className="grid grid-cols-1 lg:grid-cols-2 my-3 gap-4 w-full">
                     <Card className="w-full h-[500px] p-4">
 
@@ -101,9 +78,9 @@ const Membership = () => {
                     <div>
                     </div>
                 </div>
-            </ContentLayout>
+            </>
             {/* <PayDialog /> */}
-        </DashboardLayout>
+        </>
     )
 }
 

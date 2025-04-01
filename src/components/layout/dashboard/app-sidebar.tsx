@@ -31,7 +31,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link to={dashboard.url}>
-                <dashboard.icon className="w-5 h-5 ml-2" />
+                {dashboard.icon && React.createElement(dashboard.icon, { className: "w-5 h-5 ml-2" })}
                 <span>{dashboard.title}</span>
               </Link>
             </SidebarMenuButton>
@@ -46,7 +46,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link to={helpCenter.url}>
-                <helpCenter.icon className="w-5 h-5 ml-2" />
+                {helpCenter.icon && React.createElement(helpCenter.icon, { className: "w-5 h-5 ml-2" })}
                 <span>{helpCenter.title}</span>
               </Link>
             </SidebarMenuButton>

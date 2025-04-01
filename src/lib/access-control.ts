@@ -1,4 +1,5 @@
 import { NavItem, NavCollapsible, NavLink } from '@/components/layout/dashboard/types';
+import { SidebarData } from '@/components/layout/dashboard/types';
 
 type MembershipType = 'primary' | 'business' | null;
 
@@ -45,13 +46,13 @@ export const filterNavItems = (
         }
 
         return link;
-    });
+    }) as NavItem[];
 };
 
 export const getAccessibleSidebarData = (sidebarData: SidebarData, access: AccessControl) => {
     return {
         ...sidebarData,
-        navGroups: sidebarData.navGroups.map((group) => ({
+        navGroups: sidebarData.navGroups.map((group: { title: string; items: NavItem[] }) => ({
             ...group,
             items: filterNavItems(group.items, access),
         })),
