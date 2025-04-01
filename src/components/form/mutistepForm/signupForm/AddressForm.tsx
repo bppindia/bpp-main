@@ -6,12 +6,12 @@ import { useState } from "react";
 import { FormWrapper } from "./FormWrapper";
 
 type AddressData = {
-    addressLine1: string;
-    addressLine2: string;
-    cityOrVillage: string;
-    district: string;
-    state: string;
-    pincode: string;
+    addressLine1: string; // Required
+    addressLine2?: string;
+    cityOrVillage: string; // Required
+    district: string; // Required
+    state: string; // Required
+    pincode: string; // Required
 };
 
 type AddressFormProps = AddressData & {
@@ -41,7 +41,7 @@ export function AddressForm({
         <FormWrapper title="Address Details">
             <div className="grid gap-4">
                 {/* Address Line 1 */}
-                <div className="text-center text-xs text-muted-foreground text-semibold">* Provide Address as given in Aadhaar Card</div>
+                <div className="text-xs text-center text-muted-foreground text-semibold">* Provide Address as given in Aadhaar Card</div>
                 <div>
                     <Label htmlFor="addressLine1">Address Line 1 <span className="text-red-700">*</span></Label>
                     <Input
@@ -67,7 +67,7 @@ export function AddressForm({
                 </div>
 
                 {/* City/Village, Taluka, District Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
                         <Label htmlFor="cityOrVillage">City/Village <span className="text-red-700">*</span></Label>
                         <Input

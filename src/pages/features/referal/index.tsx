@@ -56,7 +56,7 @@ export default function Referral() {
             }
 
             try {
-                const data = await fetchReferralData(String(user.id)); // Ensure user ID is a string
+                const data = await fetchReferralData('123'); // Ensure user ID is a string
                 setReferralLink(data.referralLink);
                 setReferrals(data.referrals);
                 setEarnings(data.earnings);

@@ -6,9 +6,9 @@ import { PasswordInput } from "@/components/features/password-input";
 import ReCAPTCHA from "react-google-recaptcha";
 
 type CredentialsData = {
-  password: string;
-  confirmPassword: string;
-  referralCode: string;
+  password: string; // Required
+  confirmPassword: string; // Required
+  referralCode?: string;
 };
 
 type CredentialsFormProps = CredentialsData & {
@@ -51,7 +51,7 @@ const CredentialsForm: React.FC<CredentialsFormProps> = ({
   return (
     <FormWrapper title="Credentials Details">
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-1">
           <div>
             <Label htmlFor="password">
               Password <span className="text-red-700">*</span>
@@ -78,7 +78,7 @@ const CredentialsForm: React.FC<CredentialsFormProps> = ({
               autoComplete="confirm-password"
             />
             {passwordError && (
-              <p className="text-red-600 text-xs">{passwordError}</p>
+              <p className="text-xs text-red-600">{passwordError}</p>
             )}
           </div>
           <div>

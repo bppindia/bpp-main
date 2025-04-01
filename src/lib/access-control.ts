@@ -1,11 +1,10 @@
 import { NavItem, NavCollapsible, NavLink } from '@/components/layout/dashboard/types';
 import { SidebarData } from '@/components/layout/dashboard/types';
 
-type MembershipType = 'primary' | 'business' | null;
 
 interface AccessControl {
     isVerified: boolean;
-    membershipType: MembershipType;
+    membership: string | null;
 }
 
 const unverifiedAccessibleRoutes = [
@@ -37,10 +36,10 @@ export const filterNavItems = (
         }
 
         if (access.isVerified) {
-            if (access.membershipType === 'primary' && primaryRestrictedRoutes.includes(url)) {
+            if (access.membership === 'primary' && primaryRestrictedRoutes.includes(url)) {
                 return { ...link, disabled: true };
             }
-            if (access.membershipType === 'business' && businessRestrictedRoutes.includes(url)) {
+            if (access.membership === 'business' && businessRestrictedRoutes.includes(url)) {
                 return { ...link, disabled: true };
             }
         }

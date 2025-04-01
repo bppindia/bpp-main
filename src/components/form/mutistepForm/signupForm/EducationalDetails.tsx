@@ -5,10 +5,10 @@ import { FormWrapper } from "./FormWrapper";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type EducationalDetailsData = {
-    qualification: string;
-    profession: string;
-    position: string;
-};
+    qualification?: string;
+    profession?: string;
+    position?: string;
+}
 
 type EducationalDetailsFormProps = EducationalDetailsData & {
     updateFields: (fields: Partial<EducationalDetailsData>) => void;

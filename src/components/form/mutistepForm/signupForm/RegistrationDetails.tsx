@@ -6,10 +6,10 @@ import { useState } from "react";
 import { FormWrapper } from "./FormWrapper";
 
 type RegistrationData = {
-    aadhaarNumber: string;
+    aadhaarNumber: string; // Required
     voterId?: string;
-    aadhaarFront: File | null;
-    aadhaarBack: File | null;
+    aadhaarFront: File | null; // Required
+    aadhaarBack: File | null; // Required
     voterFront?: File | null;
     voterBack?: File | null;
     serveCommunityAccepted?: boolean;
@@ -81,7 +81,7 @@ export function RegistrationForm({
     return (
         <FormWrapper title="User Details">
             <div className="grid gap-2">
-                <div className="text-xs text-center text-muted-foreground font-semibold">
+                <div className="text-xs font-semibold text-center text-muted-foreground">
                     * Provide your Aadhaar card details.
                 </div>
                 <div className="grid grid-cols-1 gap-4">
@@ -98,7 +98,7 @@ export function RegistrationForm({
                             onChange={handleAadhaarChange}
                         />
                         {aadhaarError && (
-                            <p className="text-xs text-red-500 mt-1">{aadhaarError}</p>
+                            <p className="mt-1 text-xs text-red-500">{aadhaarError}</p>
                         )}
                     </div>
                 </div>
@@ -139,7 +139,7 @@ export function RegistrationForm({
                     <span className="mx-4 text-neutral-500 dark:text-neutral-400">or</span>
                     <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent h-[1px] w-full" />
                 </div>
-                <div className="text-xs text-center text-muted-foreground font-semibold">
+                <div className="text-xs font-semibold text-center text-muted-foreground">
                     * Provide your Voter ID card details.
                 </div>
                 <div className="grid grid-cols-1 gap-1">
@@ -162,7 +162,7 @@ export function RegistrationForm({
                             }}
                         />
                         {voterIdError && (
-                            <p className="text-xs text-red-500 mt-1">{voterIdError}</p>
+                            <p className="mt-1 text-xs text-red-500">{voterIdError}</p>
                         )}
                     </div>
                     <div>
@@ -223,7 +223,7 @@ export function RegistrationForm({
                         <span className="ms-1">No</span>
                     </Label>
                 </div>
-                <div className="text-xs text-center text-red-500 font-semibold">
+                <div className="text-xs font-semibold text-center text-red-500">
                     * upload clear image of Aadhaar and voter ID
                 </div>
             </div>

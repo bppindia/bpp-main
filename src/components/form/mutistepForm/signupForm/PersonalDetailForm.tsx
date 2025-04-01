@@ -13,16 +13,16 @@ import { FormWrapper } from "./FormWrapper";
 import { occupationData } from "@/data/occupation";
 
 type PersonalDetailData = {
-  title: string;
-  firstName: string;
+  title?: string;
+  firstName: string; // Required
   middleName?: string;
-  lastName: string;
-  dateOfBirth: string;
-  age: number;
-  gender: string;
-  phone?: string;
+  lastName: string; // Required
+  dateOfBirth: string; // Required
+  age: number; // Required
+  gender: string; // Required
+  phone: string; // Required
   email?: string;
-  occupation: string;
+  occupation: string; // Required
 };
 
 type PersonalDetailFormProps = PersonalDetailData & {
@@ -63,7 +63,7 @@ export function PersonalDetailForm({
 
   return (
     <FormWrapper title="User Details">
-      <div className="text-center text-xs text-muted-foreground text-semibold">* Enter your details exactly given in Aadhaar Card</div>
+      <div className="text-xs text-center text-muted-foreground text-semibold">* Enter your details exactly given in Aadhaar Card</div>
       <div className="grid grid-cols-12 gap-4">
         {/* Title Field */}
         <div className="col-span-2 md:col-span-2">
@@ -171,7 +171,7 @@ export function PersonalDetailForm({
             }}
             endYear={2024}
           />
-          {error && <div className="text-red-700 text-xs">{error}</div>}
+          {error && <div className="text-xs text-red-700">{error}</div>}
         </div>
 
         {/* Age Field */}

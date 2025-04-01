@@ -100,7 +100,7 @@ export const useSidebarData = () => {
   const { user } = useAuth();
   const access = {
     isVerified: user?.isVerified ?? false,
-    membershipType: user?.membershipType ?? null,
+    membership: user?.membership ?? null, 
   };
   return getAccessibleSidebarData(baseSidebarData, access);
 };

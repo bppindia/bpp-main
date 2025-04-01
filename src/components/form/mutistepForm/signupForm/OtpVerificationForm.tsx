@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { FormWrapper } from "./FormWrapper";
 
 type OtpVerificationData = {
-  otp: string;
+  otp: string; // Required
   email?: string;
   phone?: string;
 };

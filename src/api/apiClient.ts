@@ -34,24 +34,29 @@ export const getData = async (endpoint: string) => {
         const response = await apiClient.get(endpoint);
         return response.data;
     } catch (error) {
-        handleError(error); 
+        handleError(error);
     }
 };
 
 export const postData = async (
     endpoint: string,
     data: any,
-    config: { headers?: { "Content-Type"?: string } } = {} 
+    config: { headers?: { "Content-Type"?: string } } = {}
 ) => {
     try {
         const response = await apiClient.post(endpoint, data, {
             ...config,
             headers: {
-                ...config.headers, 
+                "Content-Type": config.headers?.["Content-Type"] || "application/json",
+                ...config.headers,
             },
         });
+
         return response.data;
-    } catch (error) {
-        handleError(error);
+    } catch (error: any) {
+        const errorMessage = error.response?.data?.message ||
+            error.message ||
+            "Request failed";
+        throw new Error(errorMessage);
     }
 };

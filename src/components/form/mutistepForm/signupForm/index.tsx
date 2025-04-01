@@ -10,48 +10,51 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { AddressForm } from './AddressForm';
 import CredentialsForm from './CredentialsForm';
-import EducationalDetailsForm from './EducationalDetails';
 import { EmailForm } from './EmailForm';
 import { OtpVerificationForm } from './OtpVerificationForm';
 import { PersonalDetailForm } from './PersonalDetailForm';
 import { RegistrationForm } from './RegistrationDetails';
+import EducationalDetailsForm from './EducationalDetails';
 
+// Adjusted RegistrationData type to reflect required fields
 type RegistrationData = {
-  termsAccepted?: boolean;
-  partyObjectivesAccepted?: boolean;
+  identifier?: string; // Optional, will be set as email or phone
+  termsAccepted: boolean;
+  partyObjectivesAccepted: boolean;
   serveCommunityAccepted?: boolean;
-  title: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  dateOfBirth: string;
-  gender: string;
-  age: number;
-  otp: string;
-  occupation: string;
-  addressLine1: string;
-  addressLine2: string;
-  cityOrVillage: string;
-  district: string;
-  state: string;
-  pincode: string;
-  qualification: string;
-  profession: string;
-  position: string;
-  aadhaarNumber: string;
-  voterId: string;
-  aadhaarFront: File | null;
-  aadhaarBack: File | null;
-  voterFront: File | null;
-  voterBack: File | null;
-  password: string;
-  confirmPassword: string;
-  referralCode: string;
+  title?: string;
+  firstName: string; // Required
+  middleName?: string;
+  lastName: string; // Required
+  email?: string;
+  phone: string; // Required
+  dateOfBirth: string; // Required
+  gender: string; // Required
+  age: number; // Required
+  otp: string; // Required for OTP verification
+  occupation: string; // Required
+  addressLine1: string; // Required
+  addressLine2?: string;
+  cityOrVillage: string; // Required
+  district: string; // Required
+  state: string; // Required
+  pincode: string; // Required
+  qualification?: string;
+  profession?: string;
+  position?: string;
+  aadhaarNumber: string; // Required
+  voterId?: string;
+  aadhaarFront: File | null; // Required
+  aadhaarBack: File | null; // Required
+  voterFront?: File | null;
+  voterBack?: File | null;
+  password: string; // Required
+  confirmPassword: string; // Required
+  referralCode?: string;
 };
 
 const INITIAL_DATA: RegistrationData = {
+  identifier: "",
   termsAccepted: false,
   partyObjectivesAccepted: false,
   serveCommunityAccepted: false,
@@ -65,12 +68,12 @@ const INITIAL_DATA: RegistrationData = {
   gender: "",
   age: 0,
   otp: "",
+  occupation: "",
   addressLine1: "",
   addressLine2: "",
   cityOrVillage: "",
   district: "",
   state: "",
-  occupation: "",
   pincode: "",
   qualification: "",
   profession: "",
@@ -104,7 +107,7 @@ const MultiStepForm = () => {
     ...(data.serveCommunityAccepted ? [<EducationalDetailsForm {...data} updateFields={updateFields} />] : []),
     <CredentialsForm {...data} updateFields={updateFields} />,
   ]);
-  
+
   const onSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -116,19 +119,20 @@ const MultiStepForm = () => {
       }
 
       const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-      const phoneRegex = /^(\+91)?[6-9]\d{9}$/;
+      const phoneRegex = /^\+91[6-9]\d{9}$/;
 
       const isEmail = data.email && emailRegex.test(data.email);
       const isPhone = data.phone && phoneRegex.test(data.phone);
 
       if (!isEmail && !isPhone) {
-        toast.error("Please enter a valid email or phone number");
+        toast.error("Please enter a valid email or phone number (e.g., +91XXXXXXXXXX)");
         return;
       }
 
       try {
-        const identifier = isEmail ? data.email : (data.phone.startsWith("+91") ? data.phone : `+91${data.phone}`);
-        await sendOtp(identifier);
+        const identifier = isEmail ? data.email : data.phone;
+        updateFields({ identifier }); // Store identifier in state
+        await sendOtp(identifier!);
         next();
       } catch (error: any) {
         console.error("Failed to send OTP:", error.message);
@@ -144,8 +148,8 @@ const MultiStepForm = () => {
       }
 
       try {
-        const identifier = data.email || (data.phone.startsWith("+91") ? data.phone : `+91${data.phone}`);
-        await verifyOtp(identifier, data.otp);
+        const identifier = data.identifier || data.email || data.phone;
+        await verifyOtp(identifier!, data.otp);
         next();
       } catch (error: any) {
         console.error("Failed to verify OTP:", error.message);
@@ -155,8 +159,8 @@ const MultiStepForm = () => {
 
     // Step 2: Personal Details
     else if (currentStepIndex === 2) {
-      const requiredFields = ["firstName", "lastName", "dateOfBirth", "gender", "occupation"];
-      const missingFields = requiredFields.filter((field) => !data[field as keyof RegistrationData]);
+      const requiredFields: (keyof RegistrationData)[] = ["firstName", "lastName", "dateOfBirth", "gender", "occupation"];
+      const missingFields = requiredFields.filter((field) => !data[field]);
 
       if (missingFields.length > 0) {
         toast.error(`Please fill in: ${missingFields.join(", ")}`);
@@ -164,7 +168,7 @@ const MultiStepForm = () => {
       }
 
       const today = new Date();
-      const birthDate = new Date(data.dateOfBirth);
+      const birthDate = new Date(data.dateOfBirth!);
       let age = today.getFullYear() - birthDate.getFullYear();
       const monthDiff = today.getMonth() - birthDate.getMonth();
       if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
@@ -176,8 +180,8 @@ const MultiStepForm = () => {
         return;
       }
 
-      if (!data.phone || !/^(\+91)?[6-9]\d{9}$/.test(data.phone)) {
-        toast.error("Please enter a valid 10-digit phone number");
+      if (!data.phone || !/^\+91[6-9]\d{9}$/.test(data.phone)) {
+        toast.error("Please enter a valid phone number (e.g., +91XXXXXXXXXX)");
         return;
       }
 
@@ -187,25 +191,57 @@ const MultiStepForm = () => {
 
     // Final Step: Register
     else if (isLastStep) {
-      if (data.password !== data.confirmPassword) {
-        toast.error("Passwords do not match");
+      if (!data.password || data.password !== data.confirmPassword) {
+        toast.error("Passwords must match and cannot be empty");
+        return;
+      }
+
+      if (!data.aadhaarNumber || !data.aadhaarFront || !data.aadhaarBack) {
+        toast.error("Aadhaar number and both front and back images are required");
         return;
       }
 
       try {
-        const identifier = data.email || (data.phone.startsWith("+91") ? data.phone : `+91${data.phone}`);
-        const registrationData = {
-          ...data,
+        const identifier = data.identifier || data.email || data.phone!;
+        const registrationData: RegistrationData = {
           identifier,
+          termsAccepted: data.termsAccepted,
+          partyObjectivesAccepted: data.partyObjectivesAccepted,
+          serveCommunityAccepted: data.serveCommunityAccepted,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          phone: data.phone,
+          dateOfBirth: data.dateOfBirth,
+          gender: data.gender,
+          age: data.age,
           otp: data.otp,
-          phone: data.phone.startsWith("+91") ? data.phone : `+91${data.phone}`,
+          occupation: data.occupation,
+          addressLine1: data.addressLine1,
+          cityOrVillage: data.cityOrVillage,
+          district: data.district,
+          state: data.state,
+          pincode: data.pincode,
+          aadhaarNumber: data.aadhaarNumber,
+          aadhaarFront: data.aadhaarFront,
+          aadhaarBack: data.aadhaarBack,
+          password: data.password,
+          confirmPassword: data.confirmPassword,
+          ...(data.title && { title: data.title }),
+          ...(data.middleName && { middleName: data.middleName }),
+          ...(data.email && { email: data.email }),
+          ...(data.addressLine2 && { addressLine2: data.addressLine2 }),
+          ...(data.qualification && { qualification: data.qualification }),
+          ...(data.profession && { profession: data.profession }),
+          ...(data.position && { position: data.position }),
+          ...(data.voterId && { voterId: data.voterId }),
+          ...(data.voterFront && { voterFront: data.voterFront }),
+          ...(data.voterBack && { voterBack: data.voterBack }),
+          ...(data.referralCode && { referralCode: data.referralCode }),
         };
 
         await register(registrationData);
-        toast.success("Registration Successful! Redirecting to login...", {
-          duration: 3000,
-        });
-        setTimeout(() => navigate("/auth/login"), 3000);
+        toast.success("Registration Successful! Redirecting to login...", { duration: 3000 });
+        setTimeout(() => navigate("/auth/login"), 4000);
       } catch (error: any) {
         console.error("Registration failed:", error.message);
         toast.error(error.message || "Registration failed");
@@ -219,7 +255,7 @@ const MultiStepForm = () => {
   };
 
   return (
-    <section className="flex items-center justify-center h-screen mx-auto rounded-none md:rounded-3xl md:p-8 py-10">
+    <section className="flex items-center justify-center h-screen py-10 mx-auto rounded-none md:rounded-3xl md:p-8">
       <div>
         <Card className="mx-auto border-gray-300">
           <CardHeader>
@@ -260,7 +296,7 @@ const MultiStepForm = () => {
                   )}
                   {isLastStep && (
                     <LoadingButton type="submit" loading={loading} className="w-full">
-                      Finish
+                      Register
                     </LoadingButton>
                   )}
                 </div>
@@ -268,7 +304,7 @@ const MultiStepForm = () => {
             </form>
           </CardContent>
         </Card>
-        <div className="flex justify-center mt-3 gap-1 text-sm">
+        <div className="flex justify-center gap-1 mt-3 text-sm">
           <Link to="/auth/business-community-join" className="font-semibold underline">
             sign up as a business
           </Link>{" "}
