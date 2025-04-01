@@ -1,5 +1,5 @@
-// src/AppRoutes.tsx
 import AutoScrollToTop from '@/components/auto-scroll-to-top';
+import ComingSoon from '@/components/coming-soon';
 import Login from '@/components/form/loginForm/index';
 import BussinessCommunitySignup from '@/components/form/mutistepForm/bussinessCommunitySignup';
 import MultiStepForm from '@/components/form/mutistepForm/signupForm';
@@ -15,6 +15,7 @@ import ForgotPassword from '@/pages/auth/ForgotPassword';
 import ResetPassword from '@/pages/auth/ResetPassword';
 import ResetPin from '@/pages/auth/ResetPin';
 import EthicsVendorsSuppliers from '@/pages/BusinessCommunity/EthicsVendorsSuppliers';
+import SupplierInclusion from '@/pages/BusinessCommunity/SupplierInclusion';
 import VendorDisclosure from '@/pages/BusinessCommunity/VendorDisclosure';
 import VendorSupplier from '@/pages/BusinessCommunity/VendorSupplier';
 import Contact from '@/pages/Contact/Contact';
@@ -33,17 +34,24 @@ import Transactions from '@/pages/Dashboard/Wallet/Transactions';
 import WithdrawPage from '@/pages/Dashboard/Wallet/Withdraw';
 import DownloadAppPage from '@/pages/download';
 import Dashboard from '@/pages/features/dashboard';
+import Donate from '@/pages/features/donate';
+import Events from '@/pages/features/events';
 import Goals from '@/pages/features/goals';
-import NationalIntegrity from '@/pages/features/goals/components/NationalIntegrity'; // Updated path
+import AgainstMuscle from '@/pages/features/goals/components/AgainstMuscle';
+import EmploymentGrowth from '@/pages/features/goals/components/EmploymentGrowth';
 import EqualOpportunity from '@/pages/features/goals/components/EqualOpportunity';
 import GoodHealth from '@/pages/features/goals/components/GoodHealth';
-import AgainstMuscle from '@/pages/features/goals/components/AgainstMuscle';
-import UpholdSecularism from '@/pages/features/goals/components/UpholdSecularism';
 import IndustrialDev from '@/pages/features/goals/components/IndustrialDev';
-import EmploymentGrowth from '@/pages/features/goals/components/EmploymentGrowth';
 import JusticePeace from '@/pages/features/goals/components/JusticePeace';
-import UpliftFarmers from '@/pages/features/goals/components/UpliftFarmers';
+import NationalIntegrity from '@/pages/features/goals/components/NationalIntegrity'; // Updated path
 import QualityEducation from '@/pages/features/goals/components/QualityEducation';
+import UpholdSecularism from '@/pages/features/goals/components/UpholdSecularism';
+import UpliftFarmers from '@/pages/features/goals/components/UpliftFarmers';
+import Membership from '@/pages/features/membership';
+import Profile from '@/pages/features/profile';
+import ProfessionalProfile from '@/pages/features/profile/professionals';
+import Referral from '@/pages/features/referal';
+import Wallet from '@/pages/features/wallet';
 import Home from '@/pages/Home/Home';
 import CollaborativeNetwork from '@/pages/join/CollaborativeNetwork';
 import TransparentDecisionMaking from '@/pages/join/DecisionMaking';
@@ -66,17 +74,6 @@ import Vision from '@/pages/Vision/Vision';
 import WingsPage from '@/pages/wings/wings';
 import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
-import Wallet from '@/pages/features/wallet';
-import Donate from '@/pages/features/donate';
-import Profile from '@/pages/features/profile';
-import ProfessionalProfile from '@/pages/features/profile/professionals';
-import Membership from '@/pages/features/membership';
-import ComingSoon from '@/components/coming-soon';
-import Referral from '@/pages/features/referal';
-import PopupManager from '@/components/features/PopupManager';
-import SupplierInclusion from '@/pages/BusinessCommunity/SupplierInclusion';
-import Events from '@/pages/features/events';
-import SettingsAccount from '@/pages/features/settings/account';
 
 const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
@@ -215,7 +212,6 @@ const AppRoutes = () => {
         {/* 404 Route */}
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-      <PopupManager />
     </>
   );
 };

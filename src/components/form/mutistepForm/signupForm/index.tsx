@@ -30,6 +30,7 @@ type RegistrationData = {
   gender: string;
   age: number;
   otp: string;
+  occupation: string;
   addressLine1: string;
   addressLine2: string;
   cityOrVillage: string;
@@ -69,6 +70,7 @@ const INITIAL_DATA: RegistrationData = {
   cityOrVillage: "",
   district: "",
   state: "",
+  occupation: "",
   pincode: "",
   qualification: "",
   profession: "",
@@ -102,7 +104,7 @@ const MultiStepForm = () => {
     ...(data.serveCommunityAccepted ? [<EducationalDetailsForm {...data} updateFields={updateFields} />] : []),
     <CredentialsForm {...data} updateFields={updateFields} />,
   ]);
-
+  
   const onSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -153,7 +155,7 @@ const MultiStepForm = () => {
 
     // Step 2: Personal Details
     else if (currentStepIndex === 2) {
-      const requiredFields = ["firstName", "lastName", "dateOfBirth", "gender"];
+      const requiredFields = ["firstName", "lastName", "dateOfBirth", "gender", "occupation"];
       const missingFields = requiredFields.filter((field) => !data[field as keyof RegistrationData]);
 
       if (missingFields.length > 0) {

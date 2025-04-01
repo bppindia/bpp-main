@@ -22,7 +22,7 @@ function Referral() {
       membershipType: "Life Member",
     },
     {
-      name: "Jane Appleseed",Referal
+      name: "Jane Appleseed",
       date: "1 week ago",
       status: "Pending",
       membershipNo: "Pending",

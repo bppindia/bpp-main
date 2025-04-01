@@ -111,7 +111,7 @@ const ResetPassword = () => {
         try {
             const payload = email ? { email } : { phone };
 
-            const response = await fetch('https://api.bppindia.com:8443/api/v1/forgot-password', {
+            const response = await fetch('https://api.bppindia.com:3000/api/v1/forgot-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ const ResetPassword = () => {
                 [contactInfo.type]: contactInfo.value,
             };
 
-            const response = await fetch('https://api.bppindia.com:8443/api/v1/reset-password', {
+            const response = await fetch('https://api.bppindia.com:3000/api/v1/reset-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

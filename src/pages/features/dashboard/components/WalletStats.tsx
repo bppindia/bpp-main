@@ -1,4 +1,3 @@
-// src/pages/dashboard/components/WalletStats.tsx
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Wallet } from 'lucide-react';
 

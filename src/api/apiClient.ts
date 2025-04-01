@@ -1,4 +1,3 @@
-// src/api/apiClient.ts
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -35,24 +34,24 @@ export const getData = async (endpoint: string) => {
         const response = await apiClient.get(endpoint);
         return response.data;
     } catch (error) {
-        handleError(error); // This will throw, no need to return
+        handleError(error); 
     }
 };
 
 export const postData = async (
     endpoint: string,
     data: any,
-    config: { headers?: { "Content-Type"?: string } } = {} // Optional config with headers
+    config: { headers?: { "Content-Type"?: string } } = {} 
 ) => {
     try {
         const response = await apiClient.post(endpoint, data, {
             ...config,
             headers: {
-                ...config.headers, // Merge custom headers if provided
+                ...config.headers, 
             },
         });
         return response.data;
     } catch (error) {
-        handleError(error); // This will throw, no need to return
+        handleError(error);
     }
 };

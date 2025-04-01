@@ -60,14 +60,14 @@ export function RegistrationForm({
     };
 
     const handleAadhaarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const rawValue = e.target.value;
+        const rawValue = e.target.value.replace(/\s/g, ""); // Remove spaces
         const formattedValue = formatAadhaarNumber(rawValue);
 
         updateFields({ aadhaarNumber: rawValue });
 
         if (!formattedValue) {
             setAadhaarError("Aadhaar number is required");
-        } else if (formattedValue.replace(/\s/g, "").length === 12) {
+        } else if (formattedValue.replace(/\s/g, "").length === 14) {
             if (!validateAadhaarNumber(formattedValue)) {
                 setAadhaarError("Please enter a valid Aadhaar number (e.g., 2345 6789 0123)");
             } else {
@@ -76,7 +76,7 @@ export function RegistrationForm({
         } else {
             setAadhaarError("Aadhaar number must be 12 digits");
         }
-    };
+      };
 
     return (
         <FormWrapper title="User Details">

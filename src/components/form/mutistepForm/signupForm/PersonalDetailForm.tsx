@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 import { FormWrapper } from "./FormWrapper";
+import { occupationData } from "@/data/occupation";
 
 type PersonalDetailData = {
   title: string;
@@ -21,6 +22,7 @@ type PersonalDetailData = {
   gender: string;
   phone?: string;
   email?: string;
+  occupation: string;
 };
 
 type PersonalDetailFormProps = PersonalDetailData & {
@@ -37,6 +39,7 @@ export function PersonalDetailForm({
   gender,
   phone,
   email,
+  occupation, // Added occupation
   updateFields,
 }: PersonalDetailFormProps) {
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +54,7 @@ export function PersonalDetailForm({
       age--;
     }
     if (age < 19) {
-      setError("Age must be 18 older.");
+      setError("Age must be 18 or older.");
     } else {
       setError(null);
     }
@@ -161,7 +164,6 @@ export function PersonalDetailForm({
           <DatePicker
             date={dateOfBirth ? new Date(dateOfBirth) : undefined}
             setDate={(date) => {
-              // Ensure we're using the local date string
               updateFields({
                 dateOfBirth: date ? date.toLocaleDateString('en-CA') : undefined,
                 age: calculateAge(date)
@@ -211,6 +213,31 @@ export function PersonalDetailForm({
             name="email"
             onChange={(e) => updateFields({ email: e.target.value })}
           />
+        </div>
+      </div>
+
+      {/* Occupation Field */}
+      <div className="grid grid-cols-12 gap-4 mt-4">
+        <div className="col-span-12">
+
+          <Label htmlFor="occupation">
+            Occupation <span className="text-red-700">*</span>
+          </Label>
+          <Select
+            onValueChange={(value) => updateFields({ occupation: value })}
+            value={occupation}
+          >
+            <SelectTrigger id="state" name="state" className="w-full">
+              <SelectValue placeholder="Select your state" />
+            </SelectTrigger>
+            <SelectContent>
+              {occupationData.occupations.map((occupation) => (
+                <SelectItem key={occupation} value={occupation}>
+                  {occupation}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </FormWrapper>
