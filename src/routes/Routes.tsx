@@ -37,6 +37,7 @@ import Dashboard from '@/pages/features/dashboard';
 import Donate from '@/pages/features/donate';
 import Events from '@/pages/features/events';
 import Goals from '@/pages/features/goals';
+import GoalsPage from '@/pages/About/Goals';
 import AgainstMuscle from '@/pages/features/goals/components/AgainstMuscle';
 import EmploymentGrowth from '@/pages/features/goals/components/EmploymentGrowth';
 import EqualOpportunity from '@/pages/features/goals/components/EqualOpportunity';
@@ -74,6 +75,7 @@ import Vision from '@/pages/Vision/Vision';
 import WingsPage from '@/pages/wings/wings';
 import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
+import NationalIntegrityPage from '@/pages/About/goals/national-integrity';
 
 const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
@@ -100,7 +102,17 @@ const AppRoutes = () => {
         <Route path="about">
           <Route index element={<About />} />
           <Route path="about" element={<About />} />
-          <Route path="bpp-goals" element={<Goals />} />
+          <Route path="bpp-goals" element={<GoalsPage />} />
+          <Route path="bpp-goals/national-integrity" element={<NationalIntegrityPage />} />
+          {/* <Route path="bpp-goals/equal-opportunity" element={<EqualOpportunityPage />} />
+          <Route path="bpp-goals/good-health" element={<GoodHealthPage />} />
+          <Route path="bpp-goals/against-muscle-power" element={<AgainstMusclePowerPage />} />
+          <Route path="bpp-goals/uphold-secularism" element={<UpholdSecularismPage />} />
+          <Route path="bpp-goals/industrial-development" element={<IndustrialDevelopmentPage />} />
+          <Route path="bpp-goals/employment-economic-growth" element={<EmploymentEconomicGrowthPage />} />
+          <Route path="bpp-goals/justice-peace" element={<JusticePeacePage />} />
+          <Route path="bpp-goals/upliftment-of-farmers" element={<UpliftmentOfFarmersPage />} />
+          <Route path="bpp-goals/quality-education" element={<QualityEducationPage />} /> */}
           <Route path="get-to-know-bpp" element={<GetToKnow />} />
           <Route path="commitment-progress" element={<CommitmentToProgress />} />
           <Route path="volunteer" element={<Volunteer />} />

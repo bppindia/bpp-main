@@ -9,7 +9,7 @@ export function FormWrapper({ children }: FormWrapperProps) {
     return (
         <>
             <div
-                className="space-y-3 p-5 max-w-lg w-lg">
+                className="max-w-xl p-3 space-y-3 w-xl">
                 <div className="grid gap-4">
                     {children}
                 </div>

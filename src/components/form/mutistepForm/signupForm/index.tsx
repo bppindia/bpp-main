@@ -255,10 +255,10 @@ const MultiStepForm = () => {
   };
 
   return (
-    <section className="flex items-center justify-center h-screen py-10 mx-auto rounded-none md:rounded-3xl md:p-8">
-      <div>
-        <Card className="mx-auto border-gray-300">
-          <CardHeader>
+    <section className="flex items-center justify-center min-h-screen px-4 py-6 sm:p-8 md:p-10 bg-background">
+      <div className="w-full max-w-xl">
+        <Card className="border-0 sm:border sm:shadow-md">
+          <CardHeader className="px-4 sm:px-4">
             <div className="flex items-center justify-center text-xl font-bold text-blue-800">
               <Link to="/">
                 <img src={bpplogo} alt="BPP Logo" className="w-[120px] object-contain rounded-lg" />

@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import Layout from '@/layout/Layout';
 import { BadgeDollarSign, Building2, Church, Factory, GraduationCap, Heart, Scale, Sword, Users, Wheat } from 'lucide-react';
 import React, { FC } from 'react';
+import { Link } from "react-router-dom";
 
 interface Goal {
   title: string;
@@ -22,38 +23,47 @@ interface Goal {
 }
 
 const GoalCard: FC<Goal> = ({ title, description, imgSrc, icon }) => {
+  const goalSlug = title.toLowerCase().replace(/\s+/g, '-');
+
   return (
-    <Card className="flex flex-col h-full overflow-hidden bg-white dark:bg-gray-800 dark:border-gray-700 border">
-      {/* Image Section */}
-      <div className="relative h-48 overflow-hidden">
-        <img
-          className="w-full h-full object-cover object-center"
-          src={imgSrc}
-          alt={title}
-        />
-        <div className="absolute inset-0"></div>
-      </div>
-
-      <CardHeader className="space-y-4 pt-6">
-        {/* Icon and Title */}
-        <div className="flex items-center gap-4">
-          <div className="p-3 bg-primary/10 text-primary rounded-xl shadow-sm dark:bg-primary/20">
-            {React.createElement(icon, { size: 28, className: "text-primary dark:text-white" })}
-          </div>
-          <h2 className="text-xl font-extrabold text-left font-poppins tracking-tight text-gray-900 dark:text-white">{title}</h2>
+    <Link to={`/about/bpp-goals/${goalSlug}`} className="w-full">
+      <Card className="flex flex-col justify-between h-[500px] overflow-hidden transition-all duration-300 border hover:shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+        {/* Image */}
+        <div className="relative h-48 overflow-hidden">
+          <img className="object-cover object-center w-full h-full" src={imgSrc} alt={title} />
         </div>
-      </CardHeader>
 
-      <CardContent className="flex-grow">
-        <p className="text-left text-sm leading-relaxed text-muted-foreground dark:text-gray-300">
-          {description}
-        </p>
-      </CardContent>
-    </Card>
+        {/* Header */}
+        <CardHeader className="pt-6 space-y-4">
+          <div className="flex items-center gap-4">
+            <div className="p-3 shadow-sm bg-primary/10 text-primary rounded-xl dark:bg-primary/20">
+              {React.createElement(icon, { size: 28, className: "text-primary dark:text-white" })}
+            </div>
+            <h2 className="text-xl font-extrabold tracking-tight text-left text-gray-900 font-poppins dark:text-white">
+              {title}
+            </h2>
+          </div>
+        </CardHeader>
+
+        {/* Description */}
+        <CardContent className="flex-grow">
+          <p className="text-sm leading-relaxed text-left text-muted-foreground dark:text-gray-300 line-clamp-5">
+            {description}
+          </p>
+        </CardContent>
+
+        {/* Learn More (visually implied by hover now) */}
+        <CardContent className="pt-4 pb-6">
+          <span className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-400">
+            Learn more →
+          </span>
+        </CardContent>
+      </Card>
+    </Link>
   );
 };
 
-const Goals = () => {
+const GoalsPage = () => {
   const goals = [
     {
       title: "NATIONAL INTEGRITY",
@@ -131,8 +141,8 @@ const Goals = () => {
       />
       <section className="py-8">
         <div className="container">
-          <div className="mx-auto max-w-6xl flex flex-col items-center gap-6 text-center">
-            <div className="grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex flex-col items-center gap-6 mx-auto text-center">
+            <div className="grid grid-cols-1 gap-8 place-items-center sm:grid-cols-2 lg:grid-cols-3">
               {goals.map((goal, index) => (
                 <GoalCard
                   key={index}
@@ -150,4 +160,4 @@ const Goals = () => {
   );
 };
 
-export default Goals;
+export default GoalsPage;
