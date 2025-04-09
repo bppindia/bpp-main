@@ -11,14 +11,14 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { handleServerError } from '@/utils/handle-server-error'
 import { toast } from '@/hooks/use-toast'
+import { AuthProvider } from './context/AuthContext'
 import { FontProvider } from './context/font-context'
 import { ThemeProvider } from './context/theme-context'
-import { AuthProvider } from './context/AuthContext'
-import store, { persistor } from './store/store'
 import './index.css'
 import './main.css'
 // Generated Routes
 import { routeTree } from './routeTree.gen'
+import store, { persistor } from './store/store'
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -5,9 +5,9 @@ import {
   SidebarHeader,
   SidebarRail,
 } from '@/components/ui/sidebar'
+import { LogoHeader } from '@/components/layout/dashboard/logo-header'
 import { NavGroup } from '@/components/layout/dashboard/nav-group'
 import { NavUser } from '@/components/layout/dashboard/nav-user'
-import { LogoHeader } from '@/components/layout/dashboard/logo-header'
 import { sidebarData } from './data/sidebar-data'
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

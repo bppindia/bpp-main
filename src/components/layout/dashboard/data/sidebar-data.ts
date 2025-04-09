@@ -7,12 +7,12 @@ import {
   IconTool,
   IconUserCog,
   IconWallet,
-  IconTarget, 
-  IconGift,  
-  IconUsers,  
-  IconCreditCard, 
-  IconCalendarEvent, 
-  IconTimelineEvent, 
+  IconTarget,
+  IconGift,
+  IconUsers,
+  IconCreditCard,
+  IconCalendarEvent,
+  IconTimelineEvent,
 } from '@tabler/icons-react'
 import { Command } from 'lucide-react'
 import { type SidebarData } from '../types'
@@ -28,7 +28,7 @@ export const sidebarData: SidebarData = {
       name: 'BPPINDIA',
       logo: Command,
       plan: 'Bharatiya Popular Party',
-    }
+    },
   ],
   navGroups: [
     {
@@ -37,9 +37,9 @@ export const sidebarData: SidebarData = {
         {
           title: 'Overview',
           url: '/dashboard',
-          icon: IconLayoutDashboard, 
-        }
-      ]
+          icon: IconLayoutDashboard,
+        },
+      ],
     },
     {
       title: 'General',
@@ -52,12 +52,12 @@ export const sidebarData: SidebarData = {
         {
           title: 'Donate',
           url: '/dashboard/donate',
-          icon: IconGift, 
+          icon: IconGift,
         },
         {
           title: 'Referral',
           url: '/dashboard/referral',
-          icon: IconUsers, 
+          icon: IconUsers,
         },
       ],
     },
@@ -67,17 +67,17 @@ export const sidebarData: SidebarData = {
         {
           title: 'Profile',
           url: '/dashboard/profile',
-          icon: IconUserCog, 
+          icon: IconUserCog,
         },
         {
           title: 'Professional Profile',
           url: '/dashboard/professional-profile',
-          icon: IconUserCog, 
+          icon: IconUserCog,
         },
         {
           title: 'Wallet',
           url: '/dashboard/wallet',
-          icon: IconWallet, 
+          icon: IconWallet,
         },
       ],
     },
@@ -97,7 +97,7 @@ export const sidebarData: SidebarData = {
         {
           title: 'Community Contribution',
           url: '/dashboard/community-contribution',
-          icon: IconUsers, 
+          icon: IconUsers,
         },
         {
           title: 'Business Community',
@@ -112,12 +112,12 @@ export const sidebarData: SidebarData = {
         {
           title: 'Events',
           url: '/dashboard/events',
-          icon: IconCalendarEvent, 
+          icon: IconCalendarEvent,
         },
         {
           title: 'Campaigns',
           url: '/dashboard/campaigns',
-          icon: IconTimelineEvent, 
+          icon: IconTimelineEvent,
         },
       ],
     },
@@ -126,22 +126,22 @@ export const sidebarData: SidebarData = {
       items: [
         {
           title: 'Settings',
-          icon: IconSettings, 
+          icon: IconSettings,
           items: [
             {
               title: 'Profile',
               url: '/dashboard/settings',
-              icon: IconUserCog, 
+              icon: IconUserCog,
             },
             {
               title: 'Account',
               url: '/dashboard/settings/account',
-              icon: IconTool, 
+              icon: IconTool,
             },
             {
               title: 'Appearance',
               url: '/dashboard/settings/appearance',
-              icon: IconPalette, 
+              icon: IconPalette,
             },
             {
               title: 'Notifications',
@@ -153,7 +153,7 @@ export const sidebarData: SidebarData = {
         {
           title: 'Help Center',
           url: '/dashboard/help-center',
-          icon: IconHelp, 
+          icon: IconHelp,
         },
       ],
     },

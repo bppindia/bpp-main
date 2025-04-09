@@ -148,15 +148,15 @@ const Footer = () => {
               <img
                 src={bppFlag}
                 alt='BPP Flag'
-                className='mx-auto mb-4 w-auto h-20 md:ml-0 md:mr-auto'
+                className='mx-auto mb-4 h-20 w-auto md:ml-0 md:mr-auto'
               />
               <h3 className='mb-2 text-sm font-bold text-blue-700 dark:text-blue-400'>
                 {t('Footer.contactDetails.name')}
               </h3>
-              <div className='my-2 text-xs font-bold text-center text-muted-foreground md:text-left'>
+              <div className='my-2 text-center text-xs font-bold text-muted-foreground md:text-left'>
                 {t('Footer.contactDetails.location')}
               </div>
-              <div className='my-3 text-xs text-center text-muted-foreground md:text-left'>
+              <div className='my-3 text-center text-xs text-muted-foreground md:text-left'>
                 {t('Footer.contactDetails.description')}
               </div>
             </div>
@@ -166,10 +166,10 @@ const Footer = () => {
               <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-5 lg:grid-cols-5'>
                 {sections.map((section, sectionIdx) => (
                   <div key={sectionIdx} className='mx-auto w-full'>
-                    <h3 className='mb-2 text-xs font-bold text-center dark:text-white md:text-left'>
+                    <h3 className='mb-2 text-center text-xs font-bold dark:text-white md:text-left'>
                       {section.title}
                     </h3>
-                    <ul className='space-y-2 text-xs text-center text-muted-foreground md:text-left'>
+                    <ul className='space-y-2 text-center text-xs text-muted-foreground md:text-left'>
                       {section.links.map((link, linkIdx) => (
                         <li
                           key={linkIdx}
@@ -189,8 +189,8 @@ const Footer = () => {
           <Separator className='my-3' />
 
           {/* Bottom Sections */}
-          <div className='container flex flex-col justify-between items-center space-y-4 md:flex-row md:space-y-0'>
-            <div className='flex flex-col gap-4 items-center md:flex-row md:gap-8'>
+          <div className='container flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0'>
+            <div className='flex flex-col items-center gap-4 md:flex-row md:gap-8'>
               <div className='flex items-center space-x-4'>
                 <LanguageToggle />
                 <ThemeSwitch />
@@ -198,15 +198,15 @@ const Footer = () => {
               </div>
 
               {/* Social Media Icons */}
-              <div className='flex gap-2 justify-center items-center'>
+              <div className='flex items-center justify-center gap-2'>
                 <a
                   target='_blank'
                   href='https://x.com/BharatiyaP20295'
                   className='group'
                   rel='noopener noreferrer'
                 >
-                  <div className='flex justify-center items-center w-8 h-8 rounded-full transition-colors bg-muted group-hover:bg-primary group-hover:text-primary-foreground'>
-                    <TwitterIcon className='w-4 h-4' />
+                  <div className='flex h-8 w-8 items-center justify-center rounded-full bg-muted transition-colors group-hover:bg-primary group-hover:text-primary-foreground'>
+                    <TwitterIcon className='h-4 w-4' />
                   </div>
                 </a>
                 <a
@@ -215,8 +215,8 @@ const Footer = () => {
                   className='group'
                   rel='noopener noreferrer'
                 >
-                  <div className='flex justify-center items-center w-8 h-8 rounded-full transition-colors bg-muted group-hover:bg-primary group-hover:text-primary-foreground'>
-                    <FacebookIcon className='w-4 h-4' />
+                  <div className='flex h-8 w-8 items-center justify-center rounded-full bg-muted transition-colors group-hover:bg-primary group-hover:text-primary-foreground'>
+                    <FacebookIcon className='h-4 w-4' />
                   </div>
                 </a>
                 <a
@@ -225,8 +225,8 @@ const Footer = () => {
                   className='group'
                   rel='noopener noreferrer'
                 >
-                  <div className='flex justify-center items-center w-8 h-8 rounded-full transition-colors bg-muted group-hover:bg-primary group-hover:text-primary-foreground'>
-                    <InstagramIcon className='w-4 h-4' />
+                  <div className='flex h-8 w-8 items-center justify-center rounded-full bg-muted transition-colors group-hover:bg-primary group-hover:text-primary-foreground'>
+                    <InstagramIcon className='h-4 w-4' />
                   </div>
                 </a>
                 <a
@@ -235,20 +235,20 @@ const Footer = () => {
                   className='group'
                   rel='noopener noreferrer'
                 >
-                  <div className='flex justify-center items-center w-8 h-8 rounded-full transition-colors bg-muted group-hover:bg-primary group-hover:text-primary-foreground'>
-                    <LinkedinIcon className='w-4 h-4' />
+                  <div className='flex h-8 w-8 items-center justify-center rounded-full bg-muted transition-colors group-hover:bg-primary group-hover:text-primary-foreground'>
+                    <LinkedinIcon className='h-4 w-4' />
                   </div>
                 </a>
               </div>
             </div>
 
             {/* App Store and Google Play Buttons */}
-            <div className='flex flex-col justify-center items-center space-y-2 w-full sm:w-auto sm:flex-row sm:space-x-4 sm:space-y-0'>
+            <div className='flex w-full flex-col items-center justify-center space-y-2 sm:w-auto sm:flex-row sm:space-x-4 sm:space-y-0'>
               <a
                 href='https://bppdatabase.s3.ap-south-1.amazonaws.com/app/BPP.apk'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='flex justify-center items-center px-3 py-2 w-full text-white bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 sm:w-auto'
+                className='flex w-full items-center justify-center rounded-lg bg-gray-800 px-3 py-2 text-white hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 sm:w-auto'
               >
                 <FaAndroid className='mr-2' />
                 <div className='text-left'>
@@ -262,12 +262,12 @@ const Footer = () => {
           </div>
 
           {/* Bottom Section */}
-          <section className='grid grid-cols-1 my-3 text-center md:grid-cols-12 md:text-left'>
+          <section className='my-3 grid grid-cols-1 text-center md:grid-cols-12 md:text-left'>
             <p className='text-xs text-muted-foreground md:col-span-4'>
               {t('Footer.contactDetails.copyright')}
             </p>
             <div className='mt-4 text-xs md:col-span-8 md:mt-0'>
-              <ul className='flex flex-wrap justify-center mx-auto space-x-3 w-full text-muted-foreground md:w-3/4 md:justify-around md:space-x-0'>
+              <ul className='mx-auto flex w-full flex-wrap justify-center space-x-3 text-muted-foreground md:w-3/4 md:justify-around md:space-x-0'>
                 <li className='font-medium hover:text-primary'>
                   <Link to='/'>{t('Footer.footerLinks.siteMap')}</Link>
                 </li>

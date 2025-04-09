@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from '@tanstack/react-router'
 import { useMainMenuList } from '@/data/menu/main-menu'
+import type { Group, Menu, Submenu } from '@/data/menu/main-menu'
 import { ChevronDown, MenuIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import bppLogo from '@/assets/logo/bppLogo.png'
@@ -30,7 +31,6 @@ import {
 import { ThemeSwitch } from '@/components/theme-switch'
 import { LanguageToggle } from './components/lang-toggle'
 import QRToggle from './components/qr-toggle'
-import type { Group, Menu, Submenu } from '@/data/menu/main-menu'
 
 const ListItem = React.forwardRef<
   React.ElementRef<typeof Link>,
@@ -42,13 +42,13 @@ const ListItem = React.forwardRef<
         <Link
           ref={ref}
           className={cn(
-            'block p-3 space-y-1 text-sm leading-none no-underline rounded-md transition-colors outline-none select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+            'block select-none space-y-1 rounded-md p-3 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
             className
           )}
           {...props}
         >
           <div className='text-xs font-medium leading-none'>{title}</div>
-          <p className='text-xs leading-snug line-clamp-2 text-muted-foreground'>
+          <p className='line-clamp-2 text-xs leading-snug text-muted-foreground'>
             {description}
           </p>
         </Link>
@@ -66,15 +66,15 @@ const MainNav = () => {
 
   return (
     <header className='sticky top-0 z-50 w-full border-b bg-background'>
-      <div className='container flex justify-between items-center px-4 w-full max-w-full h-16 sm:justify-between md:max-w-full'>
+      <div className='container flex h-16 w-full max-w-full items-center justify-between px-4 sm:justify-between md:max-w-full'>
         {/* Logo */}
-        <Link to='/' className='flex gap-1 items-center max-w-7xl'>
+        <Link to='/' className='flex max-w-7xl items-center gap-1'>
           <img
             src={bppLogo}
-            className='object-contain w-auto h-16'
+            className='h-16 w-auto object-contain'
             alt='BPP Logo'
           />
-          <span className='text-xl font-bold font-oswald sm:text-sm md:text-xl'>
+          <span className='font-oswald text-xl font-bold sm:text-sm md:text-xl'>
             {t('PartyName.name')}
           </span>
         </Link>
@@ -109,7 +109,7 @@ const MainNav = () => {
                     <NavigationMenuLink asChild>
                       <Link
                         to={menu.href}
-                        className='inline-flex justify-center items-center px-3 py-1 w-full h-8 text-xs font-medium rounded-md transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50'
+                        className='inline-flex h-8 w-full items-center justify-center rounded-md px-3 py-1 text-xs font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50'
                       >
                         {menu.label}
                       </Link>
@@ -126,7 +126,7 @@ const MainNav = () => {
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant='ghost' size='icon' aria-label='Menu'>
-                <MenuIcon className='w-5 h-5' />
+                <MenuIcon className='h-5 w-5' />
               </Button>
             </SheetTrigger>
             <SheetContent side='left' className='w-[300px] sm:w-[400px]'>
@@ -134,11 +134,11 @@ const MainNav = () => {
                 <SheetTitle>
                   <Link
                     to='/'
-                    className='flex gap-2 items-center'
+                    className='flex items-center gap-2'
                     onClick={() => setIsOpen(false)}
                   >
-                    <img src={bppLogo} className='w-8 h-8' alt='BPP Logo' />
-                    <span className='font-bold font-oswald'>
+                    <img src={bppLogo} className='h-8 w-8' alt='BPP Logo' />
+                    <span className='font-oswald font-bold'>
                       {t('PartyName.name')}
                     </span>
                   </Link>
@@ -150,11 +150,11 @@ const MainNav = () => {
                     <Collapsible key={`${groupIndex}-${menu.href}`}>
                       {menu.submenus?.length ? (
                         <>
-                          <CollapsibleTrigger className='flex justify-between items-center p-2 w-full text-left rounded-md hover:bg-accent'>
+                          <CollapsibleTrigger className='flex w-full items-center justify-between rounded-md p-2 text-left hover:bg-accent'>
                             <span className='text-sm font-medium'>
                               {menu.label}
                             </span>
-                            <ChevronDown className='w-4 h-4' />
+                            <ChevronDown className='h-4 w-4' />
                           </CollapsibleTrigger>
                           <CollapsibleContent className='ml-4 space-y-2'>
                             {menu.submenus.map((submenu: Submenu) => (
@@ -162,7 +162,7 @@ const MainNav = () => {
                                 key={submenu.href}
                                 to={submenu.href}
                                 onClick={() => setIsOpen(false)}
-                                className='block p-2 text-sm rounded-md hover:bg-accent'
+                                className='block rounded-md p-2 text-sm hover:bg-accent'
                               >
                                 {submenu.label}
                               </Link>
@@ -173,7 +173,7 @@ const MainNav = () => {
                         <Link
                           to={menu.href}
                           onClick={() => setIsOpen(false)}
-                          className='block p-2 text-sm rounded-md hover:bg-accent'
+                          className='block rounded-md p-2 text-sm hover:bg-accent'
                         >
                           {menu.label}
                         </Link>
@@ -187,7 +187,7 @@ const MainNav = () => {
         </div>
 
         {/* Right Side Actions */}
-        <div className='hidden gap-1 items-center lg:flex'>
+        <div className='hidden items-center gap-1 lg:flex'>
           <Button className='h-8 bg-blue-600 hover:bg-blue-800'>
             <Link to='/sign-up' className='text-xs text-white'>
               {t('Join.label', { ns: 'header' })}

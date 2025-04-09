@@ -31,11 +31,12 @@ interface Goal {
   description: string
   imgSrc: string
   icon: LucideIcon
+  link: string
 }
 
-const GoalCard: FC<Goal> = ({ title, description, imgSrc, icon }) => {
+const GoalCard: FC<Goal> = ({ title, description, imgSrc, icon, link }) => {
   return (
-    <Link to='/about/bpp-goals/national-integrity' className='w-full'>
+    <Link to={link} className='w-full'>
       <Card className='flex h-[500px] flex-col justify-between overflow-hidden border bg-white transition-all duration-300 hover:bg-gray-50 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700'>
         {/* Image */}
         <div className='relative h-48 overflow-hidden'>
@@ -87,6 +88,7 @@ const GoalsPage = () => {
         'BPP shall bear true faith and allegiance to the constitution of India as by law established, and to the principles of socialism, secularism and democracy and would uphold the sovereignty, unity and integrity of India.',
       imgSrc: img1,
       icon: Building2,
+      link: '/about/bpp-goals/national-integrity',
     },
     {
       title: 'EQUAL OPPORTUNITY AND GENDER EQUALITY',
@@ -94,6 +96,7 @@ const GoalsPage = () => {
         'BPP is committed to the task of building a developed democratic India based on principle of equal opportunity to all citizens. The party will lay special emphasis on improving the condition of socially and economically disadvantaged sections of society.',
       imgSrc: img2,
       icon: Users,
+      link: '/about/bpp-goals/equal-opportunity-and-gender-equality',
     },
     {
       title: 'GOOD HEALTH AND WELL-BEING',
@@ -101,6 +104,7 @@ const GoalsPage = () => {
         'BPP will work to provide quality health facilities to all citizens, ensuring that every individual has access to health services that improve their quality of life.',
       imgSrc: img3,
       icon: Heart,
+      link: '/about/bpp-goals',
     },
     {
       title: 'AGAINST MUSCLE AND MONEY POWER',
@@ -108,6 +112,7 @@ const GoalsPage = () => {
         'BPP will work against the misuse of money and muscle power in democratic politics.',
       imgSrc: img4,
       icon: Sword,
+      link: '/about/bpp-goals',
     },
     {
       title: 'UPHOLD SECULARISM',
@@ -115,6 +120,7 @@ const GoalsPage = () => {
         'BPP firmly supports secularism and is opposed to the idea of a theocratic state. BPP will work to protect and promote religious harmony and ensure equal rights for all faiths.',
       imgSrc: img5,
       icon: Church,
+      link: '/about/bpp-goals',
     },
     {
       title: 'INDUSTRIAL DEVELOPMENT & INFRASTRUCTURE',
@@ -122,6 +128,7 @@ const GoalsPage = () => {
         'The goal of the BPP is to promote industrial development and build world-class infrastructure to drive economic development. By modernizing industries, encouraging research and development and enhancing transportation, energy and digital networks, the party aims to create a sustainable competitive economy.',
       imgSrc: img6,
       icon: Factory,
+      link: '/about/bpp-goals',
     },
     {
       title: 'EMPLOYMENT & ECONOMIC GROWTH',
@@ -129,6 +136,7 @@ const GoalsPage = () => {
         'BPP is committed to promoting decent work and sustained economic growth by creating job opportunities, ensuring fair wages and improving working conditions for all citizens. The party aims to empower individuals particularly in rural and marginalized communities through skill development, entrepreneurship and access to employment.',
       imgSrc: img7,
       icon: BadgeDollarSign,
+      link: '/about/bpp-goals',
     },
     {
       title: 'JUSTICE, PEACE, CALM AND PROSPERITY',
@@ -136,6 +144,7 @@ const GoalsPage = () => {
         'BPP aims to create a peaceful, just, and prosperous society where all citizens have equal opportunities, security and access to resources. By this goal BPP will uphold individual rights as well as the right to privacy freedom of expression and access to information.',
       imgSrc: img8,
       icon: Scale,
+      link: '/about/bpp-goals',
     },
     {
       title: 'UPLIFTMENT OF FARMERS',
@@ -143,6 +152,7 @@ const GoalsPage = () => {
         "BPP is dedicated to the upliftment of farmers by ensuring fair prices for their product, providing access to modern farming techniques and improving infrastructure in rural areas. The focus will be on increasing farmer's income through better market access, sustainable agricultural practices and timely financial support.",
       imgSrc: img9,
       icon: Wheat,
+      link: '/about/bpp-goals',
     },
     {
       title: 'QUALITY EDUCATION',
@@ -150,6 +160,7 @@ const GoalsPage = () => {
         'BPP believes that education is one of the most powerful and proven vehicles for sustainable development. The goal is to ensure that all girls and boys complete primary and secondary schooling. It also eliminate gender and wealth disparities and achieve universal access to a quality higher education.',
       imgSrc: img10,
       icon: GraduationCap,
+      link: '/about/bpp-goals',
     },
   ]
 
@@ -176,6 +187,7 @@ const GoalsPage = () => {
                   description={goal.description}
                   imgSrc={goal.imgSrc}
                   icon={goal.icon}
+                  link={goal.link}
                 />
               ))}
             </div>

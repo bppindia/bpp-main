@@ -1,11 +1,11 @@
 import Cookies from 'js-cookie'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
+import store from '@/store/store'
 import { cn } from '@/lib/utils'
 import { SearchProvider } from '@/context/search-context'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/layout/dashboard/app-sidebar'
 import SkipToMain from '@/components/skip-to-main'
-import store from '@/store/store'
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardLayout,
@@ -15,7 +15,10 @@ export const Route = createFileRoute('/dashboard')({
     const authToken = Cookies.get('authToken')
     const userDetails = Cookies.get('userDetails')
 
-    if ((!state.auth.token || !state.auth.user) && (!authToken || !userDetails)) {
+    if (
+      (!state.auth.token || !state.auth.user) &&
+      (!authToken || !userDetails)
+    ) {
       // Redirect to sign-in with return url
       throw redirect({
         to: '/sign-in',
@@ -31,8 +34,8 @@ export const Route = createFileRoute('/dashboard')({
         type: 'auth/setCredentials',
         payload: {
           token: authToken,
-          user: JSON.parse(userDetails)
-        }
+          user: JSON.parse(userDetails),
+        },
       })
     }
   },

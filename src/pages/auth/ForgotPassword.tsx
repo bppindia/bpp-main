@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from '@tanstack/react-router'
 import { Eye, EyeOff } from 'lucide-react'
 import { toast } from 'sonner'
 import bppLogo from '@/assets/images/logos/Bpp.png'
@@ -12,7 +13,6 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Toaster } from '@/components/ui/sonner'
-import { useNavigate } from '@tanstack/react-router'
 
 const ResetPassword = () => {
   // Form states
@@ -180,17 +180,17 @@ const ResetPassword = () => {
   }
 
   return (
-    <section className='flex justify-center items-center py-10 mx-auto h-screen rounded-none md:rounded-3xl md:p-8'>
-      <Card className='p-4 mx-auto w-full max-w-md border-gray-300'>
+    <section className='mx-auto flex h-screen items-center justify-center rounded-none py-10 md:rounded-3xl md:p-8'>
+      <Card className='mx-auto w-full max-w-md border-gray-300 p-4'>
         <CardHeader>
-          <div className='flex justify-center items-center text-xl font-bold text-blue-800'>
+          <div className='flex items-center justify-center text-xl font-bold text-blue-800'>
             <img
               src={bppLogo}
               alt=''
               className='w-[120px] rounded-lg object-contain'
             />
           </div>
-          <h2 className='text-2xl font-black text-center text-neutral-800 dark:text-neutral-200'>
+          <h2 className='text-center text-2xl font-black text-neutral-800 dark:text-neutral-200'>
             <div>Welcome to</div>
             <div style={{ color: '#79A5F2' }}>Bharatiya Popular Party</div>
           </h2>
@@ -205,7 +205,7 @@ const ResetPassword = () => {
           {step === 1 ? (
             <form onSubmit={handleInitialSubmit} className='space-y-4'>
               <div>
-                <label className='block mb-1 text-sm font-medium'>Email</label>
+                <label className='mb-1 block text-sm font-medium'>Email</label>
                 <Input
                   type='email'
                   name='email'
@@ -222,7 +222,7 @@ const ResetPassword = () => {
               </div>
               <p className='my-2 text-center'>OR</p>
               <div>
-                <label className='block mb-1 text-sm font-medium'>Phone</label>
+                <label className='mb-1 block text-sm font-medium'>Phone</label>
                 <Input
                   placeholder='+91 Phone number'
                   value={phone}
@@ -244,13 +244,13 @@ const ResetPassword = () => {
             <form onSubmit={handleResetSubmit} className='space-y-4'>
               <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
                 <div>
-                  <label className='block mb-1 text-sm font-medium'>
+                  <label className='mb-1 block text-sm font-medium'>
                     {contactInfo.type === 'email' ? 'Email' : 'Phone'}
                   </label>
                   <Input value={contactInfo.value} disabled />
                 </div>
                 <div>
-                  <label className='block mb-1 text-sm font-medium'>OTP</label>
+                  <label className='mb-1 block text-sm font-medium'>OTP</label>
                   <Input
                     placeholder='Enter 6-digit OTP'
                     maxLength={6}
@@ -268,7 +268,7 @@ const ResetPassword = () => {
                   )}
                 </div>
                 <div>
-                  <label className='block mb-1 text-sm font-medium'>
+                  <label className='mb-1 block text-sm font-medium'>
                     New Password
                   </label>
                   <div className='relative'>
@@ -286,7 +286,7 @@ const ResetPassword = () => {
                       type='button'
                       variant='ghost'
                       size='icon'
-                      className='absolute top-0 right-0 px-3 py-2 h-full hover:bg-transparent'
+                      className='absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent'
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -297,7 +297,7 @@ const ResetPassword = () => {
                   )}
                 </div>
                 <div>
-                  <label className='block mb-1 text-sm font-medium'>
+                  <label className='mb-1 block text-sm font-medium'>
                     Confirm Password
                   </label>
                   <div className='relative'>
@@ -315,7 +315,7 @@ const ResetPassword = () => {
                       type='button'
                       variant='ghost'
                       size='icon'
-                      className='absolute top-0 right-0 px-3 py-2 h-full hover:bg-transparent'
+                      className='absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent'
                       onClick={() =>
                         setShowConfirmPassword(!showConfirmPassword)
                       }

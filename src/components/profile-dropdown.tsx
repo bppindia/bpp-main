@@ -1,4 +1,7 @@
 import { Link, useNavigate } from '@tanstack/react-router'
+import { RootState } from '@/store/store'
+import { useSelector } from 'react-redux'
+import { useAuth } from '@/context/AuthContext'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,9 +14,6 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useAuth } from '@/context/AuthContext'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
 
 export function ProfileDropdown() {
   const { logout } = useAuth()
@@ -28,9 +28,12 @@ export function ProfileDropdown() {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <Button variant='ghost' className='relative w-8 h-8 rounded-full'>
-          <Avatar className='w-8 h-8'>
-            <AvatarImage src='/avatars/01.png' alt={user?.firstName || 'User'} />
+        <Button variant='ghost' className='relative h-8 w-8 rounded-full'>
+          <Avatar className='h-8 w-8'>
+            <AvatarImage
+              src='/avatars/01.png'
+              alt={user?.firstName || 'User'}
+            />
             <AvatarFallback>{user?.firstName?.[0] || 'U'}</AvatarFallback>
           </Avatar>
         </Button>

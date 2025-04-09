@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from '@tanstack/react-router'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import {
@@ -10,7 +11,6 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Link } from '@tanstack/react-router'
 
 export default function ForgetPin() {
   const [input, setInput] = useState('')
@@ -117,7 +117,7 @@ export default function ForgetPin() {
               </Button>
             </form>
 
-            <div className='mt-4 text-sm text-center'>
+            <div className='mt-4 text-center text-sm'>
               Remembered your Pin?{' '}
               <Link to='/' className='text-blue-500 hover:underline'>
                 Go back

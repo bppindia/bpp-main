@@ -20,7 +20,7 @@ export default function Settings() {
       {/* ===== Top Heading ===== */}
       <Header>
         <Search />
-        <div className='flex items-center ml-auto space-x-4'>
+        <div className='ml-auto flex items-center space-x-4'>
           <ThemeSwitch />
           <ProfileDropdown />
         </div>
@@ -36,11 +36,11 @@ export default function Settings() {
           </p>
         </div>
         <Separator className='my-4 lg:my-6' />
-        <div className='flex overflow-hidden flex-col flex-1 space-y-2 md:space-y-2 lg:flex-row lg:space-x-12 lg:space-y-0'>
+        <div className='flex flex-1 flex-col space-y-2 overflow-hidden md:space-y-2 lg:flex-row lg:space-x-12 lg:space-y-0'>
           <aside className='top-0 lg:sticky lg:w-1/5'>
             <SidebarNav items={sidebarNavItems} />
           </aside>
-          <div className='flex overflow-y-hidden p-1 pr-4 w-full'>
+          <div className='flex w-full overflow-y-hidden p-1 pr-4'>
             <Outlet />
           </div>
         </div>

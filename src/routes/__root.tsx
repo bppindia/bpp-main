@@ -1,25 +1,29 @@
 // routes/_root.tsx
+import { useEffect } from 'react'
 import { QueryClient } from '@tanstack/react-query'
-import { createRootRouteWithContext, Outlet, useLocation } from '@tanstack/react-router'
+import {
+  createRootRouteWithContext,
+  Outlet,
+  useLocation,
+} from '@tanstack/react-router'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+import { initializeAnalytics, trackPageView } from '@/utils/analytics'
 import { Toaster } from '@/components/ui/toaster'
 import GeneralError from '@/features/errors/general-error'
 import NotFoundError from '@/features/errors/not-found-error'
-import { useEffect } from 'react'
-import { initializeAnalytics, trackPageView } from '@/utils/analytics'
 
 const RootComponent = () => {
-  const location = useLocation();
+  const location = useLocation()
 
   useEffect(() => {
-    const gaMeasurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
-    initializeAnalytics(gaMeasurementId);
-  }, []);
+    const gaMeasurementId = import.meta.env.VITE_GA_MEASUREMENT_ID
+    initializeAnalytics(gaMeasurementId)
+  }, [])
 
   useEffect(() => {
-    trackPageView(location.pathname);
-  }, [location]);
+    trackPageView(location.pathname)
+  }, [location])
 
   return (
     <>
@@ -32,8 +36,8 @@ const RootComponent = () => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
