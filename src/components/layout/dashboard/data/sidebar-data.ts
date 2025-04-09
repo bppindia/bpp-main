@@ -1,106 +1,161 @@
-import { useAuth } from '@/context/AuthContext';
-import { getAccessibleSidebarData } from '@/lib/access-control';
 import {
-  IconBriefcase,
-  IconBuildingCommunity,
-  IconCalendar,
-  IconCertificate,
-  IconFileText,
-  IconHeartHandshake,
   IconHelp,
   IconLayoutDashboard,
-  IconLock,
-  IconMessage,
   IconNotification,
   IconPalette,
   IconSettings,
-  IconShare3,
-  IconShield,
   IconTool,
-  IconUser,
+  IconUserCog,
   IconWallet,
-} from '@tabler/icons-react';
-import { type SidebarData } from '@/components/layout/dashboard/types';
+  IconTarget, 
+  IconGift,  
+  IconUsers,  
+  IconCreditCard, 
+  IconCalendarEvent, 
+  IconTimelineEvent, 
+} from '@tabler/icons-react'
+import { Command } from 'lucide-react'
+import { type SidebarData } from '../types'
 
-const baseSidebarData: SidebarData = {
+export const sidebarData: SidebarData = {
   user: {
-    name: 'Swapnil Mahadik',
-    email: 'mswapnil218@gmail.com',
+    name: 'satnaing',
+    email: 'satnaingdev@gmail.com',
     avatar: '/avatars/shadcn.jpg',
-    role: ''
   },
-  dashboard: {
-    title: 'Dashboard',
-    url: '/dashboard',
-    icon: IconLayoutDashboard,
-  },
+  teams: [
+    {
+      name: 'BPPINDIA',
+      logo: Command,
+      plan: 'Bharatiya Popular Party',
+    }
+  ],
   navGroups: [
+    {
+      title: 'Dashboard',
+      items: [
+        {
+          title: 'Overview',
+          url: '/dashboard',
+          icon: IconLayoutDashboard, 
+        }
+      ]
+    },
     {
       title: 'General',
       items: [
-        { title: 'Goals', url: '/dashboard/goal', icon: IconMessage },
-        { title: 'Donate', url: '/dashboard/donate', icon: IconHeartHandshake },
-        { title: 'Referral', url: '/dashboard/referral', icon: IconShare3 },
+        {
+          title: 'Goals',
+          url: '/dashboard/goal',
+          icon: IconTarget,
+        },
+        {
+          title: 'Donate',
+          url: '/dashboard/donate',
+          icon: IconGift, 
+        },
+        {
+          title: 'Referral',
+          url: '/dashboard/referral',
+          icon: IconUsers, 
+        },
       ],
     },
     {
       title: 'User Management',
       items: [
-        { title: 'Profile', url: '/dashboard/profile', icon: IconUser },
-        { title: 'Professional Profile', url: '/dashboard/professional-profile', icon: IconBriefcase },
-        { title: 'Wallet', url: '/dashboard/wallet', icon: IconWallet },
+        {
+          title: 'Profile',
+          url: '/dashboard/profile',
+          icon: IconUserCog, 
+        },
+        {
+          title: 'Professional Profile',
+          url: '/dashboard/professional-profile',
+          icon: IconUserCog, 
+        },
+        {
+          title: 'Wallet',
+          url: '/dashboard/wallet',
+          icon: IconWallet, 
+        },
       ],
     },
     {
       title: 'Membership',
       items: [
-        { title: 'Membership', url: '/dashboard/membership', icon: IconCertificate },
+        {
+          title: 'Membership',
+          url: '/dashboard/membership',
+          icon: IconCreditCard,
+        },
       ],
     },
     {
       title: 'Services',
       items: [
-        { title: 'Community Contribution', url: '/dashboard/community-contribution', icon: IconBuildingCommunity },
-        { title: 'Business Community', url: '/dashboard/business-community-join', icon: IconBriefcase },
-      ],
-    },
-    {
-      title: 'Settings',
-      items: [
         {
-          title: 'Settings',
-          icon: IconSettings,
-          items: [
-            { title: 'Account', url: '/dashboard/settings/account', icon: IconTool },
-            { title: 'Appearance', url: '/dashboard/settings/appearance', icon: IconPalette },
-            { title: 'Notifications', url: '/dashboard/settings/notifications', icon: IconNotification },
-            { title: 'Security', url: '/dashboard/settings/security', icon: IconShield },
-            { title: 'Terms & Conditions', url: '/dashboard/settings/terms-and-conditions', icon: IconFileText },
-            { title: 'Privacy Policy', url: '/dashboard/settings/privacy-policy', icon: IconLock },
-          ],
+          title: 'Community Contribution',
+          url: '/dashboard/community-contribution',
+          icon: IconUsers, 
+        },
+        {
+          title: 'Business Community',
+          url: '/dashboard/business-community',
+          icon: IconUsers,
         },
       ],
     },
     {
       title: 'Events & Campaigns',
       items: [
-        { title: 'Events', url: '/dashboard/events', icon: IconCalendar },
-        { title: 'Campaigns', url: '/dashboard/campaigns', icon: IconCalendar },
+        {
+          title: 'Events',
+          url: '/dashboard/events',
+          icon: IconCalendarEvent, 
+        },
+        {
+          title: 'Campaigns',
+          url: '/dashboard/campaigns',
+          icon: IconTimelineEvent, 
+        },
+      ],
+    },
+    {
+      title: 'Other',
+      items: [
+        {
+          title: 'Settings',
+          icon: IconSettings, 
+          items: [
+            {
+              title: 'Profile',
+              url: '/dashboard/settings',
+              icon: IconUserCog, 
+            },
+            {
+              title: 'Account',
+              url: '/dashboard/settings/account',
+              icon: IconTool, 
+            },
+            {
+              title: 'Appearance',
+              url: '/dashboard/settings/appearance',
+              icon: IconPalette, 
+            },
+            {
+              title: 'Notifications',
+              url: '/dashboard/settings/notifications',
+              icon: IconNotification,
+            },
+          ],
+        },
+        {
+          title: 'Help Center',
+          url: '/dashboard/help-center',
+          icon: IconHelp, 
+        },
       ],
     },
   ],
-  helpCenter: {
-    title: 'Help Center',
-    url: '/dashboard/customer-support',
-    icon: IconHelp,
-  },
-};
-
-export const useSidebarData = () => {
-  const { user } = useAuth();
-  const access = {
-    isVerified: user?.isVerified ?? false,
-    membership: user?.membership ?? null, 
-  };
-  return getAccessibleSidebarData(baseSidebarData, access);
-};
+}

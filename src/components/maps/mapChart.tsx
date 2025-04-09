@@ -300,8 +300,8 @@ const MapChart: React.FC<MapChartProps> = ({ state, dist }) => {
                     center={getProjectionConfig.center}
                 >
                     <Geographies geography={mapData}>
-                        {({ geographies }) =>
-                            geographies.map((geo) => {
+                        {({ geographies }: { geographies: GeographyProps['geography'][] }) =>
+                            geographies.map((geo: GeographyProps['geography']) => {
                                 const tooltipContent = getTooltipContent(geo);
                                 return (
                                     <TooltipProvider key={geo.rsmKey}>
@@ -350,7 +350,7 @@ const MapChart: React.FC<MapChartProps> = ({ state, dist }) => {
 
             {/* Popup Card for District Data */}
             {selectedDistrict && (
-                <div className="absolute z-10 w-64 top-4 right-4">
+                <div className="absolute top-4 right-4 z-10 w-64">
                     <Card>
                         <CardHeader>
                             <CardTitle>{selectedDistrict}</CardTitle>

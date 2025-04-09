@@ -168,7 +168,7 @@
         "text": "learn more about our Mission"
       }
     }
-  } ,
+  },
   "communityContribution": {
     "joinCommunity": {
       "title": "Join Our Community",
@@ -192,9 +192,9 @@
       "commonMan": "Common Man",
       "professionals": "Professionals",
       "businessCommunity": "Business Community"
-    } 
-},
-"newsletter": {
+    }
+  },
+  "newsletter": {
     "heading": "Our newsletters",
     "title": "Stay Informed with Us",
     "subtitle": "Get timely updates on national news and political developments. No spam, just the most relevant insights delivered to your inbox.",

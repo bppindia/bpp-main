@@ -1,11 +1,11 @@
-import { Separator } from '@/components/ui/separator';
-import { SidebarTrigger } from '@/components/ui/sidebar';
-import { cn } from '@/lib/utils';
-import React from 'react';
+import React from 'react'
+import { cn } from '@/lib/utils'
+import { Separator } from '@/components/ui/separator'
+import { SidebarTrigger } from '@/components/ui/sidebar'
 
 interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
-  fixed?: boolean;
-  ref?: React.Ref<HTMLElement>;
+  fixed?: boolean
+  ref?: React.Ref<HTMLElement>
 }
 
 export const Header = ({
@@ -14,15 +14,19 @@ export const Header = ({
   children,
   ...props
 }: HeaderProps) => {
-  const [offset, setOffset] = React.useState(0);
+  const [offset, setOffset] = React.useState(0)
 
   React.useEffect(() => {
     const onScroll = () => {
-      setOffset(document.body.scrollTop || document.documentElement.scrollTop);
-    };
-    document.addEventListener('scroll', onScroll, { passive: true });
-    return () => document.removeEventListener('scroll', onScroll);
-  }, []);
+      setOffset(document.body.scrollTop || document.documentElement.scrollTop)
+    }
+
+    // Add scroll listener to the body
+    document.addEventListener('scroll', onScroll, { passive: true })
+
+    // Clean up the event listener on unmount
+    return () => document.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
     <header
@@ -38,7 +42,7 @@ export const Header = ({
       <Separator orientation='vertical' className='h-6' />
       {children}
     </header>
-  );
-};
+  )
+}
 
-Header.displayName = 'Header';
+Header.displayName = 'Header'

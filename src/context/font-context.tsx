@@ -35,7 +35,7 @@ export const FontProvider: React.FC<{ children: React.ReactNode }> = ({
     _setFont(font)
   }
 
-  return <FontContext.Provider value={{ font, setFont }}>{children}</FontContext.Provider>
+  return <FontContext value={{ font, setFont }}>{children}</FontContext>
 }
 
 // eslint-disable-next-line react-refresh/only-export-components

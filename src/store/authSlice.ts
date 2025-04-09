@@ -1,29 +1,37 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { User } from "@/types/auth";
 
 interface AuthState {
   token: string | null;
-  data: any;
+  user: User | null;
+  isAuthenticated: boolean;
 }
 
 const initialState: AuthState = {
   token: null,
-  data: null,
+  user: null,
+  isAuthenticated: false,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setCredentials: (state, action: PayloadAction<{ token: string; data: any }>) => {
+    setCredentials: (state, action: PayloadAction<{ token: string; user: User }>) => {
       state.token = action.payload.token;
-      state.data = action.payload.data;
+      state.user = action.payload.user;
+      state.isAuthenticated = true;
     },
     clearCredentials: (state) => {
       state.token = null;
-      state.data = null;
+      state.user = null;
+      state.isAuthenticated = false;
+    },
+    updateUser: (state, action: PayloadAction<Partial<User>>) => {
+      state.user = state.user ? { ...state.user, ...action.payload } : null;
     },
   },
 });
 
-export const { setCredentials, clearCredentials } = authSlice.actions;
+export const { setCredentials, clearCredentials, updateUser } = authSlice.actions;
 export default authSlice.reducer;

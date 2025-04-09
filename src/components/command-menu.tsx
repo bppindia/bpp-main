@@ -1,13 +1,13 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
+import { useNavigate } from '@tanstack/react-router'
 import {
   IconArrowRightDashed,
   IconDeviceLaptop,
   IconMoon,
   IconSun,
-} from '@tabler/icons-react';
-import { useSearch } from '@/context/search-context';
-import { useTheme } from '@/context/theme-context';
+} from '@tabler/icons-react'
+import { useSearch } from '@/context/search-context'
+import { useTheme } from '@/context/theme-context'
 import {
   CommandDialog,
   CommandEmpty,
@@ -16,114 +16,81 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from '@/components/ui/command';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { useSidebarData } from '@/components/layout/dashboard/data/sidebar-data';
-import { NavGroup, NavItem, NavLink, NavCollapsible } from '@/components/layout/dashboard/types';
+} from '@/components/ui/command'
+import { sidebarData } from './layout/dashboard/data/sidebar-data'
+import { ScrollArea } from './ui/scroll-area'
 
 export function CommandMenu() {
-  const navigate = useNavigate();
-  const { setTheme } = useTheme();
-  const { open, setOpen } = useSearch();
-  const sidebarData = useSidebarData();
-  const { dashboard, navGroups, helpCenter } = sidebarData;
+  const navigate = useNavigate()
+  const { setTheme } = useTheme()
+  const { open, setOpen } = useSearch()
 
   const runCommand = React.useCallback(
     (command: () => unknown) => {
-      setOpen(false);
-      command();
+      setOpen(false)
+      command()
     },
     [setOpen]
-  );
+  )
 
   return (
     <CommandDialog modal open={open} onOpenChange={setOpen}>
-      <CommandInput placeholder="Type a command or search..." />
+      <CommandInput placeholder='Type a command or search...' />
       <CommandList>
-        <ScrollArea type="hover" className="pr-1 h-72">
+        <ScrollArea type='hover' className='h-72 pr-1'>
           <CommandEmpty>No results found.</CommandEmpty>
-
-          {/* Standalone Dashboard */}
-          <CommandGroup heading="">
-            <CommandItem
-              value={dashboard.title}
-              onSelect={() => runCommand(() => navigate(dashboard.url))}
-            >
-              <div className="flex items-center justify-center w-4 h-4 mr-2">
-                <IconArrowRightDashed className="size-2 text-muted-foreground/80" />
-              </div>
-              {dashboard.title}
-            </CommandItem>
-          </CommandGroup>
-
-          {/* Navigation Groups */}
-          {navGroups.map((group: NavGroup) => (
+          {sidebarData.navGroups.map((group) => (
             <CommandGroup key={group.title} heading={group.title}>
-              {group.items.map((navItem: NavItem, i: number) => {
-                if ('url' in navItem) {
-                  const linkItem = navItem as NavLink; // Type assertion
+              {group.items.map((navItem, i) => {
+                if (navItem.url)
                   return (
                     <CommandItem
-                      key={`${linkItem.url}-${i}`}
-                      value={linkItem.title}
-                      onSelect={() => runCommand(() => navigate(linkItem.url))}
+                      key={`${navItem.url}-${i}`}
+                      value={navItem.title}
+                      onSelect={() => {
+                        runCommand(() => navigate({ to: navItem.url }))
+                      }}
                     >
-                      <div className="flex items-center justify-center w-4 h-4 mr-2">
-                        <IconArrowRightDashed className="size-2 text-muted-foreground/80" />
+                      <div className='mr-2 flex h-4 w-4 items-center justify-center'>
+                        <IconArrowRightDashed className='size-2 text-muted-foreground/80' />
                       </div>
-                      {linkItem.title}
+                      {navItem.title}
                     </CommandItem>
-                  );
-                }
-                const collapsibleItem = navItem as NavCollapsible; // Type assertion
-                return collapsibleItem.items?.map((subItem: NavLink, j: number) => (
+                  )
+
+                return navItem.items?.map((subItem, i) => (
                   <CommandItem
-                    key={`${subItem.url}-${j}`}
+                    key={`${subItem.url}-${i}`}
                     value={subItem.title}
-                    onSelect={() => runCommand(() => navigate(subItem.url))}
+                    onSelect={() => {
+                      runCommand(() => navigate({ to: subItem.url }))
+                    }}
                   >
-                    <div className="flex items-center justify-center w-4 h-4 mr-2">
-                      <IconArrowRightDashed className="size-2 text-muted-foreground/80" />
+                    <div className='mr-2 flex h-4 w-4 items-center justify-center'>
+                      <IconArrowRightDashed className='size-2 text-muted-foreground/80' />
                     </div>
                     {subItem.title}
                   </CommandItem>
-                ));
+                ))
               })}
             </CommandGroup>
           ))}
-
-          {/* Standalone Help Center */}
-          <CommandGroup heading="">
-            <CommandItem
-              value={helpCenter.title}
-              onSelect={() => runCommand(() => navigate(helpCenter.url))}
-            >
-              <div className="flex items-center justify-center w-4 h-4 mr-2">
-                <IconArrowRightDashed className="size-2 text-muted-foreground/80" />
-              </div>
-              {helpCenter.title}
-            </CommandItem>
-          </CommandGroup>
-
           <CommandSeparator />
-          <CommandGroup heading="Theme">
+          <CommandGroup heading='Theme'>
             <CommandItem onSelect={() => runCommand(() => setTheme('light'))}>
-              <IconSun className="mr-2" />
-              <span>Light</span>
+              <IconSun /> <span>Light</span>
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme('dark'))}>
-              <IconMoon className="mr-2 scale-90" />
+              <IconMoon className='scale-90' />
               <span>Dark</span>
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme('system'))}>
-              <IconDeviceLaptop className="mr-2" />
+              <IconDeviceLaptop />
               <span>System</span>
             </CommandItem>
           </CommandGroup>
         </ScrollArea>
       </CommandList>
     </CommandDialog>
-  );
+  )
 }
-
-export default CommandMenu;

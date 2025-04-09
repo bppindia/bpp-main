@@ -1,54 +1,63 @@
 // import partyConstitution from '@/assets/pdf/PARTY CONSTITUTION.pdf';
-import HeaderComponent from '@/components/HeaderComponent';
-import RecruitmentBanner from '@/components/others/become-partCard';
+import { useNavigate } from '@tanstack/react-router'
+import { ChevronRight, Pointer } from 'lucide-react'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/accordion'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle
-} from "@/components/ui/card";
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import Layout from '@/layout/Layout';
-import { ChevronRight, Pointer } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+  CardTitle,
+} from '@/components/ui/card'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import { Separator } from '@/components/ui/separator'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import RecruitmentBanner from '@/components/common/become-partCard'
+import HeaderComponent from '@/components/layout/common/HeaderComponent'
 
 export default function MembershipFaq() {
   const navigate = useNavigate()
   return (
-    <Layout>
+    <>
       <HeaderComponent
-        heading="Membership FAQ"
+        heading='Membership FAQ'
         text="FAQ's"
         breadcrumbLinks={[
-          { label: "Home", href: "/" },
-          { label: "Membership", href: "/membership" },
-          { label: "Membership FAQ", href: "/membership/faq" }
+          { label: 'Home', href: '/' },
+          { label: 'Membership', href: '/membership' },
+          { label: 'Membership FAQ', href: '/membership/faq' },
         ]}
-        imgUrl={"null"} // Placeholder for header image
+        imgUrl={'null'} // Placeholder for header image
       />
-      <div className="max-w-7xl mx-auto p-6">
-        <div className="grid gap-6 mb-8">
+      <div className='mx-auto max-w-7xl p-6'>
+        <div className='mb-8 grid gap-6'>
           {/* Top Cards */}
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className='grid gap-6 md:grid-cols-2'>
             <Card>
               <CardHeader>
                 <CardTitle>Member Login</CardTitle>
               </CardHeader>
               <CardContent>
                 <p>Login to access all our member resource</p>
-                <div className="flex gap-4 mt-4">
-                  <Button className="bg-[#e85a32] hover:bg-[#e85a32] text-white px-6 py-2 rounded-md" onClick={() => navigate('/auth/login')}>Login <ChevronRight className="ml-2 h-4 w-4" /></Button>
-                  <Button className="bg-[#e85a32] hover:bg-[#e85a32] text-white px-6 py-2 rounded-md" onClick={() => navigate('/auth/signup')}>Join Now <ChevronRight className="ml-2 h-4 w-4" /></Button>
+                <div className='mt-4 flex gap-4'>
+                  <Button
+                    className='rounded-md bg-[#e85a32] px-6 py-2 text-white hover:bg-[#e85a32]'
+                    onClick={() => navigate({ to: '/sign-in' })}
+                  >
+                    Login <ChevronRight className='ml-2 h-4 w-4' />
+                  </Button>
+                  <Button
+                    className='rounded-md bg-[#e85a32] px-6 py-2 text-white hover:bg-[#e85a32]'
+                    onClick={() => navigate({ to: '/sign-up' })}
+                  >
+                    Join Now <ChevronRight className='ml-2 h-4 w-4' />
+                  </Button>
                 </div>
               </CardContent>
             </Card>
@@ -58,8 +67,13 @@ export default function MembershipFaq() {
                 <CardTitle>Resources</CardTitle>
               </CardHeader>
               <CardContent>
-                <Button className="bg-[#e85a32] hover:bg-[#e85a32] text-white px-6 py-2 rounded-md" onClick={() => navigate('/community-contribution/introduction')}>
-                  View Resources <ChevronRight className="ml-2 h-4 w-4" />
+                <Button
+                  className='rounded-md bg-[#e85a32] px-6 py-2 text-white hover:bg-[#e85a32]'
+                  onClick={() =>
+                    navigate({ to: '/community-contribution/introduction' })
+                  }
+                >
+                  View Resources <ChevronRight className='ml-2 h-4 w-4' />
                 </Button>
               </CardContent>
             </Card>
@@ -70,316 +84,410 @@ export default function MembershipFaq() {
             <CardHeader>
               <CardTitle>Your Membership FAQs</CardTitle>
               <CardDescription>
-                In the Members Area you'll find everything you need to support Bharatiya Popular Party as a member – from managing your membership to campaigning tools and resources.
+                In the Members Area you'll find everything you need to support
+                Bharatiya Popular Party as a member – from managing your
+                membership to campaigning tools and resources.
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex gap-4 mb-6 overflow-x-auto">
+              <div className='mb-6 flex gap-4 overflow-x-auto'>
                 {['Getting Involved'].map((item) => (
-                  <Button className="bg-[#e85a32] hover:bg-[#e85a32] text-white px-6 py-2 rounded-full" key={item} variant={item === 'Getting Involved' ? 'default' : 'outline'} size="sm">
+                  <Button
+                    className='rounded-full bg-[#e85a32] px-6 py-2 text-white hover:bg-[#e85a32]'
+                    key={item}
+                    variant={
+                      item === 'Getting Involved' ? 'default' : 'outline'
+                    }
+                    size='sm'
+                  >
                     {item}
                   </Button>
                 ))}
               </div>
-              <Accordion type="multiple" defaultValue={["Join", "Types", "professional", "Committee", "express"]} className="w-full">
-                <AccordionItem value="Join">
-                  <AccordionTrigger className='font-bold'>1.	Who is eligible to join the political party?</AccordionTrigger>
+              <Accordion
+                type='multiple'
+                defaultValue={[
+                  'Join',
+                  'Types',
+                  'professional',
+                  'Committee',
+                  'express',
+                ]}
+                className='w-full'
+              >
+                <AccordionItem value='Join'>
+                  <AccordionTrigger className='font-bold'>
+                    1. Who is eligible to join the political party?
+                  </AccordionTrigger>
                   <AccordionContent>
-                    Any Indian citizen aged 18 years or above who believes in the principles of decentralization and accepts the Party's objectives and philosophy can become a member by making a written declaration or filling out an online enrollment form, provided that he is not a member of any other political party.
+                    Any Indian citizen aged 18 years or above who believes in
+                    the principles of decentralization and accepts the Party's
+                    objectives and philosophy can become a member by making a
+                    written declaration or filling out an online enrollment
+                    form, provided that he is not a member of any other
+                    political party.
                   </AccordionContent>
                 </AccordionItem>
-                <AccordionItem value="Types">
-                  <AccordionTrigger className='font-bold'>2.	What types of memberships are available within the party?</AccordionTrigger>
-                  <AccordionContent className='font-semibold my-4'>
+                <AccordionItem value='Types'>
+                  <AccordionTrigger className='font-bold'>
+                    2. What types of memberships are available within the party?
+                  </AccordionTrigger>
+                  <AccordionContent className='my-4 font-semibold'>
                     Two types of Membership are available in the party:
-                    <Tabs defaultValue="tab-1" className="w-full mt-3">
+                    <Tabs defaultValue='tab-1' className='mt-3 w-full'>
                       <ScrollArea>
-                        <TabsList className="mb-3 h-auto gap-2 rounded-none border-b border-border bg-transparent px-0 py-1 text-foreground w-full">
+                        <TabsList className='mb-3 h-auto w-full gap-2 rounded-none border-b border-border bg-transparent px-0 py-1 text-foreground'>
                           <TabsTrigger
-                            value="tab-1"
-                            className="relative text-gray-700 bg-gray-100 after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 hover:bg-gray-200 hover:text-gray-900 data-[state=active]:bg-gray-200 data-[state=active]:text-gray-900 flex-1"
+                            value='tab-1'
+                            className='relative flex-1 bg-gray-100 text-gray-700 after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 hover:bg-gray-200 hover:text-gray-900 data-[state=active]:bg-gray-200 data-[state=active]:text-gray-900'
                           >
                             Primary Membership
                           </TabsTrigger>
                           <TabsTrigger
-                            value="tab-2"
-                            className="relative text-gray-700 bg-gray-100 after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 hover:bg-gray-200 hover:text-gray-900 data-[state=active]:bg-gray-200 data-[state=active]:text-gray-900 flex-1"
+                            value='tab-2'
+                            className='relative flex-1 bg-gray-100 text-gray-700 after:absolute after:inset-x-0 after:bottom-0 after:-mb-1 after:h-0.5 hover:bg-gray-200 hover:text-gray-900 data-[state=active]:bg-gray-200 data-[state=active]:text-gray-900'
                           >
                             Active Membership
                           </TabsTrigger>
                         </TabsList>
-                        <ScrollBar orientation="horizontal" />
+                        <ScrollBar orientation='horizontal' />
                       </ScrollArea>
-                      <TabsContent value="tab-1">
-                        <Card className="flex w-full flex-col justify-between text-left">
+                      <TabsContent value='tab-1'>
+                        <Card className='flex w-full flex-col justify-between text-left'>
                           <CardHeader>
                             <CardTitle>
-                              <p className='text-sm'> What is the process for joining the party as a Primary Member?</p>
+                              <p className='text-sm'>
+                                {' '}
+                                What is the process for joining the party as a
+                                Primary Member?
+                              </p>
                             </CardTitle>
                           </CardHeader>
                           <CardContent>
-                            <Separator className="mb-6" />
-                            <p className="text-sm font-normal ">
-                              Every Member of the party can become the primary member by paying annual fess of <span className='font-bold'>Rs. 5/-</span>
+                            <Separator className='mb-6' />
+                            <p className='text-sm font-normal'>
+                              Every Member of the party can become the primary
+                              member by paying annual fess of{' '}
+                              <span className='font-bold'>Rs. 5/-</span>
                             </p>
                           </CardContent>
                         </Card>
                       </TabsContent>
-                      <TabsContent value="tab-2">
-                        <Card className="flex w-full flex-col justify-between text-left">
+                      <TabsContent value='tab-2'>
+                        <Card className='flex w-full flex-col justify-between text-left'>
                           <CardHeader>
                             <CardTitle>
-                              <p className='text-sm'> What is the process for joining the party as an Active Member?</p>
+                              <p className='text-sm'>
+                                {' '}
+                                What is the process for joining the party as an
+                                Active Member?
+                              </p>
                             </CardTitle>
                           </CardHeader>
                           <CardContent>
-                            <Separator className="mb-6" />
-                            <p className="text-sm font-normal">
-                              Any Primary Member becomes eligible for Active Membership by adding <span className='font-bold'>10 new members</span> to the party and paying a membership fee of <span className='font-bold'>Rs. 250/-.</span>
+                            <Separator className='mb-6' />
+                            <p className='text-sm font-normal'>
+                              Any Primary Member becomes eligible for Active
+                              Membership by adding{' '}
+                              <span className='font-bold'>10 new members</span>{' '}
+                              to the party and paying a membership fee of{' '}
+                              <span className='font-bold'>Rs. 250/-.</span>
                             </p>
                             <div>
-                              <Separator className="my-6" />
+                              <Separator className='my-6' />
                               <CardTitle>
-                                <p className='text-sm my-3'>What privileges are available to Active Members?</p>
+                                <p className='my-3 text-sm'>
+                                  What privileges are available to Active
+                                  Members?
+                                </p>
                               </CardTitle>
-                              <Separator className="mb-6" />
-                              <Accordion type="single" collapsible className="space-y-4">
-                                <AccordionItem value="item-1">
-                                  <AccordionTrigger className="text-sm font-normal">
-                                    Opportunity to be the part of Party-Organ as Panchayat/Municipal Ward Council
+                              <Separator className='mb-6' />
+                              <Accordion
+                                type='single'
+                                collapsible
+                                className='space-y-4'
+                              >
+                                <AccordionItem value='item-1'>
+                                  <AccordionTrigger className='text-sm font-normal'>
+                                    Opportunity to be the part of Party-Organ as
+                                    Panchayat/Municipal Ward Council
                                   </AccordionTrigger>
                                   <AccordionContent>
-                                    <Card className="flex my-4 font-normal w-full flex-col justify-between text-left">
+                                    <Card className='my-4 flex w-full flex-col justify-between text-left font-normal'>
                                       <CardHeader>
                                         <CardTitle>
-                                          PANCHAYAT/MUNICIPAL WARD EXECUTIVE COMMITTEE
+                                          PANCHAYAT/MUNICIPAL WARD EXECUTIVE
+                                          COMMITTEE
                                         </CardTitle>
                                       </CardHeader>
                                       <CardContent>
-                                        <ol className="space-y-2 text-sm list-decimal list-inside text-gray-700 ">
-                                          <li className="flex items-center gap-2">
+                                        <ol className='list-inside list-decimal space-y-2 text-sm text-gray-700'>
+                                          <li className='flex items-center gap-2'>
                                             <span>1. President - 01</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>2. Vice President - 01</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
-                                            <span>3. General Secretary - 01</span>
+                                          <li className='flex items-center gap-2'>
+                                            <span>
+                                              3. General Secretary - 01
+                                            </span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>4. Treasurer - 01</span>
                                           </li>
                                         </ol>
-                                        <Separator className="my-4" />
-                                        <p className='text-sm font-semibold'>You can become eligible for the Executive Committee or Councils at different levels of party, based on</p>
-                                        <Separator className="my-4" />
-                                        <p className="text-sm ">
-                                          I.	Having brought atleast 10 active members to the party.
+                                        <Separator className='my-4' />
+                                        <p className='text-sm font-semibold'>
+                                          You can become eligible for the
+                                          Executive Committee or Councils at
+                                          different levels of party, based on
                                         </p>
-                                        <p className="text-sm ">
-                                          II.	Based on Rank Choice Voting (RCV)
+                                        <Separator className='my-4' />
+                                        <p className='text-sm'>
+                                          I. Having brought atleast 10 active
+                                          members to the party.
                                         </p>
-                                        <p className="text-sm ">
-                                          III.	Based on Qualification.
+                                        <p className='text-sm'>
+                                          II. Based on Rank Choice Voting (RCV)
+                                        </p>
+                                        <p className='text-sm'>
+                                          III. Based on Qualification.
                                         </p>
                                       </CardContent>
                                     </Card>
                                   </AccordionContent>
                                 </AccordionItem>
-                                <AccordionItem value="item-2">
-                                  <AccordionTrigger className="text-sm font-normal">
-                                    Opportunity to be the part of Party-Organ as Block Council or Block Executive Committee
+                                <AccordionItem value='item-2'>
+                                  <AccordionTrigger className='text-sm font-normal'>
+                                    Opportunity to be the part of Party-Organ as
+                                    Block Council or Block Executive Committee
                                   </AccordionTrigger>
                                   <AccordionContent>
-                                    <Card className="flex my-4 font-normal w-full flex-col justify-between text-left">
+                                    <Card className='my-4 flex w-full flex-col justify-between text-left font-normal'>
                                       <CardHeader>
                                         <CardTitle>
                                           BLOCK EXECUTIVE COMMITTEE
                                         </CardTitle>
                                       </CardHeader>
                                       <CardContent>
-                                        <ol className="space-y-2 text-sm list-decimal list-inside text-gray-700 ">
-                                          <li className="flex items-center gap-2">
+                                        <ol className='list-inside list-decimal space-y-2 text-sm text-gray-700'>
+                                          <li className='flex items-center gap-2'>
                                             <span>1. President - 01</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>2. Vice President - 01</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
-                                            <span>3. General Secretary - 01</span>
+                                          <li className='flex items-center gap-2'>
+                                            <span>
+                                              3. General Secretary - 01
+                                            </span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>4. Secretary - 02</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>5. Addl. Secretary - 04</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>6. Treasurer - 01</span>
                                           </li>
                                         </ol>
-                                        <Separator className="my-4" />
-                                        <p className='text-sm font-semibold'>You can become eligible for the Executive Committee or Councils at different levels of party, based on</p>
-                                        <Separator className="my-4" />
-                                        <p className="text-sm ">
-                                          I.	Having brought atleast 10 active members to the party.
+                                        <Separator className='my-4' />
+                                        <p className='text-sm font-semibold'>
+                                          You can become eligible for the
+                                          Executive Committee or Councils at
+                                          different levels of party, based on
                                         </p>
-                                        <p className="text-sm ">
-                                          II.	Based on Rank Choice Voting (RCV)
+                                        <Separator className='my-4' />
+                                        <p className='text-sm'>
+                                          I. Having brought atleast 10 active
+                                          members to the party.
                                         </p>
-                                        <p className="text-sm ">
-                                          III.	Based on Qualification.
+                                        <p className='text-sm'>
+                                          II. Based on Rank Choice Voting (RCV)
+                                        </p>
+                                        <p className='text-sm'>
+                                          III. Based on Qualification.
                                         </p>
                                       </CardContent>
                                     </Card>
                                   </AccordionContent>
                                 </AccordionItem>
-                                <AccordionItem value="item-3">
-                                  <AccordionTrigger className="text-sm font-normal">
-                                    Opportunity to be the part of Party-Organ as District Council or District Executive Committee
+                                <AccordionItem value='item-3'>
+                                  <AccordionTrigger className='text-sm font-normal'>
+                                    Opportunity to be the part of Party-Organ as
+                                    District Council or District Executive
+                                    Committee
                                   </AccordionTrigger>
                                   <AccordionContent>
-                                    <Card className="flex my-4 font-normal w-full flex-col justify-between text-left">
+                                    <Card className='my-4 flex w-full flex-col justify-between text-left font-normal'>
                                       <CardHeader>
                                         <CardTitle>
                                           DISTRICT EXECUTIVE COMMITTEE
                                         </CardTitle>
                                       </CardHeader>
                                       <CardContent>
-                                        <ol className="space-y-2 text-sm list-decimal list-inside text-gray-700 ">
-                                          <li className="flex items-center gap-2">
+                                        <ol className='list-inside list-decimal space-y-2 text-sm text-gray-700'>
+                                          <li className='flex items-center gap-2'>
                                             <span>1. President - 01</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>2. Vice President - 01</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
-                                            <span>3. General Secretary - 01</span>
+                                          <li className='flex items-center gap-2'>
+                                            <span>
+                                              3. General Secretary - 01
+                                            </span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>4. Secretary - 05</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>5. Addl. Secretary - 08</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>6. Treasurer - 01</span>
                                           </li>
                                         </ol>
-                                        <Separator className="my-4" />
-                                        <p className='text-sm font-semibold'>You can become eligible for the Executive Committee or Councils at different levels of party, based on</p>
-                                        <Separator className="my-4" />
-                                        <p className="text-sm ">
-                                          I.	Having brought atleast 10 active members to the party.
+                                        <Separator className='my-4' />
+                                        <p className='text-sm font-semibold'>
+                                          You can become eligible for the
+                                          Executive Committee or Councils at
+                                          different levels of party, based on
                                         </p>
-                                        <p className="text-sm ">
-                                          II.	Based on Rank Choice Voting (RCV)
+                                        <Separator className='my-4' />
+                                        <p className='text-sm'>
+                                          I. Having brought atleast 10 active
+                                          members to the party.
                                         </p>
-                                        <p className="text-sm ">
-                                          III.	Based on Qualification.
+                                        <p className='text-sm'>
+                                          II. Based on Rank Choice Voting (RCV)
+                                        </p>
+                                        <p className='text-sm'>
+                                          III. Based on Qualification.
                                         </p>
                                       </CardContent>
                                     </Card>
                                   </AccordionContent>
                                 </AccordionItem>
-                                <AccordionItem value="item-4">
-                                  <AccordionTrigger className="text-sm font-normal">
-                                    Opportunity to be the part of Party-Organ as State Council or State Executive Committee
+                                <AccordionItem value='item-4'>
+                                  <AccordionTrigger className='text-sm font-normal'>
+                                    Opportunity to be the part of Party-Organ as
+                                    State Council or State Executive Committee
                                   </AccordionTrigger>
                                   <AccordionContent>
-                                    <Card className="flex my-4 font-normal w-full flex-col justify-between text-left">
+                                    <Card className='my-4 flex w-full flex-col justify-between text-left font-normal'>
                                       <CardHeader>
                                         <CardTitle>
                                           STATE EXECUTIVE COMMITTEE
                                         </CardTitle>
                                       </CardHeader>
                                       <CardContent>
-                                        <ol className="space-y-2 text-sm list-decimal list-inside text-gray-700 ">
-                                          <li className="flex items-center gap-2">
+                                        <ol className='list-inside list-decimal space-y-2 text-sm text-gray-700'>
+                                          <li className='flex items-center gap-2'>
                                             <span>1. President - 01</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>2. Vice President - 01</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
-                                            <span>3. General Secretary - 01</span>
+                                          <li className='flex items-center gap-2'>
+                                            <span>
+                                              3. General Secretary - 01
+                                            </span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>4. Secretary - 12</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>5. Addl. Secretary - 17</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>6. Treasurer - 01</span>
                                           </li>
                                         </ol>
-                                        <Separator className="my-4" />
-                                        <p className='text-sm font-semibold'>You can become eligible for the Executive Committee or Councils at different levels of party, based on</p>
-                                        <Separator className="my-4" />
-                                        <p className="text-sm ">
-                                          I.	Having brought atleast 10 active members to the party.
+                                        <Separator className='my-4' />
+                                        <p className='text-sm font-semibold'>
+                                          You can become eligible for the
+                                          Executive Committee or Councils at
+                                          different levels of party, based on
                                         </p>
-                                        <p className="text-sm ">
-                                          II.	Based on Rank Choice Voting (RCV)
+                                        <Separator className='my-4' />
+                                        <p className='text-sm'>
+                                          I. Having brought atleast 10 active
+                                          members to the party.
                                         </p>
-                                        <p className="text-sm ">
-                                          III.	Based on Qualification.
+                                        <p className='text-sm'>
+                                          II. Based on Rank Choice Voting (RCV)
+                                        </p>
+                                        <p className='text-sm'>
+                                          III. Based on Qualification.
                                         </p>
                                       </CardContent>
                                     </Card>
                                   </AccordionContent>
                                 </AccordionItem>
-                                <AccordionItem value="item-5">
-                                  <AccordionTrigger className="text-sm font-normal">
-                                    Opportunity to be the part of Party-Organ as National Council or National Executive Committee
+                                <AccordionItem value='item-5'>
+                                  <AccordionTrigger className='text-sm font-normal'>
+                                    Opportunity to be the part of Party-Organ as
+                                    National Council or National Executive
+                                    Committee
                                   </AccordionTrigger>
                                   <AccordionContent>
-                                    <Card className="flex my-4 font-normal w-full flex-col justify-between text-left">
+                                    <Card className='my-4 flex w-full flex-col justify-between text-left font-normal'>
                                       <CardHeader>
                                         <CardTitle>
                                           NATIONAL EXECUTIVE COMMITTEE
                                         </CardTitle>
                                       </CardHeader>
                                       <CardContent>
-                                        <ol className="space-y-2 text-sm list-decimal list-inside text-gray-700 ">
-                                          <li className="flex items-center gap-2">
+                                        <ol className='list-inside list-decimal space-y-2 text-sm text-gray-700'>
+                                          <li className='flex items-center gap-2'>
                                             <span>1. President - 01</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>2. Vice President - 01</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
-                                            <span>3. General Secretary - 01</span>
+                                          <li className='flex items-center gap-2'>
+                                            <span>
+                                              3. General Secretary - 01
+                                            </span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>4. Secretary - 18</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>5. Addl. Secretary - 28</span>
                                           </li>
-                                          <li className="flex items-center gap-2">
+                                          <li className='flex items-center gap-2'>
                                             <span>6. Treasurer - 01</span>
                                           </li>
                                         </ol>
-                                        <Separator className="my-4" />
-                                        <p className='text-sm font-semibold'>You can become eligible for the Executive Committee or Councils at different levels of party, based on</p>
-                                        <Separator className="my-4" />
-                                        <p className="text-sm ">
-                                          I.	Having brought atleast 10 active members to the party.
+                                        <Separator className='my-4' />
+                                        <p className='text-sm font-semibold'>
+                                          You can become eligible for the
+                                          Executive Committee or Councils at
+                                          different levels of party, based on
                                         </p>
-                                        <p className="text-sm ">
-                                          II.	Based on Rank Choice Voting (RCV)
+                                        <Separator className='my-4' />
+                                        <p className='text-sm'>
+                                          I. Having brought atleast 10 active
+                                          members to the party.
                                         </p>
-                                        <p className="text-sm ">
-                                          III.	Based on Qualification.
+                                        <p className='text-sm'>
+                                          II. Based on Rank Choice Voting (RCV)
+                                        </p>
+                                        <p className='text-sm'>
+                                          III. Based on Qualification.
                                         </p>
                                       </CardContent>
                                     </Card>
                                   </AccordionContent>
                                 </AccordionItem>
-                                <AccordionItem value="item-6">
-                                  <AccordionTrigger className="text-sm font-normal">Contesting for Election</AccordionTrigger>
+                                <AccordionItem value='item-6'>
+                                  <AccordionTrigger className='text-sm font-normal'>
+                                    Contesting for Election
+                                  </AccordionTrigger>
                                   <AccordionContent>
                                     Contesting for Election
                                   </AccordionContent>
@@ -392,45 +500,57 @@ export default function MembershipFaq() {
                     </Tabs>
                   </AccordionContent>
                 </AccordionItem>
-                <AccordionItem value="professional">
-                  <AccordionTrigger className='font-semibold'>3.	How can a member enrol as ‘professional’ if he wishes to contribute to the community?</AccordionTrigger>
+                <AccordionItem value='professional'>
+                  <AccordionTrigger className='font-semibold'>
+                    3. How can a member enrol as 'professional' if he wishes to
+                    contribute to the community?
+                  </AccordionTrigger>
                   <AccordionContent>
-                    He can enrol as a professional by selecting the <span className='font-bold'>'Professional'</span> category while applying for <span className='font-bold'>Primary Membership.</span>
+                    He can enrol as a professional by selecting the{' '}
+                    <span className='font-bold'>'Professional'</span> category
+                    while applying for{' '}
+                    <span className='font-bold'>Primary Membership.</span>
                   </AccordionContent>
                 </AccordionItem>
-                <AccordionItem value="Committee">
-                  <AccordionTrigger className='font-semibold'>4.	How can I upgrade to the Executive Committee or Councils at different levels of party?</AccordionTrigger>
+                <AccordionItem value='Committee'>
+                  <AccordionTrigger className='font-semibold'>
+                    4. How can I upgrade to the Executive Committee or Councils
+                    at different levels of party?
+                  </AccordionTrigger>
                   <AccordionContent>
-                    <Card className="font-normal w-full">
+                    <Card className='w-full font-normal'>
                       <CardContent>
                         <CardHeader>
                           <CardTitle className='text-md'>
-                            You can become eligible for the Executive Committee or Councils at different levels of party, based on
+                            You can become eligible for the Executive Committee
+                            or Councils at different levels of party, based on
                           </CardTitle>
                         </CardHeader>
-                        <p className="text-sm ">
-                          I.	Having brought atleast 10 active members to the party.
+                        <p className='text-sm'>
+                          I. Having brought atleast 10 active members to the
+                          party.
                         </p>
-                        <p className="text-sm ">
-                          II.	Based on Rank Choice Voting (RCV)
+                        <p className='text-sm'>
+                          II. Based on Rank Choice Voting (RCV)
                         </p>
-                        <p className="text-sm ">
-                          III.	Based on Qualification.
-                        </p>
+                        <p className='text-sm'>III. Based on Qualification.</p>
                       </CardContent>
-
                     </Card>
                   </AccordionContent>
-
                 </AccordionItem>
 
-                <AccordionItem value="express">
-                  <AccordionTrigger className='font-semibold'>5.	How can I express my interest and demonstrate my eligibility for the Executive Committee or Councils at different levels of party?</AccordionTrigger>
+                <AccordionItem value='express'>
+                  <AccordionTrigger className='font-semibold'>
+                    5. How can I express my interest and demonstrate my
+                    eligibility for the Executive Committee or Councils at
+                    different levels of party?
+                  </AccordionTrigger>
                   <AccordionContent className='font-normal'>
-                    You can express your interest and eligibility to upgrade by sending an email to the party’s head-office with details of the active members generated for the party.
+                    You can express your interest and eligibility to upgrade by
+                    sending an email to the party's head-office with details of
+                    the active members generated for the party.
                   </AccordionContent>
                 </AccordionItem>
-
 
                 {/* <AccordionItem value="goals">
                   <AccordionTrigger>Understanding BPP Goals</AccordionTrigger>
@@ -475,18 +595,19 @@ export default function MembershipFaq() {
           </Card>
         </div>
         <div className='my-4 font-bold'>
-          FOR MORE DETAILS, PLEASE{" "}
+          FOR MORE DETAILS, PLEASE{' '}
           <a
             // href='#'
             // target="_blank"
             // rel="noopener noreferrer"
-            className="text-blue-600 hover:underline"
+            className='text-blue-600 hover:underline'
           >
-            REFER TO THE PARTY’S CONSTITUTION.{" "} <Pointer className="inline-block ml-2 w-4 h-4 text-blue-600" />
+            REFER TO THE PARTY'S CONSTITUTION.{' '}
+            <Pointer className='ml-2 inline-block h-4 w-4 text-blue-600' />
           </a>
         </div>
         <RecruitmentBanner />
       </div>
-    </Layout>
-  );
+    </>
+  )
 }
