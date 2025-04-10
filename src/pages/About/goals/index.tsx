@@ -104,7 +104,7 @@ const GoalsPage = () => {
         'BPP will work to provide quality health facilities to all citizens, ensuring that every individual has access to health services that improve their quality of life.',
       imgSrc: img3,
       icon: Heart,
-      link: '/about/bpp-goals',
+      link: '/about/bpp-goals/good-health-and-well-being',
     },
     {
       title: 'AGAINST MUSCLE AND MONEY POWER',

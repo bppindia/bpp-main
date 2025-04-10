@@ -1,4 +1,4 @@
-import { Copy, CreditCard } from 'lucide-react'
+import { Copy, CreditCard, AlertCircle, CheckCircle, UserCheck } from 'lucide-react'
 import { toast } from 'sonner'
 import { useDashboardData } from '@/hooks/use-dashboard-data'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -17,6 +17,9 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import StateMap from './components/state-map'
+import { Badge } from '@/components/ui/badge'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Link } from '@tanstack/react-router'
 
 export default function Dashboard() {
   const { data: dashboardData, isLoading } = useDashboardData()
@@ -26,15 +29,28 @@ export default function Dashboard() {
     toast.success(message)
   }
 
-  const user = {
+  // Only create user object when data is loaded
+  const user = !isLoading ? {
     firstName: dashboardData?.user?.firstName || 'User',
     lastName: dashboardData?.user?.lastName || '',
     role: dashboardData?.user?.role || 'Member',
+    status: dashboardData?.user?.status || 'PROCESSING',
     membership: dashboardData?.membership?.membershipNumber || 'N/A',
     address: {
       state: dashboardData?.user?.address?.state || 'India',
     },
-  }
+    isVerified: (dashboardData?.user as { isVerified?: boolean })?.isVerified || false
+  } : null
+
+  // Only determine status when user object exists
+  const isVerified = user ? (user.status === 'APPROVED' || user.isVerified === true) : false
+  const isPrimaryMember = user ? user.role === 'PRIMARY MEMBER' : false
+  // const isActiveMember = user ? user.role === 'ACTIVE MEMBER' : false
+
+  // Format membership dates
+  const membershipExpiryDate = !isLoading && dashboardData?.membership?.validity?.expiryDate 
+    ? new Date(dashboardData.membership.validity.expiryDate).toLocaleDateString() 
+    : 'N/A'
 
   return (
     <>
@@ -53,20 +69,28 @@ export default function Dashboard() {
             <Avatar className='h-12 w-12 md:h-16 md:w-16'>
               <AvatarImage
                 src='/avatar.jpg'
-                alt={`${user.firstName} ${user.lastName}`}
+                alt={user ? `${user.firstName} ${user.lastName}` : 'User'}
               />
               <AvatarFallback>
-                {user.firstName[0]}
-                {user.lastName[0]}
+                {user ? `${user.firstName[0]}${user.lastName[0]}` : 'U'}
               </AvatarFallback>
             </Avatar>
             <div>
               <h1 className='text-xl font-bold tracking-tight md:text-2xl'>
-                Welcome, {user.firstName} {user.lastName}
+                Welcome, {user ? `${user.firstName} ${user.lastName}` : 'User'}
               </h1>
+              {!isLoading && (
+                <div className='flex items-center gap-2'>
+                  <Badge variant={isVerified ? 'default' : 'secondary'}>
+                    {user?.role || 'Member'}
+                  </Badge>
+                  <Badge variant={isVerified ? 'outline' : 'destructive'}>
+                    {isVerified ? 'Verified' : 'Unverified'}
+                  </Badge>
+                </div>
+              )}
               <p className='text-sm text-muted-foreground'>
-                {user.role} | ID: {user.membership} | {user.address?.state},
-                India
+                ID: {user?.membership || 'N/A'} | {user?.address?.state || 'India'}, India
               </p>
             </div>
           </div>
@@ -83,6 +107,46 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Verification and Membership Status Alerts - Only show when not loading */}
+        {!isLoading && (
+          <>
+            {!isVerified && (
+              <Alert variant="destructive" className="mb-6">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Account Verification Required</AlertTitle>
+                <AlertDescription>
+                  Your account is pending verification. Please complete the verification process to access all features.
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {isVerified && !isPrimaryMember && (
+              <Alert className="mb-6">
+                <UserCheck className="h-4 w-4" />
+                <AlertTitle>Upgrade to Primary Membership</AlertTitle>
+                <AlertDescription>
+                  You're verified but not a primary member. Upgrade to access premium features.
+                </AlertDescription>
+                <div className="mt-4">
+                  <Button asChild>
+                    <Link to="/dashboard/membership">Activate Primary Membership</Link>
+                  </Button>
+                </div>
+              </Alert>
+            )}
+
+            {isPrimaryMember && (
+              <Alert className="mb-6">
+                <CheckCircle className="h-4 w-4" />
+                <AlertTitle>Primary Membership Active</AlertTitle>
+                <AlertDescription>
+                  Your primary membership is active until {membershipExpiryDate}. Enjoy all premium features!
+                </AlertDescription>
+              </Alert>
+            )}
+          </>
+        )}
+
         {/* Main Content */}
         <div className='space-y-6'>
           {/* Stats Grid */}
@@ -93,26 +157,30 @@ export default function Dashboard() {
                 value: dashboardData?.totalMembersIndia,
                 sub: `+${dashboardData?.totalMembersState} in your state`,
                 icon: 'M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6',
+                showAlways: true,
               },
               {
                 title: 'Primary Members',
-                value: dashboardData?.cases?.totalCases || 0,
+                value: dashboardData?.totalProfessionalsState|| 0,
                 sub: 'Primary Members in your state',
                 icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 7a4 4 0 1 1 0-8 M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
+                showAlways: true,
               },
               {
                 title: 'Active Members',
-                value: dashboardData?.totalProfessionalsState,
+                value: 0,
                 sub: 'Active professionals in your state',
                 icon: 'M22 12h-4l-3 9L9 3l-3 9H2',
+                showAlways: true,
               },
               {
                 title: 'Business Registered',
                 value: dashboardData?.referrals?.totalReferrals,
                 sub: 'Total business registered in your state',
                 icon: 'M2 5h20v14H2z M2 10h20',
+                showAlways: true,
               },
-            ].map((stat, index) => (
+            ].filter(stat => stat.showAlways || isVerified).map((stat, index) => (
               <Card key={index}>
                 <CardHeader className='flex flex-row items-center justify-between pb-2'>
                   <CardTitle className='text-sm font-medium'>
@@ -150,153 +218,157 @@ export default function Dashboard() {
             ))}
           </div>
 
-          {/* Referral Section */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Your Referral Code</CardTitle>
-              <CardDescription>
-                Share your referral code with friends and earn rewards
-              </CardDescription>
-            </CardHeader>
-            <CardContent className='space-y-4'>
-              {isLoading ? (
-                <>
-                  <Skeleton className='h-12 w-full' />
-                  <Skeleton className='h-4 w-48' />
-                </>
-              ) : (
-                <>
-                  <div className='flex items-center gap-2'>
-                    <div className='flex-1 rounded-md bg-muted p-3 font-mono text-lg'>
-                      {dashboardData?.referrals?.referralCode ||
-                        'No referral code available'}
-                    </div>
-                    <Button
-                      variant='outline'
-                      size='icon'
-                      onClick={() =>
-                        copyToClipboard(
-                          dashboardData?.referrals?.referralCode || '',
-                          'Referral code copied'
-                        )
-                      }
-                    >
-                      <Copy className='h-4 w-4' />
-                    </Button>
-                  </div>
-                  <div className='grid grid-cols-1 gap-4 sm:grid-cols-3'>
-                    {[
-                      {
-                        label: 'Total Referrals',
-                        value: dashboardData?.referrals?.totalReferrals,
-                      },
-                      {
-                        label: 'Successful',
-                        value: dashboardData?.referrals?.successfulReferrals,
-                      },
-                      {
-                        label: 'Pending',
-                        value: dashboardData?.referrals?.pendingReferrals,
-                      },
-                    ].map((item, index) => (
-                      <div
-                        key={index}
-                        className='rounded-md bg-muted p-3 text-center'
-                      >
-                        <div className='text-2xl font-bold'>{item.value}</div>
-                        <div className='text-xs text-muted-foreground'>
-                          {item.label}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  {dashboardData?.referrals?.referralLink && (
+          {/* Referral Section - Only show for verified users */}
+          {isVerified && dashboardData?.referrals && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Your Referral Code</CardTitle>
+                <CardDescription>
+                  Share your referral code with friends and earn rewards
+                </CardDescription>
+              </CardHeader>
+              <CardContent className='space-y-4'>
+                {isLoading ? (
+                  <>
+                    <Skeleton className='h-12 w-full' />
+                    <Skeleton className='h-4 w-48' />
+                  </>
+                ) : (
+                  <>
                     <div className='flex items-center gap-2'>
-                      <div className='flex-1 truncate rounded-md bg-muted p-2 text-sm'>
-                        {dashboardData.referrals.referralLink}
+                      <div className='flex-1 rounded-md bg-muted p-3 font-mono text-lg'>
+                        {dashboardData?.referrals?.referralCode ||
+                          'No referral code available'}
                       </div>
                       <Button
                         variant='outline'
-                        size='sm'
+                        size='icon'
                         onClick={() =>
                           copyToClipboard(
-                            dashboardData.referrals.referralLink || '',
-                            'Referral link copied'
+                            dashboardData?.referrals?.referralCode || '',
+                            'Referral code copied'
                           )
                         }
                       >
-                        Copy
+                        <Copy className='h-4 w-4' />
                       </Button>
                     </div>
-                  )}
-                </>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Overview and Recent Activity */}
-          <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
-            <Card className='lg:col-span-4'>
-              <CardHeader>
-                <CardTitle>Overview</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {isLoading ? (
-                  <Skeleton className='h-[300px] w-full' />
-                ) : (
-                  <StateMap
-                    state='Maharashtra'
-                    dist='Raigarh'
-                    totalMembers={dashboardData?.totalMembersState}
-                  />
-                )}
-              </CardContent>
-            </Card>
-            <Card className='lg:col-span-3'>
-              <CardHeader>
-                <CardTitle>Recent Activity</CardTitle>
-                <CardDescription>
-                  {isLoading ? (
-                    <Skeleton className='h-4 w-48' />
-                  ) : (
-                    `You made ${dashboardData?.referrals?.totalReferrals} Referrals this month.`
-                  )}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {isLoading ? (
-                  <div className='space-y-4'>
-                    <Skeleton className='h-12 w-full' />
-                    <Skeleton className='h-12 w-full' />
-                  </div>
-                ) : dashboardData?.wallet?.recentTransactions?.length > 0 ? (
-                  dashboardData.wallet.recentTransactions.map((transaction) => (
-                    <div
-                      key={transaction.id}
-                      className='mb-2 flex items-center justify-between rounded-md border p-2'
-                    >
-                      <div>
-                        <p className='font-medium'>{transaction.description}</p>
-                        <p className='text-xs text-muted-foreground'>
-                          {new Date(transaction.createdAt).toLocaleDateString()}
-                        </p>
-                      </div>
-                      <div
-                        className={`font-bold ${transaction.type === 'CREDIT' ? 'text-green-600' : 'text-red-600'}`}
-                      >
-                        {transaction.type === 'CREDIT' ? '+' : '-'}₹
-                        {transaction.amount}
-                      </div>
+                    <div className='grid grid-cols-1 gap-4 sm:grid-cols-3'>
+                      {[
+                        {
+                          label: 'Total Referrals',
+                          value: dashboardData?.referrals?.totalReferrals,
+                        },
+                        {
+                          label: 'Successful',
+                          value: dashboardData?.referrals?.successfulReferrals,
+                        },
+                        {
+                          label: 'Pending',
+                          value: dashboardData?.referrals?.pendingReferrals,
+                        },
+                      ].map((item, index) => (
+                        <div
+                          key={index}
+                          className='rounded-md bg-muted p-3 text-center'
+                        >
+                          <div className='text-2xl font-bold'>{item.value}</div>
+                          <div className='text-xs text-muted-foreground'>
+                            {item.label}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))
-                ) : (
-                  <div className='py-4 text-center text-muted-foreground'>
-                    No recent transactions
-                  </div>
+                    {dashboardData?.referrals?.referralLink && (
+                      <div className='flex items-center gap-2'>
+                        <div className='flex-1 truncate rounded-md bg-muted p-2 text-sm'>
+                          {dashboardData.referrals.referralLink}
+                        </div>
+                        <Button
+                          variant='outline'
+                          size='sm'
+                          onClick={() =>
+                            copyToClipboard(
+                              dashboardData.referrals.referralLink || '',
+                              'Referral link copied'
+                            )
+                          }
+                        >
+                          Copy
+                        </Button>
+                      </div>
+                    )}
+                  </>
                 )}
               </CardContent>
             </Card>
-          </div>
+          )}
+
+          {/* Overview and Recent Activity - Only show for verified users */}
+          {isVerified && (
+            <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
+              <Card className='lg:col-span-4'>
+                <CardHeader>
+                  <CardTitle>Overview</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {isLoading ? (
+                    <Skeleton className='h-[300px] w-full' />
+                  ) : (
+                    <StateMap
+                      state='Maharashtra'
+                      dist='Raigarh'
+                      totalMembers={dashboardData?.totalMembersState}
+                    />
+                  )}
+                </CardContent>
+              </Card>
+              <Card className='lg:col-span-3'>
+                <CardHeader>
+                  <CardTitle>Recent Activity</CardTitle>
+                  <CardDescription>
+                    {isLoading ? (
+                      <Skeleton className='h-4 w-48' />
+                    ) : (
+                      `You made ${dashboardData?.referrals?.totalReferrals} Referrals this month.`
+                    )}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {isLoading ? (
+                    <div className='space-y-4'>
+                      <Skeleton className='h-12 w-full' />
+                      <Skeleton className='h-12 w-full' />
+                    </div>
+                  ) : dashboardData?.wallet?.recentTransactions?.length > 0 ? (
+                    dashboardData.wallet.recentTransactions.map((transaction) => (
+                      <div
+                        key={transaction.id}
+                        className='mb-2 flex items-center justify-between rounded-md border p-2'
+                      >
+                        <div>
+                          <p className='font-medium'>{transaction.description}</p>
+                          <p className='text-xs text-muted-foreground'>
+                            {new Date(transaction.createdAt).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <div
+                          className={`font-bold ${transaction.type === 'CREDIT' ? 'text-green-600' : 'text-red-600'}`}
+                        >
+                          {transaction.type === 'CREDIT' ? '+' : '-'}₹
+                          {transaction.amount}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className='py-4 text-center text-muted-foreground'>
+                      No recent transactions
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
       </Main>
     </>

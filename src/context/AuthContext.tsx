@@ -63,9 +63,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       )
       const typedResponse = asApiResponse<LoginResponse>(response)
       const userData: AuthUser = typedResponse.data as unknown as AuthUser
+
       if (!typedResponse.token) {
         throw new Error('No token received from server')
       }
+
+      // Store user data with all populated fields
       dispatch(setCredentials({ token: typedResponse.token, user: userData }))
       Cookies.set('authToken', typedResponse.token, {
         expires: 4,
@@ -276,6 +279,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       const response = await postData('/users/me', {})
       const typedResponse = asApiResponse<{ data: ApiUser }>(response)
       const userData: AuthUser = typedResponse.data as unknown as AuthUser
+
+      // Store the complete user data with all populated fields
       setUser(userData)
       Cookies.set('userDetails', JSON.stringify(userData), {
         expires: 4,

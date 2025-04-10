@@ -39,11 +39,9 @@ const profileFormSchema = z.object({
   lastName: z
     .string()
     .min(2, { message: 'Last name must be at least 2 characters.' }),
-  dateOfBirth: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, {
-      message: 'Date must be in YYYY-MM-DD format.',
-    }),
+  dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
+    message: 'Date must be in YYYY-MM-DD format.',
+  }),
   age: z.number().min(18, { message: 'Age must be at least 18.' }).max(120),
   gender: z.enum(['male', 'female', 'other'], {
     required_error: 'Please select a gender.',

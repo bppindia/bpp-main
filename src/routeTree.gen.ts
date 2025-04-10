@@ -37,6 +37,8 @@ import { Route as PublicContactIndexImport } from './routes/_public/contact/inde
 import { Route as PublicAboutIndexImport } from './routes/_public/about/index'
 import { Route as DashboardWalletTransactionsIndexImport } from './routes/dashboard/wallet/transactions/index'
 import { Route as DashboardWalletAddFundIndexImport } from './routes/dashboard/wallet/add-fund/index'
+import { Route as DashboardMembershipRenewalIndexImport } from './routes/dashboard/membership/renewal/index'
+import { Route as DashboardMembershipPaymentIndexImport } from './routes/dashboard/membership/payment/index'
 import { Route as DashboardDonateAddDonationIndexImport } from './routes/dashboard/donate/add-donation/index'
 import { Route as PublicMembershipWingsIndexImport } from './routes/_public/membership/wings/index'
 import { Route as PublicMembershipUpgradeRenewalsIndexImport } from './routes/_public/membership/upgrade-renewals/index'
@@ -56,6 +58,7 @@ import { Route as PublicAboutGetToKnowBppIndexImport } from './routes/_public/ab
 import { Route as PublicAboutCommitmentProgressIndexImport } from './routes/_public/about/commitment-progress/index'
 import { Route as PublicAboutBppGoalsIndexImport } from './routes/_public/about/bpp-goals/index'
 import { Route as PublicAboutBppGoalsNationalIntegrityIndexImport } from './routes/_public/about/bpp-goals/national-integrity/index'
+import { Route as PublicAboutBppGoalsGoodHealthAndWellBeingIndexImport } from './routes/_public/about/bpp-goals/good-health-and-well-being/index'
 import { Route as PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexImport } from './routes/_public/about/bpp-goals/equal-opportunity-and-gender-equality/index'
 
 // Create Virtual Routes
@@ -403,6 +406,20 @@ const DashboardWalletAddFundIndexRoute =
     getParentRoute: () => DashboardRouteRoute,
   } as any)
 
+const DashboardMembershipRenewalIndexRoute =
+  DashboardMembershipRenewalIndexImport.update({
+    id: '/membership/renewal/',
+    path: '/membership/renewal/',
+    getParentRoute: () => DashboardRouteRoute,
+  } as any)
+
+const DashboardMembershipPaymentIndexRoute =
+  DashboardMembershipPaymentIndexImport.update({
+    id: '/membership/payment/',
+    path: '/membership/payment/',
+    getParentRoute: () => DashboardRouteRoute,
+  } as any)
+
 const DashboardDonateAddDonationIndexRoute =
   DashboardDonateAddDonationIndexImport.update({
     id: '/donate/add-donation/',
@@ -531,6 +548,13 @@ const PublicAboutBppGoalsNationalIntegrityIndexRoute =
   PublicAboutBppGoalsNationalIntegrityIndexImport.update({
     id: '/about/bpp-goals/national-integrity/',
     path: '/about/bpp-goals/national-integrity/',
+    getParentRoute: () => PublicRoute,
+  } as any)
+
+const PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute =
+  PublicAboutBppGoalsGoodHealthAndWellBeingIndexImport.update({
+    id: '/about/bpp-goals/good-health-and-well-being/',
+    path: '/about/bpp-goals/good-health-and-well-being/',
     getParentRoute: () => PublicRoute,
   } as any)
 
@@ -951,6 +975,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardDonateAddDonationIndexImport
       parentRoute: typeof DashboardRouteImport
     }
+    '/dashboard/membership/payment/': {
+      id: '/dashboard/membership/payment/'
+      path: '/membership/payment'
+      fullPath: '/dashboard/membership/payment'
+      preLoaderRoute: typeof DashboardMembershipPaymentIndexImport
+      parentRoute: typeof DashboardRouteImport
+    }
+    '/dashboard/membership/renewal/': {
+      id: '/dashboard/membership/renewal/'
+      path: '/membership/renewal'
+      fullPath: '/dashboard/membership/renewal'
+      preLoaderRoute: typeof DashboardMembershipRenewalIndexImport
+      parentRoute: typeof DashboardRouteImport
+    }
     '/dashboard/wallet/add-fund/': {
       id: '/dashboard/wallet/add-fund/'
       path: '/wallet/add-fund'
@@ -970,6 +1008,13 @@ declare module '@tanstack/react-router' {
       path: '/about/bpp-goals/equal-opportunity-and-gender-equality'
       fullPath: '/about/bpp-goals/equal-opportunity-and-gender-equality'
       preLoaderRoute: typeof PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexImport
+      parentRoute: typeof PublicImport
+    }
+    '/_public/about/bpp-goals/good-health-and-well-being/': {
+      id: '/_public/about/bpp-goals/good-health-and-well-being/'
+      path: '/about/bpp-goals/good-health-and-well-being'
+      fullPath: '/about/bpp-goals/good-health-and-well-being'
+      preLoaderRoute: typeof PublicAboutBppGoalsGoodHealthAndWellBeingIndexImport
       parentRoute: typeof PublicImport
     }
     '/_public/about/bpp-goals/national-integrity/': {
@@ -1027,6 +1072,8 @@ interface DashboardRouteRouteChildren {
   DashboardTasksIndexLazyRoute: typeof DashboardTasksIndexLazyRoute
   DashboardUsersIndexLazyRoute: typeof DashboardUsersIndexLazyRoute
   DashboardDonateAddDonationIndexRoute: typeof DashboardDonateAddDonationIndexRoute
+  DashboardMembershipPaymentIndexRoute: typeof DashboardMembershipPaymentIndexRoute
+  DashboardMembershipRenewalIndexRoute: typeof DashboardMembershipRenewalIndexRoute
   DashboardWalletAddFundIndexRoute: typeof DashboardWalletAddFundIndexRoute
   DashboardWalletTransactionsIndexRoute: typeof DashboardWalletTransactionsIndexRoute
 }
@@ -1053,6 +1100,8 @@ const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
   DashboardTasksIndexLazyRoute: DashboardTasksIndexLazyRoute,
   DashboardUsersIndexLazyRoute: DashboardUsersIndexLazyRoute,
   DashboardDonateAddDonationIndexRoute: DashboardDonateAddDonationIndexRoute,
+  DashboardMembershipPaymentIndexRoute: DashboardMembershipPaymentIndexRoute,
+  DashboardMembershipRenewalIndexRoute: DashboardMembershipRenewalIndexRoute,
   DashboardWalletAddFundIndexRoute: DashboardWalletAddFundIndexRoute,
   DashboardWalletTransactionsIndexRoute: DashboardWalletTransactionsIndexRoute,
 }
@@ -1085,6 +1134,7 @@ interface PublicRouteChildren {
   PublicMembershipUpgradeRenewalsIndexRoute: typeof PublicMembershipUpgradeRenewalsIndexRoute
   PublicMembershipWingsIndexRoute: typeof PublicMembershipWingsIndexRoute
   PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute: typeof PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute
+  PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute: typeof PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute
   PublicAboutBppGoalsNationalIntegrityIndexRoute: typeof PublicAboutBppGoalsNationalIntegrityIndexRoute
 }
 
@@ -1122,6 +1172,8 @@ const PublicRouteChildren: PublicRouteChildren = {
   PublicMembershipWingsIndexRoute: PublicMembershipWingsIndexRoute,
   PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute:
     PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute,
+  PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute:
+    PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute,
   PublicAboutBppGoalsNationalIntegrityIndexRoute:
     PublicAboutBppGoalsNationalIntegrityIndexRoute,
 }
@@ -1187,9 +1239,12 @@ export interface FileRoutesByFullPath {
   '/membership/upgrade-renewals': typeof PublicMembershipUpgradeRenewalsIndexRoute
   '/membership/wings': typeof PublicMembershipWingsIndexRoute
   '/dashboard/donate/add-donation': typeof DashboardDonateAddDonationIndexRoute
+  '/dashboard/membership/payment': typeof DashboardMembershipPaymentIndexRoute
+  '/dashboard/membership/renewal': typeof DashboardMembershipRenewalIndexRoute
   '/dashboard/wallet/add-fund': typeof DashboardWalletAddFundIndexRoute
   '/dashboard/wallet/transactions': typeof DashboardWalletTransactionsIndexRoute
   '/about/bpp-goals/equal-opportunity-and-gender-equality': typeof PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute
+  '/about/bpp-goals/good-health-and-well-being': typeof PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute
   '/about/bpp-goals/national-integrity': typeof PublicAboutBppGoalsNationalIntegrityIndexRoute
 }
 
@@ -1249,9 +1304,12 @@ export interface FileRoutesByTo {
   '/membership/upgrade-renewals': typeof PublicMembershipUpgradeRenewalsIndexRoute
   '/membership/wings': typeof PublicMembershipWingsIndexRoute
   '/dashboard/donate/add-donation': typeof DashboardDonateAddDonationIndexRoute
+  '/dashboard/membership/payment': typeof DashboardMembershipPaymentIndexRoute
+  '/dashboard/membership/renewal': typeof DashboardMembershipRenewalIndexRoute
   '/dashboard/wallet/add-fund': typeof DashboardWalletAddFundIndexRoute
   '/dashboard/wallet/transactions': typeof DashboardWalletTransactionsIndexRoute
   '/about/bpp-goals/equal-opportunity-and-gender-equality': typeof PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute
+  '/about/bpp-goals/good-health-and-well-being': typeof PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute
   '/about/bpp-goals/national-integrity': typeof PublicAboutBppGoalsNationalIntegrityIndexRoute
 }
 
@@ -1315,9 +1373,12 @@ export interface FileRoutesById {
   '/_public/membership/upgrade-renewals/': typeof PublicMembershipUpgradeRenewalsIndexRoute
   '/_public/membership/wings/': typeof PublicMembershipWingsIndexRoute
   '/dashboard/donate/add-donation/': typeof DashboardDonateAddDonationIndexRoute
+  '/dashboard/membership/payment/': typeof DashboardMembershipPaymentIndexRoute
+  '/dashboard/membership/renewal/': typeof DashboardMembershipRenewalIndexRoute
   '/dashboard/wallet/add-fund/': typeof DashboardWalletAddFundIndexRoute
   '/dashboard/wallet/transactions/': typeof DashboardWalletTransactionsIndexRoute
   '/_public/about/bpp-goals/equal-opportunity-and-gender-equality/': typeof PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute
+  '/_public/about/bpp-goals/good-health-and-well-being/': typeof PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute
   '/_public/about/bpp-goals/national-integrity/': typeof PublicAboutBppGoalsNationalIntegrityIndexRoute
 }
 
@@ -1381,9 +1442,12 @@ export interface FileRouteTypes {
     | '/membership/upgrade-renewals'
     | '/membership/wings'
     | '/dashboard/donate/add-donation'
+    | '/dashboard/membership/payment'
+    | '/dashboard/membership/renewal'
     | '/dashboard/wallet/add-fund'
     | '/dashboard/wallet/transactions'
     | '/about/bpp-goals/equal-opportunity-and-gender-equality'
+    | '/about/bpp-goals/good-health-and-well-being'
     | '/about/bpp-goals/national-integrity'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -1442,9 +1506,12 @@ export interface FileRouteTypes {
     | '/membership/upgrade-renewals'
     | '/membership/wings'
     | '/dashboard/donate/add-donation'
+    | '/dashboard/membership/payment'
+    | '/dashboard/membership/renewal'
     | '/dashboard/wallet/add-fund'
     | '/dashboard/wallet/transactions'
     | '/about/bpp-goals/equal-opportunity-and-gender-equality'
+    | '/about/bpp-goals/good-health-and-well-being'
     | '/about/bpp-goals/national-integrity'
   id:
     | '__root__'
@@ -1506,9 +1573,12 @@ export interface FileRouteTypes {
     | '/_public/membership/upgrade-renewals/'
     | '/_public/membership/wings/'
     | '/dashboard/donate/add-donation/'
+    | '/dashboard/membership/payment/'
+    | '/dashboard/membership/renewal/'
     | '/dashboard/wallet/add-fund/'
     | '/dashboard/wallet/transactions/'
     | '/_public/about/bpp-goals/equal-opportunity-and-gender-equality/'
+    | '/_public/about/bpp-goals/good-health-and-well-being/'
     | '/_public/about/bpp-goals/national-integrity/'
   fileRoutesById: FileRoutesById
 }
@@ -1592,6 +1662,8 @@ export const routeTree = rootRoute
         "/dashboard/tasks/",
         "/dashboard/users/",
         "/dashboard/donate/add-donation/",
+        "/dashboard/membership/payment/",
+        "/dashboard/membership/renewal/",
         "/dashboard/wallet/add-fund/",
         "/dashboard/wallet/transactions/"
       ]
@@ -1622,6 +1694,7 @@ export const routeTree = rootRoute
         "/_public/membership/upgrade-renewals/",
         "/_public/membership/wings/",
         "/_public/about/bpp-goals/equal-opportunity-and-gender-equality/",
+        "/_public/about/bpp-goals/good-health-and-well-being/",
         "/_public/about/bpp-goals/national-integrity/"
       ]
     },
@@ -1843,6 +1916,14 @@ export const routeTree = rootRoute
       "filePath": "dashboard/donate/add-donation/index.tsx",
       "parent": "/dashboard"
     },
+    "/dashboard/membership/payment/": {
+      "filePath": "dashboard/membership/payment/index.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/membership/renewal/": {
+      "filePath": "dashboard/membership/renewal/index.tsx",
+      "parent": "/dashboard"
+    },
     "/dashboard/wallet/add-fund/": {
       "filePath": "dashboard/wallet/add-fund/index.tsx",
       "parent": "/dashboard"
@@ -1853,6 +1934,10 @@ export const routeTree = rootRoute
     },
     "/_public/about/bpp-goals/equal-opportunity-and-gender-equality/": {
       "filePath": "_public/about/bpp-goals/equal-opportunity-and-gender-equality/index.tsx",
+      "parent": "/_public"
+    },
+    "/_public/about/bpp-goals/good-health-and-well-being/": {
+      "filePath": "_public/about/bpp-goals/good-health-and-well-being/index.tsx",
       "parent": "/_public"
     },
     "/_public/about/bpp-goals/national-integrity/": {

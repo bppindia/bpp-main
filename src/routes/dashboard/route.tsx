@@ -4,6 +4,8 @@ import store from '@/store/store'
 import { cn } from '@/lib/utils'
 import { SearchProvider } from '@/context/search-context'
 import { SidebarProvider } from '@/components/ui/sidebar'
+import { RouteGuard } from '@/components/features/auth/route-guard'
+import { VerificationManager } from '@/components/features/verification/verification-manager'
 import { AppSidebar } from '@/components/layout/dashboard/app-sidebar'
 import SkipToMain from '@/components/skip-to-main'
 
@@ -60,7 +62,10 @@ function DashboardLayout() {
             'group-data-[scroll-locked=1]/body:has-[main.fixed-main]:h-svh'
           )}
         >
-          <Outlet />
+          <VerificationManager />
+          <RouteGuard>
+            <Outlet />
+          </RouteGuard>
         </div>
       </SidebarProvider>
     </SearchProvider>

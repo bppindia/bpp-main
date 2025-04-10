@@ -8,6 +8,13 @@ import {
   Award,
   Users,
   Clock,
+  CheckCircle,
+  ArrowRight,
+  MapPin,
+  Mail,
+  Phone,
+  FileText,
+  Share2,
 } from 'lucide-react'
 import bppcard from '@/assets/images/BPPcard.png'
 import bppLogo from '@/assets/logo/bppLogo.svg'
@@ -28,6 +35,12 @@ import { Main } from '@/components/layout/dashboard/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
+import { UserRole, UserStatus } from '@/utils/roleAccess'
+import { useNavigate } from '@tanstack/react-router'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Separator } from '@/components/ui/separator'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Input } from '@/components/ui/input'
 
 // Mock API call
 interface MembershipData {
@@ -36,7 +49,7 @@ interface MembershipData {
   joinDate: string
   expiryDate: string
   certificateUrl: string
-  referralCount: number // Added
+  referralCount: number
 }
 
 const fetchMembershipData = async (): Promise<MembershipData> => {
@@ -47,7 +60,7 @@ const fetchMembershipData = async (): Promise<MembershipData> => {
     joinDate: '2024-01-01',
     expiryDate: '2026-01-01',
     certificateUrl: bppcard,
-    referralCount: 5, // Mock data
+    referralCount: 5,
   }
 }
 
@@ -87,10 +100,9 @@ const membershipBenefits = {
   },
 }
 
-// ... (rest of the imports and setup remain unchanged)
-
 export default function Membership() {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [membershipData, setMembershipData] = useState<MembershipData | null>(
     null
@@ -102,9 +114,9 @@ export default function Membership() {
         const data = await fetchMembershipData()
         if (user?.membership) {
           data.membershipType =
-            user.membership === 'primary'
+            user.membership.type === 'PRIMARY MEMBERSHIP'
               ? 'primary'
-              : user.membership === 'business'
+              : user.membership.type === 'ACTIVE MEMBERSHIP'
                 ? 'active'
                 : 'executive'
         }
@@ -123,8 +135,8 @@ export default function Membership() {
   }, [user])
 
   const handleDownloadCertificate = () => {
-    if (membershipData?.certificateUrl) {
-      window.open(membershipData.certificateUrl, '_blank')
+    if (user?.membership?.cardUrl) {
+      window.open(user.membership.cardUrl, '_blank')
       toast({
         title: 'Download Started',
         description: 'Your certificate is being downloaded.',
@@ -132,26 +144,218 @@ export default function Membership() {
     }
   }
 
+  const handlePaymentClick = () => {
+    navigate({to: '/dashboard/membership/payment'})
+  }
+
+  const copyReferralLink = () => {
+    if (user?.referralProfile?.referralLink) {
+      navigator.clipboard.writeText(user.referralProfile.referralLink)
+      toast({
+        title: 'Copied!',
+        description: 'Referral link copied to clipboard.',
+      })
+    }
+  }
+
   if (loading || !membershipData) {
     return (
-      <Main fixed>
-        <div className='py-10 text-center text-muted-foreground'>
-          Loading membership details...
-        </div>
-      </Main>
+      <>
+        <Header fixed>
+          <Search />
+          <div className='ml-auto flex items-center space-x-4'>
+            <ThemeSwitch />
+            <ProfileDropdown />
+          </div>
+        </Header>
+        <Main>
+          <div className='mx-auto w-full'>
+            <Skeleton className='mb-6 h-10 w-64' />
+            
+            <Card className='mb-8 overflow-hidden rounded-lg border-2 shadow-md'>
+              <CardContent className='p-6'>
+                <div className='flex flex-col items-center gap-6 sm:flex-row sm:items-start'>
+                  <Skeleton className='h-24 w-24 rounded-full sm:h-32 sm:w-32' />
+                  
+                  <div className='flex-1 space-y-4'>
+                    <div className='flex items-center justify-between'>
+                      <Skeleton className='h-8 w-48' />
+                      <Skeleton className='h-6 w-16 rounded-full' />
+                    </div>
+                    
+                    <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+                      {[1, 2, 3, 4].map((i) => (
+                        <div key={i}>
+                          <Skeleton className='mb-1 h-4 w-24' />
+                          <Skeleton className='h-6 w-32' />
+                        </div>
+                      ))}
+                      <div className='sm:col-span-2'>
+                        <Skeleton className='mb-1 h-4 w-24' />
+                        <Skeleton className='h-2.5 w-full rounded-full' />
+                      </div>
+                    </div>
+                    
+                    <div className='flex flex-col gap-2 sm:flex-row sm:justify-start'>
+                      <Skeleton className='h-10 w-full sm:w-32' />
+                      <Skeleton className='h-10 w-full sm:w-32' />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Skeleton className='mb-4 h-8 w-32' />
+            <Card className='mb-8'>
+              <CardContent className='pt-6'>
+                <div className='space-y-3'>
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className='flex items-center'>
+                      <Skeleton className='mr-2 h-5 w-5 rounded-full' />
+                      <Skeleton className='h-5 w-64' />
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </Main>
+      </>
     )
   }
 
-  const currentMembership = membershipBenefits[membershipData.membershipType]
-  const isActive = new Date(membershipData.expiryDate) > new Date()
+  // Check if user is verified
+  const isVerified = user?.isVerified === true
+  const isApproved = user?.status === UserStatus.APPROVED
+  const isPrimaryMember = user?.role === UserRole.PRIMARY_MEMBER
+  const isActiveMember = user?.role === UserRole.ACTIVE_MEMBER
+
+  // If user is not verified, show verification required message
+  if (!isVerified || !isApproved) {
+    return (
+      <>
+        <Header fixed>
+          <Search />
+          <div className='ml-auto flex items-center space-x-4'>
+            <ThemeSwitch />
+            <ProfileDropdown />
+          </div>
+        </Header>
+        <Main>
+          <div className='mx-auto w-full'>
+            <h1 className='mb-6 text-3xl font-bold'>Membership Details</h1>
+            <Card className='mb-8 border-yellow-300 bg-yellow-50'>
+              <CardContent className='p-6'>
+                <div className='flex flex-col items-center text-center'>
+                  <Award className='mb-4 h-16 w-16 text-yellow-500' />
+                  <h2 className='mb-2 text-2xl font-bold text-yellow-800'>
+                    Verification Required
+                  </h2>
+                  <p className='mb-4 max-w-md text-yellow-700'>
+                    Your account is currently pending verification. Once verified, you'll be able to access membership features and upgrade to primary membership.
+                  </p>
+                  <Button variant='outline' className='border-yellow-300 bg-white text-yellow-700 hover:bg-yellow-100'>
+                    Check Verification Status
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </Main>
+      </>
+    )
+  }
+
+  // If user is verified but not a primary member, show upgrade option
+  if (isVerified && isApproved && !isPrimaryMember && !isActiveMember) {
+    return (
+      <>
+        <Header fixed>
+          <Search />
+          <div className='ml-auto flex items-center space-x-4'>
+            <ThemeSwitch />
+            <ProfileDropdown />
+          </div>
+        </Header>
+        <Main>
+          <div className='mx-auto w-full'>
+            <h1 className='mb-6 text-3xl font-bold'>Membership Details</h1>
+            
+            {/* Upgrade to Primary Membership Card */}
+            <Card className='mb-8 border-blue-300 bg-blue-50'>
+              <CardContent className='p-6'>
+                <div className='flex flex-col items-center text-center'>
+                  <Award className='mb-4 h-16 w-16 text-blue-500' />
+                  <h2 className='mb-2 text-2xl font-bold text-blue-800'>
+                    Upgrade to Primary Membership
+                  </h2>
+                  <p className='mb-4 max-w-md text-blue-700'>
+                    Your account is verified! Now you can upgrade to Primary Membership for just ₹5 to unlock all features.
+                  </p>
+                  <div className='mb-6 flex items-center justify-center'>
+                    <span className='text-3xl font-bold text-blue-800'>₹5</span>
+                    <span className='ml-2 text-blue-600'>one-time payment</span>
+                  </div>
+                  <Button 
+                    onClick={handlePaymentClick}
+                    className='bg-blue-600 text-white hover:bg-blue-700'
+                  >
+                    Pay Now to Activate
+                    <ArrowRight className='ml-2 h-4 w-4' />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Primary Membership Benefits */}
+            <section className='mb-8'>
+              <h2 className='mb-4 text-2xl font-semibold'>Primary Membership Benefits</h2>
+              <Card>
+                <CardContent className='pt-6'>
+                  <ul className='space-y-4'>
+                    {membershipBenefits.primary.benefits.map((benefit, index) => (
+                      <li key={index} className='flex items-start'>
+                        <CheckCircle className='mr-2 h-5 w-5 flex-shrink-0 text-green-500' />
+                        <span>{benefit}</span>
+                      </li>
+                    ))}
+                    <li className='flex items-start'>
+                      <CheckCircle className='mr-2 h-5 w-5 flex-shrink-0 text-green-500' />
+                      <span>Access to all basic community features</span>
+                    </li>
+                    <li className='flex items-start'>
+                      <CheckCircle className='mr-2 h-5 w-5 flex-shrink-0 text-green-500' />
+                      <span>Eligibility for Active Membership after referrals</span>
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </section>
+          </div>
+        </Main>
+      </>
+    )
+  }
+
+  // If user is a primary or active member, show membership card
+  const currentMembership = isActiveMember 
+    ? membershipBenefits.active 
+    : membershipBenefits.primary
+  
+  // Calculate membership validity
+  const startDate = user?.membership?.validity?.startDate 
+    ? new Date(user.membership.validity.startDate) 
+    : new Date()
+  const expiryDate = user?.membership?.validity?.expiryDate 
+    ? new Date(user.membership.validity.expiryDate) 
+    : new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+  
+  const isActive = expiryDate > new Date()
   const daysRemaining = Math.ceil(
-    (new Date(membershipData.expiryDate).getTime() - Date.now()) /
-      (1000 * 60 * 60 * 24)
+    (expiryDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)
   )
   const totalDays = Math.ceil(
-    (new Date(membershipData.expiryDate).getTime() -
-      new Date(membershipData.joinDate).getTime()) /
-      (1000 * 60 * 60 * 24)
+    (expiryDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
   )
   const progressPercentage = Math.min((daysRemaining / totalDays) * 100, 100)
 
@@ -204,7 +408,7 @@ export default function Membership() {
                       <User className='mr-2 h-4 w-4' /> Membership Number
                     </p>
                     <p className='font-mono font-bold'>
-                      {membershipData.membershipNumber}
+                      {user?.membership?.membershipNumber || 'N/A'}
                     </p>
                   </div>
                   <div>
@@ -212,7 +416,7 @@ export default function Membership() {
                       <Calendar className='mr-2 h-4 w-4' /> Joining Date
                     </p>
                     <p>
-                      {new Date(membershipData.joinDate).toLocaleDateString()}
+                      {startDate.toLocaleDateString()}
                     </p>
                   </div>
                   <div>
@@ -220,14 +424,14 @@ export default function Membership() {
                       <Calendar className='mr-2 h-4 w-4' /> Expiry Date
                     </p>
                     <p>
-                      {new Date(membershipData.expiryDate).toLocaleDateString()}
+                      {expiryDate.toLocaleDateString()}
                     </p>
                   </div>
                   <div>
                     <p className='flex items-center justify-center text-sm text-muted-foreground sm:justify-start'>
                       <Users className='mr-2 h-4 w-4' /> Referral Count
                     </p>
-                    <p className='font-bold'>{membershipData.referralCount}</p>
+                    <p className='font-bold'>{user?.referralProfile?.totalReferrals || 0}</p>
                   </div>
                   <div className='sm:col-span-2'>
                     <p className='flex items-center justify-center text-sm text-muted-foreground sm:justify-start'>
@@ -236,7 +440,7 @@ export default function Membership() {
                     <div className='flex items-center gap-2'>
                       <div className='h-2.5 w-full rounded-full bg-gray-200'>
                         <div
-                          className={`h-2.5 rounded-full ${membershipData.membershipType === 'primary' ? 'bg-blue-500' : membershipData.membershipType === 'active' ? 'bg-red-500' : 'bg-orange-500'}`}
+                          className={`h-2.5 rounded-full ${isPrimaryMember ? 'bg-blue-500' : isActiveMember ? 'bg-red-500' : 'bg-orange-500'}`}
                           style={{ width: `${progressPercentage}%` }}
                         />
                       </div>
@@ -253,6 +457,7 @@ export default function Membership() {
                   <Button
                     variant='ghost'
                     className='flex w-full items-center gap-2 sm:w-auto'
+                    onClick={handleDownloadCertificate}
                   >
                     <QrCode className='h-4 w-4' /> View Certificate
                   </Button>
@@ -261,35 +466,187 @@ export default function Membership() {
             </CardContent>
           </Card>
 
-          {/* Membership Benefits */}
-          <section className='mb-8'>
-            <h2 className='mb-4 text-2xl font-semibold'>Benefits</h2>
-            <Card>
-              <CardContent className='pt-6'>
-                <ul className='space-y-3'>
-                  {currentMembership.benefits.map((benefit, index) => (
-                    <li key={index} className='flex items-center'>
-                      <svg
-                        className='mr-2 h-5 w-5 text-green-500'
-                        fill='none'
-                        stroke='currentColor'
-                        viewBox='0 0 24 24'
-                        xmlns='http://www.w3.org/2000/svg'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth='2'
-                          d='M5 13l4 4L19 7'
-                        />
-                      </svg>
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          </section>
+          {/* Tabs for different sections */}
+          <Tabs defaultValue="benefits" className="mb-8">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="benefits">Benefits</TabsTrigger>
+              <TabsTrigger value="personal">Personal Info</TabsTrigger>
+              <TabsTrigger value="referral">Referral</TabsTrigger>
+            </TabsList>
+            
+            {/* Benefits Tab */}
+            <TabsContent value="benefits">
+              <Card>
+                <CardContent className='pt-6'>
+                  <ul className='space-y-3'>
+                    {currentMembership.benefits.map((benefit, index) => (
+                      <li key={index} className='flex items-center'>
+                        <svg
+                          className='mr-2 h-5 w-5 text-green-500'
+                          fill='none'
+                          stroke='currentColor'
+                          viewBox='0 0 24 24'
+                          xmlns='http://www.w3.org/2000/svg'
+                        >
+                          <path
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            strokeWidth='2'
+                            d='M5 13l4 4L19 7'
+                          />
+                        </svg>
+                        {benefit}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            {/* Personal Info Tab */}
+            <TabsContent value="personal">
+              <Card>
+                <CardContent className='pt-6'>
+                  <div className='grid gap-6 md:grid-cols-2'>
+                    <div className='space-y-4'>
+                      <h3 className='text-lg font-semibold'>Personal Details</h3>
+                      <div className='space-y-2'>
+                        <div className='flex items-center'>
+                          <User className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <span className='font-medium'>Name:</span>
+                          <span className='ml-2'>
+                            {user?.title} {user?.firstName} {user?.middleName} {user?.lastName}
+                          </span>
+                        </div>
+                        <div className='flex items-center'>
+                          <Mail className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <span className='font-medium'>Email:</span>
+                          <span className='ml-2'>{user?.email}</span>
+                        </div>
+                        <div className='flex items-center'>
+                          <Phone className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <span className='font-medium'>Phone:</span>
+                          <span className='ml-2'>{user?.phone}</span>
+                        </div>
+                        <div className='flex items-center'>
+                          <Calendar className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <span className='font-medium'>Date of Birth:</span>
+                          <span className='ml-2'>
+                            {user?.dateOfBirth ? new Date(user.dateOfBirth).toLocaleDateString() : 'N/A'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className='space-y-4'>
+                      <h3 className='text-lg font-semibold'>Address</h3>
+                      <div className='space-y-2'>
+                        <div className='flex items-start'>
+                          <MapPin className='mr-2 h-4 w-4 text-muted-foreground mt-1' />
+                          <div>
+                            <p>{user?.address?.line1}</p>
+                            <p>{user?.address?.line2}</p>
+                            <p>
+                              {user?.address?.cityOrVillage}, {user?.address?.district}, {user?.address?.state}
+                            </p>
+                            <p>PIN: {user?.address?.pincode}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className='space-y-4 md:col-span-2'>
+                      <h3 className='text-lg font-semibold'>Professional Details</h3>
+                      <div className='space-y-2'>
+                        <div className='flex items-center'>
+                          <FileText className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <span className='font-medium'>Qualification:</span>
+                          <span className='ml-2'>{user?.professional?.qualification || 'N/A'}</span>
+                        </div>
+                        <div className='flex items-center'>
+                          <User className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <span className='font-medium'>Profession:</span>
+                          <span className='ml-2'>{user?.professional?.profession || 'N/A'}</span>
+                        </div>
+                        <div className='flex items-center'>
+                          <Award className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <span className='font-medium'>Position:</span>
+                          <span className='ml-2'>{user?.professional?.position || 'N/A'}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            {/* Referral Tab */}
+            <TabsContent value="referral">
+              <Card>
+                <CardContent className='pt-6'>
+                  <div className='space-y-6'>
+                    <div className='flex flex-col items-center space-y-4 text-center'>
+                      <div className='rounded-full bg-blue-100 p-4'>
+                        <Share2 className='h-8 w-8 text-blue-600' />
+                      </div>
+                      <div>
+                        <h3 className='text-xl font-semibold'>Your Referral Program</h3>
+                        <p className='text-muted-foreground'>
+                          Share your referral link to invite others to join BPP
+                        </p>
+                      </div>
+                      
+                      <div className='w-full max-w-md space-y-2'>
+                        <div className='flex items-center space-x-2'>
+                          <Input 
+                            value={user?.referralProfile?.referralLink || ''} 
+                            readOnly 
+                            className='font-mono text-sm'
+                          />
+                          <Button 
+                            variant='outline' 
+                            size='sm'
+                            onClick={copyReferralLink}
+                          >
+                            Copy
+                          </Button>
+                        </div>
+                        <p className='text-xs text-muted-foreground'>
+                          Your referral code: <span className='font-mono font-bold'>{user?.referralProfile?.referralCode || 'N/A'}</span>
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <Separator />
+                    
+                    <div className='grid gap-4 md:grid-cols-3'>
+                      <div className='rounded-lg border p-4 text-center'>
+                        <p className='text-2xl font-bold'>{user?.referralProfile?.totalReferrals || 0}</p>
+                        <p className='text-sm text-muted-foreground'>Total Referrals</p>
+                      </div>
+                      <div className='rounded-lg border p-4 text-center'>
+                        <p className='text-2xl font-bold'>{user?.referralProfile?.successfulReferrals || 0}</p>
+                        <p className='text-sm text-muted-foreground'>Successful</p>
+                      </div>
+                      <div className='rounded-lg border p-4 text-center'>
+                        <p className='text-2xl font-bold'>{user?.referralProfile?.pendingReferrals || 0}</p>
+                        <p className='text-sm text-muted-foreground'>Pending</p>
+                      </div>
+                    </div>
+                    
+                    {isPrimaryMember && !isActiveMember && (
+                      <div className='rounded-lg border border-yellow-200 bg-yellow-50 p-4'>
+                        <h4 className='mb-2 font-semibold text-yellow-800'>Upgrade to Active Membership</h4>
+                        <p className='text-sm text-yellow-700'>
+                          You need {10 - (user?.referralProfile?.successfulReferrals || 0)} more successful referrals to upgrade to Active Membership.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
 
           {/* Membership Certificate */}
           <section>
@@ -310,7 +667,7 @@ export default function Membership() {
                   <Dialog>
                     <DialogTrigger asChild>
                       <img
-                        src={membershipData.certificateUrl}
+                        src={user?.membership?.cardUrl || bppcard}
                         alt='Certificate Preview'
                         className='h-40 w-full cursor-pointer rounded-md object-contain blur-sm transition-all hover:blur-none'
                       />
@@ -320,7 +677,7 @@ export default function Membership() {
                         <DialogTitle>Your Membership Certificate</DialogTitle>
                         <DialogDescription>
                           <img
-                            src={membershipData.certificateUrl}
+                            src={user?.membership?.cardUrl || bppcard}
                             alt='Certificate'
                             className='h-[400px] w-full rounded-md object-contain'
                           />
