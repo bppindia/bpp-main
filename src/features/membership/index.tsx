@@ -163,56 +163,56 @@ export default function Membership() {
       <>
         <Header fixed>
           <Search />
-          <div className='ml-auto flex items-center space-x-4'>
+          <div className='flex items-center ml-auto space-x-4'>
             <ThemeSwitch />
             <ProfileDropdown />
           </div>
         </Header>
         <Main>
           <div className='mx-auto w-full'>
-            <Skeleton className='mb-6 h-10 w-64' />
+            <Skeleton className='mb-6 w-64 h-10' />
             
-            <Card className='mb-8 overflow-hidden rounded-lg border-2 shadow-md'>
+            <Card className='overflow-hidden mb-8 rounded-lg border-2 shadow-md'>
               <CardContent className='p-6'>
-                <div className='flex flex-col items-center gap-6 sm:flex-row sm:items-start'>
-                  <Skeleton className='h-24 w-24 rounded-full sm:h-32 sm:w-32' />
+                <div className='flex flex-col gap-6 items-center sm:flex-row sm:items-start'>
+                  <Skeleton className='w-24 h-24 rounded-full sm:h-32 sm:w-32' />
                   
                   <div className='flex-1 space-y-4'>
-                    <div className='flex items-center justify-between'>
-                      <Skeleton className='h-8 w-48' />
-                      <Skeleton className='h-6 w-16 rounded-full' />
+                    <div className='flex justify-between items-center'>
+                      <Skeleton className='w-48 h-8' />
+                      <Skeleton className='w-16 h-6 rounded-full' />
                     </div>
                     
                     <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
                       {[1, 2, 3, 4].map((i) => (
                         <div key={i}>
-                          <Skeleton className='mb-1 h-4 w-24' />
-                          <Skeleton className='h-6 w-32' />
+                          <Skeleton className='mb-1 w-24 h-4' />
+                          <Skeleton className='w-32 h-6' />
                         </div>
                       ))}
                       <div className='sm:col-span-2'>
-                        <Skeleton className='mb-1 h-4 w-24' />
+                        <Skeleton className='mb-1 w-24 h-4' />
                         <Skeleton className='h-2.5 w-full rounded-full' />
                       </div>
                     </div>
                     
                     <div className='flex flex-col gap-2 sm:flex-row sm:justify-start'>
-                      <Skeleton className='h-10 w-full sm:w-32' />
-                      <Skeleton className='h-10 w-full sm:w-32' />
+                      <Skeleton className='w-full h-10 sm:w-32' />
+                      <Skeleton className='w-full h-10 sm:w-32' />
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
             
-            <Skeleton className='mb-4 h-8 w-32' />
+            <Skeleton className='mb-4 w-32 h-8' />
             <Card className='mb-8'>
               <CardContent className='pt-6'>
                 <div className='space-y-3'>
                   {[1, 2, 3].map((i) => (
                     <div key={i} className='flex items-center'>
-                      <Skeleton className='mr-2 h-5 w-5 rounded-full' />
-                      <Skeleton className='h-5 w-64' />
+                      <Skeleton className='mr-2 w-5 h-5 rounded-full' />
+                      <Skeleton className='w-64 h-5' />
                     </div>
                   ))}
                 </div>
@@ -236,7 +236,7 @@ export default function Membership() {
       <>
         <Header fixed>
           <Search />
-          <div className='ml-auto flex items-center space-x-4'>
+          <div className='flex items-center ml-auto space-x-4'>
             <ThemeSwitch />
             <ProfileDropdown />
           </div>
@@ -244,17 +244,17 @@ export default function Membership() {
         <Main>
           <div className='mx-auto w-full'>
             <h1 className='mb-6 text-3xl font-bold'>Membership Details</h1>
-            <Card className='mb-8 border-yellow-300 bg-yellow-50'>
+            <Card className='mb-8 bg-yellow-50 border-yellow-300'>
               <CardContent className='p-6'>
                 <div className='flex flex-col items-center text-center'>
-                  <Award className='mb-4 h-16 w-16 text-yellow-500' />
+                  <Award className='mb-4 w-16 h-16 text-yellow-500' />
                   <h2 className='mb-2 text-2xl font-bold text-yellow-800'>
                     Verification Required
                   </h2>
                   <p className='mb-4 max-w-md text-yellow-700'>
                     Your account is currently pending verification. Once verified, you'll be able to access membership features and upgrade to primary membership.
                   </p>
-                  <Button variant='outline' className='border-yellow-300 bg-white text-yellow-700 hover:bg-yellow-100'>
+                  <Button variant='outline' className='text-yellow-700 bg-white border-yellow-300 hover:bg-yellow-100'>
                     Check Verification Status
                   </Button>
                 </div>
@@ -272,7 +272,7 @@ export default function Membership() {
       <>
         <Header fixed>
           <Search />
-          <div className='ml-auto flex items-center space-x-4'>
+          <div className='flex items-center ml-auto space-x-4'>
             <ThemeSwitch />
             <ProfileDropdown />
           </div>
@@ -282,26 +282,26 @@ export default function Membership() {
             <h1 className='mb-6 text-3xl font-bold'>Membership Details</h1>
             
             {/* Upgrade to Primary Membership Card */}
-            <Card className='mb-8 border-blue-300 bg-blue-50'>
+            <Card className='mb-8 bg-blue-50 border-blue-300'>
               <CardContent className='p-6'>
                 <div className='flex flex-col items-center text-center'>
-                  <Award className='mb-4 h-16 w-16 text-blue-500' />
+                  <Award className='mb-4 w-16 h-16 text-blue-500' />
                   <h2 className='mb-2 text-2xl font-bold text-blue-800'>
                     Upgrade to Primary Membership
                   </h2>
                   <p className='mb-4 max-w-md text-blue-700'>
                     Your account is verified! Now you can upgrade to Primary Membership for just ₹5 to unlock all features.
                   </p>
-                  <div className='mb-6 flex items-center justify-center'>
+                  <div className='flex justify-center items-center mb-6'>
                     <span className='text-3xl font-bold text-blue-800'>₹5</span>
                     <span className='ml-2 text-blue-600'>one-time payment</span>
                   </div>
                   <Button 
                     onClick={handlePaymentClick}
-                    className='bg-blue-600 text-white hover:bg-blue-700'
+                    className='text-white bg-blue-600 hover:bg-blue-700'
                   >
                     Pay Now to Activate
-                    <ArrowRight className='ml-2 h-4 w-4' />
+                    <ArrowRight className='ml-2 w-4 h-4' />
                   </Button>
                 </div>
               </CardContent>
@@ -315,16 +315,16 @@ export default function Membership() {
                   <ul className='space-y-4'>
                     {membershipBenefits.primary.benefits.map((benefit, index) => (
                       <li key={index} className='flex items-start'>
-                        <CheckCircle className='mr-2 h-5 w-5 flex-shrink-0 text-green-500' />
+                        <CheckCircle className='flex-shrink-0 mr-2 w-5 h-5 text-green-500' />
                         <span>{benefit}</span>
                       </li>
                     ))}
                     <li className='flex items-start'>
-                      <CheckCircle className='mr-2 h-5 w-5 flex-shrink-0 text-green-500' />
+                      <CheckCircle className='flex-shrink-0 mr-2 w-5 h-5 text-green-500' />
                       <span>Access to all basic community features</span>
                     </li>
                     <li className='flex items-start'>
-                      <CheckCircle className='mr-2 h-5 w-5 flex-shrink-0 text-green-500' />
+                      <CheckCircle className='flex-shrink-0 mr-2 w-5 h-5 text-green-500' />
                       <span>Eligibility for Active Membership after referrals</span>
                     </li>
                   </ul>
@@ -363,7 +363,7 @@ export default function Membership() {
     <>
       <Header fixed>
         <Search />
-        <div className='ml-auto flex items-center space-x-4'>
+        <div className='flex items-center ml-auto space-x-4'>
           <ThemeSwitch />
           <ProfileDropdown />
         </div>
@@ -378,25 +378,25 @@ export default function Membership() {
           >
             {/* Background SVG Shade */}
             <div
-              className='absolute inset-0 bg-contain bg-center bg-no-repeat opacity-10'
+              className='absolute inset-0 bg-center bg-no-repeat bg-contain opacity-10'
               style={{ backgroundImage: `url(${bppLogo})` }}
             />
-            <CardContent className='relative flex flex-col items-center gap-6 p-6 sm:flex-row sm:items-start'>
+            <CardContent className='flex relative flex-col gap-6 items-center p-6 sm:flex-row sm:items-start'>
               {/* Badge Circle */}
               <div
                 className={`flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br sm:h-32 sm:w-32 ${currentMembership.badgeColor} border-4 border-white shadow-md`}
               >
-                <Award className='h-12 w-12 text-white sm:h-16 sm:w-16' />
+                <Award className='w-12 h-12 text-white sm:h-16 sm:w-16' />
               </div>
 
               {/* Card Details */}
               <div className='flex-1 text-center sm:text-left'>
-                <div className='mb-2 flex items-center justify-between'>
+                <div className='flex justify-between items-center mb-2'>
                   <h2 className='text-2xl font-bold'>
                     {currentMembership.title}
                   </h2>
                   <span
-                    className={`rounded-full px-2 py-1 text-xs ${isActive ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`}
+                    className={`rounded-full px-2 py-1 text-xs ${isActive ? 'text-green-800 bg-green-200' : 'text-red-800 bg-red-200'}`}
                   >
                     {isActive ? 'Active' : 'Expired'}
                   </span>
@@ -404,40 +404,40 @@ export default function Membership() {
 
                 <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
                   <div>
-                    <p className='flex items-center justify-center text-sm text-muted-foreground sm:justify-start'>
-                      <User className='mr-2 h-4 w-4' /> Membership Number
+                    <p className='flex justify-center items-center text-sm text-muted-foreground sm:justify-start'>
+                      <User className='mr-2 w-4 h-4' /> Membership Number
                     </p>
                     <p className='font-mono font-bold'>
                       {user?.membership?.membershipNumber || 'N/A'}
                     </p>
                   </div>
                   <div>
-                    <p className='flex items-center justify-center text-sm text-muted-foreground sm:justify-start'>
-                      <Calendar className='mr-2 h-4 w-4' /> Joining Date
+                    <p className='flex justify-center items-center text-sm text-muted-foreground sm:justify-start'>
+                      <Calendar className='mr-2 w-4 h-4' /> Joining Date
                     </p>
                     <p>
                       {startDate.toLocaleDateString()}
                     </p>
                   </div>
                   <div>
-                    <p className='flex items-center justify-center text-sm text-muted-foreground sm:justify-start'>
-                      <Calendar className='mr-2 h-4 w-4' /> Expiry Date
+                    <p className='flex justify-center items-center text-sm text-muted-foreground sm:justify-start'>
+                      <Calendar className='mr-2 w-4 h-4' /> Expiry Date
                     </p>
                     <p>
                       {expiryDate.toLocaleDateString()}
                     </p>
                   </div>
                   <div>
-                    <p className='flex items-center justify-center text-sm text-muted-foreground sm:justify-start'>
-                      <Users className='mr-2 h-4 w-4' /> Referral Count
+                    <p className='flex justify-center items-center text-sm text-muted-foreground sm:justify-start'>
+                      <Users className='mr-2 w-4 h-4' /> Referral Count
                     </p>
                     <p className='font-bold'>{user?.referralProfile?.totalReferrals || 0}</p>
                   </div>
                   <div className='sm:col-span-2'>
-                    <p className='flex items-center justify-center text-sm text-muted-foreground sm:justify-start'>
-                      <Clock className='mr-2 h-4 w-4' /> Days Remaining
+                    <p className='flex justify-center items-center text-sm text-muted-foreground sm:justify-start'>
+                      <Clock className='mr-2 w-4 h-4' /> Days Remaining
                     </p>
-                    <div className='flex items-center gap-2'>
+                    <div className='flex gap-2 items-center'>
                       <div className='h-2.5 w-full rounded-full bg-gray-200'>
                         <div
                           className={`h-2.5 rounded-full ${isPrimaryMember ? 'bg-blue-500' : isActiveMember ? 'bg-red-500' : 'bg-orange-500'}`}
@@ -450,16 +450,16 @@ export default function Membership() {
                     </div>
                   </div>
                 </div>
-                <div className='mt-4 flex flex-col justify-center gap-2 sm:flex-row sm:justify-start'>
+                <div className='flex flex-col gap-2 justify-center mt-4 sm:flex-row sm:justify-start'>
                   <Button variant='outline' className='w-full sm:w-auto'>
                     Renew Membership
                   </Button>
                   <Button
                     variant='ghost'
-                    className='flex w-full items-center gap-2 sm:w-auto'
+                    className='flex gap-2 items-center w-full sm:w-auto'
                     onClick={handleDownloadCertificate}
                   >
-                    <QrCode className='h-4 w-4' /> View Certificate
+                    <QrCode className='w-4 h-4' /> View Certificate
                   </Button>
                 </div>
               </div>
@@ -468,7 +468,7 @@ export default function Membership() {
 
           {/* Tabs for different sections */}
           <Tabs defaultValue="benefits" className="mb-8">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid grid-cols-3 w-full">
               <TabsTrigger value="benefits">Benefits</TabsTrigger>
               <TabsTrigger value="personal">Personal Info</TabsTrigger>
               <TabsTrigger value="referral">Referral</TabsTrigger>
@@ -482,7 +482,7 @@ export default function Membership() {
                     {currentMembership.benefits.map((benefit, index) => (
                       <li key={index} className='flex items-center'>
                         <svg
-                          className='mr-2 h-5 w-5 text-green-500'
+                          className='mr-2 w-5 h-5 text-green-500'
                           fill='none'
                           stroke='currentColor'
                           viewBox='0 0 24 24'
@@ -512,24 +512,24 @@ export default function Membership() {
                       <h3 className='text-lg font-semibold'>Personal Details</h3>
                       <div className='space-y-2'>
                         <div className='flex items-center'>
-                          <User className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <User className='mr-2 w-4 h-4 text-muted-foreground' />
                           <span className='font-medium'>Name:</span>
                           <span className='ml-2'>
                             {user?.title} {user?.firstName} {user?.middleName} {user?.lastName}
                           </span>
                         </div>
                         <div className='flex items-center'>
-                          <Mail className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <Mail className='mr-2 w-4 h-4 text-muted-foreground' />
                           <span className='font-medium'>Email:</span>
                           <span className='ml-2'>{user?.email}</span>
                         </div>
                         <div className='flex items-center'>
-                          <Phone className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <Phone className='mr-2 w-4 h-4 text-muted-foreground' />
                           <span className='font-medium'>Phone:</span>
                           <span className='ml-2'>{user?.phone}</span>
                         </div>
                         <div className='flex items-center'>
-                          <Calendar className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <Calendar className='mr-2 w-4 h-4 text-muted-foreground' />
                           <span className='font-medium'>Date of Birth:</span>
                           <span className='ml-2'>
                             {user?.dateOfBirth ? new Date(user.dateOfBirth).toLocaleDateString() : 'N/A'}
@@ -542,7 +542,7 @@ export default function Membership() {
                       <h3 className='text-lg font-semibold'>Address</h3>
                       <div className='space-y-2'>
                         <div className='flex items-start'>
-                          <MapPin className='mr-2 h-4 w-4 text-muted-foreground mt-1' />
+                          <MapPin className='mt-1 mr-2 w-4 h-4 text-muted-foreground' />
                           <div>
                             <p>{user?.address?.line1}</p>
                             <p>{user?.address?.line2}</p>
@@ -559,17 +559,17 @@ export default function Membership() {
                       <h3 className='text-lg font-semibold'>Professional Details</h3>
                       <div className='space-y-2'>
                         <div className='flex items-center'>
-                          <FileText className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <FileText className='mr-2 w-4 h-4 text-muted-foreground' />
                           <span className='font-medium'>Qualification:</span>
                           <span className='ml-2'>{user?.professional?.qualification || 'N/A'}</span>
                         </div>
                         <div className='flex items-center'>
-                          <User className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <User className='mr-2 w-4 h-4 text-muted-foreground' />
                           <span className='font-medium'>Profession:</span>
                           <span className='ml-2'>{user?.professional?.profession || 'N/A'}</span>
                         </div>
                         <div className='flex items-center'>
-                          <Award className='mr-2 h-4 w-4 text-muted-foreground' />
+                          <Award className='mr-2 w-4 h-4 text-muted-foreground' />
                           <span className='font-medium'>Position:</span>
                           <span className='ml-2'>{user?.professional?.position || 'N/A'}</span>
                         </div>
@@ -586,8 +586,8 @@ export default function Membership() {
                 <CardContent className='pt-6'>
                   <div className='space-y-6'>
                     <div className='flex flex-col items-center space-y-4 text-center'>
-                      <div className='rounded-full bg-blue-100 p-4'>
-                        <Share2 className='h-8 w-8 text-blue-600' />
+                      <div className='p-4 bg-blue-100 rounded-full'>
+                        <Share2 className='w-8 h-8 text-blue-600' />
                       </div>
                       <div>
                         <h3 className='text-xl font-semibold'>Your Referral Program</h3>
@@ -596,7 +596,7 @@ export default function Membership() {
                         </p>
                       </div>
                       
-                      <div className='w-full max-w-md space-y-2'>
+                      <div className='space-y-2 w-full max-w-md'>
                         <div className='flex items-center space-x-2'>
                           <Input 
                             value={user?.referralProfile?.referralLink || ''} 
@@ -620,22 +620,22 @@ export default function Membership() {
                     <Separator />
                     
                     <div className='grid gap-4 md:grid-cols-3'>
-                      <div className='rounded-lg border p-4 text-center'>
+                      <div className='p-4 text-center rounded-lg border'>
                         <p className='text-2xl font-bold'>{user?.referralProfile?.totalReferrals || 0}</p>
                         <p className='text-sm text-muted-foreground'>Total Referrals</p>
                       </div>
-                      <div className='rounded-lg border p-4 text-center'>
+                      <div className='p-4 text-center rounded-lg border'>
                         <p className='text-2xl font-bold'>{user?.referralProfile?.successfulReferrals || 0}</p>
                         <p className='text-sm text-muted-foreground'>Successful</p>
                       </div>
-                      <div className='rounded-lg border p-4 text-center'>
+                      <div className='p-4 text-center rounded-lg border'>
                         <p className='text-2xl font-bold'>{user?.referralProfile?.pendingReferrals || 0}</p>
                         <p className='text-sm text-muted-foreground'>Pending</p>
                       </div>
                     </div>
                     
                     {isPrimaryMember && !isActiveMember && (
-                      <div className='rounded-lg border border-yellow-200 bg-yellow-50 p-4'>
+                      <div className='p-4 bg-yellow-50 rounded-lg border border-yellow-200'>
                         <h4 className='mb-2 font-semibold text-yellow-800'>Upgrade to Active Membership</h4>
                         <p className='text-sm text-yellow-700'>
                           You need {10 - (user?.referralProfile?.successfulReferrals || 0)} more successful referrals to upgrade to Active Membership.
@@ -655,21 +655,21 @@ export default function Membership() {
             </h2>
             <div className='grid gap-6 sm:grid-cols-2'>
               <Card>
-                <CardContent className='flex flex-col items-center space-y-4 pt-6'>
-                  <QrCode className='h-24 w-24' />
-                  <p className='text-center text-sm text-muted-foreground'>
+                <CardContent className='flex flex-col items-center pt-6 space-y-4'>
+                  <QrCode className='w-24 h-24' />
+                  <p className='text-sm text-center text-muted-foreground'>
                     Scan the QR code to access your membership certificate.
                   </p>
                 </CardContent>
               </Card>
               <Card>
-                <CardContent className='flex flex-col items-center space-y-4 pt-6'>
+                <CardContent className='flex flex-col items-center pt-6 space-y-4'>
                   <Dialog>
                     <DialogTrigger asChild>
                       <img
                         src={user?.membership?.cardUrl || bppcard}
                         alt='Certificate Preview'
-                        className='h-40 w-full cursor-pointer rounded-md object-contain blur-sm transition-all hover:blur-none'
+                        className='object-contain w-full h-40 rounded-md blur-sm transition-all cursor-pointer hover:blur-none'
                       />
                     </DialogTrigger>
                     <DialogContent className='sm:max-w-[600px]'>
@@ -685,16 +685,16 @@ export default function Membership() {
                       </DialogHeader>
                       <div className='flex justify-end space-x-2'>
                         <Button onClick={handleDownloadCertificate}>
-                          <Download className='mr-2 h-4 w-4' /> Download
+                          <Download className='mr-2 w-4 h-4' /> Download
                         </Button>
                         <Button variant='destructive'>Close</Button>
                       </div>
                     </DialogContent>
                   </Dialog>
                   <Button onClick={handleDownloadCertificate} variant='outline'>
-                    <Download className='mr-2 h-4 w-4' /> Download Certificate
+                    <Download className='mr-2 w-4 h-4' /> Download Certificate
                   </Button>
-                  <p className='text-center text-sm text-muted-foreground'>
+                  <p className='text-sm text-center text-muted-foreground'>
                     Click the image to preview your certificate.
                   </p>
                 </CardContent>

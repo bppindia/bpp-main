@@ -39,24 +39,24 @@ const GoalCard: FC<Goal> = ({ title, description, imgSrc, icon, link }) => {
     <Link to={link} className='w-full'>
       <Card className='flex h-[500px] flex-col justify-between overflow-hidden border bg-white transition-all duration-300 hover:bg-gray-50 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700'>
         {/* Image */}
-        <div className='relative h-48 overflow-hidden'>
+        <div className='overflow-hidden relative h-48'>
           <img
-            className='h-full w-full object-cover object-center'
+            className='object-cover object-center w-full h-full'
             src={imgSrc}
             alt={title}
           />
         </div>
 
         {/* Header */}
-        <CardHeader className='space-y-4 pt-6'>
-          <div className='flex items-center gap-4'>
-            <div className='rounded-xl bg-primary/10 p-3 text-primary shadow-sm dark:bg-primary/20'>
+        <CardHeader className='pt-6 space-y-4'>
+          <div className='flex gap-4 items-center'>
+            <div className='p-3 rounded-xl shadow-sm bg-primary/10 text-primary dark:bg-primary/20'>
               {React.createElement(icon, {
                 size: 28,
                 className: 'text-primary dark:text-white',
               })}
             </div>
-            <h2 className='font-poppins text-left text-xl font-extrabold tracking-tight text-gray-900 dark:text-white'>
+            <h2 className='text-xl font-extrabold tracking-tight text-left text-gray-900 font-poppins dark:text-white'>
               {title}
             </h2>
           </div>
@@ -64,13 +64,13 @@ const GoalCard: FC<Goal> = ({ title, description, imgSrc, icon, link }) => {
 
         {/* Description */}
         <CardContent className='flex-grow'>
-          <p className='line-clamp-5 text-left text-sm leading-relaxed text-muted-foreground dark:text-gray-300'>
+          <p className='text-sm leading-relaxed text-left line-clamp-5 text-muted-foreground dark:text-gray-300'>
             {description}
           </p>
         </CardContent>
 
         {/* Learn More (visually implied by hover now) */}
-        <CardContent className='pb-6 pt-4'>
+        <CardContent className='pt-4 pb-6'>
           <span className='text-sm font-medium text-blue-600 hover:underline dark:text-blue-400'>
             Learn more →
           </span>
@@ -112,7 +112,7 @@ const GoalsPage = () => {
         'BPP will work against the misuse of money and muscle power in democratic politics.',
       imgSrc: img4,
       icon: Sword,
-      link: '/about/bpp-goals',
+      link: '/about/bpp-goals/against-muscle-and-money-power',
     },
     {
       title: 'UPHOLD SECULARISM',
@@ -152,7 +152,7 @@ const GoalsPage = () => {
         "BPP is dedicated to the upliftment of farmers by ensuring fair prices for their product, providing access to modern farming techniques and improving infrastructure in rural areas. The focus will be on increasing farmer's income through better market access, sustainable agricultural practices and timely financial support.",
       imgSrc: img9,
       icon: Wheat,
-      link: '/about/bpp-goals',
+      link: '/about/bpp-goals/upliftment-of-farmers',
     },
     {
       title: 'QUALITY EDUCATION',
@@ -178,8 +178,8 @@ const GoalsPage = () => {
       />
       <section className='py-8'>
         <div className='container'>
-          <div className='mx-auto flex flex-col items-center gap-6 text-center'>
-            <div className='grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 lg:grid-cols-3'>
+          <div className='flex flex-col gap-6 items-center mx-auto text-center'>
+            <div className='grid grid-cols-1 gap-8 place-items-center sm:grid-cols-2 lg:grid-cols-3'>
               {goals.map((goal, index) => (
                 <GoalCard
                   key={index}
