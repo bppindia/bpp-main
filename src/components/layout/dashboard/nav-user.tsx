@@ -37,6 +37,10 @@ export function NavUser() {
     navigate({ to: '/sign-in' })
   }
 
+  const isEligibleForUpgrade =
+    user?.role === 'PRIMARY MEMBER' &&
+    (user?.referralProfile?.successfulReferrals || 0) >= 10
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -90,30 +94,36 @@ export function NavUser() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+            {isEligibleForUpgrade && (
+              <>
+                <DropdownMenuGroup>
+                  <DropdownMenuItem asChild>
+                    <Link to='/dashboard/membership/upgrade'>
+                      <Sparkles className='mr-2 h-4 w-4' />
+                      Upgrade to Active Membership
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+              </>
+            )}
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
                 <Link to='/dashboard/settings/account'>
-                  <BadgeCheck />
+                  <BadgeCheck className='mr-2 h-4 w-4' />
                   Account
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to='/dashboard/settings/notifications'>
-                  <Bell />
+                  <Bell className='mr-2 h-4 w-4' />
                   Notifications
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout}>
-              <LogOut />
+              <LogOut className='mr-2 h-4 w-4' />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

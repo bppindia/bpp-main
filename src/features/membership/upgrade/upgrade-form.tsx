@@ -25,7 +25,6 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
-import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import { Header } from '@/components/layout/dashboard/header'
 import { Main } from '@/components/layout/dashboard/main'
@@ -33,11 +32,10 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 
-export function PaymentForm() {
+export function UpgradeForm() {
   const { user, fetchUserData } = useAuth()
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
-  const [showDonation, setShowDonation] = useState(false)
   const [showSuccessDialog, setShowSuccessDialog] = useState(false)
   const [formData, setFormData] = useState({
     accountName: '',
@@ -48,7 +46,6 @@ export function PaymentForm() {
     ifscCode: '',
     transactionId: '',
     paymentMode: '',
-    donationAmount: '',
     paymentScreenshot: null as File | null,
     remarks: '',
   })
@@ -87,11 +84,6 @@ export function PaymentForm() {
       formDataToSend.append('transactionId', formData.transactionId)
       formDataToSend.append('paymentMode', formData.paymentMode)
 
-      // Add donation amount if provided
-      if (formData.donationAmount) {
-        formDataToSend.append('donationAmount', formData.donationAmount)
-      }
-
       // Add remarks if provided
       if (formData.remarks) {
         formDataToSend.append('remarks', formData.remarks)
@@ -108,22 +100,20 @@ export function PaymentForm() {
         throw new Error('User ID not found')
       }
 
-      // Use API client to submit payment
+      // Use API client to submit payment with the correct route format
       await postData(
-        `/users/payment/${userId}`,
+        `/users/membership/upgrade/payment/submit/${userId}`,
         formDataToSend as unknown as Record<string, unknown>,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       )
 
-      // Show success dialog instead of toast
+      // Show success dialog
       setShowSuccessDialog(true)
 
       // Refresh user data to get updated role and status
       await fetchUserData()
     } catch (error) {
       // Log error for debugging
-      // eslint-disable-next-line no-console
-      console.error('Error submitting payment:', error)
       toast.error(
         error instanceof Error
           ? error.message
@@ -152,9 +142,11 @@ export function PaymentForm() {
       <Main>
         <div className='mx-auto'>
           <div className='mb-8'>
-            <h1 className='mb-2 text-xl font-bold'>Membership Payment</h1>
+            <h1 className='mb-2 text-xl font-bold'>
+              Active Membership Upgrade
+            </h1>
             <p className='text-muted-foreground'>
-              Complete your payment to upgrade your membership
+              Complete your payment to upgrade to Active Membership
             </p>
           </div>
 
@@ -178,19 +170,19 @@ export function PaymentForm() {
                     Current Membership
                   </p>
                   <Badge
-                    variant={user?.role === 'MEMBER' ? 'outline' : 'default'}
+                    variant={
+                      user?.role === 'PRIMARY MEMBER' ? 'outline' : 'default'
+                    }
                   >
-                    {user?.role || 'MEMBER'}
+                    {user?.role || 'PRIMARY MEMBER'}
                   </Badge>
                 </div>
                 <div>
                   <p className='text-sm text-muted-foreground'>
-                    Wallet Balance
+                    Successful Referrals
                   </p>
                   <p className='font-medium'>
-                    {user?.wallet?.balance !== undefined
-                      ? `₹${user.wallet.balance}`
-                      : '₹0'}
+                    {user?.referralProfile?.successfulReferrals || 0}
                   </p>
                 </div>
               </div>
@@ -270,9 +262,9 @@ export function PaymentForm() {
                 </div>
                 <div className='mt-4'>
                   <p className='text-sm font-medium'>
-                    Amount for Active Primary Membership
+                    Amount for Active Membership Upgrade
                   </p>
-                  <p className='text-lg font-bold'>₹5 (One-time payment)</p>
+                  <p className='text-lg font-bold'>₹250 (One-time payment)</p>
                 </div>
               </div>
             </CardContent>
@@ -283,7 +275,7 @@ export function PaymentForm() {
             <CardHeader>
               <CardTitle>Payment Details</CardTitle>
               <CardDescription>
-                Please provide your payment details to complete the transaction
+                Please provide your payment details to complete the upgrade
               </CardDescription>
             </CardHeader>
             <form onSubmit={handleSubmit}>
@@ -386,31 +378,6 @@ export function PaymentForm() {
                     />
                   </div>
                 </div>
-
-                <div className='flex items-center space-x-2 py-2'>
-                  <Switch
-                    id='donation'
-                    checked={showDonation}
-                    onCheckedChange={setShowDonation}
-                  />
-                  <Label htmlFor='donation'>
-                    I would like to make a donation
-                  </Label>
-                </div>
-
-                {showDonation && (
-                  <div className='space-y-2'>
-                    <Label htmlFor='donationAmount'>Donation Amount (₹)</Label>
-                    <Input
-                      id='donationAmount'
-                      name='donationAmount'
-                      type='number'
-                      value={formData.donationAmount}
-                      onChange={handleInputChange}
-                      placeholder='Enter donation amount'
-                    />
-                  </div>
-                )}
 
                 <div className='space-y-2'>
                   <Label htmlFor='paymentScreenshot'>Payment Screenshot</Label>
