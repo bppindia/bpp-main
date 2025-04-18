@@ -1,10 +1,10 @@
+import { format } from 'date-fns'
 import { ColumnDef } from '@tanstack/react-table'
+import { EyeIcon } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { statuses } from '../data/data'
 import { Donation } from '../data/schema'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { format } from 'date-fns'
-import { Button } from '@/components/ui/button'
-import { EyeIcon } from 'lucide-react'
 
 export const columns: ColumnDef<Donation>[] = [
   {
@@ -96,8 +96,8 @@ export const columns: ColumnDef<Donation>[] = [
       <DataTableColumnHeader column={column} title='Payment Date' />
     ),
     cell: ({ row }) => {
-      const date = row.original.paymentDetails?.paymentDate 
-        ? new Date(row.original.paymentDetails.paymentDate) 
+      const date = row.original.paymentDetails?.paymentDate
+        ? new Date(row.original.paymentDetails.paymentDate)
         : new Date(row.getValue('createdAt'))
       return <div>{format(date, 'dd MMM yyyy')}</div>
     },
@@ -107,12 +107,12 @@ export const columns: ColumnDef<Donation>[] = [
     id: 'actions',
     cell: ({ row: _row }) => {
       return (
-        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-          <EyeIcon className="h-4 w-4" />
-          <span className="sr-only">View details</span>
+        <Button variant='ghost' size='sm' className='h-8 w-8 p-0'>
+          <EyeIcon className='h-4 w-4' />
+          <span className='sr-only'>View details</span>
         </Button>
       )
     },
     size: 50,
   },
-] 
+]

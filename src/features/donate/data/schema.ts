@@ -22,4 +22,4 @@ export const donationSchema = z.object({
   updatedAt: z.string(),
 })
 
-export type Donation = z.infer<typeof donationSchema> 
+export type Donation = z.infer<typeof donationSchema>

@@ -1,23 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { PlusIcon, ArrowUpIcon } from 'lucide-react'
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { getData } from '@/api/apiClient'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Header } from '@/components/layout/dashboard/header'
 import { Main } from '@/components/layout/dashboard/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
+import { DataTable } from './components/data-table'
 import { Donation } from './data/schema'
-import { getData } from '@/api/apiClient'
-import { Skeleton } from '@/components/ui/skeleton'
 
 const Donate = () => {
   const navigate = useNavigate()
@@ -37,10 +32,10 @@ const Donate = () => {
       try {
         // Fetch donations for the current user using the API client
         const data = await getData<{
-          donations: Donation[],
+          donations: Donation[]
           summary: {
-            totalDonations: number,
-            recurringDonations: number,
+            totalDonations: number
+            recurringDonations: number
             oneTimeDonations: number
           }
         }>('/donations/user')
@@ -74,7 +69,7 @@ const Donate = () => {
           <ProfileDropdown />
         </div>
       </Header>
-      <Main fixed>
+      <Main>
         <div className='mb-6 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center'>
           <div className='w-full'>
             <div className='mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center'>
@@ -155,7 +150,10 @@ const Donate = () => {
                       </div>
                       <div className='h-[300px] overflow-hidden'>
                         {Array.from({ length: 5 }).map((_, index) => (
-                          <div key={index} className='mb-4 flex items-center justify-between'>
+                          <div
+                            key={index}
+                            className='mb-4 flex items-center justify-between'
+                          >
                             <Skeleton className='h-12 w-[200px]' />
                             <Skeleton className='h-12 w-[150px]' />
                             <Skeleton className='h-12 w-[100px]' />
@@ -164,9 +162,7 @@ const Donate = () => {
                       </div>
                     </div>
                   ) : error ? (
-                    <div className='text-center text-red-500'>
-                      {error}
-                    </div>
+                    <div className='text-center text-red-500'>{error}</div>
                   ) : donations.length === 0 ? (
                     <div className='text-center text-muted-foreground'>
                       No donation history found.

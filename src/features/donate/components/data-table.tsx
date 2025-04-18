@@ -63,19 +63,19 @@ export function DataTable<TData, TValue>({
     <div className='space-y-4'>
       <DataTableToolbar table={table} />
       <div className='rounded-md border'>
-        <div className="relative">
-          <div className="h-[300px] overflow-auto">
-            <Table className="border-collapse w-full">
-              <TableHeader className="sticky top-0 z-10 bg-background">
+        <div className='relative'>
+          <div className='h-[300px] overflow-auto'>
+            <Table className='w-full border-collapse'>
+              <TableHeader className='sticky top-0 z-10 bg-background'>
                 {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id} className="border-b">
+                  <TableRow key={headerGroup.id} className='border-b'>
                     {headerGroup.headers.map((header) => {
                       return (
-                        <TableHead 
-                          key={header.id} 
+                        <TableHead
+                          key={header.id}
                           colSpan={header.colSpan}
                           style={{ width: header.getSize() }}
-                          className="border-r px-4 py-2"
+                          className='border-r px-4 py-2'
                         >
                           {header.isPlaceholder
                             ? null
@@ -95,13 +95,13 @@ export function DataTable<TData, TValue>({
                     <TableRow
                       key={row.id}
                       data-state={row.getIsSelected() && 'selected'}
-                      className="border-b hover:bg-muted/50"
+                      className='border-b hover:bg-muted/50'
                     >
                       {row.getVisibleCells().map((cell) => (
-                        <TableCell 
+                        <TableCell
                           key={cell.id}
                           style={{ width: cell.column.getSize() }}
-                          className="border-r px-4 py-2"
+                          className='border-r px-4 py-2'
                         >
                           {flexRender(
                             cell.column.columnDef.cell,
@@ -115,7 +115,7 @@ export function DataTable<TData, TValue>({
                   <TableRow>
                     <TableCell
                       colSpan={columns.length}
-                      className='h-24 text-center border-r'
+                      className='h-24 border-r text-center'
                     >
                       No results.
                     </TableCell>
@@ -129,4 +129,4 @@ export function DataTable<TData, TValue>({
       <DataTablePagination table={table} />
     </div>
   )
-} 
+}

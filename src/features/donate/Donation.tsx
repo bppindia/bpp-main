@@ -1,32 +1,89 @@
-import React, { useState } from 'react'
-import { Lock } from 'lucide-react'
+import { useState } from 'react'
+import * as z from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
-  CardFooter,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/checkbox'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Header } from '@/components/layout/dashboard/header'
+import { Main } from '@/components/layout/dashboard/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
+import { DonationForm } from './DonationForm'
 
-const DonationPage: React.FC = () => {
-  const [donationAmount, setDonationAmount] = useState(20)
-  const [coverFees, setCoverFees] = useState(true)
+// Define the form schema with Zod
+const customAmountSchema = z.object({
+  amount: z
+    .string()
+    .min(1, 'Amount is required')
+    .refine((val) => !isNaN(Number(val)), 'Amount must be a number')
+    .refine((val) => Number(val) > 0, 'Amount must be greater than 0')
+    .refine((val) => Number(val) <= 1000000, 'Amount cannot exceed 10 lakhs'),
+})
 
-  const handleDonationAmountChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDonationAmount(parseInt(e.target.value))
+type CustomAmountValues = z.infer<typeof customAmountSchema>
+
+const predefinedAmounts = [
+  { label: '₹1,000', value: 1000 },
+  { label: '₹2,500', value: 2500 },
+  { label: '₹5,000', value: 5000 },
+  { label: '₹10,000', value: 10000 },
+  { label: '₹25,000', value: 25000 },
+  { label: '₹50,000', value: 50000 },
+]
+
+const DonatePage = () => {
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(null)
+  const [showCustomAmount, setShowCustomAmount] = useState(false)
+
+  // Initialize form with react-hook-form and zod validation
+  const form = useForm<CustomAmountValues>({
+    resolver: zodResolver(customAmountSchema),
+    defaultValues: {
+      amount: '',
+    },
+  })
+
+  const handleAmountSelect = (amount: number) => {
+    setSelectedAmount(amount)
+    setShowCustomAmount(false)
   }
 
-  const totalDonation = donationAmount + (coverFees ? 0.6 : 0)
+  const handleCustomAmountSubmit = (data: CustomAmountValues) => {
+    const amount = Number(data.amount)
+    if (amount > 0 && amount <= 1000000) {
+      setSelectedAmount(amount)
+      setShowCustomAmount(false)
+    } else {
+      toast.error('Please enter a valid amount between ₹1 and ₹10,00,000')
+    }
+  }
+
+  const handleBack = () => {
+    setSelectedAmount(null)
+    setShowCustomAmount(false)
+    form.reset()
+  }
+
+  if (selectedAmount !== null) {
+    return <DonationForm amount={selectedAmount} onBack={handleBack} />
+  }
 
   return (
     <>
@@ -37,15 +94,15 @@ const DonationPage: React.FC = () => {
           <ProfileDropdown />
         </div>
       </Header>
-      <main className='flex-1 px-4 py-6 md:px-6 lg:py-8'>
-        <div className='x-auto'>
+      <Main>
+        <div className='mx-auto px-4'>
           <div className='mb-6 flex items-center justify-between'>
             <div>
               <h1 className='text-2xl font-bold'>
                 Change begins. Donate today.
               </h1>
               <p className='text-muted-foreground'>
-                Change begins. Donate today.
+                Make a difference in someone's life today.
               </p>
             </div>
           </div>
@@ -64,131 +121,89 @@ const DonationPage: React.FC = () => {
                 />
               </CardContent>
             </Card>
-            <Card className='mx-auto w-full'>
+
+            {/* Right side - Amount Selection */}
+            <Card>
               <CardHeader>
-                <CardTitle>Change begins. Donate today.</CardTitle>
+                <CardTitle>Select Donation Amount</CardTitle>
+                <CardDescription>
+                  Choose an amount to donate or enter a custom amount
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <Tabs defaultValue='donateOnce' className='w-full'>
-                  <div className='space-y-4'>
-                    <div>
-                      <TabsList className='grid w-full grid-cols-2'>
-                        <TabsTrigger value='donateOnce'>
-                          Donate Once
-                        </TabsTrigger>
-                        <TabsTrigger value='donateMonthly'>
-                          Donate Monthly
-                        </TabsTrigger>
-                      </TabsList>
-                      <div className='my-3 grid grid-cols-3 gap-4'>
-                        <button
-                          className={`rounded-md px-4 py-2 transition-colors ${
-                            donationAmount === 10
-                              ? 'bg-gray-500 text-white'
-                              : 'hover:bg-gray-100'
-                          }`}
-                          onClick={() => setDonationAmount(10)}
-                        >
-                          Rs 10
-                        </button>
-                        <button
-                          className={`rounded-md px-4 py-2 transition-colors ${
-                            donationAmount === 20
-                              ? 'bg-gray-500 text-white'
-                              : 'hover:bg-gray-100'
-                          }`}
-                          onClick={() => setDonationAmount(20)}
-                        >
-                          Rs 20
-                        </button>
-                        <button
-                          className={`rounded-md px-4 py-2 transition-colors ${
-                            donationAmount === 50
-                              ? 'bg-gray-500 text-white'
-                              : 'hover:bg-gray-100'
-                          }`}
-                          onClick={() => setDonationAmount(50)}
-                        >
-                          Rs 50
-                        </button>
-                        <button
-                          className={`rounded-md px-4 py-2 transition-colors ${
-                            donationAmount === 100
-                              ? 'bg-gray-500 text-white'
-                              : 'hover:bg-gray-100'
-                          }`}
-                          onClick={() => setDonationAmount(100)}
-                        >
-                          Rs 100
-                        </button>
-                        <button
-                          className={`rounded-md px-4 py-2 transition-colors ${
-                            donationAmount === 200
-                              ? 'bg-gray-500 text-white'
-                              : 'hover:bg-gray-100'
-                          }`}
-                          onClick={() => setDonationAmount(200)}
-                        >
-                          Rs 200
-                        </button>
-                        <button
-                          className={`rounded-md px-4 py-2 transition-colors ${
-                            donationAmount === 500
-                              ? 'bg-gray-500 text-white'
-                              : 'hover:bg-gray-100'
-                          }`}
-                          onClick={() => setDonationAmount(500)}
-                        >
-                          Rs 500
-                        </button>
+                <div className='grid grid-cols-2 gap-4 sm:grid-cols-3'>
+                  {predefinedAmounts.map((amount) => (
+                    <Button
+                      key={amount.value}
+                      variant='outline'
+                      className='h-auto py-4'
+                      onClick={() => handleAmountSelect(amount.value)}
+                    >
+                      <div className='flex flex-col items-center gap-1'>
+                        <span className='text-lg font-medium'>
+                          {amount.label}
+                        </span>
                       </div>
-                      <Input
-                        type='number'
-                        placeholder='Other amount'
-                        value={donationAmount}
-                        onChange={handleDonationAmountChange}
-                        className='mt-4 w-full'
-                      />
-                    </div>
-                    <div>
-                      <div className='flex items-center space-x-2'>
-                        <Checkbox
-                          id='terms'
-                          checked={coverFees}
-                          onCheckedChange={(checked) => setCoverFees(!!checked)}
+                    </Button>
+                  ))}
+                </div>
+
+                <div className='mt-6'>
+                  {!showCustomAmount ? (
+                    <Button
+                      variant='outline'
+                      className='w-full'
+                      onClick={() => setShowCustomAmount(true)}
+                    >
+                      Enter Custom Amount
+                    </Button>
+                  ) : (
+                    <Form {...form}>
+                      <form
+                        onSubmit={form.handleSubmit(handleCustomAmountSubmit)}
+                        className='space-y-4'
+                      >
+                        <FormField
+                          control={form.control}
+                          name='amount'
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Custom Amount (₹)</FormLabel>
+                              <FormControl>
+                                <Input
+                                  type='number'
+                                  placeholder='Enter amount'
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
                         />
-                        <label
-                          htmlFor='terms'
-                          className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                        >
-                          I would like to cover the transaction fees for this
-                          donation
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </Tabs>
+                        <div className='flex gap-2'>
+                          <Button
+                            type='button'
+                            variant='outline'
+                            className='flex-1'
+                            onClick={() => setShowCustomAmount(false)}
+                          >
+                            Cancel
+                          </Button>
+                          <Button type='submit' className='flex-1'>
+                            Continue
+                          </Button>
+                        </div>
+                      </form>
+                    </Form>
+                  )}
+                </div>
               </CardContent>
-              <CardFooter className='flex flex-col items-center justify-between space-y-4'>
-                <div className='w-full'>
-                  <div>
-                    My grand total will be Rs {totalDonation.toFixed(2)}
-                  </div>
-                  <Button className='mt-4 w-full' disabled>
-                    Next
-                  </Button>
-                </div>
-                <div className='flex items-center space-x-1'>
-                  <Lock className='h-4 w-4' />
-                  <span>Secure donation</span>
-                </div>
-              </CardFooter>
             </Card>
           </div>
         </div>
-      </main>
+      </Main>
     </>
   )
 }
 
-export default DonationPage
+export default DonatePage

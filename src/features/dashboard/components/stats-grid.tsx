@@ -1,6 +1,6 @@
 import { LucideIcon } from 'lucide-react'
-import { StatCard } from './stat-card'
 import { DashboardData } from '@/hooks/use-dashboard-data'
+import { StatCard } from './stat-card'
 
 type StatCardKey = keyof DashboardData | 'activeMembers'
 
@@ -21,31 +21,36 @@ interface StatsGridProps {
   statCards: StatCardConfig[]
 }
 
-export function StatsGrid({ isLoading, dashboardData, isVerified, statCards }: StatsGridProps) {
+export function StatsGrid({
+  isLoading,
+  dashboardData,
+  isVerified,
+  statCards,
+}: StatsGridProps) {
   const getValue = (key: StatCardKey): number => {
     if (key === 'activeMembers') {
-      return 0 
+      return 0
     }
-    
+
     if (key === 'referrals') {
       return dashboardData.referrals?.totalReferrals || 0
     }
-    
+
     return (dashboardData[key] as number) || 0
   }
 
   const getSubValue = (key: keyof DashboardData | undefined): number => {
     if (!key) return 0
-    
+
     if (key === 'referrals') {
       return dashboardData.referrals?.totalReferrals || 0
     }
-    
+
     return (dashboardData[key] as number) || 0
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
       {statCards
         .filter((stat) => stat.showAlways || isVerified)
         .map((stat, index) => (
@@ -62,4 +67,4 @@ export function StatsGrid({ isLoading, dashboardData, isVerified, statCards }: S
         ))}
     </div>
   )
-} 
+}

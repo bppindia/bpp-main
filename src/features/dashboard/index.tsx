@@ -1,18 +1,18 @@
 import { Users, UserCheck, TrendingUp } from 'lucide-react'
-import { useAuth } from '@/context/AuthContext'
 import { UserRole, UserStatus } from '@/utils/roleAccess'
+import { useAuth } from '@/context/AuthContext'
 import { DashboardData, useDashboardData } from '@/hooks/use-dashboard-data'
 import { Header } from '@/components/layout/dashboard/header'
 import { Main } from '@/components/layout/dashboard/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import GoogleMap from './components/google-map'
-import UserCard from './components/user-card'
-import { StatsGrid } from './components/stats-grid'
-import { PieChartComponent } from './components/pie-chart'
 import { AreaChartComponent } from './components/area-chart'
+import GoogleMap from './components/google-map'
+import { PieChartComponent } from './components/pie-chart'
 import { RecentActivities } from './components/recent-activities'
+import { StatsGrid } from './components/stats-grid'
+import UserCard from './components/user-card'
 
 type StatCardKey = keyof DashboardData | 'activeMembers'
 
@@ -59,20 +59,21 @@ export default function Dashboard() {
   const { data: dashboardData, isLoading } = useDashboardData()
   const { user: authUser } = useAuth()
 
-  const user = !isLoading && authUser
-    ? {
-      firstName: authUser.firstName || 'User',
-      lastName: authUser.lastName || '',
-      role: authUser.role as UserRole || UserRole.MEMBER,
-      status: authUser.status as UserStatus || UserStatus.PROCESSING,
-      membership: dashboardData?.membership?.number || 'N/A',
-      address: {
-        state: authUser.address?.state || 'India',
-        district: authUser.address?.district || 'Raigarh',
-      },
-      isVerified: authUser.isVerified || false,
-    }
-    : null
+  const user =
+    !isLoading && authUser
+      ? {
+          firstName: authUser.firstName || 'User',
+          lastName: authUser.lastName || '',
+          role: (authUser.role as UserRole) || UserRole.MEMBER,
+          status: (authUser.status as UserStatus) || UserStatus.PROCESSING,
+          membership: dashboardData?.membership?.number || 'N/A',
+          address: {
+            state: authUser.address?.state || 'India',
+            district: authUser.address?.district || 'Raigarh',
+          },
+          isVerified: authUser.isVerified || false,
+        }
+      : null
 
   const isVerified = user?.isVerified && user?.status === UserStatus.APPROVED
 
@@ -80,7 +81,7 @@ export default function Dashboard() {
     <>
       <Header fixed>
         <Search />
-        <div className="ml-auto flex items-center space-x-4">
+        <div className='ml-auto flex items-center space-x-4'>
           <ThemeSwitch />
           <ProfileDropdown />
         </div>
@@ -88,7 +89,7 @@ export default function Dashboard() {
 
       <Main>
         <UserCard dashboardData={dashboardData} isLoading={isLoading} />
-        <div className="space-y-6">
+        <div className='space-y-6'>
           <StatsGrid
             isLoading={isLoading}
             dashboardData={dashboardData}
@@ -96,19 +97,28 @@ export default function Dashboard() {
             statCards={statCards}
           />
 
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-7">
-            <GoogleMap 
-              state={user?.address.state || 'Maharashtra'} 
-              district={user?.address.district || 'Raigarh'} 
-              totalMembers={dashboardData?.totalMembersState || 0} 
-              isLoading={isLoading} 
+          <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
+            <GoogleMap
+              state={user?.address.state || 'Maharashtra'}
+              district={user?.address.district || 'Raigarh'}
+              totalMembers={dashboardData?.totalMembersState || 0}
+              isLoading={isLoading}
             />
-            <RecentActivities dashboardData={dashboardData} isLoading={isLoading} />
+            <RecentActivities
+              dashboardData={dashboardData}
+              isLoading={isLoading}
+            />
           </div>
 
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <AreaChartComponent dashboardData={dashboardData} isLoading={isLoading} />
-            <PieChartComponent dashboardData={dashboardData} isLoading={isLoading} />
+          <div className='grid grid-cols-1 gap-4 lg:grid-cols-2'>
+            <AreaChartComponent
+              dashboardData={dashboardData}
+              isLoading={isLoading}
+            />
+            <PieChartComponent
+              dashboardData={dashboardData}
+              isLoading={isLoading}
+            />
           </div>
         </div>
       </Main>

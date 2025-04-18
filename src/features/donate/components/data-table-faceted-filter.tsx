@@ -143,4 +143,4 @@ export function DataTableFacetedFilter<TData, TValue>({
       </PopoverContent>
     </Popover>
   )
-} 
+}

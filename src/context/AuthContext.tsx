@@ -136,7 +136,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const register = async (registrationData: RegistrationData): Promise<void> => {
+  const register = async (
+    registrationData: RegistrationData
+  ): Promise<void> => {
     try {
       setLoading(true)
 

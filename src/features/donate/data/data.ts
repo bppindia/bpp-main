@@ -1,4 +1,8 @@
-import { CheckCircledIcon, CrossCircledIcon, ClockIcon } from '@radix-ui/react-icons'
+import {
+  CheckCircledIcon,
+  CrossCircledIcon,
+  ClockIcon,
+} from '@radix-ui/react-icons'
 
 export const statuses = [
   {
@@ -16,4 +20,4 @@ export const statuses = [
     label: 'Failed',
     icon: CrossCircledIcon,
   },
-] 
+]
