@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import {
   QrCode,
-  Download,
   Calendar,
   User,
   Award,
@@ -24,14 +23,6 @@ import { useAuth } from '@/context/AuthContext'
 import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -716,60 +707,6 @@ export default function Membership() {
               </Card>
             </TabsContent>
           </Tabs>
-
-          {/* Membership Certificate */}
-          <section>
-            <h2 className='mb-4 text-2xl font-semibold'>
-              Membership Certificate
-            </h2>
-            <div className='grid gap-6 sm:grid-cols-2'>
-              <Card>
-                <CardContent className='flex flex-col items-center space-y-4 pt-6'>
-                  <QrCode className='h-24 w-24' />
-                  <p className='text-center text-sm text-muted-foreground'>
-                    Scan the QR code to access your membership certificate.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className='flex flex-col items-center space-y-4 pt-6'>
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <img
-                        src={user?.membership?.cardUrl || bppcard}
-                        alt='Certificate Preview'
-                        className='h-40 w-full cursor-pointer rounded-md object-contain blur-sm transition-all hover:blur-none'
-                      />
-                    </DialogTrigger>
-                    <DialogContent className='sm:max-w-[600px]'>
-                      <DialogHeader>
-                        <DialogTitle>Your Membership Certificate</DialogTitle>
-                        <DialogDescription>
-                          <img
-                            src={user?.membership?.cardUrl || bppcard}
-                            alt='Certificate'
-                            className='h-[400px] w-full rounded-md object-contain'
-                          />
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className='flex justify-end space-x-2'>
-                        <Button onClick={handleDownloadCertificate}>
-                          <Download className='mr-2 h-4 w-4' /> Download
-                        </Button>
-                        <Button variant='destructive'>Close</Button>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                  <Button onClick={handleDownloadCertificate} variant='outline'>
-                    <Download className='mr-2 h-4 w-4' /> Download Certificate
-                  </Button>
-                  <p className='text-center text-sm text-muted-foreground'>
-                    Click the image to preview your certificate.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </section>
         </div>
       </Main>
     </>

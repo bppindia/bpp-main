@@ -1,133 +1,117 @@
-import React, { useMemo, useState } from 'react'
-import { FilterIcon, ListOrderedIcon } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
+import { useEffect, useState } from 'react'
+import { getData } from '@/api/apiClient'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Header } from '@/components/layout/dashboard/header'
 import { Main } from '@/components/layout/dashboard/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
+import { columns } from './components/columns'
+import { DataTable } from './components/data-table'
+import { WalletSkeleton } from './components/skeleton'
+import type { Transaction } from './data/schema'
 
-interface Transaction {
-  id: number
-  date: string
-  description: string
-  amount: number
-  status: 'Pending' | 'Completed'
-}
+export default function TransactionsPage() {
+  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [summary, setSummary] = useState<{
+    totalCredits: number
+    totalDebits: number
+    completedTransactions: number
+    pendingTransactions: number
+    failedTransactions: number
+  } | null>(null)
 
-const Transactions: React.FC = () => {
-  const initialTransactions: Transaction[] = [
-    {
-      id: 1,
-      date: '2023-06-01',
-      description: 'Voting',
-      amount: -1200,
-      status: 'Completed',
-    },
-    {
-      id: 2,
-      date: '2023-06-05',
-      description: 'Upgrade Membership',
-      amount: -150.25,
-      status: 'Completed',
-    },
-    {
-      id: 3,
-      date: '2023-06-10',
-      description: 'Voting Received',
-      amount: 3500,
-      status: 'Completed',
-    },
-    {
-      id: 5,
-      date: '2023-06-20',
-      description: 'Online Purchase',
-      amount: -75.5,
-      status: 'Completed',
-    },
-    {
-      id: 6,
-      date: '2023-06-25',
-      description: 'Subscription Renewal',
-      amount: -9.99,
-      status: 'Completed',
-    },
-  ]
+  // Fetch all transactions from API
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        setLoading(true)
+        setError(null)
 
-  const [transactions] = useState<Transaction[]>(initialTransactions)
+        // Fetch all transactions from the API
+        const response = await getData<{
+          success: boolean
+          data: {
+            transactions: Transaction[]
+            summary: {
+              totalCredits: number
+              totalDebits: number
+              completedTransactions: number
+              pendingTransactions: number
+              failedTransactions: number
+            }
+            pagination: {
+              total: number
+              page: number
+              limit: number
+              totalPages: number
+            }
+          }
+        }>('/wallet/transactions')
 
-  // Use string literal union type instead of const assertion
-  type SortByType = 'date' | 'description' | 'amount' | 'status'
-  type SortOrderType = 'asc' | 'desc'
-
-  const [sortBy, setSortBy] = useState<SortByType>('date')
-  const [sortOrder, setSortOrder] = useState<SortOrderType>('asc')
-  const [filterStatus, setFilterStatus] = useState<
-    'all' | Transaction['status']
-  >('all')
-
-  const filteredTransactions = useMemo(() => {
-    let filtered = [...transactions]
-
-    // Filter by status
-    if (filterStatus !== 'all') {
-      filtered = filtered.filter((tx) => tx.status === filterStatus)
+        if (response.success && response.data) {
+          setTransactions(response.data.transactions)
+          setSummary(response.data.summary)
+        } else {
+          throw new Error('Invalid response format')
+        }
+      } catch (_err) {
+        setError('Failed to load transactions. Please try again later.')
+      } finally {
+        setLoading(false)
+      }
     }
 
-    // Sort transactions
-    filtered.sort((a, b) => {
-      // Numeric comparison for amount
-      if (sortBy === 'amount') {
-        return sortOrder === 'asc' ? a.amount - b.amount : b.amount - a.amount
-      }
+    fetchTransactions()
+  }, [])
 
-      // String comparison for other fields
-      if (
-        sortBy === 'date' ||
-        sortBy === 'description' ||
-        sortBy === 'status'
-      ) {
-        const valueA = a[sortBy] ?? ''
-        const valueB = b[sortBy] ?? ''
+  // Show loading state
+  if (loading) {
+    return (
+      <>
+        <Header fixed>
+          <Search />
+          <div className='ml-auto flex items-center space-x-4'>
+            <ThemeSwitch />
+            <ProfileDropdown />
+          </div>
+        </Header>
 
-        return sortOrder === 'asc'
-          ? valueA.localeCompare(valueB)
-          : valueB.localeCompare(valueA)
-      }
+        <Main>
+          <WalletSkeleton />
+        </Main>
+      </>
+    )
+  }
 
-      return 0
-    })
-
-    return filtered
-  }, [transactions, sortBy, sortOrder, filterStatus])
-
-  const totalAmount = useMemo(() => {
-    return filteredTransactions.reduce((total, tx) => total + tx.amount, 0)
-  }, [filteredTransactions])
-
-  const numTransactions = filteredTransactions.length
-  const numPending = filteredTransactions.filter(
-    (tx) => tx.status === 'Pending'
-  ).length
+  // Show error state
+  if (error) {
+    return (
+      <Main>
+        <div className='flex h-full items-center justify-center'>
+          <div className='text-center'>
+            <p className='text-destructive'>{error}</p>
+            <Button
+              variant='outline'
+              className='mt-4'
+              onClick={() => window.location.reload()}
+            >
+              Try Again
+            </Button>
+          </div>
+        </div>
+      </Main>
+    )
+  }
 
   return (
     <>
@@ -140,139 +124,73 @@ const Transactions: React.FC = () => {
       </Header>
 
       <Main>
-        <div className='mx-auto'>
-          <div className='mb-6 flex items-center justify-between'>
-            <h1 className='text-2xl font-bold'>Transaction History</h1>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant='outline' size='sm'>
-                  <FilterIcon className='mr-2 h-4 w-4' />
-                  Filter by status
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align='end'>
-                <DropdownMenuItem onSelect={() => setFilterStatus('all')}>
-                  All
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => setFilterStatus('Pending')}>
-                  Pending
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => setFilterStatus('Completed')}>
-                  Completed
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-          <div className='mb-6 grid grid-cols-1 gap-4 md:grid-cols-3'>
+        <div className='space-y-8'>
+          {/* Transaction Summary */}
+          {summary && (
             <Card>
               <CardHeader>
-                <CardTitle>Total Amount</CardTitle>
+                <CardTitle>Transaction Summary</CardTitle>
+                <CardDescription>
+                  Overview of your wallet transactions
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className='text-4xl font-bold'>
-                  ₹ {totalAmount.toFixed(2)}
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+                  <div className='rounded-lg bg-muted p-4'>
+                    <p className='text-sm font-medium'>Total Credits</p>
+                    <p className='text-2xl font-bold text-green-600'>
+                      ₹{summary.totalCredits}
+                    </p>
+                  </div>
+                  <div className='rounded-lg bg-muted p-4'>
+                    <p className='text-sm font-medium'>Total Debits</p>
+                    <p className='text-2xl font-bold text-red-600'>
+                      ₹{summary.totalDebits}
+                    </p>
+                  </div>
+                  <div className='rounded-lg bg-muted p-4'>
+                    <p className='text-sm font-medium'>Balance</p>
+                    <p className='text-2xl font-bold'>
+                      {summary.totalCredits - summary.totalDebits >= 0
+                        ? '₹' + (summary.totalCredits - summary.totalDebits)
+                        : '-₹' + (summary.totalDebits - summary.totalCredits)}
+                    </p>
+                  </div>
+                </div>
+                <div className='mt-4 grid grid-cols-1 gap-4 md:grid-cols-3'>
+                  <div className='rounded-lg bg-muted p-4'>
+                    <p className='text-sm font-medium'>Completed</p>
+                    <p className='text-2xl font-bold text-green-600'>
+                      {summary.completedTransactions}
+                    </p>
+                  </div>
+                  <div className='rounded-lg bg-muted p-4'>
+                    <p className='text-sm font-medium'>Pending</p>
+                    <p className='text-2xl font-bold text-yellow-600'>
+                      {summary.pendingTransactions}
+                    </p>
+                  </div>
+                  <div className='rounded-lg bg-muted p-4'>
+                    <p className='text-sm font-medium'>Failed</p>
+                    <p className='text-2xl font-bold text-red-600'>
+                      {summary.failedTransactions}
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Total Transactions</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className='text-4xl font-bold'>{numTransactions}</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Pending Transactions</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className='text-4xl font-bold'>{numPending}</div>
-              </CardContent>
-            </Card>
-          </div>
+          )}
+
+          {/* All Transactions */}
           <Card>
             <CardHeader>
-              <div className='flex items-center justify-between'>
-                <CardTitle>Transactions</CardTitle>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant='outline' size='sm'>
-                      <ListOrderedIcon className='mr-2 h-4 w-4' />
-                      Sort by {sortBy} ({sortOrder})
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align='end'>
-                    <DropdownMenuRadioGroup
-                      value={sortBy}
-                      onValueChange={(value) => setSortBy(value as SortByType)}
-                    >
-                      <DropdownMenuRadioItem value='date'>
-                        Date
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value='description'>
-                        Description
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value='amount'>
-                        Amount
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value='status'>
-                        Status
-                      </DropdownMenuRadioItem>
-                    </DropdownMenuRadioGroup>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuRadioGroup
-                      value={sortOrder}
-                      onValueChange={(value) =>
-                        setSortOrder(value as SortOrderType)
-                      }
-                    >
-                      <DropdownMenuRadioItem value='asc'>
-                        Ascending
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value='desc'>
-                        Descending
-                      </DropdownMenuRadioItem>
-                    </DropdownMenuRadioGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
+              <CardTitle>All Transactions</CardTitle>
+              <CardDescription>
+                View all your wallet transactions
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead className='text-right'>Amount</TableHead>
-                    <TableHead>Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredTransactions.map((tx) => (
-                    <TableRow key={tx.id}>
-                      <TableCell>{tx.date}</TableCell>
-                      <TableCell>{tx.description}</TableCell>
-                      <TableCell
-                        className={`text-right ${
-                          tx.amount < 0 ? 'text-red-500' : 'text-green-500'
-                        }`}
-                      >
-                        ₹ {Math.abs(tx.amount).toFixed(2)}
-                      </TableCell>
-                      <TableCell>
-                        <Badge
-                          variant={
-                            tx.status === 'Pending' ? 'outline' : 'secondary'
-                          }
-                        >
-                          {tx.status}
-                        </Badge>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <DataTable columns={columns} data={transactions || []} />
             </CardContent>
           </Card>
         </div>
@@ -280,5 +198,3 @@ const Transactions: React.FC = () => {
     </>
   )
 }
-
-export default Transactions

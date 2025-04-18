@@ -36,7 +36,6 @@ import { Route as PublicDownloadAppIndexImport } from './routes/_public/download
 import { Route as PublicContactIndexImport } from './routes/_public/contact/index'
 import { Route as PublicAboutIndexImport } from './routes/_public/about/index'
 import { Route as DashboardWalletTransactionsIndexImport } from './routes/dashboard/wallet/transactions/index'
-import { Route as DashboardWalletAddFundIndexImport } from './routes/dashboard/wallet/add-fund/index'
 import { Route as DashboardMembershipUpgradeIndexImport } from './routes/dashboard/membership/upgrade/index'
 import { Route as DashboardMembershipRenewalIndexImport } from './routes/dashboard/membership/renewal/index'
 import { Route as DashboardMembershipPaymentIndexImport } from './routes/dashboard/membership/payment/index'
@@ -399,13 +398,6 @@ const DashboardWalletTransactionsIndexRoute =
   DashboardWalletTransactionsIndexImport.update({
     id: '/wallet/transactions/',
     path: '/wallet/transactions/',
-    getParentRoute: () => DashboardRouteRoute,
-  } as any)
-
-const DashboardWalletAddFundIndexRoute =
-  DashboardWalletAddFundIndexImport.update({
-    id: '/wallet/add-fund/',
-    path: '/wallet/add-fund/',
     getParentRoute: () => DashboardRouteRoute,
   } as any)
 
@@ -1020,13 +1012,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardMembershipUpgradeIndexImport
       parentRoute: typeof DashboardRouteImport
     }
-    '/dashboard/wallet/add-fund/': {
-      id: '/dashboard/wallet/add-fund/'
-      path: '/wallet/add-fund'
-      fullPath: '/dashboard/wallet/add-fund'
-      preLoaderRoute: typeof DashboardWalletAddFundIndexImport
-      parentRoute: typeof DashboardRouteImport
-    }
     '/dashboard/wallet/transactions/': {
       id: '/dashboard/wallet/transactions/'
       path: '/wallet/transactions'
@@ -1120,7 +1105,6 @@ interface DashboardRouteRouteChildren {
   DashboardMembershipPaymentIndexRoute: typeof DashboardMembershipPaymentIndexRoute
   DashboardMembershipRenewalIndexRoute: typeof DashboardMembershipRenewalIndexRoute
   DashboardMembershipUpgradeIndexRoute: typeof DashboardMembershipUpgradeIndexRoute
-  DashboardWalletAddFundIndexRoute: typeof DashboardWalletAddFundIndexRoute
   DashboardWalletTransactionsIndexRoute: typeof DashboardWalletTransactionsIndexRoute
 }
 
@@ -1149,7 +1133,6 @@ const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
   DashboardMembershipPaymentIndexRoute: DashboardMembershipPaymentIndexRoute,
   DashboardMembershipRenewalIndexRoute: DashboardMembershipRenewalIndexRoute,
   DashboardMembershipUpgradeIndexRoute: DashboardMembershipUpgradeIndexRoute,
-  DashboardWalletAddFundIndexRoute: DashboardWalletAddFundIndexRoute,
   DashboardWalletTransactionsIndexRoute: DashboardWalletTransactionsIndexRoute,
 }
 
@@ -1295,7 +1278,6 @@ export interface FileRoutesByFullPath {
   '/dashboard/membership/payment': typeof DashboardMembershipPaymentIndexRoute
   '/dashboard/membership/renewal': typeof DashboardMembershipRenewalIndexRoute
   '/dashboard/membership/upgrade': typeof DashboardMembershipUpgradeIndexRoute
-  '/dashboard/wallet/add-fund': typeof DashboardWalletAddFundIndexRoute
   '/dashboard/wallet/transactions': typeof DashboardWalletTransactionsIndexRoute
   '/about/bpp-goals/against-muscle-and-money-power': typeof PublicAboutBppGoalsAgainstMuscleAndMoneyPowerIndexRoute
   '/about/bpp-goals/equal-opportunity-and-gender-equality': typeof PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute
@@ -1363,7 +1345,6 @@ export interface FileRoutesByTo {
   '/dashboard/membership/payment': typeof DashboardMembershipPaymentIndexRoute
   '/dashboard/membership/renewal': typeof DashboardMembershipRenewalIndexRoute
   '/dashboard/membership/upgrade': typeof DashboardMembershipUpgradeIndexRoute
-  '/dashboard/wallet/add-fund': typeof DashboardWalletAddFundIndexRoute
   '/dashboard/wallet/transactions': typeof DashboardWalletTransactionsIndexRoute
   '/about/bpp-goals/against-muscle-and-money-power': typeof PublicAboutBppGoalsAgainstMuscleAndMoneyPowerIndexRoute
   '/about/bpp-goals/equal-opportunity-and-gender-equality': typeof PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute
@@ -1435,7 +1416,6 @@ export interface FileRoutesById {
   '/dashboard/membership/payment/': typeof DashboardMembershipPaymentIndexRoute
   '/dashboard/membership/renewal/': typeof DashboardMembershipRenewalIndexRoute
   '/dashboard/membership/upgrade/': typeof DashboardMembershipUpgradeIndexRoute
-  '/dashboard/wallet/add-fund/': typeof DashboardWalletAddFundIndexRoute
   '/dashboard/wallet/transactions/': typeof DashboardWalletTransactionsIndexRoute
   '/_public/about/bpp-goals/against-muscle-and-money-power/': typeof PublicAboutBppGoalsAgainstMuscleAndMoneyPowerIndexRoute
   '/_public/about/bpp-goals/equal-opportunity-and-gender-equality/': typeof PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute
@@ -1507,7 +1487,6 @@ export interface FileRouteTypes {
     | '/dashboard/membership/payment'
     | '/dashboard/membership/renewal'
     | '/dashboard/membership/upgrade'
-    | '/dashboard/wallet/add-fund'
     | '/dashboard/wallet/transactions'
     | '/about/bpp-goals/against-muscle-and-money-power'
     | '/about/bpp-goals/equal-opportunity-and-gender-equality'
@@ -1574,7 +1553,6 @@ export interface FileRouteTypes {
     | '/dashboard/membership/payment'
     | '/dashboard/membership/renewal'
     | '/dashboard/membership/upgrade'
-    | '/dashboard/wallet/add-fund'
     | '/dashboard/wallet/transactions'
     | '/about/bpp-goals/against-muscle-and-money-power'
     | '/about/bpp-goals/equal-opportunity-and-gender-equality'
@@ -1644,7 +1622,6 @@ export interface FileRouteTypes {
     | '/dashboard/membership/payment/'
     | '/dashboard/membership/renewal/'
     | '/dashboard/membership/upgrade/'
-    | '/dashboard/wallet/add-fund/'
     | '/dashboard/wallet/transactions/'
     | '/_public/about/bpp-goals/against-muscle-and-money-power/'
     | '/_public/about/bpp-goals/equal-opportunity-and-gender-equality/'
@@ -1736,7 +1713,6 @@ export const routeTree = rootRoute
         "/dashboard/membership/payment/",
         "/dashboard/membership/renewal/",
         "/dashboard/membership/upgrade/",
-        "/dashboard/wallet/add-fund/",
         "/dashboard/wallet/transactions/"
       ]
     },
@@ -2000,10 +1976,6 @@ export const routeTree = rootRoute
     },
     "/dashboard/membership/upgrade/": {
       "filePath": "dashboard/membership/upgrade/index.tsx",
-      "parent": "/dashboard"
-    },
-    "/dashboard/wallet/add-fund/": {
-      "filePath": "dashboard/wallet/add-fund/index.tsx",
       "parent": "/dashboard"
     },
     "/dashboard/wallet/transactions/": {
