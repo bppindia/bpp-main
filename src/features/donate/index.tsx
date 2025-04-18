@@ -1,105 +1,69 @@
-import React, { useState, useEffect, JSX } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
-import { ChevronDown, ChevronUp } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { PlusIcon, ArrowUpIcon } from 'lucide-react'
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
+import { Button } from '@/components/ui/button'
 import { Header } from '@/components/layout/dashboard/header'
 import { Main } from '@/components/layout/dashboard/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-
-// Mock donation data (replace with API call later)
-type Donation = {
-  id: string
-  date: string
-  amount: number
-  type: 'one-time' | 'recurring'
-  status: 'completed' | 'pending' | 'failed'
-  campaign?: string // Optional: Link to specific campaign
-}
-
-const mockDonations: Donation[] = [
-  {
-    id: 'DON001',
-    date: '2025-03-14',
-    amount: 5000,
-    type: 'one-time',
-    status: 'completed',
-    campaign: 'Election Fund',
-  },
-  {
-    id: 'DON002',
-    date: '2025-03-13',
-    amount: 1000,
-    type: 'recurring',
-    status: 'completed',
-  },
-  {
-    id: 'DON003',
-    date: '2025-03-12',
-    amount: 2500,
-    type: 'one-time',
-    status: 'pending',
-    campaign: 'Community Outreach',
-  },
-  {
-    id: 'DON004',
-    date: '2025-03-11',
-    amount: 500,
-    type: 'recurring',
-    status: 'completed',
-  },
-]
-
-// Mock summary data (replace with API call later)
-const donationSummary = {
-  totalDonations: 9000, // Rs
-  recurringDonations: 1500, // Rs
-  oneTimeDonations: 7500, // Rs
-}
+import { DataTable } from './components/data-table'
+import { columns } from './components/columns'
+import { Donation } from './data/schema'
+import { getData } from '@/api/apiClient'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const Donate = () => {
   const navigate = useNavigate()
-  const [donations, setDonations] = useState<Donation[]>([])
   const [loading, setLoading] = useState(true)
-  const [showAllDonations, setShowAllDonations] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [donations, setDonations] = useState<Donation[]>([])
+  const [donationSummary, setDonationSummary] = useState({
+    totalDonations: 0,
+    recurringDonations: 0,
+    oneTimeDonations: 0,
+  })
 
-  // Simulate API fetch (replace with real API call)
   useEffect(() => {
     const fetchDonations = async () => {
       setLoading(true)
+      setError(null)
       try {
-        // Replace with actual API call
-        await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate delay
-        setDonations(mockDonations)
+        // Fetch donations for the current user using the API client
+        const data = await getData<{
+          donations: Donation[],
+          summary: {
+            totalDonations: number,
+            recurringDonations: number,
+            oneTimeDonations: number
+          }
+        }>('/donations/user')
+
+        setDonations(data.donations || [])
+
+        // Use the summary data from the API response
+        if (data.summary) {
+          setDonationSummary({
+            totalDonations: data.summary.totalDonations,
+            recurringDonations: data.summary.recurringDonations,
+            oneTimeDonations: data.summary.oneTimeDonations,
+          })
+        }
       } catch (_error) {
-        // Handle error silently
+        setError('Failed to load donation data. Please try again later.')
       } finally {
         setLoading(false)
       }
     }
+
     fetchDonations()
   }, [])
-
-  const displayedDonations = showAllDonations
-    ? donations
-    : donations.slice(0, 3)
 
   return (
     <>
@@ -144,7 +108,7 @@ const Donate = () => {
                   </div>
                   <div className='flex items-center gap-1 text-muted-foreground'>
                     <ArrowUpIcon className='h-4 w-4 text-green-500' />
-                    <span>+12%</span> {/* Replace with real percentage */}
+                    <span>+12%</span>
                   </div>
                 </CardContent>
               </Card>
@@ -182,185 +146,41 @@ const Donate = () => {
             <div className='mt-8'>
               <h2 className='mb-4 text-xl font-bold'>Donation History</h2>
               <Card>
-                <CardContent className='p-0'>
+                <CardContent className='p-6'>
                   {loading ? (
-                    <div className='p-6 text-center text-muted-foreground'>
-                      Loading...
+                    <div className='space-y-4'>
+                      <div className='flex items-center justify-between'>
+                        <Skeleton className='h-8 w-[250px]' />
+                        <Skeleton className='h-8 w-[100px]' />
+                      </div>
+                      <div className='h-[300px] overflow-hidden'>
+                        {Array.from({ length: 5 }).map((_, index) => (
+                          <div key={index} className='mb-4 flex items-center justify-between'>
+                            <Skeleton className='h-12 w-[200px]' />
+                            <Skeleton className='h-12 w-[150px]' />
+                            <Skeleton className='h-12 w-[100px]' />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : error ? (
+                    <div className='text-center text-red-500'>
+                      {error}
                     </div>
                   ) : donations.length === 0 ? (
-                    <div className='p-6 text-center text-muted-foreground'>
+                    <div className='text-center text-muted-foreground'>
                       No donation history found.
                     </div>
                   ) : (
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Date</TableHead>
-                          <TableHead>Amount</TableHead>
-                          <TableHead>Type</TableHead>
-                          <TableHead>Campaign</TableHead>
-                          <TableHead>Status</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {displayedDonations.map((donation) => (
-                          <TableRow
-                            key={donation.id}
-                            className='cursor-pointer hover:bg-gray-100'
-                            onClick={() =>
-                              donation.campaign &&
-                              navigate({
-                                to: `/dashboard`,
-                              })
-                            }
-                          >
-                            <TableCell>{donation.date}</TableCell>
-                            <TableCell>
-                              Rs {donation.amount.toLocaleString()}
-                            </TableCell>
-                            <TableCell>
-                              <Badge
-                                variant={
-                                  donation.type === 'recurring'
-                                    ? 'default'
-                                    : 'secondary'
-                                }
-                              >
-                                {donation.type}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              {donation.campaign || 'General Fund'}
-                            </TableCell>
-                            <TableCell>
-                              <Badge
-                                variant={
-                                  donation.status === 'completed'
-                                    ? 'default'
-                                    : donation.status === 'pending'
-                                      ? 'outline'
-                                      : 'destructive'
-                                }
-                              >
-                                {donation.status}
-                              </Badge>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                    <DataTable columns={columns} data={donations} />
                   )}
                 </CardContent>
-                {donations.length > 3 && (
-                  <CardFooter className='flex justify-between'>
-                    <Button
-                      variant='ghost'
-                      size='sm'
-                      onClick={() => setShowAllDonations(!showAllDonations)}
-                    >
-                      {showAllDonations ? (
-                        <>
-                          Show Less <ChevronUp className='ml-1 h-4 w-4' />
-                        </>
-                      ) : (
-                        <>
-                          Show More <ChevronDown className='ml-1 h-4 w-4' />
-                        </>
-                      )}
-                    </Button>
-                  </CardFooter>
-                )}
-              </Card>
-            </div>
-
-            {/* Additional Features */}
-            <div className='mt-6 grid grid-cols-1 gap-6 md:grid-cols-2'>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Active Campaigns</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className='text-muted-foreground'>
-                    Contribute to ongoing campaigns.
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Button
-                    variant='outline'
-                    onClick={() => navigate({ to: '/dashboard' })}
-                  >
-                    View Campaigns
-                  </Button>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Donation Receipt</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className='text-muted-foreground'>
-                    Download your donation receipts.
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Button
-                    variant='outline'
-                    onClick={() => navigate({ to: '/dashboard' })}
-                  >
-                    Get Receipts
-                  </Button>
-                </CardFooter>
               </Card>
             </div>
           </div>
         </div>
       </Main>
     </>
-  )
-}
-
-// Icon components (unchanged)
-function ArrowUpIcon(
-  props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
-) {
-  return (
-    <svg
-      {...props}
-      xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    >
-      <path d='m5 12 7-7 7 7' />
-      <path d='M12 19V5' />
-    </svg>
-  )
-}
-
-function PlusIcon(
-  props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
-) {
-  return (
-    <svg
-      {...props}
-      xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    >
-      <path d='M5 12h14' />
-      <path d='M12 5v14' />
-    </svg>
   )
 }
 

@@ -1,4 +1,3 @@
-// AuthContext.tsx
 import React, { createContext, ReactNode, useContext, useState } from 'react'
 import Cookies from 'js-cookie'
 import { clearCredentials, setCredentials } from '@/store/authSlice'
@@ -17,17 +16,7 @@ import { useDispatch } from 'react-redux'
 import { toast } from 'sonner'
 import { postData } from '@/api/apiClient'
 
-function isFile(value: unknown): value is File {
-  return (
-    value instanceof File ||
-    (typeof value === 'object' &&
-      value !== null &&
-      'name' in value &&
-      'size' in value &&
-      'type' in value)
-  )
-}
-
+// Types
 interface AuthContextType {
   user: AuthUser | null
   isAuthenticated: boolean
@@ -42,61 +31,104 @@ interface AuthContextType {
   fetchUserData: () => Promise<void>
 }
 
+interface CookieOptions {
+  expires: number
+  secure: boolean
+  sameSite: 'strict' | 'lax' | 'none'
+}
+
+// Constants
+const COOKIE_OPTIONS: CookieOptions = {
+  expires: 4,
+  secure: true,
+  sameSite: 'strict',
+}
+
+const COOKIE_KEYS = {
+  AUTH_TOKEN: 'authToken',
+  USER_DETAILS: 'userDetails',
+} as const
+
+// Utility functions
+const isFile = (value: unknown): value is File => {
+  return (
+    value instanceof File ||
+    (typeof value === 'object' &&
+      value !== null &&
+      'name' in value &&
+      'size' in value &&
+      'type' in value)
+  )
+}
+
+const getErrorMessage = (error: unknown): string => {
+  if (
+    error &&
+    typeof error === 'object' &&
+    'response' in error &&
+    error.response &&
+    typeof error.response === 'object' &&
+    'data' in error.response &&
+    error.response.data &&
+    typeof error.response.data === 'object' &&
+    'message' in error.response.data
+  ) {
+    return String(error.response.data.message)
+  }
+  return error && typeof error === 'object' && 'message' in error
+    ? String(error.message)
+    : 'An unexpected error occurred'
+}
+
+const setCookie = (key: string, value: string | object): void => {
+  const valueToStore = typeof value === 'object' ? JSON.stringify(value) : value
+  Cookies.set(key, valueToStore, COOKIE_OPTIONS)
+}
+
+const removeCookie = (key: string): void => {
+  Cookies.remove(key)
+}
+
+// Context
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<AuthUser | null>(() => {
-    const userDetails = Cookies.get('userDetails')
+    const userDetails = Cookies.get(COOKIE_KEYS.USER_DETAILS)
     return userDetails ? JSON.parse(userDetails) : null
   })
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
 
-  const login = async (credentials: LoginCredentials) => {
+  const handleAuthSuccess = (token: string, userData: AuthUser): void => {
+    dispatch(setCredentials({ token, user: userData }))
+    setCookie(COOKIE_KEYS.AUTH_TOKEN, token)
+    setCookie(COOKIE_KEYS.USER_DETAILS, userData)
+    setUser(userData)
+  }
+
+  const login = async (credentials: LoginCredentials): Promise<void> => {
     try {
       setLoading(true)
-      const response = await postData(
+      const response = await postData<LoginResponse>(
         '/auth/login',
         credentials as unknown as Record<string, unknown>
       )
       const typedResponse = asApiResponse<LoginResponse>(response)
-      const userData: AuthUser = typedResponse.data as unknown as AuthUser
+      const userData = typedResponse.data as unknown as AuthUser
 
       if (!typedResponse.token) {
         throw new Error('No token received from server')
       }
 
-      // Store user data with all populated fields
-      dispatch(setCredentials({ token: typedResponse.token, user: userData }))
-      Cookies.set('authToken', typedResponse.token, {
-        expires: 4,
-        secure: true,
-        sameSite: 'strict',
-      })
-      Cookies.set('userDetails', JSON.stringify(userData), {
-        expires: 4,
-        secure: true,
-        sameSite: 'strict',
-      })
-      setUser(userData)
+      handleAuthSuccess(typedResponse.token, userData)
       toast.success('Login Successful!', {
-        description: 'Redirecting to the dashboard...',
+        description: 'Redirecting to the login page...',
       })
-    } catch (_error: unknown) {
-      const errorMessage =
-        _error &&
-        typeof _error === 'object' &&
-        'response' in _error &&
-        _error.response &&
-        typeof _error.response === 'object' &&
-        'data' in _error.response &&
-        _error.response.data &&
-        typeof _error.response.data === 'object' &&
-        'message' in _error.response.data
-          ? String(_error.response.data.message)
-          : 'Login failed. Please check your credentials.'
+    } catch (error) {
+      const errorMessage = getErrorMessage(error)
       toast.error(errorMessage)
       throw new Error(errorMessage)
     } finally {
@@ -104,9 +136,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const register = async (
-    registrationData: RegistrationData
-  ): Promise<void> => {
+  const register = async (registrationData: RegistrationData): Promise<void> => {
     try {
       setLoading(true)
 
@@ -125,28 +155,38 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         ...rest
       } = registrationData
 
-      // Only append non-empty fields
+      // Append non-empty fields
       Object.entries(rest).forEach(([key, value]) => {
         if (value !== undefined && value !== null && value !== '') {
           formData.append(key, isFile(value) ? value : String(value))
         }
       })
 
-      // Append address fields if they exist
-      if (addressLine1) formData.append('addressLine1', addressLine1)
-      if (addressLine2) formData.append('addressLine2', addressLine2)
-      if (cityOrVillage) formData.append('cityOrVillage', cityOrVillage)
-      if (district) formData.append('district', district)
-      if (state) formData.append('state', state)
-      if (pincode) formData.append('pincode', pincode)
+      // Append address fields
+      const addressFields = {
+        addressLine1,
+        addressLine2,
+        cityOrVillage,
+        district,
+        state,
+        pincode,
+      }
+      Object.entries(addressFields).forEach(([key, value]) => {
+        if (value) formData.append(key, value)
+      })
 
-      // Append files if they exist
-      if (aadhaarFront) formData.append('aadhaarFront', aadhaarFront)
-      if (aadhaarBack) formData.append('aadhaarBack', aadhaarBack)
-      if (voterFront) formData.append('voterFront', voterFront)
-      if (voterBack) formData.append('voterBack', voterBack)
+      // Append files
+      const files = {
+        aadhaarFront,
+        aadhaarBack,
+        voterFront,
+        voterBack,
+      }
+      Object.entries(files).forEach(([key, value]) => {
+        if (value) formData.append(key, value)
+      })
 
-      const response = await postData(
+      const response = await postData<RegistrationResponse>(
         '/auth/register',
         formData as unknown as Record<string, unknown>,
         {
@@ -154,61 +194,32 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         }
       )
       const typedResponse = asApiResponse<RegistrationResponse>(response)
-      if (typedResponse.success) {
-        const userData: AuthUser = typedResponse.data as unknown as AuthUser
-        if (!typedResponse.token) {
-          throw new Error('No token received from server')
-        }
-        dispatch(setCredentials({ token: typedResponse.token, user: userData }))
-        Cookies.set('authToken', typedResponse.token, {
-          expires: 4,
-          secure: true,
-          sameSite: 'strict',
-        })
-        Cookies.set('userDetails', JSON.stringify(userData), {
-          expires: 4,
-          secure: true,
-          sameSite: 'strict',
-        })
-        setUser(userData)
 
+      if (typedResponse.success && typedResponse.token) {
+        const userData = typedResponse.data as unknown as AuthUser
+        handleAuthSuccess(typedResponse.token, userData)
         toast.success(typedResponse.message || 'Registration Successful!')
       } else {
-        throw new Error(typedResponse.message || 'Registration completed')
+        throw new Error(typedResponse.message || 'Registration failed')
       }
-    } catch (_error: unknown) {
-      // Error handling without console.log
-      const errorMessage =
-        _error && typeof _error === 'object' && 'message' in _error
-          ? String(_error.message)
-          : 'Registration failed'
+    } catch (error) {
+      const errorMessage = getErrorMessage(error)
       toast.error(errorMessage)
-      throw _error
+      throw error
     } finally {
       setLoading(false)
     }
   }
 
-  const sendOtp = async (identifier: string) => {
+  const sendOtp = async (identifier: string): Promise<void> => {
     try {
       setLoading(true)
       await postData('/auth/register/send-otp', { identifier })
       toast.success(
         `OTP sent successfully to your ${identifier.includes('@') ? 'email' : 'phone'}!`
       )
-    } catch (_error: unknown) {
-      const errorMessage =
-        _error &&
-        typeof _error === 'object' &&
-        'response' in _error &&
-        _error.response &&
-        typeof _error.response === 'object' &&
-        'data' in _error.response &&
-        _error.response.data &&
-        typeof _error.response.data === 'object' &&
-        'message' in _error.response.data
-          ? String(_error.response.data.message)
-          : 'Failed to send OTP'
+    } catch (error) {
+      const errorMessage = getErrorMessage(error)
       toast.error(errorMessage)
       throw new Error(errorMessage)
     } finally {
@@ -216,24 +227,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const verifyOtp = async (identifier: string, otp: string) => {
+  const verifyOtp = async (identifier: string, otp: string): Promise<void> => {
     try {
       setLoading(true)
       await postData('/auth/register/verify-otp', { identifier, otp })
       toast.success('OTP verified successfully!')
-    } catch (_error: unknown) {
-      const errorMessage =
-        _error &&
-        typeof _error === 'object' &&
-        'response' in _error &&
-        _error.response &&
-        typeof _error.response === 'object' &&
-        'data' in _error.response &&
-        _error.response.data &&
-        typeof _error.response.data === 'object' &&
-        'message' in _error.response.data
-          ? String(_error.response.data.message)
-          : 'Failed to verify OTP.'
+    } catch (error) {
+      const errorMessage = getErrorMessage(error)
       toast.error(errorMessage)
       throw new Error(errorMessage)
     } finally {
@@ -241,68 +241,45 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const logout = () => {
-    Cookies.remove('authToken')
-    Cookies.remove('userDetails')
+  const logout = (): void => {
+    removeCookie(COOKIE_KEYS.AUTH_TOKEN)
+    removeCookie(COOKIE_KEYS.USER_DETAILS)
     setUser(null)
     dispatch(clearCredentials())
     toast.success('Logged out successfully')
   }
 
-  const updateVerification = (isVerified: boolean) => {
+  const updateVerification = (isVerified: boolean): void => {
     if (user) {
       const updatedUser = { ...user, isVerified }
       setUser(updatedUser)
-      Cookies.set('userDetails', JSON.stringify(updatedUser), {
-        expires: 4,
-        secure: true,
-        sameSite: 'strict',
-      })
+      setCookie(COOKIE_KEYS.USER_DETAILS, updatedUser)
     }
   }
 
-  const updateUser = (updates: Partial<AuthUser>) => {
+  const updateUser = (updates: Partial<AuthUser>): void => {
     if (user) {
       const updatedUser = { ...user, ...updates }
       setUser(updatedUser)
-      Cookies.set('userDetails', JSON.stringify(updatedUser), {
-        expires: 4,
-        secure: true,
-        sameSite: 'strict',
-      })
+      setCookie(COOKIE_KEYS.USER_DETAILS, updatedUser)
     }
   }
 
-  const fetchUserData = async () => {
+  const fetchUserData = async (): Promise<void> => {
     try {
       setLoading(true)
-      const response = await postData('/users/me', {})
+      const response = await postData<{ data: ApiUser }>('/users/me', {})
       const typedResponse = asApiResponse<{ data: ApiUser }>(response)
-      const userData: AuthUser = typedResponse.data as unknown as AuthUser
+      const userData = typedResponse.data as AuthUser
 
-      // Store the complete user data with all populated fields
-      setUser(userData)
-      Cookies.set('userDetails', JSON.stringify(userData), {
-        expires: 4,
-        secure: true,
-        sameSite: 'strict',
-      })
-      dispatch(
-        setCredentials({ token: Cookies.get('authToken')!, user: userData })
-      )
-    } catch (_error: unknown) {
-      const errorMessage =
-        _error &&
-        typeof _error === 'object' &&
-        'response' in _error &&
-        _error.response &&
-        typeof _error.response === 'object' &&
-        'data' in _error.response &&
-        _error.response.data &&
-        typeof _error.response.data === 'object' &&
-        'message' in _error.response.data
-          ? String(_error.response.data.message)
-          : 'Failed to fetch user data.'
+      const token = Cookies.get(COOKIE_KEYS.AUTH_TOKEN)
+      if (!token) {
+        throw new Error('No authentication token found')
+      }
+
+      handleAuthSuccess(token, userData)
+    } catch (error) {
+      const errorMessage = getErrorMessage(error)
       toast.error(errorMessage)
       throw new Error(errorMessage)
     } finally {
@@ -310,24 +287,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
+  const contextValue: AuthContextType = {
+    user,
+    isAuthenticated: !!Cookies.get(COOKIE_KEYS.AUTH_TOKEN),
+    login,
+    register,
+    sendOtp,
+    verifyOtp,
+    logout,
+    loading,
+    updateVerification,
+    updateUser,
+    fetchUserData,
+  }
+
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        isAuthenticated: !!Cookies.get('authToken'),
-        login,
-        register,
-        sendOtp,
-        verifyOtp,
-        logout,
-        loading,
-        updateVerification,
-        updateUser,
-        fetchUserData,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   )
 }
 

@@ -5,15 +5,55 @@ import { asApiResponse } from '@/types/api'
 import { useSelector } from 'react-redux'
 import { toast } from 'sonner'
 import { getData } from '@/api/apiClient'
+import { UserRole, UserStatus } from '@/utils/roleAccess'
 
 // Define types for dashboard data
 export interface DashboardData {
   totalMembersIndia: number
   totalMembersState: number
-  cases?: {
-    totalCases: number
-    pendingCases: number
-  }
+  totalMembersDistrict: number
+  totalPrimaryMembersState: number
+  totalActiveMembersState: number
+  recentMembersState: Array<{
+    address: {
+      line1?: string
+      line2?: string
+      cityOrVillage?: string
+      district?: string
+      state?: string
+      pincode?: string
+    }
+    aadhaar?: {
+      number?: string
+      front?: string
+      back?: string
+    }
+    voter?: {
+      number?: string
+      front?: string
+      back?: string
+    }
+    _id: string
+    title?: string
+    firstName: string
+    middleName?: string
+    lastName: string
+    email?: string
+    phone?: string
+    dateOfBirth?: string
+    age?: number
+    role: string
+    occupation?: string
+    status: string
+    isVerified?: boolean
+    professional?: string
+    referredBy?: string | null
+    createdAt?: string
+    updatedAt?: string
+    wallet?: string
+    membership?: string
+    referralProfile?: string
+  }>
   referrals: {
     totalReferrals: number
     successfulReferrals: number
@@ -26,7 +66,7 @@ export interface DashboardData {
     balance: number
     totalContributions: number
     recentTransactions: Array<{
-      id: number
+      _id: string
       amount: number
       type: string
       description: string
@@ -35,22 +75,25 @@ export interface DashboardData {
       createdAt: string
     }>
   }
-  totalProfessionalsState: number
   membership?: {
-    membershipNumber?: string
-    type?: string
-    status?: string
-    amount?: number
-    validity?: {
-      startDate?: string
-      expiryDate?: string
-    }
+    number: string
+    type: string
+    status: string
+    cardUrl?: string
+    startDate?: string
+    expiryDate?: string
   } | null
   user: {
+    title?: string
     firstName: string
+    middleName?: string
     lastName: string
-    role: string
-    status: string
+    role: UserRole
+    email?: string
+    phone?: string
+    dateOfBirth?: string
+    occupation?: string
+    status: UserStatus
     address: {
       line1?: string
       line2?: string
@@ -59,10 +102,39 @@ export interface DashboardData {
       state?: string
       pincode?: string
     }
-    referredBy: {
+  }
+  recentActivities: Array<{
+    _id: string
+    user: {
+      _id: string
       firstName: string
       lastName: string
-    } | null
+      email?: string
+      phone?: string
+    }
+    activityType: string
+    details: Record<string, unknown>
+    status: string
+    ipAddress: string
+    userAgent: string
+    createdAt: string
+    updatedAt: string
+  }>
+  charts: {
+    pieStats: Array<{
+      name: string
+      value: number
+    }>
+    barStats: Array<{
+      date: string
+      primary: number
+      active: number
+    }>
+    areaStats: Array<{
+      date: string
+      primary: number
+      active: number
+    }>
   }
 }
 
@@ -70,10 +142,10 @@ export interface DashboardData {
 const defaultData: DashboardData = {
   totalMembersIndia: 0,
   totalMembersState: 0,
-  cases: {
-    totalCases: 0,
-    pendingCases: 0,
-  },
+  totalMembersDistrict: 0,
+  totalPrimaryMembersState: 0,
+  totalActiveMembersState: 0,
+  recentMembersState: [],
   referrals: {
     totalReferrals: 0,
     successfulReferrals: 0,
@@ -87,15 +159,25 @@ const defaultData: DashboardData = {
     totalContributions: 0,
     recentTransactions: [],
   },
-  totalProfessionalsState: 0,
   membership: null,
   user: {
     firstName: '',
     lastName: '',
-    role: '',
-    status: '',
+    title: '',
+    middleName: '',
+    role: UserRole.MEMBER,
+    status: UserStatus.PROCESSING,
+    email: '',
+    phone: '',
+    dateOfBirth: '',
+    occupation: '',
     address: {},
-    referredBy: null,
+  },
+  recentActivities: [],
+  charts: {
+    pieStats: [],
+    barStats: [],
+    areaStats: [],
   },
 }
 
@@ -130,20 +212,7 @@ export function useDashboardData() {
 
         const response = await getData('/user-dashboard/stats')
         const typedResponse = asApiResponse<DashboardData>(response)
-        let dashboardData = typedResponse.data
-
-        // Add default cases object if it doesn't exist
-        if (!dashboardData.cases) {
-          dashboardData = {
-            ...dashboardData,
-            cases: {
-              totalCases: 0,
-              pendingCases: 0,
-            },
-          }
-        }
-
-        setData(dashboardData)
+        setData(typedResponse.data)
       } catch (err) {
         const error =
           err instanceof Error

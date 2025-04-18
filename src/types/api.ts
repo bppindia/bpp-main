@@ -108,12 +108,12 @@ export function asApiResponse<T>(response: unknown): ApiResponse<T> {
 }
 
 export interface DashboardData {
-  user: {
-    firstName: string
-    lastName: string
-    role: string
-    status: string
-    isVerified?: boolean
+  totalMembersIndia: number
+  totalMembersState: number
+  totalMembersDistrict: number
+  totalPrimaryMembersState: number
+  totalActiveMembersState: number
+  recentMembersState: Array<{
     address: {
       line1?: string
       line2?: string
@@ -122,11 +122,117 @@ export interface DashboardData {
       state?: string
       pincode?: string
     }
-    referredBy: {
-      id: string
+    aadhaar?: {
+      number?: string
+      front?: string
+      back?: string
+    }
+    voter?: {
+      number?: string
+      front?: string
+      back?: string
+    }
+    _id: string
+    title?: string
+    firstName: string
+    middleName?: string
+    lastName: string
+    email?: string
+    phone?: string
+    dateOfBirth?: string
+    age?: number
+    role: string
+    occupation?: string
+    status: string
+    isVerified?: boolean
+    professional?: string
+    referredBy?: string | null
+    createdAt?: string
+    updatedAt?: string
+    wallet?: string
+    membership?: string
+    referralProfile?: string
+  }>
+  referrals: {
+    totalReferrals: number
+    successfulReferrals: number
+    pendingReferrals: number
+    referralEarnings: number
+    referralCode: string | null
+    referralLink: string | null
+  }
+  wallet: {
+    balance: number
+    totalContributions: number
+    recentTransactions: Array<{
+      _id: string
+      amount: number
+      type: string
+      description: string
+      status: string
+      category: string
+      createdAt: string
+    }>
+  }
+  membership?: {
+    number: string
+    type: string
+    status: string
+    cardUrl?: string
+    startDate?: string
+    expiryDate?: string
+  } | null
+  user: {
+    title?: string
+    firstName: string
+    middleName?: string
+    lastName: string
+    role: string
+    email?: string
+    phone?: string
+    dateOfBirth?: string
+    occupation?: string
+    status: string
+    address: {
+      line1?: string
+      line2?: string
+      cityOrVillage?: string
+      district?: string
+      state?: string
+      pincode?: string
+    }
+  }
+  recentActivities: Array<{
+    _id: string
+    user: {
+      _id: string
       firstName: string
       lastName: string
-    } | null
+      email?: string
+      phone?: string
+    }
+    activityType: string
+    details: Record<string, unknown>
+    status: string
+    ipAddress: string
+    userAgent: string
+    createdAt: string
+    updatedAt: string
+  }>
+  charts: {
+    pieStats: Array<{
+      name: string
+      value: number
+    }>
+    barStats: Array<{
+      date: string
+      primary: number
+      active: number
+    }>
+    areaStats: Array<{
+      date: string
+      primary: number
+      active: number
+    }>
   }
-  // ... existing code ...
 }
