@@ -33,8 +33,8 @@ apiClient.interceptors.response.use(
     if (newToken) {
       Cookies.set('authToken', newToken, { 
         expires: 1/24, // 1 hour
-        secure: true,
-        sameSite: 'strict'
+        secure: false,
+        sameSite: 'none'
       })
     }
     
@@ -43,8 +43,8 @@ apiClient.interceptors.response.use(
     if (sessionId) {
       Cookies.set('sessionId', sessionId, {
         expires: 30, // 30 days
-        secure: true,
-        sameSite: 'strict'
+        secure: false,
+        sameSite: 'none'
       })
     }
     

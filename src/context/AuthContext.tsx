@@ -135,7 +135,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
       handleAuthSuccess(responseData.accessToken, userData, responseData.sessionId)
       toast.success('Login Successful!', {
-        description: 'Redirecting to the login page...',
+        description: 'Redirecting to the dashboard page...',
       })
     } catch (error) {
       const errorMessage = getErrorMessage(error)
