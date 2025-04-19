@@ -6,15 +6,17 @@ import {
   RegistrationResponse,
   asApiResponse,
   User as ApiUser,
+  Session,
 } from '@/types/api'
 import {
   User as AuthUser,
   LoginCredentials,
   RegistrationData,
+  LoginResponseData,
 } from '@/types/auth'
 import { useDispatch } from 'react-redux'
 import { toast } from 'sonner'
-import { postData } from '@/api/apiClient'
+import { postData, getData, deleteData } from '@/api/apiClient'
 
 // Types
 interface AuthContextType {
@@ -29,6 +31,9 @@ interface AuthContextType {
   updateVerification: (isVerified: boolean) => void
   updateUser: (updates: Partial<AuthUser>) => void
   fetchUserData: () => Promise<void>
+  getActiveSessions: () => Promise<Session[]>
+  revokeSession: (sessionId: string) => Promise<void>
+  revokeAllOtherSessions: () => Promise<void>
 }
 
 interface CookieOptions {
@@ -47,6 +52,7 @@ const COOKIE_OPTIONS: CookieOptions = {
 const COOKIE_KEYS = {
   AUTH_TOKEN: 'authToken',
   USER_DETAILS: 'userDetails',
+  SESSION_ID: 'sessionId',
 } as const
 
 // Utility functions
@@ -102,10 +108,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
 
-  const handleAuthSuccess = (token: string, userData: AuthUser): void => {
+  const handleAuthSuccess = (token: string, userData: AuthUser, sessionId?: string): void => {
     dispatch(setCredentials({ token, user: userData }))
     setCookie(COOKIE_KEYS.AUTH_TOKEN, token)
     setCookie(COOKIE_KEYS.USER_DETAILS, userData)
+    if (sessionId) {
+      setCookie(COOKIE_KEYS.SESSION_ID, sessionId)
+    }
     setUser(userData)
   }
 
@@ -117,13 +126,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         credentials as unknown as Record<string, unknown>
       )
       const typedResponse = asApiResponse<LoginResponse>(response)
-      const userData = typedResponse.data as unknown as AuthUser
+      const responseData = typedResponse.data as unknown as LoginResponseData
+      const userData = responseData.user as unknown as AuthUser
 
-      if (!typedResponse.token) {
+      if (!responseData.accessToken) {
         throw new Error('No token received from server')
       }
 
-      handleAuthSuccess(typedResponse.token, userData)
+      handleAuthSuccess(responseData.accessToken, userData, responseData.sessionId)
       toast.success('Login Successful!', {
         description: 'Redirecting to the login page...',
       })
@@ -246,6 +256,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const logout = (): void => {
     removeCookie(COOKIE_KEYS.AUTH_TOKEN)
     removeCookie(COOKIE_KEYS.USER_DETAILS)
+    removeCookie(COOKIE_KEYS.SESSION_ID)
     setUser(null)
     dispatch(clearCredentials())
     toast.success('Logged out successfully')
@@ -289,6 +300,43 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
+  const getActiveSessions = async (): Promise<Session[]> => {
+    try {
+      const response = await getData<{ success: boolean; data: Session[] }>('/auth/sessions/active')
+      return response.data
+    } catch (error) {
+      const errorMessage = getErrorMessage(error)
+      toast.error(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
+  const revokeSession = async (sessionId: string) => {
+    try {
+      await deleteData<{ success: boolean; message: string }>(`/auth/sessions/${sessionId}`, {
+        refreshToken: Cookies.get('refreshToken')
+      })
+      toast.success('Session revoked successfully')
+    } catch (error) {
+      const errorMessage = getErrorMessage(error)
+      toast.error(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
+  const revokeAllOtherSessions = async () => {
+    try {
+      await deleteData<{ success: boolean; message: string }>('/auth/sessions/revoke-others', {
+        refreshToken: Cookies.get('refreshToken')
+      })
+      toast.success('All other sessions revoked successfully')
+    } catch (error) {
+      const errorMessage = getErrorMessage(error)
+      toast.error(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
   const contextValue: AuthContextType = {
     user,
     isAuthenticated: !!Cookies.get(COOKIE_KEYS.AUTH_TOKEN),
@@ -301,6 +349,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     updateVerification,
     updateUser,
     fetchUserData,
+    getActiveSessions,
+    revokeSession,
+    revokeAllOtherSessions,
   }
 
   return (

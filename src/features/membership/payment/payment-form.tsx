@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { CheckCircle2 } from 'lucide-react'
 import { toast } from 'sonner'
@@ -32,6 +32,15 @@ import { Main } from '@/components/layout/dashboard/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { PaymentMethods } from '@/data/payment'
+import { IndianBankNames } from '@/data/bank-names'
 
 export function PaymentForm() {
   const { user, fetchUserData } = useAuth()
@@ -53,10 +62,26 @@ export function PaymentForm() {
     remarks: '',
   })
 
+  // Pre-fill user information when component mounts
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        accountName: user.name || `${user.firstName} ${user.lastName}`.trim(),
+        mobile: user.phone || '',
+        email: user.email || '',
+      }))
+    }
+  }, [user])
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSelectChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
@@ -295,9 +320,8 @@ export function PaymentForm() {
                       id='accountName'
                       name='accountName'
                       value={formData.accountName}
-                      onChange={handleInputChange}
-                      placeholder='Enter your account name'
-                      required
+                      disabled
+                      className='bg-muted'
                     />
                   </div>
 
@@ -307,9 +331,8 @@ export function PaymentForm() {
                       id='mobile'
                       name='mobile'
                       value={formData.mobile}
-                      onChange={handleInputChange}
-                      placeholder='Enter your mobile number'
-                      required
+                      disabled
+                      className='bg-muted'
                     />
                   </div>
 
@@ -320,22 +343,28 @@ export function PaymentForm() {
                       name='email'
                       type='email'
                       value={formData.email}
-                      onChange={handleInputChange}
-                      placeholder='Enter your email'
-                      required
+                      disabled
+                      className='bg-muted'
                     />
                   </div>
 
                   <div className='space-y-2'>
                     <Label htmlFor='bankName'>Bank Name</Label>
-                    <Input
-                      id='bankName'
-                      name='bankName'
+                    <Select
                       value={formData.bankName}
-                      onChange={handleInputChange}
-                      placeholder='Enter your bank name'
-                      required
-                    />
+                      onValueChange={(value) => handleSelectChange('bankName', value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your bank" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {IndianBankNames.map((bank) => (
+                          <SelectItem key={bank} value={bank}>
+                            {bank}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   <div className='space-y-2'>
@@ -376,14 +405,21 @@ export function PaymentForm() {
 
                   <div className='space-y-2'>
                     <Label htmlFor='paymentMode'>Payment Mode</Label>
-                    <Input
-                      id='paymentMode'
-                      name='paymentMode'
+                    <Select
                       value={formData.paymentMode}
-                      onChange={handleInputChange}
-                      placeholder='Enter payment mode (UPI, NEFT, etc.)'
-                      required
-                    />
+                      onValueChange={(value) => handleSelectChange('paymentMode', value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select payment mode" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {PaymentMethods.map((mode) => (
+                          <SelectItem key={mode} value={mode}>
+                            {mode}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 

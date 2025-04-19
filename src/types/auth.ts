@@ -120,3 +120,9 @@ export interface RegistrationData {
   identifier?: string
   otp?: string
 }
+
+export interface LoginResponseData {
+  user: User
+  accessToken: string
+  sessionId: string
+}

@@ -12,11 +12,48 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use((config) => {
   const token = Cookies.get('authToken')
+  const sessionId = Cookies.get('sessionId')
+  
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
+  
+  if (sessionId) {
+    config.headers['X-Session-Id'] = sessionId
+  }
+  
   return config
 })
+
+// Add response interceptor to handle new tokens and session IDs
+apiClient.interceptors.response.use(
+  (response) => {
+    // Handle new access token if provided
+    const newToken = response.headers['x-new-token']
+    if (newToken) {
+      Cookies.set('authToken', newToken, { 
+        expires: 1/24, // 1 hour
+        secure: true,
+        sameSite: 'strict'
+      })
+    }
+    
+    // Handle session ID if provided
+    const sessionId = response.headers['x-session-id']
+    if (sessionId) {
+      Cookies.set('sessionId', sessionId, {
+        expires: 30, // 30 days
+        secure: true,
+        sameSite: 'strict'
+      })
+    }
+    
+    return response
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 interface ApiError {
   message: string
@@ -77,13 +114,14 @@ export const putData = async <T>(
   }
 }
 
-export const deleteData = async <T>(endpoint: string): Promise<T> => {
-  try {
-    const response = await apiClient.delete<T>(endpoint)
-    return response.data
-  } catch (error) {
-    return handleError(error)
-  }
+export const deleteData = async <T>(url: string, data?: Record<string, unknown>): Promise<T> => {
+  const response = await apiClient.delete<T>(url, {
+    data,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  return response.data
 }
 
 export default apiClient

@@ -8,8 +8,13 @@ export interface ApiResponse<T> {
 
 // Login response type
 export interface LoginResponse {
-  token: string
-  data: User
+  success: boolean
+  message: string
+  data: {
+    user: User
+    accessToken: string
+    sessionId: string
+  }
 }
 
 // Registration response type
@@ -235,4 +240,19 @@ export interface DashboardData {
       active: number
     }>
   }
+}
+
+export interface Session {
+  _id: string
+  userId: string
+  userAgent: string
+  deviceType: string
+  ipAddress: string
+  location: string
+  isActive: boolean
+  expiresAt: string
+  lastActiveAt: string
+  createdAt: string
+  updatedAt: string
+  __v?: number
 }

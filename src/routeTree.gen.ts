@@ -87,6 +87,9 @@ const DashboardHelpCenterIndexLazyImport = createFileRoute(
 )()
 const DashboardChatsIndexLazyImport = createFileRoute('/dashboard/chats/')()
 const DashboardAppsIndexLazyImport = createFileRoute('/dashboard/apps/')()
+const DashboardSettingsSessionsLazyImport = createFileRoute(
+  '/dashboard/settings/sessions',
+)()
 const DashboardSettingsNotificationsLazyImport = createFileRoute(
   '/dashboard/settings/notifications',
 )()
@@ -355,6 +358,15 @@ const PublicAboutIndexRoute = PublicAboutIndexImport.update({
   path: '/about/',
   getParentRoute: () => PublicRoute,
 } as any)
+
+const DashboardSettingsSessionsLazyRoute =
+  DashboardSettingsSessionsLazyImport.update({
+    id: '/sessions',
+    path: '/sessions',
+    getParentRoute: () => DashboardSettingsRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/dashboard/settings/sessions.lazy').then((d) => d.Route),
+  )
 
 const DashboardSettingsNotificationsLazyRoute =
   DashboardSettingsNotificationsLazyImport.update({
@@ -711,6 +723,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardSettingsNotificationsLazyImport
       parentRoute: typeof DashboardSettingsRouteLazyImport
     }
+    '/dashboard/settings/sessions': {
+      id: '/dashboard/settings/sessions'
+      path: '/sessions'
+      fullPath: '/dashboard/settings/sessions'
+      preLoaderRoute: typeof DashboardSettingsSessionsLazyImport
+      parentRoute: typeof DashboardSettingsRouteLazyImport
+    }
     '/_public/about/': {
       id: '/_public/about/'
       path: '/about'
@@ -1064,6 +1083,7 @@ interface DashboardSettingsRouteLazyRouteChildren {
   DashboardSettingsAppearanceLazyRoute: typeof DashboardSettingsAppearanceLazyRoute
   DashboardSettingsDisplayLazyRoute: typeof DashboardSettingsDisplayLazyRoute
   DashboardSettingsNotificationsLazyRoute: typeof DashboardSettingsNotificationsLazyRoute
+  DashboardSettingsSessionsLazyRoute: typeof DashboardSettingsSessionsLazyRoute
   DashboardSettingsIndexLazyRoute: typeof DashboardSettingsIndexLazyRoute
 }
 
@@ -1074,6 +1094,7 @@ const DashboardSettingsRouteLazyRouteChildren: DashboardSettingsRouteLazyRouteCh
     DashboardSettingsDisplayLazyRoute: DashboardSettingsDisplayLazyRoute,
     DashboardSettingsNotificationsLazyRoute:
       DashboardSettingsNotificationsLazyRoute,
+    DashboardSettingsSessionsLazyRoute: DashboardSettingsSessionsLazyRoute,
     DashboardSettingsIndexLazyRoute: DashboardSettingsIndexLazyRoute,
   }
 
@@ -1235,6 +1256,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/settings/appearance': typeof DashboardSettingsAppearanceLazyRoute
   '/dashboard/settings/display': typeof DashboardSettingsDisplayLazyRoute
   '/dashboard/settings/notifications': typeof DashboardSettingsNotificationsLazyRoute
+  '/dashboard/settings/sessions': typeof DashboardSettingsSessionsLazyRoute
   '/about': typeof PublicAboutIndexRoute
   '/contact': typeof PublicContactIndexRoute
   '/download-app': typeof PublicDownloadAppIndexRoute
@@ -1302,6 +1324,7 @@ export interface FileRoutesByTo {
   '/dashboard/settings/appearance': typeof DashboardSettingsAppearanceLazyRoute
   '/dashboard/settings/display': typeof DashboardSettingsDisplayLazyRoute
   '/dashboard/settings/notifications': typeof DashboardSettingsNotificationsLazyRoute
+  '/dashboard/settings/sessions': typeof DashboardSettingsSessionsLazyRoute
   '/about': typeof PublicAboutIndexRoute
   '/contact': typeof PublicContactIndexRoute
   '/download-app': typeof PublicDownloadAppIndexRoute
@@ -1373,6 +1396,7 @@ export interface FileRoutesById {
   '/dashboard/settings/appearance': typeof DashboardSettingsAppearanceLazyRoute
   '/dashboard/settings/display': typeof DashboardSettingsDisplayLazyRoute
   '/dashboard/settings/notifications': typeof DashboardSettingsNotificationsLazyRoute
+  '/dashboard/settings/sessions': typeof DashboardSettingsSessionsLazyRoute
   '/_public/about/': typeof PublicAboutIndexRoute
   '/_public/contact/': typeof PublicContactIndexRoute
   '/_public/download-app/': typeof PublicDownloadAppIndexRoute
@@ -1444,6 +1468,7 @@ export interface FileRouteTypes {
     | '/dashboard/settings/appearance'
     | '/dashboard/settings/display'
     | '/dashboard/settings/notifications'
+    | '/dashboard/settings/sessions'
     | '/about'
     | '/contact'
     | '/download-app'
@@ -1510,6 +1535,7 @@ export interface FileRouteTypes {
     | '/dashboard/settings/appearance'
     | '/dashboard/settings/display'
     | '/dashboard/settings/notifications'
+    | '/dashboard/settings/sessions'
     | '/about'
     | '/contact'
     | '/download-app'
@@ -1579,6 +1605,7 @@ export interface FileRouteTypes {
     | '/dashboard/settings/appearance'
     | '/dashboard/settings/display'
     | '/dashboard/settings/notifications'
+    | '/dashboard/settings/sessions'
     | '/_public/about/'
     | '/_public/contact/'
     | '/_public/download-app/'
@@ -1762,6 +1789,7 @@ export const routeTree = rootRoute
         "/dashboard/settings/appearance",
         "/dashboard/settings/display",
         "/dashboard/settings/notifications",
+        "/dashboard/settings/sessions",
         "/dashboard/settings/"
       ]
     },
@@ -1804,6 +1832,10 @@ export const routeTree = rootRoute
     },
     "/dashboard/settings/notifications": {
       "filePath": "dashboard/settings/notifications.lazy.tsx",
+      "parent": "/dashboard/settings"
+    },
+    "/dashboard/settings/sessions": {
+      "filePath": "dashboard/settings/sessions.lazy.tsx",
       "parent": "/dashboard/settings"
     },
     "/_public/about/": {
