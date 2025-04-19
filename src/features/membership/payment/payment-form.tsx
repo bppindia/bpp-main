@@ -32,15 +32,12 @@ import { Main } from '@/components/layout/dashboard/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { PaymentMethods } from '@/data/payment'
 import { IndianBankNames } from '@/data/bank-names'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { Check, ChevronsUpDown } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export function PaymentForm() {
   const { user, fetchUserData } = useAuth()
@@ -48,6 +45,7 @@ export function PaymentForm() {
   const [loading, setLoading] = useState(false)
   const [showDonation, setShowDonation] = useState(false)
   const [showSuccessDialog, setShowSuccessDialog] = useState(false)
+  const [openBankDropdown, setOpenBankDropdown] = useState(false)
   const [formData, setFormData] = useState({
     accountName: '',
     mobile: '',
@@ -350,21 +348,47 @@ export function PaymentForm() {
 
                   <div className='space-y-2'>
                     <Label htmlFor='bankName'>Bank Name</Label>
-                    <Select
-                      value={formData.bankName}
-                      onValueChange={(value) => handleSelectChange('bankName', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select your bank" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {IndianBankNames.map((bank) => (
-                          <SelectItem key={bank} value={bank}>
-                            {bank}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <Popover open={openBankDropdown} onOpenChange={setOpenBankDropdown}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={openBankDropdown}
+                          className="w-full justify-between"
+                        >
+                          {formData.bankName
+                            ? IndianBankNames.find((bank) => bank === formData.bankName)
+                            : "Select your bank"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full p-0">
+                        <Command>
+                          <CommandInput placeholder="Search bank..." />
+                          <CommandEmpty>No bank found.</CommandEmpty>
+                          <CommandGroup className="max-h-[300px] overflow-auto">
+                            {IndianBankNames.map((bank) => (
+                              <CommandItem
+                                key={bank}
+                                value={bank}
+                                onSelect={(currentValue) => {
+                                  handleSelectChange('bankName', currentValue);
+                                  setOpenBankDropdown(false);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    formData.bankName === bank ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                                {bank}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
                   </div>
 
                   <div className='space-y-2'>
@@ -405,21 +429,45 @@ export function PaymentForm() {
 
                   <div className='space-y-2'>
                     <Label htmlFor='paymentMode'>Payment Mode</Label>
-                    <Select
-                      value={formData.paymentMode}
-                      onValueChange={(value) => handleSelectChange('paymentMode', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select payment mode" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {PaymentMethods.map((mode) => (
-                          <SelectItem key={mode} value={mode}>
-                            {mode}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className="w-full justify-between"
+                        >
+                          {formData.paymentMode
+                            ? PaymentMethods.find((mode) => mode === formData.paymentMode)
+                            : "Select payment mode"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full p-0">
+                        <Command>
+                          <CommandInput placeholder="Search payment mode..." />
+                          <CommandEmpty>No payment mode found.</CommandEmpty>
+                          <CommandGroup>
+                            {PaymentMethods.map((mode) => (
+                              <CommandItem
+                                key={mode}
+                                value={mode}
+                                onSelect={(currentValue) => {
+                                  handleSelectChange('paymentMode', currentValue);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    formData.paymentMode === mode ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                                {mode}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
                   </div>
                 </div>
 

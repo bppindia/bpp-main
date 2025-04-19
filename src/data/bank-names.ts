@@ -28,7 +28,6 @@ export const IndianBankNames = [
   "Agartala Co-operative Urban Bank",
   "Assam Gramin Vikash Bank",
   "Ahmednagar District Central Co-operative Bank",
-  "Ahmednagar District Central Co-operative Bank",
   "Ahilyadevi Urban Co-operative Bank Solapur",
   "Airtel Payments Bank",
   "Ajara Urban Co-operative Bank",
