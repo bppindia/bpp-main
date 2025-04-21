@@ -144,7 +144,7 @@ const GoalsPage = () => {
         'BPP aims to create a peaceful, just, and prosperous society where all citizens have equal opportunities, security and access to resources. By this goal BPP will uphold individual rights as well as the right to privacy freedom of expression and access to information.',
       imgSrc: img8,
       icon: Scale,
-      link: '/about/bpp-goals',
+      link: '/about/bpp-goals/justice-peace-calm-and-prosperity',
     },
     {
       title: 'UPLIFTMENT OF FARMERS',
