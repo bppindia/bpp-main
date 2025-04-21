@@ -1,0 +1,21 @@
+import{b as c,y as S,r as a,j as e,B as u,F as v,z as n,bI as t,c as b}from"./index-FbrHImm8.js";import{C as A}from"./content-section-DIkvEk2L.js";/**
+ * @license lucide-react v0.468.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const R=c("Laptop",[["path",{d:"M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16",key:"tarvll"}]]);/**
+ * @license lucide-react v0.468.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const L=c("Monitor",[["rect",{width:"20",height:"14",x:"2",y:"3",rx:"2",key:"48i651"}],["line",{x1:"8",x2:"16",y1:"21",y2:"21",key:"1svkeh"}],["line",{x1:"12",x2:"12",y1:"17",y2:"21",key:"vw1qmm"}]]);/**
+ * @license lucide-react v0.468.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const _=c("Smartphone",[["rect",{width:"14",height:"20",x:"5",y:"2",rx:"2",ry:"2",key:"1yt0o3"}],["path",{d:"M12 18h.01",key:"mhygvu"}]]);/**
+ * @license lucide-react v0.468.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const M=c("Tablet",[["rect",{width:"16",height:"20",x:"4",y:"2",rx:"2",ry:"2",key:"76otgf"}],["line",{x1:"12",x2:"12.01",y1:"18",y2:"18",key:"1dp563"}]]),P=()=>{const{getActiveSessions:y,revokeSession:f,revokeAllOtherSessions:j}=S(),[i,l]=a.useState([]),[p,o]=a.useState(!1),[d,x]=a.useState(null),[h,m]=a.useState(!1),r=async()=>{try{o(!0);const s=await y();l(s||[])}catch{n.error("Failed to load active sessions"),l([])}finally{o(!1)}};a.useEffect(()=>{r()},[]);const k=async s=>{try{x(s),await f(s),await r(),n.success("Session revoked successfully")}catch{n.error("Failed to revoke session")}finally{x(null)}},g=async()=>{try{m(!0),await j(),await r(),n.success("All other sessions revoked successfully")}catch{n.error("Failed to revoke all other sessions")}finally{m(!1)}},w=s=>{switch(s.toLowerCase()){case"mobile":return e.jsx(_,{className:"h-5 w-5"});case"tablet":return e.jsx(M,{className:"h-5 w-5"});case"desktop":return e.jsx(L,{className:"h-5 w-5"});default:return e.jsx(R,{className:"h-5 w-5"})}},N=()=>e.jsxs("div",{className:"flex items-center justify-between rounded-lg border p-4",children:[e.jsxs("div",{className:"flex items-center space-x-4",children:[e.jsx(t,{className:"h-10 w-10 rounded-full"}),e.jsxs("div",{className:"space-y-2",children:[e.jsx(t,{className:"h-4 w-48"}),e.jsx(t,{className:"h-3 w-32"}),e.jsx(t,{className:"h-3 w-40"}),e.jsx(t,{className:"h-3 w-24"})]})]}),e.jsx(t,{className:"h-9 w-20"})]});return e.jsxs("div",{className:"w-full space-y-6",children:[e.jsxs("div",{className:"flex items-center justify-between",children:[e.jsx("h2",{className:"text-2xl font-semibold tracking-tight",children:"Active Sessions"}),e.jsx(u,{variant:"outline",onClick:g,disabled:h||i.length<=1,children:h?"Revoking...":"Revoke All Other Sessions"})]}),p?e.jsx("div",{className:"space-y-4",children:[1,2,3].map(s=>e.jsx(N,{},s))}):i.length===0?e.jsx("p",{className:"text-center text-muted-foreground",children:"No active sessions"}):e.jsx("div",{className:"space-y-4",children:i.map(s=>e.jsxs("div",{className:"flex items-center justify-between rounded-lg border p-4",children:[e.jsxs("div",{className:"flex items-center space-x-4",children:[e.jsx("div",{className:"flex h-10 w-10 items-center justify-center rounded-full bg-muted",children:w(s.deviceType)}),e.jsxs("div",{children:[e.jsxs("p",{className:"font-medium",children:[s.deviceType," - ",s.location]}),e.jsxs("p",{className:"text-sm text-muted-foreground",children:["Last active: ",v(new Date(s.lastActiveAt),"PPp")]}),e.jsxs("p",{className:"text-sm text-muted-foreground",children:["Expires: ",v(new Date(s.expiresAt),"PPp")]}),e.jsxs("p",{className:"text-xs text-muted-foreground",children:["IP: ",s.ipAddress]})]})]}),e.jsx(u,{variant:"outline",size:"sm",onClick:()=>k(s._id),disabled:d===s._id,children:d===s._id?"Revoking...":"Revoke"})]},s._id))})]})},C=()=>e.jsx(A,{title:"Sessions",desc:"Manage your active sessions across different devices",children:e.jsx(P,{})}),z=b("/dashboard/settings/sessions")({component:C});export{z as Route};

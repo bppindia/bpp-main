@@ -120,7 +120,7 @@ const GoalsPage = () => {
         'BPP firmly supports secularism and is opposed to the idea of a theocratic state. BPP will work to protect and promote religious harmony and ensure equal rights for all faiths.',
       imgSrc: img5,
       icon: Church,
-      link: '/about/bpp-goals',
+      link: '/about/bpp-goals/uphold-secularism',
     },
     {
       title: 'INDUSTRIAL DEVELOPMENT & INFRASTRUCTURE',
@@ -128,7 +128,7 @@ const GoalsPage = () => {
         'The goal of the BPP is to promote industrial development and build world-class infrastructure to drive economic development. By modernizing industries, encouraging research and development and enhancing transportation, energy and digital networks, the party aims to create a sustainable competitive economy.',
       imgSrc: img6,
       icon: Factory,
-      link: '/about/bpp-goals',
+      link: '/about/bpp-goals/industrial-development-and-infrastructure',
     },
     {
       title: 'EMPLOYMENT & ECONOMIC GROWTH',
@@ -136,7 +136,7 @@ const GoalsPage = () => {
         'BPP is committed to promoting decent work and sustained economic growth by creating job opportunities, ensuring fair wages and improving working conditions for all citizens. The party aims to empower individuals particularly in rural and marginalized communities through skill development, entrepreneurship and access to employment.',
       imgSrc: img7,
       icon: BadgeDollarSign,
-      link: '/about/bpp-goals',
+      link: '/about/bpp-goals/employment-and-economic-growth',
     },
     {
       title: 'JUSTICE, PEACE, CALM AND PROSPERITY',

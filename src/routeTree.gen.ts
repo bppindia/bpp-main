@@ -58,9 +58,12 @@ import { Route as PublicAboutGetToKnowBppIndexImport } from './routes/_public/ab
 import { Route as PublicAboutCommitmentProgressIndexImport } from './routes/_public/about/commitment-progress/index'
 import { Route as PublicAboutBppGoalsIndexImport } from './routes/_public/about/bpp-goals/index'
 import { Route as PublicAboutBppGoalsUpliftmentOfFarmersIndexImport } from './routes/_public/about/bpp-goals/upliftment-of-farmers/index'
+import { Route as PublicAboutBppGoalsUpholdSecularismIndexImport } from './routes/_public/about/bpp-goals/uphold-secularism/index'
 import { Route as PublicAboutBppGoalsNationalIntegrityIndexImport } from './routes/_public/about/bpp-goals/national-integrity/index'
+import { Route as PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexImport } from './routes/_public/about/bpp-goals/industrial-development-and-infrastructure/index'
 import { Route as PublicAboutBppGoalsGoodHealthAndWellBeingIndexImport } from './routes/_public/about/bpp-goals/good-health-and-well-being/index'
 import { Route as PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexImport } from './routes/_public/about/bpp-goals/equal-opportunity-and-gender-equality/index'
+import { Route as PublicAboutBppGoalsEmploymentAndEconomicGrowthIndexImport } from './routes/_public/about/bpp-goals/employment-and-economic-growth/index'
 import { Route as PublicAboutBppGoalsAgainstMuscleAndMoneyPowerIndexImport } from './routes/_public/about/bpp-goals/against-muscle-and-money-power/index'
 
 // Create Virtual Routes
@@ -565,10 +568,24 @@ const PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute =
     getParentRoute: () => PublicRoute,
   } as any)
 
+const PublicAboutBppGoalsUpholdSecularismIndexRoute =
+  PublicAboutBppGoalsUpholdSecularismIndexImport.update({
+    id: '/about/bpp-goals/uphold-secularism/',
+    path: '/about/bpp-goals/uphold-secularism/',
+    getParentRoute: () => PublicRoute,
+  } as any)
+
 const PublicAboutBppGoalsNationalIntegrityIndexRoute =
   PublicAboutBppGoalsNationalIntegrityIndexImport.update({
     id: '/about/bpp-goals/national-integrity/',
     path: '/about/bpp-goals/national-integrity/',
+    getParentRoute: () => PublicRoute,
+  } as any)
+
+const PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexRoute =
+  PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexImport.update({
+    id: '/about/bpp-goals/industrial-development-and-infrastructure/',
+    path: '/about/bpp-goals/industrial-development-and-infrastructure/',
     getParentRoute: () => PublicRoute,
   } as any)
 
@@ -583,6 +600,13 @@ const PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute =
   PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexImport.update({
     id: '/about/bpp-goals/equal-opportunity-and-gender-equality/',
     path: '/about/bpp-goals/equal-opportunity-and-gender-equality/',
+    getParentRoute: () => PublicRoute,
+  } as any)
+
+const PublicAboutBppGoalsEmploymentAndEconomicGrowthIndexRoute =
+  PublicAboutBppGoalsEmploymentAndEconomicGrowthIndexImport.update({
+    id: '/about/bpp-goals/employment-and-economic-growth/',
+    path: '/about/bpp-goals/employment-and-economic-growth/',
     getParentRoute: () => PublicRoute,
   } as any)
 
@@ -1045,6 +1069,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAboutBppGoalsAgainstMuscleAndMoneyPowerIndexImport
       parentRoute: typeof PublicImport
     }
+    '/_public/about/bpp-goals/employment-and-economic-growth/': {
+      id: '/_public/about/bpp-goals/employment-and-economic-growth/'
+      path: '/about/bpp-goals/employment-and-economic-growth'
+      fullPath: '/about/bpp-goals/employment-and-economic-growth'
+      preLoaderRoute: typeof PublicAboutBppGoalsEmploymentAndEconomicGrowthIndexImport
+      parentRoute: typeof PublicImport
+    }
     '/_public/about/bpp-goals/equal-opportunity-and-gender-equality/': {
       id: '/_public/about/bpp-goals/equal-opportunity-and-gender-equality/'
       path: '/about/bpp-goals/equal-opportunity-and-gender-equality'
@@ -1059,11 +1090,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAboutBppGoalsGoodHealthAndWellBeingIndexImport
       parentRoute: typeof PublicImport
     }
+    '/_public/about/bpp-goals/industrial-development-and-infrastructure/': {
+      id: '/_public/about/bpp-goals/industrial-development-and-infrastructure/'
+      path: '/about/bpp-goals/industrial-development-and-infrastructure'
+      fullPath: '/about/bpp-goals/industrial-development-and-infrastructure'
+      preLoaderRoute: typeof PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexImport
+      parentRoute: typeof PublicImport
+    }
     '/_public/about/bpp-goals/national-integrity/': {
       id: '/_public/about/bpp-goals/national-integrity/'
       path: '/about/bpp-goals/national-integrity'
       fullPath: '/about/bpp-goals/national-integrity'
       preLoaderRoute: typeof PublicAboutBppGoalsNationalIntegrityIndexImport
+      parentRoute: typeof PublicImport
+    }
+    '/_public/about/bpp-goals/uphold-secularism/': {
+      id: '/_public/about/bpp-goals/uphold-secularism/'
+      path: '/about/bpp-goals/uphold-secularism'
+      fullPath: '/about/bpp-goals/uphold-secularism'
+      preLoaderRoute: typeof PublicAboutBppGoalsUpholdSecularismIndexImport
       parentRoute: typeof PublicImport
     }
     '/_public/about/bpp-goals/upliftment-of-farmers/': {
@@ -1185,9 +1230,12 @@ interface PublicRouteChildren {
   PublicMembershipUpgradeRenewalsIndexRoute: typeof PublicMembershipUpgradeRenewalsIndexRoute
   PublicMembershipWingsIndexRoute: typeof PublicMembershipWingsIndexRoute
   PublicAboutBppGoalsAgainstMuscleAndMoneyPowerIndexRoute: typeof PublicAboutBppGoalsAgainstMuscleAndMoneyPowerIndexRoute
+  PublicAboutBppGoalsEmploymentAndEconomicGrowthIndexRoute: typeof PublicAboutBppGoalsEmploymentAndEconomicGrowthIndexRoute
   PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute: typeof PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute
   PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute: typeof PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute
+  PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexRoute: typeof PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexRoute
   PublicAboutBppGoalsNationalIntegrityIndexRoute: typeof PublicAboutBppGoalsNationalIntegrityIndexRoute
+  PublicAboutBppGoalsUpholdSecularismIndexRoute: typeof PublicAboutBppGoalsUpholdSecularismIndexRoute
   PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute: typeof PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute
 }
 
@@ -1225,12 +1273,18 @@ const PublicRouteChildren: PublicRouteChildren = {
   PublicMembershipWingsIndexRoute: PublicMembershipWingsIndexRoute,
   PublicAboutBppGoalsAgainstMuscleAndMoneyPowerIndexRoute:
     PublicAboutBppGoalsAgainstMuscleAndMoneyPowerIndexRoute,
+  PublicAboutBppGoalsEmploymentAndEconomicGrowthIndexRoute:
+    PublicAboutBppGoalsEmploymentAndEconomicGrowthIndexRoute,
   PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute:
     PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute,
   PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute:
     PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute,
+  PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexRoute:
+    PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexRoute,
   PublicAboutBppGoalsNationalIntegrityIndexRoute:
     PublicAboutBppGoalsNationalIntegrityIndexRoute,
+  PublicAboutBppGoalsUpholdSecularismIndexRoute:
+    PublicAboutBppGoalsUpholdSecularismIndexRoute,
   PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute:
     PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute,
 }
@@ -1302,9 +1356,12 @@ export interface FileRoutesByFullPath {
   '/dashboard/membership/upgrade': typeof DashboardMembershipUpgradeIndexRoute
   '/dashboard/wallet/transactions': typeof DashboardWalletTransactionsIndexRoute
   '/about/bpp-goals/against-muscle-and-money-power': typeof PublicAboutBppGoalsAgainstMuscleAndMoneyPowerIndexRoute
+  '/about/bpp-goals/employment-and-economic-growth': typeof PublicAboutBppGoalsEmploymentAndEconomicGrowthIndexRoute
   '/about/bpp-goals/equal-opportunity-and-gender-equality': typeof PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute
   '/about/bpp-goals/good-health-and-well-being': typeof PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute
+  '/about/bpp-goals/industrial-development-and-infrastructure': typeof PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexRoute
   '/about/bpp-goals/national-integrity': typeof PublicAboutBppGoalsNationalIntegrityIndexRoute
+  '/about/bpp-goals/uphold-secularism': typeof PublicAboutBppGoalsUpholdSecularismIndexRoute
   '/about/bpp-goals/upliftment-of-farmers': typeof PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute
 }
 
@@ -1370,9 +1427,12 @@ export interface FileRoutesByTo {
   '/dashboard/membership/upgrade': typeof DashboardMembershipUpgradeIndexRoute
   '/dashboard/wallet/transactions': typeof DashboardWalletTransactionsIndexRoute
   '/about/bpp-goals/against-muscle-and-money-power': typeof PublicAboutBppGoalsAgainstMuscleAndMoneyPowerIndexRoute
+  '/about/bpp-goals/employment-and-economic-growth': typeof PublicAboutBppGoalsEmploymentAndEconomicGrowthIndexRoute
   '/about/bpp-goals/equal-opportunity-and-gender-equality': typeof PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute
   '/about/bpp-goals/good-health-and-well-being': typeof PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute
+  '/about/bpp-goals/industrial-development-and-infrastructure': typeof PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexRoute
   '/about/bpp-goals/national-integrity': typeof PublicAboutBppGoalsNationalIntegrityIndexRoute
+  '/about/bpp-goals/uphold-secularism': typeof PublicAboutBppGoalsUpholdSecularismIndexRoute
   '/about/bpp-goals/upliftment-of-farmers': typeof PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute
 }
 
@@ -1442,9 +1502,12 @@ export interface FileRoutesById {
   '/dashboard/membership/upgrade/': typeof DashboardMembershipUpgradeIndexRoute
   '/dashboard/wallet/transactions/': typeof DashboardWalletTransactionsIndexRoute
   '/_public/about/bpp-goals/against-muscle-and-money-power/': typeof PublicAboutBppGoalsAgainstMuscleAndMoneyPowerIndexRoute
+  '/_public/about/bpp-goals/employment-and-economic-growth/': typeof PublicAboutBppGoalsEmploymentAndEconomicGrowthIndexRoute
   '/_public/about/bpp-goals/equal-opportunity-and-gender-equality/': typeof PublicAboutBppGoalsEqualOpportunityAndGenderEqualityIndexRoute
   '/_public/about/bpp-goals/good-health-and-well-being/': typeof PublicAboutBppGoalsGoodHealthAndWellBeingIndexRoute
+  '/_public/about/bpp-goals/industrial-development-and-infrastructure/': typeof PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexRoute
   '/_public/about/bpp-goals/national-integrity/': typeof PublicAboutBppGoalsNationalIntegrityIndexRoute
+  '/_public/about/bpp-goals/uphold-secularism/': typeof PublicAboutBppGoalsUpholdSecularismIndexRoute
   '/_public/about/bpp-goals/upliftment-of-farmers/': typeof PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute
 }
 
@@ -1514,9 +1577,12 @@ export interface FileRouteTypes {
     | '/dashboard/membership/upgrade'
     | '/dashboard/wallet/transactions'
     | '/about/bpp-goals/against-muscle-and-money-power'
+    | '/about/bpp-goals/employment-and-economic-growth'
     | '/about/bpp-goals/equal-opportunity-and-gender-equality'
     | '/about/bpp-goals/good-health-and-well-being'
+    | '/about/bpp-goals/industrial-development-and-infrastructure'
     | '/about/bpp-goals/national-integrity'
+    | '/about/bpp-goals/uphold-secularism'
     | '/about/bpp-goals/upliftment-of-farmers'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -1581,9 +1647,12 @@ export interface FileRouteTypes {
     | '/dashboard/membership/upgrade'
     | '/dashboard/wallet/transactions'
     | '/about/bpp-goals/against-muscle-and-money-power'
+    | '/about/bpp-goals/employment-and-economic-growth'
     | '/about/bpp-goals/equal-opportunity-and-gender-equality'
     | '/about/bpp-goals/good-health-and-well-being'
+    | '/about/bpp-goals/industrial-development-and-infrastructure'
     | '/about/bpp-goals/national-integrity'
+    | '/about/bpp-goals/uphold-secularism'
     | '/about/bpp-goals/upliftment-of-farmers'
   id:
     | '__root__'
@@ -1651,9 +1720,12 @@ export interface FileRouteTypes {
     | '/dashboard/membership/upgrade/'
     | '/dashboard/wallet/transactions/'
     | '/_public/about/bpp-goals/against-muscle-and-money-power/'
+    | '/_public/about/bpp-goals/employment-and-economic-growth/'
     | '/_public/about/bpp-goals/equal-opportunity-and-gender-equality/'
     | '/_public/about/bpp-goals/good-health-and-well-being/'
+    | '/_public/about/bpp-goals/industrial-development-and-infrastructure/'
     | '/_public/about/bpp-goals/national-integrity/'
+    | '/_public/about/bpp-goals/uphold-secularism/'
     | '/_public/about/bpp-goals/upliftment-of-farmers/'
   fileRoutesById: FileRoutesById
 }
@@ -1769,9 +1841,12 @@ export const routeTree = rootRoute
         "/_public/membership/upgrade-renewals/",
         "/_public/membership/wings/",
         "/_public/about/bpp-goals/against-muscle-and-money-power/",
+        "/_public/about/bpp-goals/employment-and-economic-growth/",
         "/_public/about/bpp-goals/equal-opportunity-and-gender-equality/",
         "/_public/about/bpp-goals/good-health-and-well-being/",
+        "/_public/about/bpp-goals/industrial-development-and-infrastructure/",
         "/_public/about/bpp-goals/national-integrity/",
+        "/_public/about/bpp-goals/uphold-secularism/",
         "/_public/about/bpp-goals/upliftment-of-farmers/"
       ]
     },
@@ -2018,6 +2093,10 @@ export const routeTree = rootRoute
       "filePath": "_public/about/bpp-goals/against-muscle-and-money-power/index.tsx",
       "parent": "/_public"
     },
+    "/_public/about/bpp-goals/employment-and-economic-growth/": {
+      "filePath": "_public/about/bpp-goals/employment-and-economic-growth/index.tsx",
+      "parent": "/_public"
+    },
     "/_public/about/bpp-goals/equal-opportunity-and-gender-equality/": {
       "filePath": "_public/about/bpp-goals/equal-opportunity-and-gender-equality/index.tsx",
       "parent": "/_public"
@@ -2026,8 +2105,16 @@ export const routeTree = rootRoute
       "filePath": "_public/about/bpp-goals/good-health-and-well-being/index.tsx",
       "parent": "/_public"
     },
+    "/_public/about/bpp-goals/industrial-development-and-infrastructure/": {
+      "filePath": "_public/about/bpp-goals/industrial-development-and-infrastructure/index.tsx",
+      "parent": "/_public"
+    },
     "/_public/about/bpp-goals/national-integrity/": {
       "filePath": "_public/about/bpp-goals/national-integrity/index.tsx",
+      "parent": "/_public"
+    },
+    "/_public/about/bpp-goals/uphold-secularism/": {
+      "filePath": "_public/about/bpp-goals/uphold-secularism/index.tsx",
       "parent": "/_public"
     },
     "/_public/about/bpp-goals/upliftment-of-farmers/": {
