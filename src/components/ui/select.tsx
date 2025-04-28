@@ -80,7 +80,7 @@ const SelectContent = React.forwardRef<
       position={position}
       onCloseAutoFocus={(e) => {
         // Prevent the default focus behavior that causes scrolling
-        e.preventDefault();
+        e.preventDefault()
       }}
       {...props}
     >

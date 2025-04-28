@@ -30,16 +30,16 @@ export function LoginToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end'>
-        <DropdownMenuItem onClick={() => navigate({ to: '/' })}>
+        <DropdownMenuItem onClick={() => navigate({ to: '/sign-in' })}>
           Member Login
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => navigate({ to: '/' })}>
+        <DropdownMenuItem onClick={() => navigate({ to: '/sign-up' })}>
           Join BPP
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => navigate({ to: '/' })}>
+        <DropdownMenuItem onClick={() => navigate({ to: '/sign-in' })}>
           Business Community Login
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => navigate({ to: '/' })}>
+        <DropdownMenuItem onClick={() => navigate({ to: '/business-sign-up' })}>
           Business Community Join
         </DropdownMenuItem>
       </DropdownMenuContent>

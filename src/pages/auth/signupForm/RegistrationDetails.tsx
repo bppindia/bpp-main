@@ -44,14 +44,11 @@ export function RegistrationForm({
   }
 
   const formatAadhaarNumber = (value: string) => {
-    // Remove all spaces from the input
-    const digitsOnly = value.replace(/\s/g, '')
-
-    // Only allow numbers
-    const numbersOnly = digitsOnly.replace(/[^\d]/g, '')
+    // Remove all spaces and non-digit characters
+    const digitsOnly = value.replace(/[^\d]/g, '')
 
     // Limit to 12 digits
-    const truncated = numbersOnly.slice(0, 12)
+    const truncated = digitsOnly.slice(0, 12)
 
     // Add spaces after every 4 digits
     const formatted = truncated.replace(/(\d{4})/g, '$1 ').trim()
@@ -60,23 +57,36 @@ export function RegistrationForm({
   }
 
   const handleAadhaarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value.replace(/\s/g, '') // Remove spaces
+    const rawValue = e.target.value.replace(/[^\d]/g, '') // Remove non-digits
     const formattedValue = formatAadhaarNumber(rawValue)
 
+    // Update the field with raw value (without spaces)
     updateFields({ aadhaarNumber: rawValue })
 
+    // Validate and set error messages
     if (!formattedValue) {
       setAadhaarError('Aadhaar number is required')
-    } else if (formattedValue.replace(/\s/g, '').length === 14) {
-      if (!validateAadhaarNumber(formattedValue)) {
-        setAadhaarError(
-          'Please enter a valid Aadhaar number (e.g., 2345 6789 0123)'
-        )
-      } else {
-        setAadhaarError('')
-      }
-    } else {
+    } else if (rawValue.length < 12) {
       setAadhaarError('Aadhaar number must be 12 digits')
+    } else if (!validateAadhaarNumber(formattedValue)) {
+      setAadhaarError(
+        'Please enter a valid Aadhaar number (e.g., 2345 6789 0123)'
+      )
+    } else {
+      setAadhaarError('')
+    }
+  }
+
+  const handleVoterIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toUpperCase() // Convert to uppercase
+    updateFields({ voterId: value })
+
+    if (!value) {
+      setVoterIdError('')
+    } else if (!validateVoterId(value)) {
+      setVoterIdError('Please enter a valid Voter ID (e.g., ABC1234567)')
+    } else {
+      setVoterIdError('')
     }
   }
 
@@ -92,8 +102,8 @@ export function RegistrationForm({
             <Input
               id='aadhaarNumber'
               placeholder='eg 2345 6789 0123'
-              value={aadhaarNumber}
-              maxLength={12}
+              value={formatAadhaarNumber(aadhaarNumber)}
+              maxLength={14} // 12 digits + 2 spaces
               className={
                 aadhaarError ? 'border-red-500 focus:ring-red-500' : ''
               }
@@ -161,21 +171,13 @@ export function RegistrationForm({
             <Label htmlFor='voterId'>Voter ID / Electoral Card</Label>
             <Input
               id='voterId'
-              placeholder='Enter Voter ID'
+              placeholder='Enter Voter ID (e.g., ABC1234567)'
               value={voterId}
+              maxLength={10}
               className={
                 voterIdError ? 'border-red-500 focus:ring-red-500' : ''
               }
-              onChange={(e) => {
-                const value = e.target.value
-                updateFields({ voterId: value })
-
-                if (value && !validateVoterId(value)) {
-                  setVoterIdError('Please enter a valid Voter ID Number')
-                } else {
-                  setVoterIdError('')
-                }
-              }}
+              onChange={handleVoterIdChange}
             />
             {voterIdError && (
               <p className='mt-1 text-xs text-red-500'>{voterIdError}</p>

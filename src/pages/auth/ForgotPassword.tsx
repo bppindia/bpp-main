@@ -1,8 +1,12 @@
-import { useState } from 'react'
-import { useNavigate } from '@tanstack/react-router'
+import { useState, useEffect } from 'react'
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { Eye, EyeOff } from 'lucide-react'
 import { toast } from 'sonner'
 import bppLogo from '@/assets/images/logos/Bpp.png'
+import { authService } from '@/api/authService'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -14,181 +18,212 @@ import {
 import { Input } from '@/components/ui/input'
 import { Toaster } from '@/components/ui/sonner'
 
+// Form validation schemas
+const initialFormSchema = z
+  .object({
+    email: z
+      .string()
+      .email('Invalid email address')
+      .optional()
+      .or(z.literal('')),
+    phone: z
+      .string()
+      .regex(/^\+91\d{10}$/, 'Invalid phone number')
+      .optional()
+      .or(z.literal('')),
+  })
+  .refine(
+    (data) => {
+      // At least one field must be filled
+      return Boolean(data.email?.trim() || data.phone?.trim())
+    },
+    {
+      message: 'Either email or phone is required',
+      path: ['email'], // This will show the error under the email field
+    }
+  )
+
+const resetFormSchema = z
+  .object({
+    otp: z.string().length(4, 'OTP must be 4 digits'),
+    newPassword: z.string().min(1, 'Password is required'),
+    confirmPassword: z.string().min(1, 'Confirm Password is required'),
+    showPassword: z.boolean().default(false),
+    showConfirmPassword: z.boolean().default(false),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  })
+
+type InitialFormData = z.infer<typeof initialFormSchema>
+type ResetFormData = z.infer<typeof resetFormSchema>
+
 const ResetPassword = () => {
   // Form states
   const [step, setStep] = useState(1)
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [otp, setOtp] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
   const [contactInfo, setContactInfo] = useState({ type: '', value: '' })
 
-  // UI states
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-
-  // Error states
-  const [emailError, setEmailError] = useState('')
-  const [phoneError, setPhoneError] = useState('')
-  const [otpError, setOtpError] = useState('')
-  const [passwordError, setPasswordError] = useState('')
-  const [confirmPasswordError, setConfirmPasswordError] = useState('')
+  // Timer states
+  const [timer, setTimer] = useState(300) // 5 minutes in seconds
+  const [showResend, setShowResend] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
 
-  // Validation functions
-  const validateEmail = (value: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (value && !emailRegex.test(value)) {
-      setEmailError('Invalid email address')
-      return false
-    }
-    setEmailError('')
-    return true
-  }
+  // Form hooks
+  const initialForm = useForm<InitialFormData>({
+    resolver: zodResolver(initialFormSchema),
+    defaultValues: {
+      email: '',
+      phone: '',
+    },
+  })
 
-  const validatePhone = (value: string) => {
-    const phoneRegex = /^\+91\d{10}$/
-    if (value && !phoneRegex.test(value)) {
-      setPhoneError('Invalid phone number')
-      return false
-    }
-    setPhoneError('')
-    return true
-  }
+  const resetForm = useForm<ResetFormData>({
+    resolver: zodResolver(resetFormSchema),
+    defaultValues: {
+      otp: '',
+      newPassword: '',
+      confirmPassword: '',
+      showPassword: false,
+      showConfirmPassword: false,
+    },
+  })
 
-  const validateOtp = (value: string) => {
-    if (!value || value.length !== 4) {
-      setOtpError('OTP must be 4 digits')
-      return false
-    }
-    setOtpError('')
-    return true
-  }
+  // Timer effect
+  useEffect(() => {
+    let interval: NodeJS.Timeout | undefined
 
-  const validatePasswords = () => {
-    let isValid = true
-
-    if (!newPassword) {
-      setPasswordError('Password is required')
-      isValid = false
-    } else {
-      setPasswordError('')
+    if (step === 2 && timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1)
+      }, 1000)
+    } else if (timer === 0) {
+      setShowResend(true)
     }
 
-    if (!confirmPassword) {
-      setConfirmPasswordError('Confirm Password is required')
-      isValid = false
-    } else if (newPassword !== confirmPassword) {
-      setConfirmPasswordError('Passwords do not match')
-      isValid = false
-    } else {
-      setConfirmPasswordError('')
+    return () => {
+      if (interval) clearInterval(interval)
     }
+  }, [step, timer])
 
-    return isValid
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
   }
 
   // Handle initial form submit (email/phone)
-  const handleInitialSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    // Validate inputs
-    const isEmailValid = validateEmail(email)
-    const isPhoneValid = validatePhone(phone)
-
-    if (!email && !phone) {
-      setEmailError('Either email or phone is required')
-      setPhoneError('Either email or phone is required')
-      return
-    }
-
-    if ((email && !isEmailValid) || (phone && !isPhoneValid)) {
-      return
-    }
-
+  const handleInitialSubmit = async (data: InitialFormData) => {
     try {
-      const payload = email ? { email } : { phone }
+      setLoading(true)
+      // Clean up the data before sending
+      const cleanData = {
+        email: data.email?.trim() || undefined,
+        phone: data.phone?.trim() || undefined,
+      }
 
-      const response = await fetch(
-        'https://api.bppindia.com/api/v1/forgot-password',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        }
-      )
+      const payload = cleanData.email
+        ? { email: cleanData.email }
+        : { phone: cleanData.phone }
+      const response = await authService.forgotPassword(payload)
 
-      if (!response.ok) throw new Error('Failed to send OTP')
+      if (!response.success) {
+        toast.error(response.message || 'Failed to send OTP')
+        return
+      }
 
       setContactInfo({
-        type: email ? 'email' : 'phone',
-        value: email || phone,
+        type: cleanData.email ? 'email' : 'phone',
+        value: cleanData.email || cleanData.phone || '',
       })
       setStep(2)
+      setTimer(300) // Reset timer to 5 minutes
+      setShowResend(false)
       toast.success('OTP sent successfully')
-    } catch (_) {
-      toast.error('Failed to send OTP. Please try again.')
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message)
+      } else {
+        toast.error('Failed to send OTP. Please try again.')
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Handle resend OTP
+  const handleResendOTP = async () => {
+    try {
+      setLoading(true)
+      const payload =
+        contactInfo.type === 'email'
+          ? { email: contactInfo.value }
+          : { phone: contactInfo.value }
+      const response = await authService.forgotPassword(payload)
+
+      if (!response.success) {
+        toast.error(response.message || 'Failed to resend OTP')
+        return
+      }
+
+      setTimer(300) // Reset timer to 5 minutes
+      setShowResend(false)
+      toast.success('OTP resent successfully')
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message)
+      } else {
+        toast.error('Failed to resend OTP. Please try again.')
+      }
+    } finally {
+      setLoading(false)
     }
   }
 
   // Handle password reset form submit
-  const handleResetSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    // Validate all fields
-    const isOtpValid = validateOtp(otp)
-    const arePasswordsValid = validatePasswords()
-
-    if (!isOtpValid || !arePasswordsValid) {
-      return
-    }
-
+  const handleResetSubmit = async (data: ResetFormData) => {
     try {
+      setLoading(true)
       const payload = {
-        otp,
-        newPassword,
+        otp: data.otp,
+        newPassword: data.newPassword,
         [contactInfo.type]: contactInfo.value,
       }
 
-      const response = await fetch(
-        'https://api.bppindia.com:3000/api/v1/reset-password',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        }
-      )
+      const response = await authService.resetPassword(payload)
 
-      if (!response.ok) throw new Error('Failed to reset password')
+      if (!response.success) {
+        toast.error(response.message || 'Failed to reset password')
+        return
+      }
 
-      // Show success message
       toast.success('Password reset successfully')
-
-      // Redirect to login page after 3 seconds
-      setTimeout(() => {
-        navigate({ to: '/sign-in' })
-      }, 3000) // 3 seconds delay
-    } catch (_) {
-      toast.error('Failed to reset password. Please try again.')
+      setTimeout(() => navigate({ to: '/sign-in' }), 3000)
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message)
+      } else {
+        toast.error('Failed to reset password. Please try again.')
+      }
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
-    <section className='mx-auto flex h-screen items-center justify-center rounded-none py-10 md:rounded-3xl md:p-8'>
-      <Card className='mx-auto w-full max-w-md border-gray-300 p-4'>
+    <section className='mx-auto flex min-h-screen items-center justify-center bg-background px-4 py-6 sm:p-8 md:p-10'>
+      <Card className='mx-auto w-full max-w-xl border-gray-300 p-4'>
         <CardHeader>
           <div className='flex items-center justify-center text-xl font-bold text-blue-800'>
-            <img
-              src={bppLogo}
-              alt=''
-              className='w-[120px] rounded-lg object-contain'
-            />
+            <Link to='/'>
+              <img
+                src={bppLogo}
+                alt='BPP Logo'
+                className='w-[120px] rounded-lg object-contain'
+              />
+            </Link>
           </div>
           <h2 className='text-center text-2xl font-black text-neutral-800 dark:text-neutral-200'>
             <div>Welcome to</div>
@@ -203,21 +238,21 @@ const ResetPassword = () => {
         </CardHeader>
         <CardContent>
           {step === 1 ? (
-            <form onSubmit={handleInitialSubmit} className='space-y-4'>
+            <form
+              onSubmit={initialForm.handleSubmit(handleInitialSubmit)}
+              className='space-y-4'
+            >
               <div>
                 <label className='mb-1 block text-sm font-medium'>Email</label>
                 <Input
                   type='email'
-                  name='email'
+                  {...initialForm.register('email')}
                   placeholder='Enter email'
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value)
-                    validateEmail(e.target.value)
-                  }}
                 />
-                {emailError && (
-                  <p className='mt-1 text-sm text-red-500'>{emailError}</p>
+                {initialForm.formState.errors.email && (
+                  <p className='mt-1 text-sm text-red-500'>
+                    {initialForm.formState.errors.email.message}
+                  </p>
                 )}
               </div>
               <p className='my-2 text-center'>OR</p>
@@ -225,23 +260,23 @@ const ResetPassword = () => {
                 <label className='mb-1 block text-sm font-medium'>Phone</label>
                 <Input
                   placeholder='+91 Phone number'
-                  value={phone}
-                  name='phone'
-                  onChange={(e) => {
-                    setPhone(e.target.value)
-                    validatePhone(e.target.value)
-                  }}
+                  {...initialForm.register('phone')}
                 />
-                {phoneError && (
-                  <p className='mt-1 text-sm text-red-500'>{phoneError}</p>
+                {initialForm.formState.errors.phone && (
+                  <p className='mt-1 text-sm text-red-500'>
+                    {initialForm.formState.errors.phone.message}
+                  </p>
                 )}
               </div>
-              <Button type='submit' className='mt-4 w-full'>
-                Send OTP
+              <Button type='submit' className='mt-4 w-full' disabled={loading}>
+                {loading ? 'Sending OTP...' : 'Send OTP'}
               </Button>
             </form>
           ) : (
-            <form onSubmit={handleResetSubmit} className='space-y-4'>
+            <form
+              onSubmit={resetForm.handleSubmit(handleResetSubmit)}
+              className='space-y-4'
+            >
               <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
                 <div>
                   <label className='mb-1 block text-sm font-medium'>
@@ -252,20 +287,33 @@ const ResetPassword = () => {
                 <div>
                   <label className='mb-1 block text-sm font-medium'>OTP</label>
                   <Input
-                    placeholder='Enter 6-digit OTP'
-                    maxLength={6}
+                    placeholder='Enter 4-digit OTP'
+                    maxLength={4}
                     type='text'
-                    name='otp'
                     inputMode='numeric'
-                    value={otp}
-                    onChange={(e) => {
-                      setOtp(e.target.value)
-                      validateOtp(e.target.value)
-                    }}
+                    {...resetForm.register('otp')}
                   />
-                  {otpError && (
-                    <p className='mt-1 text-sm text-red-500'>{otpError}</p>
+                  {resetForm.formState.errors.otp && (
+                    <p className='mt-1 text-sm text-red-500'>
+                      {resetForm.formState.errors.otp.message}
+                    </p>
                   )}
+                  <div className='mt-2 flex items-center justify-between text-sm'>
+                    <span className='text-muted-foreground'>
+                      Time remaining: {formatTime(timer)}
+                    </span>
+                    {showResend && (
+                      <Button
+                        type='button'
+                        variant='link'
+                        className='h-auto p-0 text-blue-600'
+                        onClick={handleResendOTP}
+                        disabled={loading}
+                      >
+                        Resend OTP
+                      </Button>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <label className='mb-1 block text-sm font-medium'>
@@ -273,27 +321,35 @@ const ResetPassword = () => {
                   </label>
                   <div className='relative'>
                     <Input
-                      type={showPassword ? 'text' : 'password'}
+                      type={
+                        resetForm.watch('showPassword') ? 'text' : 'password'
+                      }
                       placeholder='Enter new password'
-                      name='newPassword'
-                      value={newPassword}
-                      onChange={(e) => {
-                        setNewPassword(e.target.value)
-                        if (confirmPassword) validatePasswords()
-                      }}
+                      {...resetForm.register('newPassword')}
                     />
                     <Button
                       type='button'
                       variant='ghost'
                       size='icon'
                       className='absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent'
-                      onClick={() => setShowPassword(!showPassword)}
+                      onClick={() =>
+                        resetForm.setValue(
+                          'showPassword',
+                          !resetForm.watch('showPassword')
+                        )
+                      }
                     >
-                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                      {resetForm.watch('showPassword') ? (
+                        <EyeOff size={16} />
+                      ) : (
+                        <Eye size={16} />
+                      )}
                     </Button>
                   </div>
-                  {passwordError && (
-                    <p className='mt-1 text-sm text-red-500'>{passwordError}</p>
+                  {resetForm.formState.errors.newPassword && (
+                    <p className='mt-1 text-sm text-red-500'>
+                      {resetForm.formState.errors.newPassword.message}
+                    </p>
                   )}
                 </div>
                 <div>
@@ -302,14 +358,13 @@ const ResetPassword = () => {
                   </label>
                   <div className='relative'>
                     <Input
-                      type={showConfirmPassword ? 'text' : 'password'}
+                      type={
+                        resetForm.watch('showConfirmPassword')
+                          ? 'text'
+                          : 'password'
+                      }
                       placeholder='Confirm new password'
-                      value={confirmPassword}
-                      name='confirmPassword'
-                      onChange={(e) => {
-                        setConfirmPassword(e.target.value)
-                        if (newPassword) validatePasswords()
-                      }}
+                      {...resetForm.register('confirmPassword')}
                     />
                     <Button
                       type='button'
@@ -317,25 +372,28 @@ const ResetPassword = () => {
                       size='icon'
                       className='absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent'
                       onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
+                        resetForm.setValue(
+                          'showConfirmPassword',
+                          !resetForm.watch('showConfirmPassword')
+                        )
                       }
                     >
-                      {showConfirmPassword ? (
+                      {resetForm.watch('showConfirmPassword') ? (
                         <EyeOff size={16} />
                       ) : (
                         <Eye size={16} />
                       )}
                     </Button>
                   </div>
-                  {confirmPasswordError && (
+                  {resetForm.formState.errors.confirmPassword && (
                     <p className='mt-1 text-sm text-red-500'>
-                      {confirmPasswordError}
+                      {resetForm.formState.errors.confirmPassword.message}
                     </p>
                   )}
                 </div>
               </div>
-              <Button type='submit' className='mt-4 w-full'>
-                Reset Password
+              <Button type='submit' className='mt-4 w-full' disabled={loading}>
+                {loading ? 'Resetting Password...' : 'Reset Password'}
               </Button>
             </form>
           )}

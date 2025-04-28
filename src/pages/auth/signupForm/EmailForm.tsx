@@ -38,12 +38,14 @@ export function EmailForm({
 }: EmailFormProps) {
   const [isTermsDialogOpen, setTermsDialogOpen] = useState(false)
   const [inputValue, setInputValue] = useState(email || phone || '')
+  const [error, setError] = useState<string>('')
 
   const handleInputChange = (value: string) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
     const phoneRegex = /^[6-9]\d{9}$/ // Indian mobile number without +91 initially
 
     setInputValue(value)
+    setError('')
 
     if (emailRegex.test(value)) {
       updateFields({ email: value, phone: '' })
@@ -53,6 +55,9 @@ export function EmailForm({
       updateFields({ phone: formattedPhone, email: '' })
     } else {
       updateFields({ email: '', phone: '' })
+      if (value) {
+        setError('Please enter a valid email or phone number')
+      }
     }
   }
 
@@ -93,12 +98,14 @@ export function EmailForm({
           value={inputValue}
           placeholder='Email or Phone Number'
           onChange={(e) => handleInputChange(e.target.value)}
+          className={error ? 'border-red-500 focus:ring-red-500' : ''}
         />
         <div className='pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-3 text-muted-foreground/80 peer-disabled:opacity-50'>
           {email && <Mail size={16} strokeWidth={2} aria-hidden='true' />}
           {phone && <Phone size={16} strokeWidth={2} aria-hidden='true' />}
         </div>
       </div>
+      {error && <p className='mt-1 text-xs text-red-500'>{error}</p>}
       <div className='flex flex-row items-center space-x-3 space-y-0'>
         <Checkbox
           checked={termsAccepted}

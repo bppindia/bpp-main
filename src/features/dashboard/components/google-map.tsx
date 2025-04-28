@@ -17,7 +17,7 @@ interface GoogleMapProps {
   isLoading: boolean
 }
 
-const GOOGLE_MAPS_API_KEY = 'AIzaSyD2izlgxKpxjqjkH4BF8-WHoVkQ1Ml_Cfw'
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
 
 export default function GoogleMap({
   state,

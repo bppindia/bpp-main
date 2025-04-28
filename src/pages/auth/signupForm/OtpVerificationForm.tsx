@@ -42,8 +42,8 @@ export function OtpVerificationForm({
       toast.success(
         `OTP resent successfully to your ${email ? 'email' : 'phone'}!`
       )
-    } catch (error) {
-      console.error('Failed to resend OTP:', error)
+    } catch (_error) {
+      toast.error('Failed to resend OTP. Please try again.')
     }
   }
 

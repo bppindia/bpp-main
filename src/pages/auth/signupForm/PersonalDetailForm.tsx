@@ -1,7 +1,14 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { occupationData } from '@/data/occupation'
+import { Search } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import {
   Select,
   SelectContent,
@@ -39,10 +46,19 @@ export function PersonalDetailForm({
   gender,
   phone,
   email,
-  occupation, // Added occupation
+  occupation,
   updateFields,
 }: PersonalDetailFormProps) {
   const [error, setError] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+
+  const filteredOccupations = useMemo(() => {
+    if (!searchQuery) return occupationData.occupations
+    return occupationData.occupations.filter((occ) =>
+      occ.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  }, [searchQuery])
 
   const calculateAge = (dob: Date | undefined): number => {
     if (!dob) return 0
@@ -231,21 +247,44 @@ export function PersonalDetailForm({
           <Label htmlFor='occupation'>
             Occupation <span className='text-red-700'>*</span>
           </Label>
-          <Select
-            onValueChange={(value) => updateFields({ occupation: value })}
-            value={occupation}
-          >
-            <SelectTrigger id='state' name='state' className='w-full'>
-              <SelectValue placeholder='Select your occupation' />
-            </SelectTrigger>
-            <SelectContent>
-              {occupationData.occupations.map((occupation) => (
-                <SelectItem key={occupation} value={occupation}>
-                  {occupation}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Popover open={isOpen} onOpenChange={setIsOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant='outline'
+                role='combobox'
+                aria-expanded={isOpen}
+                className='w-full justify-between'
+              >
+                {occupation || 'Select occupation'}
+                <Search className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className='w-full p-0'>
+              <div className='p-2'>
+                <Input
+                  placeholder='Search occupation...'
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className='mb-2'
+                />
+                <div className='max-h-[300px] overflow-y-auto'>
+                  {filteredOccupations.map((occ) => (
+                    <div
+                      key={occ}
+                      className='cursor-pointer px-2 py-1.5 hover:bg-accent hover:text-accent-foreground'
+                      onClick={() => {
+                        updateFields({ occupation: occ })
+                        setIsOpen(false)
+                        setSearchQuery('')
+                      }}
+                    >
+                      {occ}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
     </FormWrapper>

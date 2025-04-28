@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
+import { IndianBankNames } from '@/data/bank-names'
+import { PaymentMethods } from '@/data/payment'
 import { CheckCircle2 } from 'lucide-react'
+import { Check, ChevronsUpDown } from 'lucide-react'
 import { toast } from 'sonner'
 import { postData } from '@/api/apiClient'
+import { cn } from '@/lib/utils'
 import { useAuth } from '@/context/AuthContext'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -15,6 +19,13 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from '@/components/ui/command'
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -24,6 +35,11 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
@@ -32,12 +48,6 @@ import { Main } from '@/components/layout/dashboard/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { PaymentMethods } from '@/data/payment'
-import { IndianBankNames } from '@/data/bank-names'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Check, ChevronsUpDown } from 'lucide-react'
-import { cn } from '@/lib/utils'
 
 export function PaymentForm() {
   const { user, fetchUserData } = useAuth()
@@ -63,7 +73,7 @@ export function PaymentForm() {
   // Pre-fill user information when component mounts
   useEffect(() => {
     if (user) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         accountName: user.name || `${user.firstName} ${user.lastName}`.trim(),
         mobile: user.phone || '',
@@ -348,38 +358,45 @@ export function PaymentForm() {
 
                   <div className='space-y-2'>
                     <Label htmlFor='bankName'>Bank Name</Label>
-                    <Popover open={openBankDropdown} onOpenChange={setOpenBankDropdown}>
+                    <Popover
+                      open={openBankDropdown}
+                      onOpenChange={setOpenBankDropdown}
+                    >
                       <PopoverTrigger asChild>
                         <Button
-                          variant="outline"
-                          role="combobox"
+                          variant='outline'
+                          role='combobox'
                           aria-expanded={openBankDropdown}
-                          className="w-full justify-between"
+                          className='w-full justify-between'
                         >
                           {formData.bankName
-                            ? IndianBankNames.find((bank) => bank === formData.bankName)
-                            : "Select your bank"}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            ? IndianBankNames.find(
+                                (bank) => bank === formData.bankName
+                              )
+                            : 'Select your bank'}
+                          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-full p-0">
+                      <PopoverContent className='w-full p-0'>
                         <Command>
-                          <CommandInput placeholder="Search bank..." />
+                          <CommandInput placeholder='Search bank...' />
                           <CommandEmpty>No bank found.</CommandEmpty>
-                          <CommandGroup className="max-h-[300px] overflow-auto">
+                          <CommandGroup className='max-h-[300px] overflow-auto'>
                             {IndianBankNames.map((bank) => (
                               <CommandItem
                                 key={bank}
                                 value={bank}
                                 onSelect={(currentValue) => {
-                                  handleSelectChange('bankName', currentValue);
-                                  setOpenBankDropdown(false);
+                                  handleSelectChange('bankName', currentValue)
+                                  setOpenBankDropdown(false)
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
-                                    formData.bankName === bank ? "opacity-100" : "opacity-0"
+                                    'mr-2 h-4 w-4',
+                                    formData.bankName === bank
+                                      ? 'opacity-100'
+                                      : 'opacity-0'
                                   )}
                                 />
                                 {bank}
@@ -432,19 +449,21 @@ export function PaymentForm() {
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
-                          variant="outline"
-                          role="combobox"
-                          className="w-full justify-between"
+                          variant='outline'
+                          role='combobox'
+                          className='w-full justify-between'
                         >
                           {formData.paymentMode
-                            ? PaymentMethods.find((mode) => mode === formData.paymentMode)
-                            : "Select payment mode"}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            ? PaymentMethods.find(
+                                (mode) => mode === formData.paymentMode
+                              )
+                            : 'Select payment mode'}
+                          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-full p-0">
+                      <PopoverContent className='w-full p-0'>
                         <Command>
-                          <CommandInput placeholder="Search payment mode..." />
+                          <CommandInput placeholder='Search payment mode...' />
                           <CommandEmpty>No payment mode found.</CommandEmpty>
                           <CommandGroup>
                             {PaymentMethods.map((mode) => (
@@ -452,13 +471,18 @@ export function PaymentForm() {
                                 key={mode}
                                 value={mode}
                                 onSelect={(currentValue) => {
-                                  handleSelectChange('paymentMode', currentValue);
+                                  handleSelectChange(
+                                    'paymentMode',
+                                    currentValue
+                                  )
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
-                                    formData.paymentMode === mode ? "opacity-100" : "opacity-0"
+                                    'mr-2 h-4 w-4',
+                                    formData.paymentMode === mode
+                                      ? 'opacity-100'
+                                      : 'opacity-0'
                                   )}
                                 />
                                 {mode}

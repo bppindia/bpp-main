@@ -160,7 +160,7 @@ const GoalsPage = () => {
         'BPP believes that education is one of the most powerful and proven vehicles for sustainable development. The goal is to ensure that all girls and boys complete primary and secondary schooling. It also eliminate gender and wealth disparities and achieve universal access to a quality higher education.',
       imgSrc: img10,
       icon: GraduationCap,
-      link: '/about/bpp-goals',
+      link: '/about/bpp-goals/quality-education',
     },
   ]
 

@@ -18,6 +18,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as authSignInImport } from './routes/(auth)/sign-in'
+import { Route as authBusinessSignUpImport } from './routes/(auth)/business-sign-up'
 import { Route as auth500Import } from './routes/(auth)/500'
 import { Route as DashboardWalletIndexImport } from './routes/dashboard/wallet/index'
 import { Route as DashboardReferralIndexImport } from './routes/dashboard/referral/index'
@@ -59,6 +60,7 @@ import { Route as PublicAboutCommitmentProgressIndexImport } from './routes/_pub
 import { Route as PublicAboutBppGoalsIndexImport } from './routes/_public/about/bpp-goals/index'
 import { Route as PublicAboutBppGoalsUpliftmentOfFarmersIndexImport } from './routes/_public/about/bpp-goals/upliftment-of-farmers/index'
 import { Route as PublicAboutBppGoalsUpholdSecularismIndexImport } from './routes/_public/about/bpp-goals/uphold-secularism/index'
+import { Route as PublicAboutBppGoalsQualityEducationIndexImport } from './routes/_public/about/bpp-goals/quality-education/index'
 import { Route as PublicAboutBppGoalsNationalIntegrityIndexImport } from './routes/_public/about/bpp-goals/national-integrity/index'
 import { Route as PublicAboutBppGoalsJusticePeaceCalmAndProsperityIndexImport } from './routes/_public/about/bpp-goals/justice-peace-calm-and-prosperity/index'
 import { Route as PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexImport } from './routes/_public/about/bpp-goals/industrial-development-and-infrastructure/index'
@@ -203,6 +205,12 @@ const DashboardSettingsRouteLazyRoute = DashboardSettingsRouteLazyImport.update(
 const authSignInRoute = authSignInImport.update({
   id: '/(auth)/sign-in',
   path: '/sign-in',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const authBusinessSignUpRoute = authBusinessSignUpImport.update({
+  id: '/(auth)/business-sign-up',
+  path: '/business-sign-up',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -576,6 +584,13 @@ const PublicAboutBppGoalsUpholdSecularismIndexRoute =
     getParentRoute: () => PublicRoute,
   } as any)
 
+const PublicAboutBppGoalsQualityEducationIndexRoute =
+  PublicAboutBppGoalsQualityEducationIndexImport.update({
+    id: '/about/bpp-goals/quality-education/',
+    path: '/about/bpp-goals/quality-education/',
+    getParentRoute: () => PublicRoute,
+  } as any)
+
 const PublicAboutBppGoalsNationalIntegrityIndexRoute =
   PublicAboutBppGoalsNationalIntegrityIndexImport.update({
     id: '/about/bpp-goals/national-integrity/',
@@ -655,6 +670,13 @@ declare module '@tanstack/react-router' {
       path: '/500'
       fullPath: '/500'
       preLoaderRoute: typeof auth500Import
+      parentRoute: typeof rootRoute
+    }
+    '/(auth)/business-sign-up': {
+      id: '/(auth)/business-sign-up'
+      path: '/business-sign-up'
+      fullPath: '/business-sign-up'
+      preLoaderRoute: typeof authBusinessSignUpImport
       parentRoute: typeof rootRoute
     }
     '/(auth)/sign-in': {
@@ -1119,6 +1141,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAboutBppGoalsNationalIntegrityIndexImport
       parentRoute: typeof PublicImport
     }
+    '/_public/about/bpp-goals/quality-education/': {
+      id: '/_public/about/bpp-goals/quality-education/'
+      path: '/about/bpp-goals/quality-education'
+      fullPath: '/about/bpp-goals/quality-education'
+      preLoaderRoute: typeof PublicAboutBppGoalsQualityEducationIndexImport
+      parentRoute: typeof PublicImport
+    }
     '/_public/about/bpp-goals/uphold-secularism/': {
       id: '/_public/about/bpp-goals/uphold-secularism/'
       path: '/about/bpp-goals/uphold-secularism'
@@ -1251,6 +1280,7 @@ interface PublicRouteChildren {
   PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexRoute: typeof PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexRoute
   PublicAboutBppGoalsJusticePeaceCalmAndProsperityIndexRoute: typeof PublicAboutBppGoalsJusticePeaceCalmAndProsperityIndexRoute
   PublicAboutBppGoalsNationalIntegrityIndexRoute: typeof PublicAboutBppGoalsNationalIntegrityIndexRoute
+  PublicAboutBppGoalsQualityEducationIndexRoute: typeof PublicAboutBppGoalsQualityEducationIndexRoute
   PublicAboutBppGoalsUpholdSecularismIndexRoute: typeof PublicAboutBppGoalsUpholdSecularismIndexRoute
   PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute: typeof PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute
 }
@@ -1301,6 +1331,8 @@ const PublicRouteChildren: PublicRouteChildren = {
     PublicAboutBppGoalsJusticePeaceCalmAndProsperityIndexRoute,
   PublicAboutBppGoalsNationalIntegrityIndexRoute:
     PublicAboutBppGoalsNationalIntegrityIndexRoute,
+  PublicAboutBppGoalsQualityEducationIndexRoute:
+    PublicAboutBppGoalsQualityEducationIndexRoute,
   PublicAboutBppGoalsUpholdSecularismIndexRoute:
     PublicAboutBppGoalsUpholdSecularismIndexRoute,
   PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute:
@@ -1315,6 +1347,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '': typeof PublicRouteWithChildren
   '/500': typeof errors500LazyRoute
+  '/business-sign-up': typeof authBusinessSignUpRoute
   '/sign-in': typeof authSignInRoute
   '/dashboard/settings': typeof DashboardSettingsRouteLazyRouteWithChildren
   '/forgot-password': typeof authForgotPasswordLazyRoute
@@ -1380,6 +1413,7 @@ export interface FileRoutesByFullPath {
   '/about/bpp-goals/industrial-development-and-infrastructure': typeof PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexRoute
   '/about/bpp-goals/justice-peace-calm-and-prosperity': typeof PublicAboutBppGoalsJusticePeaceCalmAndProsperityIndexRoute
   '/about/bpp-goals/national-integrity': typeof PublicAboutBppGoalsNationalIntegrityIndexRoute
+  '/about/bpp-goals/quality-education': typeof PublicAboutBppGoalsQualityEducationIndexRoute
   '/about/bpp-goals/uphold-secularism': typeof PublicAboutBppGoalsUpholdSecularismIndexRoute
   '/about/bpp-goals/upliftment-of-farmers': typeof PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute
 }
@@ -1388,6 +1422,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof PublicRouteWithChildren
   '/500': typeof errors500LazyRoute
+  '/business-sign-up': typeof authBusinessSignUpRoute
   '/sign-in': typeof authSignInRoute
   '/forgot-password': typeof authForgotPasswordLazyRoute
   '/sign-up': typeof authSignUpLazyRoute
@@ -1452,6 +1487,7 @@ export interface FileRoutesByTo {
   '/about/bpp-goals/industrial-development-and-infrastructure': typeof PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexRoute
   '/about/bpp-goals/justice-peace-calm-and-prosperity': typeof PublicAboutBppGoalsJusticePeaceCalmAndProsperityIndexRoute
   '/about/bpp-goals/national-integrity': typeof PublicAboutBppGoalsNationalIntegrityIndexRoute
+  '/about/bpp-goals/quality-education': typeof PublicAboutBppGoalsQualityEducationIndexRoute
   '/about/bpp-goals/uphold-secularism': typeof PublicAboutBppGoalsUpholdSecularismIndexRoute
   '/about/bpp-goals/upliftment-of-farmers': typeof PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute
 }
@@ -1462,6 +1498,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
   '/(auth)/500': typeof auth500Route
+  '/(auth)/business-sign-up': typeof authBusinessSignUpRoute
   '/(auth)/sign-in': typeof authSignInRoute
   '/dashboard/settings': typeof DashboardSettingsRouteLazyRouteWithChildren
   '/(auth)/forgot-password': typeof authForgotPasswordLazyRoute
@@ -1528,6 +1565,7 @@ export interface FileRoutesById {
   '/_public/about/bpp-goals/industrial-development-and-infrastructure/': typeof PublicAboutBppGoalsIndustrialDevelopmentAndInfrastructureIndexRoute
   '/_public/about/bpp-goals/justice-peace-calm-and-prosperity/': typeof PublicAboutBppGoalsJusticePeaceCalmAndProsperityIndexRoute
   '/_public/about/bpp-goals/national-integrity/': typeof PublicAboutBppGoalsNationalIntegrityIndexRoute
+  '/_public/about/bpp-goals/quality-education/': typeof PublicAboutBppGoalsQualityEducationIndexRoute
   '/_public/about/bpp-goals/uphold-secularism/': typeof PublicAboutBppGoalsUpholdSecularismIndexRoute
   '/_public/about/bpp-goals/upliftment-of-farmers/': typeof PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute
 }
@@ -1539,6 +1577,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | ''
     | '/500'
+    | '/business-sign-up'
     | '/sign-in'
     | '/dashboard/settings'
     | '/forgot-password'
@@ -1604,6 +1643,7 @@ export interface FileRouteTypes {
     | '/about/bpp-goals/industrial-development-and-infrastructure'
     | '/about/bpp-goals/justice-peace-calm-and-prosperity'
     | '/about/bpp-goals/national-integrity'
+    | '/about/bpp-goals/quality-education'
     | '/about/bpp-goals/uphold-secularism'
     | '/about/bpp-goals/upliftment-of-farmers'
   fileRoutesByTo: FileRoutesByTo
@@ -1611,6 +1651,7 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/500'
+    | '/business-sign-up'
     | '/sign-in'
     | '/forgot-password'
     | '/sign-up'
@@ -1675,6 +1716,7 @@ export interface FileRouteTypes {
     | '/about/bpp-goals/industrial-development-and-infrastructure'
     | '/about/bpp-goals/justice-peace-calm-and-prosperity'
     | '/about/bpp-goals/national-integrity'
+    | '/about/bpp-goals/quality-education'
     | '/about/bpp-goals/uphold-secularism'
     | '/about/bpp-goals/upliftment-of-farmers'
   id:
@@ -1683,6 +1725,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/_public'
     | '/(auth)/500'
+    | '/(auth)/business-sign-up'
     | '/(auth)/sign-in'
     | '/dashboard/settings'
     | '/(auth)/forgot-password'
@@ -1749,6 +1792,7 @@ export interface FileRouteTypes {
     | '/_public/about/bpp-goals/industrial-development-and-infrastructure/'
     | '/_public/about/bpp-goals/justice-peace-calm-and-prosperity/'
     | '/_public/about/bpp-goals/national-integrity/'
+    | '/_public/about/bpp-goals/quality-education/'
     | '/_public/about/bpp-goals/uphold-secularism/'
     | '/_public/about/bpp-goals/upliftment-of-farmers/'
   fileRoutesById: FileRoutesById
@@ -1759,6 +1803,7 @@ export interface RootRouteChildren {
   DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
   PublicRoute: typeof PublicRouteWithChildren
   auth500Route: typeof auth500Route
+  authBusinessSignUpRoute: typeof authBusinessSignUpRoute
   authSignInRoute: typeof authSignInRoute
   authForgotPasswordLazyRoute: typeof authForgotPasswordLazyRoute
   authSignUpLazyRoute: typeof authSignUpLazyRoute
@@ -1774,6 +1819,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRouteRoute: DashboardRouteRouteWithChildren,
   PublicRoute: PublicRouteWithChildren,
   auth500Route: auth500Route,
+  authBusinessSignUpRoute: authBusinessSignUpRoute,
   authSignInRoute: authSignInRoute,
   authForgotPasswordLazyRoute: authForgotPasswordLazyRoute,
   authSignUpLazyRoute: authSignUpLazyRoute,
@@ -1798,6 +1844,7 @@ export const routeTree = rootRoute
         "/dashboard",
         "/_public",
         "/(auth)/500",
+        "/(auth)/business-sign-up",
         "/(auth)/sign-in",
         "/(auth)/forgot-password",
         "/(auth)/sign-up",
@@ -1871,12 +1918,16 @@ export const routeTree = rootRoute
         "/_public/about/bpp-goals/industrial-development-and-infrastructure/",
         "/_public/about/bpp-goals/justice-peace-calm-and-prosperity/",
         "/_public/about/bpp-goals/national-integrity/",
+        "/_public/about/bpp-goals/quality-education/",
         "/_public/about/bpp-goals/uphold-secularism/",
         "/_public/about/bpp-goals/upliftment-of-farmers/"
       ]
     },
     "/(auth)/500": {
       "filePath": "(auth)/500.tsx"
+    },
+    "/(auth)/business-sign-up": {
+      "filePath": "(auth)/business-sign-up.tsx"
     },
     "/(auth)/sign-in": {
       "filePath": "(auth)/sign-in.tsx"
@@ -2140,6 +2191,10 @@ export const routeTree = rootRoute
     },
     "/_public/about/bpp-goals/national-integrity/": {
       "filePath": "_public/about/bpp-goals/national-integrity/index.tsx",
+      "parent": "/_public"
+    },
+    "/_public/about/bpp-goals/quality-education/": {
+      "filePath": "_public/about/bpp-goals/quality-education/index.tsx",
       "parent": "/_public"
     },
     "/_public/about/bpp-goals/uphold-secularism/": {

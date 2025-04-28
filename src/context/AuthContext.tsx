@@ -108,7 +108,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
 
-  const handleAuthSuccess = (token: string, userData: AuthUser, sessionId?: string): void => {
+  const handleAuthSuccess = (
+    token: string,
+    userData: AuthUser,
+    sessionId?: string
+  ): void => {
     dispatch(setCredentials({ token, user: userData }))
     setCookie(COOKIE_KEYS.AUTH_TOKEN, token)
     setCookie(COOKIE_KEYS.USER_DETAILS, userData)
@@ -133,7 +137,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         throw new Error('No token received from server')
       }
 
-      handleAuthSuccess(responseData.accessToken, userData, responseData.sessionId)
+      handleAuthSuccess(
+        responseData.accessToken,
+        userData,
+        responseData.sessionId
+      )
       toast.success('Login Successful!', {
         description: 'Redirecting to the dashboard page...',
       })
@@ -302,7 +310,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const getActiveSessions = async (): Promise<Session[]> => {
     try {
-      const response = await getData<{ success: boolean; data: Session[] }>('/auth/sessions/active')
+      const response = await getData<{ success: boolean; data: Session[] }>(
+        '/auth/sessions/active'
+      )
       return response.data
     } catch (error) {
       const errorMessage = getErrorMessage(error)
@@ -313,9 +323,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const revokeSession = async (sessionId: string) => {
     try {
-      await deleteData<{ success: boolean; message: string }>(`/auth/sessions/${sessionId}`, {
-        refreshToken: Cookies.get('refreshToken')
-      })
+      await deleteData<{ success: boolean; message: string }>(
+        `/auth/sessions/${sessionId}`,
+        {
+          refreshToken: Cookies.get('refreshToken'),
+        }
+      )
       toast.success('Session revoked successfully')
     } catch (error) {
       const errorMessage = getErrorMessage(error)
@@ -326,9 +339,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const revokeAllOtherSessions = async () => {
     try {
-      await deleteData<{ success: boolean; message: string }>('/auth/sessions/revoke-others', {
-        refreshToken: Cookies.get('refreshToken')
-      })
+      await deleteData<{ success: boolean; message: string }>(
+        '/auth/sessions/revoke-others',
+        {
+          refreshToken: Cookies.get('refreshToken'),
+        }
+      )
       toast.success('All other sessions revoked successfully')
     } catch (error) {
       const errorMessage = getErrorMessage(error)
