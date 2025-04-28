@@ -1,5 +1,5 @@
-import { FormEvent, useState } from 'react'
-import { Link, useNavigate } from '@tanstack/react-router'
+import { FormEvent, useState, useEffect } from 'react'
+import { Link, useNavigate, useLocation } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import bpplogo from '@/assets/images/logos/Bpp.png'
 import { useAuth } from '@/context/AuthContext'
@@ -93,7 +93,17 @@ const MultiStepForm = () => {
   const [data, setData] = useState(INITIAL_DATA)
   const [isCaptchaVerified, setIsCaptchaVerified] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
   const { sendOtp, verifyOtp, register, loading } = useAuth()
+
+  // Read referral code from URL and apply it
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search)
+    const ref = searchParams.get('ref')
+    if (ref) {
+      updateFields({ referralCode: ref })
+    }
+  }, [location.search])
 
   function updateFields(fields: Partial<RegistrationData>) {
     setData((prev) => ({ ...prev, ...fields }))

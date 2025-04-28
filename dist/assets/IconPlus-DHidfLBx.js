@@ -1,4 +1,4 @@
-import{a7 as a}from"./index-DV_eFnsi.js";/**
+import{a8 as a}from"./index-kk9VfDE4.js";/**
  * @license @tabler/icons-react v3.31.0 - MIT
  *
  * This source code is licensed under the MIT license.

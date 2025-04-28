@@ -167,13 +167,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       )
       const typedResponse = asApiResponse<RegistrationResponse>(response)
 
-      if (typedResponse.success && typedResponse.token) {
+      if (typedResponse.data.success) {
         const userData = typedResponse.data as unknown as AuthUser
-        handleAuthSuccess(typedResponse.token, userData)
-        toast.success(typedResponse.message || 'Registration Successful!')
-      } else {
-        throw new Error(typedResponse.message || 'Registration failed')
+        if (typedResponse.data.token) {
+          handleAuthSuccess(typedResponse.data.token, userData)
+        }
+        toast.success('Registration successful!')
+        return
       }
+      throw new Error(typedResponse.data.message || 'Registration failed')
     } catch (error) {
       const errorMessage = getErrorMessage(error)
       toast.error(errorMessage)
