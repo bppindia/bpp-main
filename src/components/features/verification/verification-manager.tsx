@@ -36,18 +36,18 @@ export function VerificationManager() {
         }
       )
 
-      if (response.success) {
+      if (response.data.success) {
         setHasRequestedNotification(true)
         toast({
           title: 'Success',
-          description: response.message,
+          description: response.data.message,
         })
       } else {
         toast({
           variant: 'destructive',
           title: 'Error',
           description:
-            response.message || 'Failed to submit notification request',
+            response.data.message || 'Failed to submit notification request',
         })
       }
     } catch (error) {

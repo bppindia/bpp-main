@@ -17,85 +17,16 @@ import {
 import { useDispatch } from 'react-redux'
 import { toast } from 'sonner'
 import { postData, getData, deleteData } from '@/api/apiClient'
+import { useWebSocket } from '@/hooks/useWebSocket'
+import {
+  COOKIE_KEYS,
+  setCookie,
+  removeCookie,
+  getErrorMessage,
+  isFile,
+  AuthContextType,
+} from './authUtils'
 
-// Types
-interface AuthContextType {
-  user: AuthUser | null
-  isAuthenticated: boolean
-  login: (credentials: LoginCredentials) => Promise<void>
-  register: (registrationData: RegistrationData) => Promise<void>
-  sendOtp: (identifier: string) => Promise<void>
-  verifyOtp: (identifier: string, otp: string) => Promise<void>
-  logout: () => void
-  loading: boolean
-  updateVerification: (isVerified: boolean) => void
-  updateUser: (updates: Partial<AuthUser>) => void
-  fetchUserData: () => Promise<void>
-  getActiveSessions: () => Promise<Session[]>
-  revokeSession: (sessionId: string) => Promise<void>
-  revokeAllOtherSessions: () => Promise<void>
-}
-
-interface CookieOptions {
-  expires: number
-  secure: boolean
-  sameSite: 'strict' | 'lax' | 'none'
-}
-
-// Constants
-const COOKIE_OPTIONS: CookieOptions = {
-  expires: 4,
-  secure: true,
-  sameSite: 'strict',
-}
-
-const COOKIE_KEYS = {
-  AUTH_TOKEN: 'authToken',
-  USER_DETAILS: 'userDetails',
-  SESSION_ID: 'sessionId',
-} as const
-
-// Utility functions
-const isFile = (value: unknown): value is File => {
-  return (
-    value instanceof File ||
-    (typeof value === 'object' &&
-      value !== null &&
-      'name' in value &&
-      'size' in value &&
-      'type' in value)
-  )
-}
-
-const getErrorMessage = (error: unknown): string => {
-  if (
-    error &&
-    typeof error === 'object' &&
-    'response' in error &&
-    error.response &&
-    typeof error.response === 'object' &&
-    'data' in error.response &&
-    error.response.data &&
-    typeof error.response.data === 'object' &&
-    'message' in error.response.data
-  ) {
-    return String(error.response.data.message)
-  }
-  return error && typeof error === 'object' && 'message' in error
-    ? String(error.message)
-    : 'An unexpected error occurred'
-}
-
-const setCookie = (key: string, value: string | object): void => {
-  const valueToStore = typeof value === 'object' ? JSON.stringify(value) : value
-  Cookies.set(key, valueToStore, COOKIE_OPTIONS)
-}
-
-const removeCookie = (key: string): void => {
-  Cookies.remove(key)
-}
-
-// Context
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
@@ -108,6 +39,29 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
 
+  const refreshSessions = async (): Promise<void> => {
+    try {
+      await getData<{ success: boolean; data: Session[] }>(
+        '/auth/sessions/active'
+      )
+    } catch (_error) {
+      // Error is handled by the caller
+    }
+  }
+
+  useWebSocket({ user, getActiveSessions: refreshSessions })
+
+  const getActiveSessions = async (): Promise<Session[]> => {
+    try {
+      const response = await getData<{ success: boolean; data: Session[] }>(
+        '/auth/sessions/active'
+      )
+      return response.data
+    } catch (_error) {
+      throw new Error('Failed to get active sessions')
+    }
+  }
+
   const handleAuthSuccess = (
     token: string,
     userData: AuthUser,
@@ -118,6 +72,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setCookie(COOKIE_KEYS.USER_DETAILS, userData)
     if (sessionId) {
       setCookie(COOKIE_KEYS.SESSION_ID, sessionId)
+      localStorage.setItem('sessionId', sessionId)
     }
     setUser(userData)
   }
@@ -127,21 +82,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       setLoading(true)
       const response = await postData<LoginResponse>(
         '/auth/login',
-        credentials as unknown as Record<string, unknown>
+        credentials as unknown as Record<string, unknown>,
+        {
+          withCredentials: true,
+        }
       )
-      const typedResponse = asApiResponse<LoginResponse>(response)
-      const responseData = typedResponse.data as unknown as LoginResponseData
-      const userData = responseData.user as unknown as AuthUser
+      const loginResponse = response.data.data as LoginResponseData
+      const userData = loginResponse.user as unknown as AuthUser
+      const sessionId = loginResponse.sessionId
+      const accessToken = loginResponse.accessToken
 
-      if (!responseData.accessToken) {
-        throw new Error('No token received from server')
+      if (!accessToken || !sessionId) {
+        throw new Error('No token or session ID received from server')
       }
 
-      handleAuthSuccess(
-        responseData.accessToken,
-        userData,
-        responseData.sessionId
-      )
+      handleAuthSuccess(accessToken, userData, sessionId)
       toast.success('Login Successful!', {
         description: 'Redirecting to the dashboard page...',
       })
@@ -175,14 +130,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         ...rest
       } = registrationData
 
-      // Append non-empty fields
       Object.entries(rest).forEach(([key, value]) => {
         if (value !== undefined && value !== null && value !== '') {
           formData.append(key, isFile(value) ? value : String(value))
         }
       })
 
-      // Append address fields
       const addressFields = {
         addressLine1,
         addressLine2,
@@ -195,7 +148,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         if (value) formData.append(key, value)
       })
 
-      // Append files
       const files = {
         aadhaarFront,
         aadhaarBack,
@@ -261,13 +213,28 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const logout = (): void => {
-    removeCookie(COOKIE_KEYS.AUTH_TOKEN)
-    removeCookie(COOKIE_KEYS.USER_DETAILS)
-    removeCookie(COOKIE_KEYS.SESSION_ID)
-    setUser(null)
-    dispatch(clearCredentials())
-    toast.success('Logged out successfully')
+  const logout = async (): Promise<void> => {
+    try {
+      await postData(
+        '/auth/sessions/logout',
+        {},
+        {
+          headers: { 'x-session-id': localStorage.getItem('sessionId') },
+          withCredentials: true,
+        }
+      )
+      removeCookie(COOKIE_KEYS.AUTH_TOKEN)
+      removeCookie(COOKIE_KEYS.USER_DETAILS)
+      removeCookie(COOKIE_KEYS.SESSION_ID)
+      localStorage.removeItem('sessionId')
+      setUser(null)
+      dispatch(clearCredentials())
+      toast.success('Logged out successfully')
+    } catch (error) {
+      const errorMessage = getErrorMessage(error)
+      toast.error(errorMessage)
+      throw new Error(errorMessage)
+    }
   }
 
   const updateVerification = (isVerified: boolean): void => {
@@ -308,48 +275,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const getActiveSessions = async (): Promise<Session[]> => {
-    try {
-      const response = await getData<{ success: boolean; data: Session[] }>(
-        '/auth/sessions/active'
-      )
-      return response.data
-    } catch (error) {
-      const errorMessage = getErrorMessage(error)
-      toast.error(errorMessage)
-      throw new Error(errorMessage)
-    }
-  }
-
   const revokeSession = async (sessionId: string) => {
     try {
       await deleteData<{ success: boolean; message: string }>(
-        `/auth/sessions/${sessionId}`,
-        {
-          refreshToken: Cookies.get('refreshToken'),
-        }
+        `/auth/sessions/${sessionId}`
       )
-      toast.success('Session revoked successfully')
-    } catch (error) {
-      const errorMessage = getErrorMessage(error)
-      toast.error(errorMessage)
-      throw new Error(errorMessage)
+    } catch (_error) {
+      throw new Error('Failed to revoke session')
     }
   }
 
   const revokeAllOtherSessions = async () => {
     try {
       await deleteData<{ success: boolean; message: string }>(
-        '/auth/sessions/revoke-others',
-        {
-          refreshToken: Cookies.get('refreshToken'),
-        }
+        '/auth/sessions/logout-others'
       )
-      toast.success('All other sessions revoked successfully')
-    } catch (error) {
-      const errorMessage = getErrorMessage(error)
-      toast.error(errorMessage)
-      throw new Error(errorMessage)
+    } catch (_error) {
+      throw new Error('Failed to revoke other sessions')
     }
   }
 

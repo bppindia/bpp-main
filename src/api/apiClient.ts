@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import Cookies from 'js-cookie'
 
 const API_URL = import.meta.env.VITE_API_URL
@@ -86,17 +86,19 @@ export const getData = async <T>(endpoint: string): Promise<T> => {
 export const postData = async <T>(
   endpoint: string,
   data: Record<string, unknown>,
-  config: { headers?: { 'Content-Type'?: string } } = {}
-): Promise<T> => {
+  config: {
+    headers?: Record<string, string | null>
+    withCredentials?: boolean
+  } = {}
+): Promise<AxiosResponse<T>> => {
   try {
-    const response = await apiClient.post<T>(endpoint, data, {
+    return await apiClient.post<T>(endpoint, data, {
       ...config,
       headers: {
-        'Content-Type': config.headers?.['Content-Type'] || 'application/json',
+        'Content-Type': 'application/json',
         ...config.headers,
       },
     })
-    return response.data
   } catch (error) {
     return handleError(error)
   }

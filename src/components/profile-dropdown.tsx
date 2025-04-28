@@ -20,9 +20,13 @@ export function ProfileDropdown() {
   const navigate = useNavigate()
   const user = useSelector((state: RootState) => state.auth.user)
 
-  const handleLogout = () => {
-    logout()
-    navigate({ to: '/sign-in' })
+  const handleLogout = async () => {
+    try {
+      await logout()
+      navigate({ to: '/sign-in' })
+    } catch (_error) {
+      // Error is handled by toast in AuthProvider
+    }
   }
 
   return (

@@ -40,27 +40,30 @@ export function AddressForm({
   >({})
   const [autocompleteValue, setAutocompleteValue] = useState(addressLine1 || '')
 
-  const validateField = useCallback((field: keyof AddressData, value: string) => {
-    const newErrors = { ...errors }
+  const validateField = useCallback(
+    (field: keyof AddressData, value: string) => {
+      const newErrors = { ...errors }
 
-    if (!value && field !== 'addressLine2') {
-      newErrors[field] = 'This field is required'
-    } else {
-      delete newErrors[field]
-    }
+      if (!value && field !== 'addressLine2') {
+        newErrors[field] = 'This field is required'
+      } else {
+        delete newErrors[field]
+      }
 
-    if (field === 'pincode' && value && !/^\d{6}$/.test(value)) {
-      newErrors.pincode = 'Please enter a valid 6-digit pincode'
-    }
+      if (field === 'pincode' && value && !/^\d{6}$/.test(value)) {
+        newErrors.pincode = 'Please enter a valid 6-digit pincode'
+      }
 
-    if (field === 'addressLine1' && value && value.length < 5) {
-      newErrors.addressLine1 =
-        'Address line 1 must be at least 5 characters long'
-    }
+      if (field === 'addressLine1' && value && value.length < 5) {
+        newErrors.addressLine1 =
+          'Address line 1 must be at least 5 characters long'
+      }
 
-    setErrors(newErrors)
-    return !newErrors[field]
-  }, [errors])
+      setErrors(newErrors)
+      return !newErrors[field]
+    },
+    [errors]
+  )
 
   const handleStateChange = useCallback(
     (selectedState: string) => {
@@ -193,7 +196,9 @@ export function AddressForm({
               name='city'
               value={cityOrVillage || ''}
               required
-              onChange={(e) => handleInputChange('cityOrVillage', e.target.value)}
+              onChange={(e) =>
+                handleInputChange('cityOrVillage', e.target.value)
+              }
               className={
                 errors.cityOrVillage ? 'border-red-500 focus:ring-red-500' : ''
               }
@@ -212,8 +217,9 @@ export function AddressForm({
               <SelectTrigger
                 id='state'
                 name='state'
-                className={`w-full ${errors.state ? 'border-red-500 focus:ring-red-500' : ''
-                  }`}
+                className={`w-full ${
+                  errors.state ? 'border-red-500 focus:ring-red-500' : ''
+                }`}
               >
                 <SelectValue placeholder='Select your state' />
               </SelectTrigger>
@@ -238,8 +244,9 @@ export function AddressForm({
               <SelectTrigger
                 id='district'
                 name='district'
-                className={`w-full ${errors.district ? 'border-red-500 focus:ring-red-500' : ''
-                  }`}
+                className={`w-full ${
+                  errors.district ? 'border-red-500 focus:ring-red-500' : ''
+                }`}
               >
                 <SelectValue placeholder='Select your district' />
               </SelectTrigger>

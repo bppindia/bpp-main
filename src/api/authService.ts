@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 import { asApiResponse } from '@/types/api'
 import { postData } from './apiClient'
 
@@ -45,6 +46,24 @@ export const authService = {
         data
       )
       return asApiResponse(response)
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message)
+      }
+      throw error
+    }
+  },
+
+  logout: async () => {
+    try {
+      // Clear auth token and session ID from cookies
+      Cookies.remove('authToken')
+      Cookies.remove('sessionId')
+
+      // Make a request to the server to invalidate the session
+      await postData('/auth/logout', {})
+
+      return { success: true, message: 'Logged out successfully' }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message)

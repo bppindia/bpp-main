@@ -250,6 +250,7 @@ export interface Session {
   ipAddress: string
   location: string
   isActive: boolean
+  status: 'online' | 'offline' | 'away'
   expiresAt: string
   lastActiveAt: string
   createdAt: string
