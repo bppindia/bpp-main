@@ -60,6 +60,7 @@ export function PaymentRequiredDialog({
               <Button
                 type='button'
                 variant='secondary'
+                disabled={true}
                 onClick={() => {
                   setOpen(false)
                   navigate({ to: '/dashboard/membership/payment' })

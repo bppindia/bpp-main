@@ -241,8 +241,8 @@ const UserCard = memo(({ dashboardData, isLoading }: UserCardProps) => {
               <Avatar className='h-24 w-24 shrink-0 sm:h-32 sm:w-32'>
                 <AvatarImage
                   src={
-                    typeof authUser?.profileImage === 'string'
-                      ? authUser.profileImage
+                      typeof authUser?.profilePicture === 'string'
+                        ? authUser.profilePicture
                       : undefined
                   }
                   alt={dashboardData.user.firstName}
