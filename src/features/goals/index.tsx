@@ -1,4 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import { Header } from '@/components/layout/dashboard/header'
 import { Main } from '@/components/layout/dashboard/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
@@ -17,7 +18,25 @@ const GoalsPage = () => {
         </div>
       </Header>
       <Main fixed>
-        <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'>
+        <div className='space-y-6'>
+          <h1 className='text-3xl font-bold tracking-tight'>Our Goals</h1>
+          <Separator />
+          <div className='prose prose-sm max-w-none text-gray-500'>
+            <p className='leading-relaxed'>
+              Bharatiya Popular Party aims to build a stronger nation rooted in
+              unity, equality, and opportunity for all. We stand for justice,
+              peace, and prosperity, and envision a democracy free from the
+              influence of muscle and money power.
+            </p>
+            <p className='leading-relaxed'>
+              Our focus lies in health, education, agriculture, industry, and
+              inclusive development, benefiting every citizen. We are committed
+              to a future where every individual contributes to, and benefits
+              from, collective growth.
+            </p>
+          </div>
+        </div>
+        <div className='mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5'>
           {goals.map((goal) => (
             <Card
               key={goal.number}

@@ -1,12 +1,12 @@
 import { memo, useState } from 'react'
-import { CreditCard, Eye } from 'lucide-react'
+// import { CreditCard, Eye } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { UserRole, UserStatus } from '@/utils/roleAccess'
 import { useAuth } from '@/context/AuthContext'
 import { DashboardData } from '@/hooks/use-dashboard-data'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+// import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import {
   Dialog,
@@ -15,7 +15,8 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Skeleton } from '@/components/ui/skeleton'
-import { ReferralShare } from './referal-share'
+
+// import { ReferralShare } from './referal-share'
 
 // Define user card styles based on role and status
 type CardStyle = {
@@ -104,13 +105,13 @@ const UserCard = memo(({ dashboardData, isLoading }: UserCardProps) => {
 
   const cardStyle = getCardStyle()
 
-  // Check if membership is expired
-  const isMembershipExpired = dashboardData.membership?.expiryDate
-    ? new Date(dashboardData.membership.expiryDate) < new Date()
-    : false
+  // // Check if membership is expired
+  // const isMembershipExpired = dashboardData.membership?.expiryDate
+  //   ? new Date(dashboardData.membership.expiryDate) < new Date()
+  //   : false
 
-  // Check if user has enough referrals for upgrade
-  const hasEnoughReferrals = dashboardData.referrals?.successfulReferrals >= 10
+  // // Check if user has enough referrals for upgrade
+  // const hasEnoughReferrals = dashboardData.referrals?.successfulReferrals >= 10
 
   const renderUserInfo = () => {
     if (isLoading) {
@@ -281,7 +282,7 @@ const UserCard = memo(({ dashboardData, isLoading }: UserCardProps) => {
 
               {renderUserInfo()}
 
-              <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
+              {/* <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
                 {isLoading ? (
                   <div className='flex flex-col gap-2 sm:flex-row'>
                     <Skeleton className='h-10 w-full sm:w-32' />
@@ -290,7 +291,8 @@ const UserCard = memo(({ dashboardData, isLoading }: UserCardProps) => {
                 ) : (
                   <>
                     {(isPrimaryMember || isActiveMember) &&
-                      dashboardData.membership?.number && (
+                      dashboardData.membership?.number &&
+                      dashboardData.membership?.cardUrl && (
                         <div className='flex flex-wrap items-center gap-2'>
                           <Button
                             variant='outline'
@@ -325,7 +327,7 @@ const UserCard = memo(({ dashboardData, isLoading }: UserCardProps) => {
                       )}
                   </>
                 )}
-              </div>
+              </div> */}
             </div>
           </div>
         </CardContent>

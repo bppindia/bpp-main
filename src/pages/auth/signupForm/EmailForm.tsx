@@ -163,7 +163,7 @@ interface TermsDialogProps {
 const TermsDialog: React.FC<TermsDialogProps> = ({ isOpen, onOpenChange }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className='sm:max-w-2xl'>
         <DialogHeader>
           <DialogTitle className='text-3xl font-semibold text-blue-700'>
             Terms & Conditions

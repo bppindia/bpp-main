@@ -1,10 +1,8 @@
 import { Outlet } from '@tanstack/react-router'
 import {
-  IconBrowserCheck,
   IconNotification,
   IconPalette,
   IconTool,
-  IconUser,
   IconDeviceLaptop,
 } from '@tabler/icons-react'
 import { Separator } from '@/components/ui/separator'
@@ -52,14 +50,9 @@ export default function Settings() {
 
 const sidebarNavItems = [
   {
-    title: 'Profile',
-    icon: <IconUser size={18} />,
-    href: '/dashboard/settings',
-  },
-  {
     title: 'Account',
     icon: <IconTool size={18} />,
-    href: '/dashboard/settings/account',
+    href: '/dashboard/settings/',
   },
   {
     title: 'Appearance',
@@ -70,11 +63,6 @@ const sidebarNavItems = [
     title: 'Notifications',
     icon: <IconNotification size={18} />,
     href: '/dashboard/settings/notifications',
-  },
-  {
-    title: 'Display',
-    icon: <IconBrowserCheck size={18} />,
-    href: '/dashboard/settings/display',
   },
   {
     title: 'Sessions',

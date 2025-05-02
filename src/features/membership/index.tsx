@@ -1,6 +1,6 @@
-// src/pages/membership/Membership.tsx
 import { useEffect, useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
+import { membershipService } from '@/services/membership.service'
 import {
   QrCode,
   Calendar,
@@ -16,14 +16,21 @@ import {
   FileText,
   Share2,
 } from 'lucide-react'
-import bppcard from '@/assets/images/BPPcard.png'
 import bppLogo from '@/assets/logo/bppLogo.svg'
 import { UserRole, UserStatus } from '@/utils/roleAccess'
 import { useAuth } from '@/context/AuthContext'
 import { toast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -33,7 +40,6 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 
-// Mock API call
 interface MembershipData {
   membershipType: 'primary' | 'active' | 'executive'
   membershipNumber: string
@@ -41,18 +47,6 @@ interface MembershipData {
   expiryDate: string
   certificateUrl: string
   referralCount: number
-}
-
-const fetchMembershipData = async (): Promise<MembershipData> => {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-  return {
-    membershipType: 'primary',
-    membershipNumber: 'BPP123456',
-    joinDate: '2024-01-01',
-    expiryDate: '2026-01-01',
-    certificateUrl: bppcard,
-    referralCount: 5,
-  }
 }
 
 const membershipBenefits = {
@@ -98,20 +92,36 @@ export default function Membership() {
   const [membershipData, setMembershipData] = useState<MembershipData | null>(
     null
   )
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
+  const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null)
+  const [uploadProgress, setUploadProgress] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [certificateStatus, setCertificateStatus] = useState<
+    'pending' | 'approved' | null
+  >(null)
 
   useEffect(() => {
     const loadMembership = async () => {
       try {
-        const data = await fetchMembershipData()
+        // Use the actual membership data from the user context
         if (user?.membership) {
-          data.membershipType =
-            user.membership.type === 'PRIMARY MEMBERSHIP'
-              ? 'primary'
-              : user.membership.type === 'ACTIVE MEMBERSHIP'
-                ? 'active'
-                : 'executive'
+          const data: MembershipData = {
+            membershipType:
+              user.membership.type === 'PRIMARY MEMBERSHIP'
+                ? 'primary'
+                : user.membership.type === 'ACTIVE MEMBERSHIP'
+                  ? 'active'
+                  : 'executive',
+            membershipNumber: user.membership.membershipNumber || 'N/A',
+            joinDate:
+              user.membership.validity?.startDate || new Date().toISOString(),
+            expiryDate:
+              user.membership.validity?.expiryDate || new Date().toISOString(),
+            certificateUrl: user.membership.cardUrl || '',
+            referralCount: user.referralProfile?.totalReferrals || 0,
+          }
+          setMembershipData(data)
         }
-        setMembershipData(data)
       } catch (_error) {
         toast({
           title: 'Error',
@@ -132,6 +142,57 @@ export default function Membership() {
         title: 'Download Started',
         description: 'Your certificate is being downloaded.',
       })
+    }
+  }
+
+  const handleGenerateCertificate = () => {
+    setIsUploadModalOpen(true)
+  }
+
+  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      setSelectedPhoto(file)
+    }
+  }
+
+  const handleSubmitCertificate = async () => {
+    if (!selectedPhoto) return
+
+    setIsSubmitting(true)
+    try {
+      const response = await membershipService.uploadCertificate(
+        selectedPhoto,
+        user?.membership?._id || ''
+      )
+
+      if (response.data.success) {
+        setCertificateStatus('pending')
+        toast({
+          title: 'Certificate Request Submitted',
+          description:
+            response.data.data?.message ||
+            'Your certificate request has been submitted for admin approval.',
+        })
+        setIsUploadModalOpen(false)
+        setSelectedPhoto(null)
+        setUploadProgress(0)
+      } else {
+        throw new Error(
+          response.data.message || 'Failed to submit certificate request'
+        )
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description:
+          error instanceof Error
+            ? error.message
+            : 'Failed to submit certificate request.',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -452,16 +513,31 @@ export default function Membership() {
                   </div>
                 </div>
                 <div className='mt-4 flex flex-col justify-center gap-2 sm:flex-row sm:justify-start'>
-                  <Button variant='outline' className='w-full sm:w-auto'>
-                    Renew Membership
-                  </Button>
-                  <Button
-                    variant='ghost'
-                    className='flex w-full items-center gap-2 sm:w-auto'
-                    onClick={handleDownloadCertificate}
-                  >
-                    <QrCode className='h-4 w-4' /> View Certificate
-                  </Button>
+                  {user?.membership?.cardUrl ? (
+                    <Button
+                      variant='ghost'
+                      className='flex w-full items-center gap-2 sm:w-auto'
+                      onClick={handleDownloadCertificate}
+                    >
+                      <QrCode className='h-4 w-4' /> View Certificate
+                    </Button>
+                  ) : certificateStatus === 'pending' ? (
+                    <Button
+                      variant='ghost'
+                      className='flex w-full items-center gap-2 sm:w-auto'
+                      disabled
+                    >
+                      <Clock className='h-4 w-4' /> Pending Approval
+                    </Button>
+                  ) : (
+                    <Button
+                      variant='ghost'
+                      className='flex w-full items-center gap-2 sm:w-auto'
+                      onClick={handleGenerateCertificate}
+                    >
+                      <QrCode className='h-4 w-4' /> Generate Certificate
+                    </Button>
+                  )}
                 </div>
               </div>
             </CardContent>
@@ -709,6 +785,71 @@ export default function Membership() {
           </Tabs>
         </div>
       </Main>
+
+      {/* Photo Upload Modal */}
+      <Dialog open={isUploadModalOpen} onOpenChange={setIsUploadModalOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Upload Passport Photo</DialogTitle>
+          </DialogHeader>
+          <div className='space-y-4'>
+            <div className='space-y-2'>
+              <Label htmlFor='photo'>Passport Size Photo</Label>
+              <Input
+                id='photo'
+                type='file'
+                accept='image/*'
+                onChange={handlePhotoUpload}
+                disabled={isSubmitting}
+              />
+              <p className='text-sm text-muted-foreground'>
+                Please upload a passport size photo (2x2 inches) in JPG or PNG
+                format
+              </p>
+            </div>
+
+            {selectedPhoto && (
+              <div className='space-y-2'>
+                <div className='flex items-center justify-center'>
+                  <img
+                    src={URL.createObjectURL(selectedPhoto)}
+                    alt='Preview'
+                    className='h-32 w-32 rounded-full object-cover'
+                  />
+                </div>
+                {uploadProgress > 0 && (
+                  <div className='space-y-2'>
+                    <Progress value={uploadProgress} />
+                    <p className='text-sm text-muted-foreground'>
+                      Uploading... {uploadProgress}%
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <div className='flex justify-end gap-2'>
+              <Button
+                variant='outline'
+                onClick={() => {
+                  setIsUploadModalOpen(false)
+                  setSelectedPhoto(null)
+                  setUploadProgress(0)
+                }}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSubmitCertificate}
+                disabled={!selectedPhoto || isSubmitting}
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit for Approval'}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

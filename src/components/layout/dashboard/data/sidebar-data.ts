@@ -13,6 +13,7 @@ import {
   IconCreditCard,
   IconCalendarEvent,
   IconTimelineEvent,
+  IconDeviceDesktop,
 } from '@tabler/icons-react'
 import { Command } from 'lucide-react'
 import { type SidebarData } from '../types'
@@ -70,11 +71,6 @@ export const sidebarData: SidebarData = {
           icon: IconUserCog,
         },
         {
-          title: 'Professional Profile',
-          url: '/dashboard/professional-profile',
-          icon: IconUserCog,
-        },
-        {
           title: 'Wallet',
           url: '/dashboard/wallet',
           icon: IconWallet,
@@ -129,13 +125,8 @@ export const sidebarData: SidebarData = {
           icon: IconSettings,
           items: [
             {
-              title: 'Profile',
-              url: '/dashboard/settings',
-              icon: IconUserCog,
-            },
-            {
               title: 'Account',
-              url: '/dashboard/settings/account',
+              url: '/dashboard/settings',
               icon: IconTool,
             },
             {
@@ -147,6 +138,11 @@ export const sidebarData: SidebarData = {
               title: 'Notifications',
               url: '/dashboard/settings/notifications',
               icon: IconNotification,
+            },
+            {
+              title: 'Session',
+              url: '/dashboard/settings/sessions',
+              icon: IconDeviceDesktop,
             },
           ],
         },

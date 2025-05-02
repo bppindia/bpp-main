@@ -109,7 +109,7 @@ export function NavUser() {
             )}
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
-                <Link to='/dashboard/settings/account'>
+                <Link to='/dashboard/settings'>
                   <BadgeCheck className='mr-2 h-4 w-4' />
                   Account
                 </Link>

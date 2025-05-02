@@ -32,7 +32,7 @@ export function PaymentRequiredDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className='sm:max-w-md'>
+      <DialogContent className='sm:max-w-xl'>
         {!showNotificationContent ? (
           <>
             <DialogHeader>
@@ -47,19 +47,19 @@ export function PaymentRequiredDialog({
                 As a Primary Member, you'll get access to:
               </p>
               <ul className='mt-2 list-disc pl-5 text-sm text-muted-foreground'>
-                <li>Donation features</li>
                 <li>Professional Profile</li>
                 <li>Community Contribution</li>
+                <li>Donation features</li>
                 <li>And more!</li>
               </ul>
               <p className='mt-4 text-sm font-medium'>
-                One-time payment of ₹5 only
+                Primary Membership fee (one time only)- Rs. 5/-
               </p>
             </div>
             <DialogFooter className='sm:justify-start'>
               <Button
                 type='button'
-                variant='default'
+                variant='secondary'
                 onClick={() => {
                   setOpen(false)
                   navigate({ to: '/dashboard/membership/payment' })
@@ -69,7 +69,7 @@ export function PaymentRequiredDialog({
               </Button>
               <Button
                 type='button'
-                variant='secondary'
+                variant='outline'
                 onClick={() => setShowNotificationContent(true)}
               >
                 Notify Me
@@ -81,14 +81,36 @@ export function PaymentRequiredDialog({
             <DialogHeader>
               <DialogTitle>Membership Notification</DialogTitle>
               <DialogDescription>
-                Our political party will accept membership on a specific date
+                We will start accepting membership fees soon.
               </DialogDescription>
             </DialogHeader>
             <div className='py-4'>
               <p className='text-sm text-muted-foreground'>
-                Once payment is accepted, we will notify you via email and
-                in-app notifications.
+                You will be notified via email or text as soon as
+                payment-gateway is open and your membership is confirmed.
               </p>
+              <div className='mt-4 space-y-2 text-sm'>
+                <p className='font-medium'>Terms and Conditions:</p>
+                <ul className='list-disc space-y-2 pl-6 text-muted-foreground'>
+                  <li>
+                    I promise to make the primary membership fee payment
+                    promptly upon receiving the official notification.
+                  </li>
+                  <li>
+                    As a primary member, I commit to act in accordance with the
+                    values and principles of the organization.
+                  </li>
+                  <li>
+                    I understand that my contact information (email and phone
+                    number) will be used to send important updates related to my
+                    membership.
+                  </li>
+                  <li>
+                    I acknowledge that the Party reserves the right to revoke my
+                    membership in the event of any breach of these terms.
+                  </li>
+                </ul>
+              </div>
               <div className='mt-4 flex items-center space-x-2'>
                 <Checkbox
                   id='terms'
@@ -108,7 +130,7 @@ export function PaymentRequiredDialog({
             <DialogFooter className='sm:justify-start'>
               <Button
                 type='button'
-                variant='default'
+                variant='secondary'
                 onClick={handleNotifyMe}
                 disabled={!termsAccepted}
               >
@@ -116,7 +138,7 @@ export function PaymentRequiredDialog({
               </Button>
               <Button
                 type='button'
-                variant='secondary'
+                variant='outline'
                 onClick={() => setShowNotificationContent(false)}
               >
                 Back

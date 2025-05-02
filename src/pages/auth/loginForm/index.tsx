@@ -172,6 +172,7 @@ const Login = () => {
                     <LoadingButton
                       type='submit'
                       className='w-full'
+                      variant='default'
                       loading={isLoading}
                     >
                       Login

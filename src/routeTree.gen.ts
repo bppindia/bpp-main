@@ -22,8 +22,6 @@ import { Route as authBusinessSignUpImport } from './routes/(auth)/business-sign
 import { Route as auth500Import } from './routes/(auth)/500'
 import { Route as DashboardWalletIndexImport } from './routes/dashboard/wallet/index'
 import { Route as DashboardReferralIndexImport } from './routes/dashboard/referral/index'
-import { Route as DashboardProfileIndexImport } from './routes/dashboard/profile/index'
-import { Route as DashboardProfessionalProfileIndexImport } from './routes/dashboard/professional-profile/index'
 import { Route as DashboardMembershipIndexImport } from './routes/dashboard/membership/index'
 import { Route as DashboardGoalIndexImport } from './routes/dashboard/goal/index'
 import { Route as DashboardEventsIndexImport } from './routes/dashboard/events/index'
@@ -83,11 +81,13 @@ const authForgotPasswordLazyImport = createFileRoute(
 const DashboardSettingsRouteLazyImport = createFileRoute(
   '/dashboard/settings',
 )()
+const DashboardProfileRouteLazyImport = createFileRoute('/dashboard/profile')()
 const DashboardUsersIndexLazyImport = createFileRoute('/dashboard/users/')()
 const DashboardTasksIndexLazyImport = createFileRoute('/dashboard/tasks/')()
 const DashboardSettingsIndexLazyImport = createFileRoute(
   '/dashboard/settings/',
 )()
+const DashboardProfileIndexLazyImport = createFileRoute('/dashboard/profile/')()
 const DashboardHelpCenterIndexLazyImport = createFileRoute(
   '/dashboard/help-center/',
 )()
@@ -99,14 +99,20 @@ const DashboardSettingsSessionsLazyImport = createFileRoute(
 const DashboardSettingsNotificationsLazyImport = createFileRoute(
   '/dashboard/settings/notifications',
 )()
-const DashboardSettingsDisplayLazyImport = createFileRoute(
-  '/dashboard/settings/display',
-)()
 const DashboardSettingsAppearanceLazyImport = createFileRoute(
   '/dashboard/settings/appearance',
 )()
-const DashboardSettingsAccountLazyImport = createFileRoute(
-  '/dashboard/settings/account',
+const DashboardProfileProfessionalLazyImport = createFileRoute(
+  '/dashboard/profile/professional',
+)()
+const DashboardProfileDocumentLazyImport = createFileRoute(
+  '/dashboard/profile/document',
+)()
+const DashboardProfileContactLazyImport = createFileRoute(
+  '/dashboard/profile/contact',
+)()
+const DashboardProfileAddressLazyImport = createFileRoute(
+  '/dashboard/profile/address',
 )()
 
 // Create/Update Routes
@@ -202,6 +208,14 @@ const DashboardSettingsRouteLazyRoute = DashboardSettingsRouteLazyImport.update(
   import('./routes/dashboard/settings/route.lazy').then((d) => d.Route),
 )
 
+const DashboardProfileRouteLazyRoute = DashboardProfileRouteLazyImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => DashboardRouteRoute,
+} as any).lazy(() =>
+  import('./routes/dashboard/profile/route.lazy').then((d) => d.Route),
+)
+
 const authSignInRoute = authSignInImport.update({
   id: '/(auth)/sign-in',
   path: '/sign-in',
@@ -246,6 +260,14 @@ const DashboardSettingsIndexLazyRoute = DashboardSettingsIndexLazyImport.update(
   import('./routes/dashboard/settings/index.lazy').then((d) => d.Route),
 )
 
+const DashboardProfileIndexLazyRoute = DashboardProfileIndexLazyImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardProfileRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/dashboard/profile/index.lazy').then((d) => d.Route),
+)
+
 const DashboardHelpCenterIndexLazyRoute =
   DashboardHelpCenterIndexLazyImport.update({
     id: '/help-center/',
@@ -282,19 +304,6 @@ const DashboardReferralIndexRoute = DashboardReferralIndexImport.update({
   path: '/referral/',
   getParentRoute: () => DashboardRouteRoute,
 } as any)
-
-const DashboardProfileIndexRoute = DashboardProfileIndexImport.update({
-  id: '/profile/',
-  path: '/profile/',
-  getParentRoute: () => DashboardRouteRoute,
-} as any)
-
-const DashboardProfessionalProfileIndexRoute =
-  DashboardProfessionalProfileIndexImport.update({
-    id: '/professional-profile/',
-    path: '/professional-profile/',
-    getParentRoute: () => DashboardRouteRoute,
-  } as any)
 
 const DashboardMembershipIndexRoute = DashboardMembershipIndexImport.update({
   id: '/membership/',
@@ -391,15 +400,6 @@ const DashboardSettingsNotificationsLazyRoute =
     ),
   )
 
-const DashboardSettingsDisplayLazyRoute =
-  DashboardSettingsDisplayLazyImport.update({
-    id: '/display',
-    path: '/display',
-    getParentRoute: () => DashboardSettingsRouteLazyRoute,
-  } as any).lazy(() =>
-    import('./routes/dashboard/settings/display.lazy').then((d) => d.Route),
-  )
-
 const DashboardSettingsAppearanceLazyRoute =
   DashboardSettingsAppearanceLazyImport.update({
     id: '/appearance',
@@ -409,13 +409,40 @@ const DashboardSettingsAppearanceLazyRoute =
     import('./routes/dashboard/settings/appearance.lazy').then((d) => d.Route),
   )
 
-const DashboardSettingsAccountLazyRoute =
-  DashboardSettingsAccountLazyImport.update({
-    id: '/account',
-    path: '/account',
-    getParentRoute: () => DashboardSettingsRouteLazyRoute,
+const DashboardProfileProfessionalLazyRoute =
+  DashboardProfileProfessionalLazyImport.update({
+    id: '/professional',
+    path: '/professional',
+    getParentRoute: () => DashboardProfileRouteLazyRoute,
   } as any).lazy(() =>
-    import('./routes/dashboard/settings/account.lazy').then((d) => d.Route),
+    import('./routes/dashboard/profile/professional.lazy').then((d) => d.Route),
+  )
+
+const DashboardProfileDocumentLazyRoute =
+  DashboardProfileDocumentLazyImport.update({
+    id: '/document',
+    path: '/document',
+    getParentRoute: () => DashboardProfileRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/dashboard/profile/document.lazy').then((d) => d.Route),
+  )
+
+const DashboardProfileContactLazyRoute =
+  DashboardProfileContactLazyImport.update({
+    id: '/contact',
+    path: '/contact',
+    getParentRoute: () => DashboardProfileRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/dashboard/profile/contact.lazy').then((d) => d.Route),
+  )
+
+const DashboardProfileAddressLazyRoute =
+  DashboardProfileAddressLazyImport.update({
+    id: '/address',
+    path: '/address',
+    getParentRoute: () => DashboardProfileRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/dashboard/profile/address.lazy').then((d) => d.Route),
   )
 
 const DashboardWalletTransactionsIndexRoute =
@@ -686,6 +713,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authSignInImport
       parentRoute: typeof rootRoute
     }
+    '/dashboard/profile': {
+      id: '/dashboard/profile'
+      path: '/profile'
+      fullPath: '/dashboard/profile'
+      preLoaderRoute: typeof DashboardProfileRouteLazyImport
+      parentRoute: typeof DashboardRouteImport
+    }
     '/dashboard/settings': {
       id: '/dashboard/settings'
       path: '/settings'
@@ -749,25 +783,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexImport
       parentRoute: typeof DashboardRouteImport
     }
-    '/dashboard/settings/account': {
-      id: '/dashboard/settings/account'
-      path: '/account'
-      fullPath: '/dashboard/settings/account'
-      preLoaderRoute: typeof DashboardSettingsAccountLazyImport
-      parentRoute: typeof DashboardSettingsRouteLazyImport
+    '/dashboard/profile/address': {
+      id: '/dashboard/profile/address'
+      path: '/address'
+      fullPath: '/dashboard/profile/address'
+      preLoaderRoute: typeof DashboardProfileAddressLazyImport
+      parentRoute: typeof DashboardProfileRouteLazyImport
+    }
+    '/dashboard/profile/contact': {
+      id: '/dashboard/profile/contact'
+      path: '/contact'
+      fullPath: '/dashboard/profile/contact'
+      preLoaderRoute: typeof DashboardProfileContactLazyImport
+      parentRoute: typeof DashboardProfileRouteLazyImport
+    }
+    '/dashboard/profile/document': {
+      id: '/dashboard/profile/document'
+      path: '/document'
+      fullPath: '/dashboard/profile/document'
+      preLoaderRoute: typeof DashboardProfileDocumentLazyImport
+      parentRoute: typeof DashboardProfileRouteLazyImport
+    }
+    '/dashboard/profile/professional': {
+      id: '/dashboard/profile/professional'
+      path: '/professional'
+      fullPath: '/dashboard/profile/professional'
+      preLoaderRoute: typeof DashboardProfileProfessionalLazyImport
+      parentRoute: typeof DashboardProfileRouteLazyImport
     }
     '/dashboard/settings/appearance': {
       id: '/dashboard/settings/appearance'
       path: '/appearance'
       fullPath: '/dashboard/settings/appearance'
       preLoaderRoute: typeof DashboardSettingsAppearanceLazyImport
-      parentRoute: typeof DashboardSettingsRouteLazyImport
-    }
-    '/dashboard/settings/display': {
-      id: '/dashboard/settings/display'
-      path: '/display'
-      fullPath: '/dashboard/settings/display'
-      preLoaderRoute: typeof DashboardSettingsDisplayLazyImport
       parentRoute: typeof DashboardSettingsRouteLazyImport
     }
     '/dashboard/settings/notifications': {
@@ -868,20 +916,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardMembershipIndexImport
       parentRoute: typeof DashboardRouteImport
     }
-    '/dashboard/professional-profile/': {
-      id: '/dashboard/professional-profile/'
-      path: '/professional-profile'
-      fullPath: '/dashboard/professional-profile'
-      preLoaderRoute: typeof DashboardProfessionalProfileIndexImport
-      parentRoute: typeof DashboardRouteImport
-    }
-    '/dashboard/profile/': {
-      id: '/dashboard/profile/'
-      path: '/profile'
-      fullPath: '/dashboard/profile'
-      preLoaderRoute: typeof DashboardProfileIndexImport
-      parentRoute: typeof DashboardRouteImport
-    }
     '/dashboard/referral/': {
       id: '/dashboard/referral/'
       path: '/referral'
@@ -916,6 +950,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/help-center'
       preLoaderRoute: typeof DashboardHelpCenterIndexLazyImport
       parentRoute: typeof DashboardRouteImport
+    }
+    '/dashboard/profile/': {
+      id: '/dashboard/profile/'
+      path: '/'
+      fullPath: '/dashboard/profile/'
+      preLoaderRoute: typeof DashboardProfileIndexLazyImport
+      parentRoute: typeof DashboardProfileRouteLazyImport
     }
     '/dashboard/settings/': {
       id: '/dashboard/settings/'
@@ -1167,10 +1208,31 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface DashboardProfileRouteLazyRouteChildren {
+  DashboardProfileAddressLazyRoute: typeof DashboardProfileAddressLazyRoute
+  DashboardProfileContactLazyRoute: typeof DashboardProfileContactLazyRoute
+  DashboardProfileDocumentLazyRoute: typeof DashboardProfileDocumentLazyRoute
+  DashboardProfileProfessionalLazyRoute: typeof DashboardProfileProfessionalLazyRoute
+  DashboardProfileIndexLazyRoute: typeof DashboardProfileIndexLazyRoute
+}
+
+const DashboardProfileRouteLazyRouteChildren: DashboardProfileRouteLazyRouteChildren =
+  {
+    DashboardProfileAddressLazyRoute: DashboardProfileAddressLazyRoute,
+    DashboardProfileContactLazyRoute: DashboardProfileContactLazyRoute,
+    DashboardProfileDocumentLazyRoute: DashboardProfileDocumentLazyRoute,
+    DashboardProfileProfessionalLazyRoute:
+      DashboardProfileProfessionalLazyRoute,
+    DashboardProfileIndexLazyRoute: DashboardProfileIndexLazyRoute,
+  }
+
+const DashboardProfileRouteLazyRouteWithChildren =
+  DashboardProfileRouteLazyRoute._addFileChildren(
+    DashboardProfileRouteLazyRouteChildren,
+  )
+
 interface DashboardSettingsRouteLazyRouteChildren {
-  DashboardSettingsAccountLazyRoute: typeof DashboardSettingsAccountLazyRoute
   DashboardSettingsAppearanceLazyRoute: typeof DashboardSettingsAppearanceLazyRoute
-  DashboardSettingsDisplayLazyRoute: typeof DashboardSettingsDisplayLazyRoute
   DashboardSettingsNotificationsLazyRoute: typeof DashboardSettingsNotificationsLazyRoute
   DashboardSettingsSessionsLazyRoute: typeof DashboardSettingsSessionsLazyRoute
   DashboardSettingsIndexLazyRoute: typeof DashboardSettingsIndexLazyRoute
@@ -1178,9 +1240,7 @@ interface DashboardSettingsRouteLazyRouteChildren {
 
 const DashboardSettingsRouteLazyRouteChildren: DashboardSettingsRouteLazyRouteChildren =
   {
-    DashboardSettingsAccountLazyRoute: DashboardSettingsAccountLazyRoute,
     DashboardSettingsAppearanceLazyRoute: DashboardSettingsAppearanceLazyRoute,
-    DashboardSettingsDisplayLazyRoute: DashboardSettingsDisplayLazyRoute,
     DashboardSettingsNotificationsLazyRoute:
       DashboardSettingsNotificationsLazyRoute,
     DashboardSettingsSessionsLazyRoute: DashboardSettingsSessionsLazyRoute,
@@ -1193,6 +1253,7 @@ const DashboardSettingsRouteLazyRouteWithChildren =
   )
 
 interface DashboardRouteRouteChildren {
+  DashboardProfileRouteLazyRoute: typeof DashboardProfileRouteLazyRouteWithChildren
   DashboardSettingsRouteLazyRoute: typeof DashboardSettingsRouteLazyRouteWithChildren
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardBusinessCommunityIndexRoute: typeof DashboardBusinessCommunityIndexRoute
@@ -1202,8 +1263,6 @@ interface DashboardRouteRouteChildren {
   DashboardEventsIndexRoute: typeof DashboardEventsIndexRoute
   DashboardGoalIndexRoute: typeof DashboardGoalIndexRoute
   DashboardMembershipIndexRoute: typeof DashboardMembershipIndexRoute
-  DashboardProfessionalProfileIndexRoute: typeof DashboardProfessionalProfileIndexRoute
-  DashboardProfileIndexRoute: typeof DashboardProfileIndexRoute
   DashboardReferralIndexRoute: typeof DashboardReferralIndexRoute
   DashboardWalletIndexRoute: typeof DashboardWalletIndexRoute
   DashboardAppsIndexLazyRoute: typeof DashboardAppsIndexLazyRoute
@@ -1219,6 +1278,7 @@ interface DashboardRouteRouteChildren {
 }
 
 const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
+  DashboardProfileRouteLazyRoute: DashboardProfileRouteLazyRouteWithChildren,
   DashboardSettingsRouteLazyRoute: DashboardSettingsRouteLazyRouteWithChildren,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardBusinessCommunityIndexRoute: DashboardBusinessCommunityIndexRoute,
@@ -1229,9 +1289,6 @@ const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
   DashboardEventsIndexRoute: DashboardEventsIndexRoute,
   DashboardGoalIndexRoute: DashboardGoalIndexRoute,
   DashboardMembershipIndexRoute: DashboardMembershipIndexRoute,
-  DashboardProfessionalProfileIndexRoute:
-    DashboardProfessionalProfileIndexRoute,
-  DashboardProfileIndexRoute: DashboardProfileIndexRoute,
   DashboardReferralIndexRoute: DashboardReferralIndexRoute,
   DashboardWalletIndexRoute: DashboardWalletIndexRoute,
   DashboardAppsIndexLazyRoute: DashboardAppsIndexLazyRoute,
@@ -1349,6 +1406,7 @@ export interface FileRoutesByFullPath {
   '/500': typeof errors500LazyRoute
   '/business-sign-up': typeof authBusinessSignUpRoute
   '/sign-in': typeof authSignInRoute
+  '/dashboard/profile': typeof DashboardProfileRouteLazyRouteWithChildren
   '/dashboard/settings': typeof DashboardSettingsRouteLazyRouteWithChildren
   '/forgot-password': typeof authForgotPasswordLazyRoute
   '/sign-up': typeof authSignUpLazyRoute
@@ -1357,9 +1415,11 @@ export interface FileRoutesByFullPath {
   '/404': typeof errors404LazyRoute
   '/503': typeof errors503LazyRoute
   '/dashboard/': typeof DashboardIndexRoute
-  '/dashboard/settings/account': typeof DashboardSettingsAccountLazyRoute
+  '/dashboard/profile/address': typeof DashboardProfileAddressLazyRoute
+  '/dashboard/profile/contact': typeof DashboardProfileContactLazyRoute
+  '/dashboard/profile/document': typeof DashboardProfileDocumentLazyRoute
+  '/dashboard/profile/professional': typeof DashboardProfileProfessionalLazyRoute
   '/dashboard/settings/appearance': typeof DashboardSettingsAppearanceLazyRoute
-  '/dashboard/settings/display': typeof DashboardSettingsDisplayLazyRoute
   '/dashboard/settings/notifications': typeof DashboardSettingsNotificationsLazyRoute
   '/dashboard/settings/sessions': typeof DashboardSettingsSessionsLazyRoute
   '/about': typeof PublicAboutIndexRoute
@@ -1374,13 +1434,12 @@ export interface FileRoutesByFullPath {
   '/dashboard/events': typeof DashboardEventsIndexRoute
   '/dashboard/goal': typeof DashboardGoalIndexRoute
   '/dashboard/membership': typeof DashboardMembershipIndexRoute
-  '/dashboard/professional-profile': typeof DashboardProfessionalProfileIndexRoute
-  '/dashboard/profile': typeof DashboardProfileIndexRoute
   '/dashboard/referral': typeof DashboardReferralIndexRoute
   '/dashboard/wallet': typeof DashboardWalletIndexRoute
   '/dashboard/apps': typeof DashboardAppsIndexLazyRoute
   '/dashboard/chats': typeof DashboardChatsIndexLazyRoute
   '/dashboard/help-center': typeof DashboardHelpCenterIndexLazyRoute
+  '/dashboard/profile/': typeof DashboardProfileIndexLazyRoute
   '/dashboard/settings/': typeof DashboardSettingsIndexLazyRoute
   '/dashboard/tasks': typeof DashboardTasksIndexLazyRoute
   '/dashboard/users': typeof DashboardUsersIndexLazyRoute
@@ -1431,9 +1490,11 @@ export interface FileRoutesByTo {
   '/404': typeof errors404LazyRoute
   '/503': typeof errors503LazyRoute
   '/dashboard': typeof DashboardIndexRoute
-  '/dashboard/settings/account': typeof DashboardSettingsAccountLazyRoute
+  '/dashboard/profile/address': typeof DashboardProfileAddressLazyRoute
+  '/dashboard/profile/contact': typeof DashboardProfileContactLazyRoute
+  '/dashboard/profile/document': typeof DashboardProfileDocumentLazyRoute
+  '/dashboard/profile/professional': typeof DashboardProfileProfessionalLazyRoute
   '/dashboard/settings/appearance': typeof DashboardSettingsAppearanceLazyRoute
-  '/dashboard/settings/display': typeof DashboardSettingsDisplayLazyRoute
   '/dashboard/settings/notifications': typeof DashboardSettingsNotificationsLazyRoute
   '/dashboard/settings/sessions': typeof DashboardSettingsSessionsLazyRoute
   '/about': typeof PublicAboutIndexRoute
@@ -1448,13 +1509,12 @@ export interface FileRoutesByTo {
   '/dashboard/events': typeof DashboardEventsIndexRoute
   '/dashboard/goal': typeof DashboardGoalIndexRoute
   '/dashboard/membership': typeof DashboardMembershipIndexRoute
-  '/dashboard/professional-profile': typeof DashboardProfessionalProfileIndexRoute
-  '/dashboard/profile': typeof DashboardProfileIndexRoute
   '/dashboard/referral': typeof DashboardReferralIndexRoute
   '/dashboard/wallet': typeof DashboardWalletIndexRoute
   '/dashboard/apps': typeof DashboardAppsIndexLazyRoute
   '/dashboard/chats': typeof DashboardChatsIndexLazyRoute
   '/dashboard/help-center': typeof DashboardHelpCenterIndexLazyRoute
+  '/dashboard/profile': typeof DashboardProfileIndexLazyRoute
   '/dashboard/settings': typeof DashboardSettingsIndexLazyRoute
   '/dashboard/tasks': typeof DashboardTasksIndexLazyRoute
   '/dashboard/users': typeof DashboardUsersIndexLazyRoute
@@ -1500,6 +1560,7 @@ export interface FileRoutesById {
   '/(auth)/500': typeof auth500Route
   '/(auth)/business-sign-up': typeof authBusinessSignUpRoute
   '/(auth)/sign-in': typeof authSignInRoute
+  '/dashboard/profile': typeof DashboardProfileRouteLazyRouteWithChildren
   '/dashboard/settings': typeof DashboardSettingsRouteLazyRouteWithChildren
   '/(auth)/forgot-password': typeof authForgotPasswordLazyRoute
   '/(auth)/sign-up': typeof authSignUpLazyRoute
@@ -1509,9 +1570,11 @@ export interface FileRoutesById {
   '/(errors)/500': typeof errors500LazyRoute
   '/(errors)/503': typeof errors503LazyRoute
   '/dashboard/': typeof DashboardIndexRoute
-  '/dashboard/settings/account': typeof DashboardSettingsAccountLazyRoute
+  '/dashboard/profile/address': typeof DashboardProfileAddressLazyRoute
+  '/dashboard/profile/contact': typeof DashboardProfileContactLazyRoute
+  '/dashboard/profile/document': typeof DashboardProfileDocumentLazyRoute
+  '/dashboard/profile/professional': typeof DashboardProfileProfessionalLazyRoute
   '/dashboard/settings/appearance': typeof DashboardSettingsAppearanceLazyRoute
-  '/dashboard/settings/display': typeof DashboardSettingsDisplayLazyRoute
   '/dashboard/settings/notifications': typeof DashboardSettingsNotificationsLazyRoute
   '/dashboard/settings/sessions': typeof DashboardSettingsSessionsLazyRoute
   '/_public/about/': typeof PublicAboutIndexRoute
@@ -1526,13 +1589,12 @@ export interface FileRoutesById {
   '/dashboard/events/': typeof DashboardEventsIndexRoute
   '/dashboard/goal/': typeof DashboardGoalIndexRoute
   '/dashboard/membership/': typeof DashboardMembershipIndexRoute
-  '/dashboard/professional-profile/': typeof DashboardProfessionalProfileIndexRoute
-  '/dashboard/profile/': typeof DashboardProfileIndexRoute
   '/dashboard/referral/': typeof DashboardReferralIndexRoute
   '/dashboard/wallet/': typeof DashboardWalletIndexRoute
   '/dashboard/apps/': typeof DashboardAppsIndexLazyRoute
   '/dashboard/chats/': typeof DashboardChatsIndexLazyRoute
   '/dashboard/help-center/': typeof DashboardHelpCenterIndexLazyRoute
+  '/dashboard/profile/': typeof DashboardProfileIndexLazyRoute
   '/dashboard/settings/': typeof DashboardSettingsIndexLazyRoute
   '/dashboard/tasks/': typeof DashboardTasksIndexLazyRoute
   '/dashboard/users/': typeof DashboardUsersIndexLazyRoute
@@ -1579,6 +1641,7 @@ export interface FileRouteTypes {
     | '/500'
     | '/business-sign-up'
     | '/sign-in'
+    | '/dashboard/profile'
     | '/dashboard/settings'
     | '/forgot-password'
     | '/sign-up'
@@ -1587,9 +1650,11 @@ export interface FileRouteTypes {
     | '/404'
     | '/503'
     | '/dashboard/'
-    | '/dashboard/settings/account'
+    | '/dashboard/profile/address'
+    | '/dashboard/profile/contact'
+    | '/dashboard/profile/document'
+    | '/dashboard/profile/professional'
     | '/dashboard/settings/appearance'
-    | '/dashboard/settings/display'
     | '/dashboard/settings/notifications'
     | '/dashboard/settings/sessions'
     | '/about'
@@ -1604,13 +1669,12 @@ export interface FileRouteTypes {
     | '/dashboard/events'
     | '/dashboard/goal'
     | '/dashboard/membership'
-    | '/dashboard/professional-profile'
-    | '/dashboard/profile'
     | '/dashboard/referral'
     | '/dashboard/wallet'
     | '/dashboard/apps'
     | '/dashboard/chats'
     | '/dashboard/help-center'
+    | '/dashboard/profile/'
     | '/dashboard/settings/'
     | '/dashboard/tasks'
     | '/dashboard/users'
@@ -1660,9 +1724,11 @@ export interface FileRouteTypes {
     | '/404'
     | '/503'
     | '/dashboard'
-    | '/dashboard/settings/account'
+    | '/dashboard/profile/address'
+    | '/dashboard/profile/contact'
+    | '/dashboard/profile/document'
+    | '/dashboard/profile/professional'
     | '/dashboard/settings/appearance'
-    | '/dashboard/settings/display'
     | '/dashboard/settings/notifications'
     | '/dashboard/settings/sessions'
     | '/about'
@@ -1677,13 +1743,12 @@ export interface FileRouteTypes {
     | '/dashboard/events'
     | '/dashboard/goal'
     | '/dashboard/membership'
-    | '/dashboard/professional-profile'
-    | '/dashboard/profile'
     | '/dashboard/referral'
     | '/dashboard/wallet'
     | '/dashboard/apps'
     | '/dashboard/chats'
     | '/dashboard/help-center'
+    | '/dashboard/profile'
     | '/dashboard/settings'
     | '/dashboard/tasks'
     | '/dashboard/users'
@@ -1727,6 +1792,7 @@ export interface FileRouteTypes {
     | '/(auth)/500'
     | '/(auth)/business-sign-up'
     | '/(auth)/sign-in'
+    | '/dashboard/profile'
     | '/dashboard/settings'
     | '/(auth)/forgot-password'
     | '/(auth)/sign-up'
@@ -1736,9 +1802,11 @@ export interface FileRouteTypes {
     | '/(errors)/500'
     | '/(errors)/503'
     | '/dashboard/'
-    | '/dashboard/settings/account'
+    | '/dashboard/profile/address'
+    | '/dashboard/profile/contact'
+    | '/dashboard/profile/document'
+    | '/dashboard/profile/professional'
     | '/dashboard/settings/appearance'
-    | '/dashboard/settings/display'
     | '/dashboard/settings/notifications'
     | '/dashboard/settings/sessions'
     | '/_public/about/'
@@ -1753,13 +1821,12 @@ export interface FileRouteTypes {
     | '/dashboard/events/'
     | '/dashboard/goal/'
     | '/dashboard/membership/'
-    | '/dashboard/professional-profile/'
-    | '/dashboard/profile/'
     | '/dashboard/referral/'
     | '/dashboard/wallet/'
     | '/dashboard/apps/'
     | '/dashboard/chats/'
     | '/dashboard/help-center/'
+    | '/dashboard/profile/'
     | '/dashboard/settings/'
     | '/dashboard/tasks/'
     | '/dashboard/users/'
@@ -1861,6 +1928,7 @@ export const routeTree = rootRoute
     "/dashboard": {
       "filePath": "dashboard/route.tsx",
       "children": [
+        "/dashboard/profile",
         "/dashboard/settings",
         "/dashboard/",
         "/dashboard/business-community/",
@@ -1870,8 +1938,6 @@ export const routeTree = rootRoute
         "/dashboard/events/",
         "/dashboard/goal/",
         "/dashboard/membership/",
-        "/dashboard/professional-profile/",
-        "/dashboard/profile/",
         "/dashboard/referral/",
         "/dashboard/wallet/",
         "/dashboard/apps/",
@@ -1932,13 +1998,22 @@ export const routeTree = rootRoute
     "/(auth)/sign-in": {
       "filePath": "(auth)/sign-in.tsx"
     },
+    "/dashboard/profile": {
+      "filePath": "dashboard/profile/route.lazy.tsx",
+      "parent": "/dashboard",
+      "children": [
+        "/dashboard/profile/address",
+        "/dashboard/profile/contact",
+        "/dashboard/profile/document",
+        "/dashboard/profile/professional",
+        "/dashboard/profile/"
+      ]
+    },
     "/dashboard/settings": {
       "filePath": "dashboard/settings/route.lazy.tsx",
       "parent": "/dashboard",
       "children": [
-        "/dashboard/settings/account",
         "/dashboard/settings/appearance",
-        "/dashboard/settings/display",
         "/dashboard/settings/notifications",
         "/dashboard/settings/sessions",
         "/dashboard/settings/"
@@ -1969,16 +2044,24 @@ export const routeTree = rootRoute
       "filePath": "dashboard/index.tsx",
       "parent": "/dashboard"
     },
-    "/dashboard/settings/account": {
-      "filePath": "dashboard/settings/account.lazy.tsx",
-      "parent": "/dashboard/settings"
+    "/dashboard/profile/address": {
+      "filePath": "dashboard/profile/address.lazy.tsx",
+      "parent": "/dashboard/profile"
+    },
+    "/dashboard/profile/contact": {
+      "filePath": "dashboard/profile/contact.lazy.tsx",
+      "parent": "/dashboard/profile"
+    },
+    "/dashboard/profile/document": {
+      "filePath": "dashboard/profile/document.lazy.tsx",
+      "parent": "/dashboard/profile"
+    },
+    "/dashboard/profile/professional": {
+      "filePath": "dashboard/profile/professional.lazy.tsx",
+      "parent": "/dashboard/profile"
     },
     "/dashboard/settings/appearance": {
       "filePath": "dashboard/settings/appearance.lazy.tsx",
-      "parent": "/dashboard/settings"
-    },
-    "/dashboard/settings/display": {
-      "filePath": "dashboard/settings/display.lazy.tsx",
       "parent": "/dashboard/settings"
     },
     "/dashboard/settings/notifications": {
@@ -2037,14 +2120,6 @@ export const routeTree = rootRoute
       "filePath": "dashboard/membership/index.tsx",
       "parent": "/dashboard"
     },
-    "/dashboard/professional-profile/": {
-      "filePath": "dashboard/professional-profile/index.tsx",
-      "parent": "/dashboard"
-    },
-    "/dashboard/profile/": {
-      "filePath": "dashboard/profile/index.tsx",
-      "parent": "/dashboard"
-    },
     "/dashboard/referral/": {
       "filePath": "dashboard/referral/index.tsx",
       "parent": "/dashboard"
@@ -2064,6 +2139,10 @@ export const routeTree = rootRoute
     "/dashboard/help-center/": {
       "filePath": "dashboard/help-center/index.lazy.tsx",
       "parent": "/dashboard"
+    },
+    "/dashboard/profile/": {
+      "filePath": "dashboard/profile/index.lazy.tsx",
+      "parent": "/dashboard/profile"
     },
     "/dashboard/settings/": {
       "filePath": "dashboard/settings/index.lazy.tsx",

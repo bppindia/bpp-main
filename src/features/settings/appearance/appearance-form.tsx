@@ -6,7 +6,6 @@ import { fonts } from '@/config/fonts'
 import { cn } from '@/lib/utils'
 import { useFont } from '@/context/font-context'
 import { useTheme } from '@/context/theme-context'
-import { toast } from '@/hooks/use-toast'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
   Form,
@@ -49,15 +48,6 @@ export function AppearanceForm() {
   function onSubmit(data: AppearanceFormValues) {
     if (data.font != font) setFont(data.font)
     if (data.theme != theme) setTheme(data.theme)
-
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
   }
 
   return (
