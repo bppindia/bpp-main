@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie'
-import { asApiResponse } from '@/types/api'
 import { postData } from './apiClient'
 
 interface ApiResponse<T> {
@@ -25,7 +24,7 @@ export const authService = {
         '/auth/forgot-password',
         identifier
       )
-      return asApiResponse(response)
+      return response.data
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message)
@@ -45,7 +44,7 @@ export const authService = {
         '/auth/reset-password',
         data
       )
-      return asApiResponse(response)
+      return response.data
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message)

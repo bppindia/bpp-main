@@ -2,11 +2,7 @@ export const stateWithDistrictData = {
   states: [
     {
       state: 'Andaman And Nicobar Islands',
-      districts: [
-        'Nicobars',
-        'North And Middle Andaman',
-        'South Andamans',
-      ],
+      districts: ['Nicobars', 'North And Middle Andaman', 'South Andamans'],
     },
     {
       state: 'Andhra Pradesh',
@@ -194,9 +190,7 @@ export const stateWithDistrictData = {
     },
     {
       state: 'Chandigarh',
-      districts: [
-        'Chandigarh',
-      ],
+      districts: ['Chandigarh'],
     },
     {
       state: 'Delhi',
@@ -216,18 +210,11 @@ export const stateWithDistrictData = {
     },
     {
       state: 'The Dadra And Nagar Haveli And Daman And Diu',
-      districts: [
-        'Dadra And Nagar Haveli',
-        'Daman',
-        'Diu',
-      ],
+      districts: ['Dadra And Nagar Haveli', 'Daman', 'Diu'],
     },
     {
       state: 'Goa',
-      districts: [
-        'North Goa',
-        'South Goa',
-      ],
+      districts: ['North Goa', 'South Goa'],
     },
     {
       state: 'Gujarat',
@@ -422,16 +409,11 @@ export const stateWithDistrictData = {
     },
     {
       state: 'Ladakh',
-      districts: [
-        'Kargil',
-        'Leh Ladakh',
-      ],
+      districts: ['Kargil', 'Leh Ladakh'],
     },
     {
       state: 'Lakshadweep',
-      districts: [
-        'Lakshadweep District',
-      ],
+      districts: ['Lakshadweep District'],
     },
     {
       state: 'Maharashtra',
@@ -675,10 +657,7 @@ export const stateWithDistrictData = {
     },
     {
       state: 'Puducherry',
-      districts: [
-        'Karaikal',
-        'Puducherry',
-      ],
+      districts: ['Karaikal', 'Puducherry'],
     },
     {
       state: 'Rajasthan',

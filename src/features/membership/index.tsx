@@ -45,7 +45,7 @@ interface MembershipData {
   membershipNumber: string
   joinDate: string
   expiryDate: string
-  certificateUrl: string
+  CardUrl: string
   referralCount: number
 }
 
@@ -96,9 +96,9 @@ export default function Membership() {
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null)
   const [uploadProgress, setUploadProgress] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [certificateStatus, setCertificateStatus] = useState<
-    'pending' | 'approved' | null
-  >(null)
+  const [CardStatus, setCardStatus] = useState<'pending' | 'approved' | null>(
+    null
+  )
 
   useEffect(() => {
     const loadMembership = async () => {
@@ -117,7 +117,7 @@ export default function Membership() {
               user.membership.validity?.startDate || new Date().toISOString(),
             expiryDate:
               user.membership.validity?.expiryDate || new Date().toISOString(),
-            certificateUrl: user.membership.cardUrl || '',
+            CardUrl: user.membership.cardUrl || '',
             referralCount: user.referralProfile?.totalReferrals || 0,
           }
           setMembershipData(data)
@@ -135,17 +135,17 @@ export default function Membership() {
     loadMembership()
   }, [user])
 
-  const handleDownloadCertificate = () => {
+  const handleDownloadCard = () => {
     if (user?.membership?.cardUrl) {
       window.open(user.membership.cardUrl, '_blank')
       toast({
         title: 'Download Started',
-        description: 'Your certificate is being downloaded.',
+        description: 'Your Card is being downloaded.',
       })
     }
   }
 
-  const handleGenerateCertificate = () => {
+  const handleGenerateCard = () => {
     setIsUploadModalOpen(true)
   }
 
@@ -156,7 +156,7 @@ export default function Membership() {
     }
   }
 
-  const handleSubmitCertificate = async () => {
+  const handleSubmitCard = async () => {
     if (!selectedPhoto) return
 
     setIsSubmitting(true)
@@ -167,19 +167,19 @@ export default function Membership() {
       )
 
       if (response.data.success) {
-        setCertificateStatus('pending')
+        setCardStatus('pending')
         toast({
-          title: 'Certificate Request Submitted',
+          title: 'Card Request Submitted',
           description:
             response.data.data?.message ||
-            'Your certificate request has been submitted for admin approval.',
+            'Your Card request has been submitted for admin approval.',
         })
         setIsUploadModalOpen(false)
         setSelectedPhoto(null)
         setUploadProgress(0)
       } else {
         throw new Error(
-          response.data.message || 'Failed to submit certificate request'
+          response.data.message || 'Failed to submit Card request'
         )
       }
     } catch (error) {
@@ -188,7 +188,7 @@ export default function Membership() {
         description:
           error instanceof Error
             ? error.message
-            : 'Failed to submit certificate request.',
+            : 'Failed to submit Card request.',
         variant: 'destructive',
       })
     } finally {
@@ -517,11 +517,11 @@ export default function Membership() {
                     <Button
                       variant='ghost'
                       className='flex w-full items-center gap-2 sm:w-auto'
-                      onClick={handleDownloadCertificate}
+                      onClick={handleDownloadCard}
                     >
-                      <QrCode className='h-4 w-4' /> View Certificate
+                      <QrCode className='h-4 w-4' /> View Card
                     </Button>
-                  ) : certificateStatus === 'pending' ? (
+                  ) : CardStatus === 'pending' ? (
                     <Button
                       variant='ghost'
                       className='flex w-full items-center gap-2 sm:w-auto'
@@ -533,9 +533,9 @@ export default function Membership() {
                     <Button
                       variant='ghost'
                       className='flex w-full items-center gap-2 sm:w-auto'
-                      onClick={handleGenerateCertificate}
+                      onClick={handleGenerateCard}
                     >
-                      <QrCode className='h-4 w-4' /> Generate Certificate
+                      <QrCode className='h-4 w-4' /> Generate Card
                     </Button>
                   )}
                 </div>
@@ -726,7 +726,7 @@ export default function Membership() {
                       </div>
                       <div className='rounded-lg border p-4 text-center'>
                         <p className='text-2xl font-bold'>
-                          {user?.referralProfile?.successfulReferrals || 0}
+                          {user?.referralProfile?.successfulReferrals}
                         </p>
                         <p className='text-sm text-muted-foreground'>
                           Successful
@@ -734,7 +734,7 @@ export default function Membership() {
                       </div>
                       <div className='rounded-lg border p-4 text-center'>
                         <p className='text-2xl font-bold'>
-                          {user?.referralProfile?.pendingReferrals || 0}
+                          {user?.referralProfile?.pendingReferrals}
                         </p>
                         <p className='text-sm text-muted-foreground'>Pending</p>
                       </div>
@@ -802,9 +802,13 @@ export default function Membership() {
                 onChange={handlePhotoUpload}
                 disabled={isSubmitting}
               />
-              <p className='text-sm text-muted-foreground'>
+              <p className='text-xs text-muted-foreground'>
                 Please upload a passport size photo (2x2 inches) in JPG or PNG
                 format
+              </p>
+              <p className='text-xs font-medium text-red-600'>
+                Important: Your photo must match with your Aadhaar Card or
+                Electoral Card photo
               </p>
             </div>
 
@@ -841,7 +845,7 @@ export default function Membership() {
                 Cancel
               </Button>
               <Button
-                onClick={handleSubmitCertificate}
+                onClick={handleSubmitCard}
                 disabled={!selectedPhoto || isSubmitting}
               >
                 {isSubmitting ? 'Submitting...' : 'Submit for Approval'}

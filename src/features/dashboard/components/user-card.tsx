@@ -221,7 +221,7 @@ const UserCard = memo(({ dashboardData, isLoading }: UserCardProps) => {
         <div>
           <p className='text-sm text-muted-foreground'>Total Referrals</p>
           <p className='truncate font-medium'>
-            {dashboardData?.referrals?.totalReferrals || 'N/A'}
+            {dashboardData?.referrals?.successfulReferrals || 'N/A'}
           </p>
         </div>
       </div>
@@ -241,8 +241,8 @@ const UserCard = memo(({ dashboardData, isLoading }: UserCardProps) => {
               <Avatar className='h-24 w-24 shrink-0 sm:h-32 sm:w-32'>
                 <AvatarImage
                   src={
-                      typeof authUser?.profilePicture === 'string'
-                        ? authUser.profilePicture
+                    typeof authUser?.profilePicture === 'string'
+                      ? authUser.profilePicture
                       : undefined
                   }
                   alt={dashboardData.user.firstName}

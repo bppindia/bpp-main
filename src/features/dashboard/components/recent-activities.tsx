@@ -129,7 +129,7 @@ export function RecentActivities({
       case 'PAYMENT':
         return `Payment of ₹${activity.details.amount as number} for ${activity.details.purpose as string}`
       case 'REFERRAL':
-        return `Referred ${activity.details.referredName as string} (${activity.details.referredEmail as string})`
+        return `Referred ${activity.details.referredUserName as string} (${activity.details.status as string})`
       default:
         return activity.activityType
     }
