@@ -188,10 +188,13 @@ const MultiStepForm = () => {
     // Step 2: Personal Details
     else if (currentStepIndex === 2) {
       const requiredFields: (keyof RegistrationData)[] = [
+        'title',
         'firstName',
         'lastName',
         'dateOfBirth',
+        'age',
         'gender',
+        'phone',
         'occupation',
       ]
       const missingFields = requiredFields.filter((field) => !data[field])
@@ -263,6 +266,30 @@ const MultiStepForm = () => {
       // Validate Aadhaar number format (12 digits)
       if (!/^\d{12}$/.test(data.aadhaarNumber)) {
         toast.error('Please enter a valid 12-digit Aadhaar number')
+        return
+      }
+
+      // Validate file types for Aadhaar uploads
+      const allowedFileTypes = [
+        'image/jpeg',
+        'image/jpg',
+        'image/png',
+        'application/pdf',
+      ]
+      const frontFileType = data.aadhaarFront?.type
+      const backFileType = data.aadhaarBack?.type
+
+      if (!frontFileType || !allowedFileTypes.includes(frontFileType)) {
+        toast.error(
+          'Aadhaar front image must be a PDF or image file (PNG, JPEG, JPG)'
+        )
+        return
+      }
+
+      if (!backFileType || !allowedFileTypes.includes(backFileType)) {
+        toast.error(
+          'Aadhaar back image must be a PDF or image file (PNG, JPEG, JPG)'
+        )
         return
       }
 

@@ -2,13 +2,15 @@
 export interface User {
   _id?: string
   id?: string
-  title?: string
+  title?: 'Mr' | 'Ms' | 'Mrs' | 'Dr' | 'CA' | 'CS' | 'Adv'
   firstName?: string
   lastName?: string
   middleName?: string
   name?: string
   email?: string
   phone?: string
+  password?: string
+  profilePicture?: string
   address?: {
     line1?: string
     line2?: string
@@ -21,18 +23,36 @@ export interface User {
     number?: string
     front?: string
     back?: string
+    updateCount?: number
+    lastUpdated?: string
   }
   voter?: {
     number?: string
     front?: string
     back?: string
+    updateCount?: number
+    lastUpdated?: string
   }
   dateOfBirth?: string
   age?: number
+  gender?: 'male' | 'female' | 'other'
   occupation?: string
-  role?: string
-  status?: string
+  role?: 'MEMBER' | 'PRIMARY MEMBER' | 'ACTIVE MEMBER'
+  status?: 'PROCESSING' | 'APPROVED' | 'REJECTED' | 'SUSPENDED'
   isVerified?: boolean
+  rejectionRemark?: string
+  unverifiedDocuments?: (
+  "aadhaarNumber" |
+  "aadhaarFront" |
+  "aadhaarBack" |
+  "voterIdNumber" |
+  "voterIdFront" |
+  "voterIdBack" |
+  "address" |
+  "name" |
+  "dob" |
+  "email" |
+  "phone")[]
   wallet?: {
     _id?: string
     user?: string
@@ -40,6 +60,11 @@ export interface User {
     isActive?: boolean
     createdAt?: string
     updatedAt?: string
+  }
+  notificationPreferences?: {
+    email?: boolean
+    sms?: boolean
+    push?: boolean
   }
   membership?: {
     _id?: string

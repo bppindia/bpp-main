@@ -4,6 +4,7 @@ import { useAuth } from '@/context/AuthContext'
 import { DashboardData, useDashboardData } from '@/hooks/use-dashboard-data'
 import { Header } from '@/components/layout/dashboard/header'
 import { Main } from '@/components/layout/dashboard/main'
+import { NotificationHeaderMenu } from '@/components/layout/dashboard/notification'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
@@ -12,6 +13,7 @@ import GoogleMap from './components/google-map'
 import { PieChartComponent } from './components/pie-chart'
 import { RecentActivities } from './components/recent-activities'
 import { StatsGrid } from './components/stats-grid'
+import { StepperStats } from './components/stepper-stats'
 import UserCard from './components/user-card'
 
 type StatCardKey = keyof DashboardData | 'activeMembers'
@@ -82,6 +84,7 @@ export default function Dashboard() {
       <Header fixed>
         <Search />
         <div className='ml-auto flex items-center space-x-4'>
+          <NotificationHeaderMenu />
           <ThemeSwitch />
           <ProfileDropdown />
         </div>
@@ -89,6 +92,7 @@ export default function Dashboard() {
 
       <Main>
         <UserCard dashboardData={dashboardData} isLoading={isLoading} />
+        <StepperStats />
         <div className='space-y-6'>
           <StatsGrid
             isLoading={isLoading}

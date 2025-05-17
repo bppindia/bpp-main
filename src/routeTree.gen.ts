@@ -56,6 +56,7 @@ import { Route as PublicAboutLogoMediaRequestIndexImport } from './routes/_publi
 import { Route as PublicAboutGetToKnowBppIndexImport } from './routes/_public/about/get-to-know-bpp/index'
 import { Route as PublicAboutCommitmentProgressIndexImport } from './routes/_public/about/commitment-progress/index'
 import { Route as PublicAboutBppGoalsIndexImport } from './routes/_public/about/bpp-goals/index'
+import { Route as PublicMembershipDetailsMembershipIdImport } from './routes/_public/membership/details/$membershipId'
 import { Route as PublicAboutBppGoalsUpliftmentOfFarmersIndexImport } from './routes/_public/about/bpp-goals/upliftment-of-farmers/index'
 import { Route as PublicAboutBppGoalsUpholdSecularismIndexImport } from './routes/_public/about/bpp-goals/uphold-secularism/index'
 import { Route as PublicAboutBppGoalsQualityEducationIndexImport } from './routes/_public/about/bpp-goals/quality-education/index'
@@ -597,6 +598,13 @@ const PublicAboutBppGoalsIndexRoute = PublicAboutBppGoalsIndexImport.update({
   getParentRoute: () => PublicRoute,
 } as any)
 
+const PublicMembershipDetailsMembershipIdRoute =
+  PublicMembershipDetailsMembershipIdImport.update({
+    id: '/membership/details/$membershipId',
+    path: '/membership/details/$membershipId',
+    getParentRoute: () => PublicRoute,
+  } as any)
+
 const PublicAboutBppGoalsUpliftmentOfFarmersIndexRoute =
   PublicAboutBppGoalsUpliftmentOfFarmersIndexImport.update({
     id: '/about/bpp-goals/upliftment-of-farmers/',
@@ -979,6 +987,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardUsersIndexLazyImport
       parentRoute: typeof DashboardRouteImport
     }
+    '/_public/membership/details/$membershipId': {
+      id: '/_public/membership/details/$membershipId'
+      path: '/membership/details/$membershipId'
+      fullPath: '/membership/details/$membershipId'
+      preLoaderRoute: typeof PublicMembershipDetailsMembershipIdImport
+      parentRoute: typeof PublicImport
+    }
     '/_public/about/bpp-goals/': {
       id: '/_public/about/bpp-goals/'
       path: '/about/bpp-goals'
@@ -1313,6 +1328,7 @@ interface PublicRouteChildren {
   PublicDownloadAppIndexRoute: typeof PublicDownloadAppIndexRoute
   PublicPrivacyPolicyIndexRoute: typeof PublicPrivacyPolicyIndexRoute
   PublicTermsAndConditionsIndexRoute: typeof PublicTermsAndConditionsIndexRoute
+  PublicMembershipDetailsMembershipIdRoute: typeof PublicMembershipDetailsMembershipIdRoute
   PublicAboutBppGoalsIndexRoute: typeof PublicAboutBppGoalsIndexRoute
   PublicAboutCommitmentProgressIndexRoute: typeof PublicAboutCommitmentProgressIndexRoute
   PublicAboutGetToKnowBppIndexRoute: typeof PublicAboutGetToKnowBppIndexRoute
@@ -1348,6 +1364,8 @@ const PublicRouteChildren: PublicRouteChildren = {
   PublicDownloadAppIndexRoute: PublicDownloadAppIndexRoute,
   PublicPrivacyPolicyIndexRoute: PublicPrivacyPolicyIndexRoute,
   PublicTermsAndConditionsIndexRoute: PublicTermsAndConditionsIndexRoute,
+  PublicMembershipDetailsMembershipIdRoute:
+    PublicMembershipDetailsMembershipIdRoute,
   PublicAboutBppGoalsIndexRoute: PublicAboutBppGoalsIndexRoute,
   PublicAboutCommitmentProgressIndexRoute:
     PublicAboutCommitmentProgressIndexRoute,
@@ -1443,6 +1461,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/settings/': typeof DashboardSettingsIndexLazyRoute
   '/dashboard/tasks': typeof DashboardTasksIndexLazyRoute
   '/dashboard/users': typeof DashboardUsersIndexLazyRoute
+  '/membership/details/$membershipId': typeof PublicMembershipDetailsMembershipIdRoute
   '/about/bpp-goals': typeof PublicAboutBppGoalsIndexRoute
   '/about/commitment-progress': typeof PublicAboutCommitmentProgressIndexRoute
   '/about/get-to-know-bpp': typeof PublicAboutGetToKnowBppIndexRoute
@@ -1518,6 +1537,7 @@ export interface FileRoutesByTo {
   '/dashboard/settings': typeof DashboardSettingsIndexLazyRoute
   '/dashboard/tasks': typeof DashboardTasksIndexLazyRoute
   '/dashboard/users': typeof DashboardUsersIndexLazyRoute
+  '/membership/details/$membershipId': typeof PublicMembershipDetailsMembershipIdRoute
   '/about/bpp-goals': typeof PublicAboutBppGoalsIndexRoute
   '/about/commitment-progress': typeof PublicAboutCommitmentProgressIndexRoute
   '/about/get-to-know-bpp': typeof PublicAboutGetToKnowBppIndexRoute
@@ -1598,6 +1618,7 @@ export interface FileRoutesById {
   '/dashboard/settings/': typeof DashboardSettingsIndexLazyRoute
   '/dashboard/tasks/': typeof DashboardTasksIndexLazyRoute
   '/dashboard/users/': typeof DashboardUsersIndexLazyRoute
+  '/_public/membership/details/$membershipId': typeof PublicMembershipDetailsMembershipIdRoute
   '/_public/about/bpp-goals/': typeof PublicAboutBppGoalsIndexRoute
   '/_public/about/commitment-progress/': typeof PublicAboutCommitmentProgressIndexRoute
   '/_public/about/get-to-know-bpp/': typeof PublicAboutGetToKnowBppIndexRoute
@@ -1678,6 +1699,7 @@ export interface FileRouteTypes {
     | '/dashboard/settings/'
     | '/dashboard/tasks'
     | '/dashboard/users'
+    | '/membership/details/$membershipId'
     | '/about/bpp-goals'
     | '/about/commitment-progress'
     | '/about/get-to-know-bpp'
@@ -1752,6 +1774,7 @@ export interface FileRouteTypes {
     | '/dashboard/settings'
     | '/dashboard/tasks'
     | '/dashboard/users'
+    | '/membership/details/$membershipId'
     | '/about/bpp-goals'
     | '/about/commitment-progress'
     | '/about/get-to-know-bpp'
@@ -1830,6 +1853,7 @@ export interface FileRouteTypes {
     | '/dashboard/settings/'
     | '/dashboard/tasks/'
     | '/dashboard/users/'
+    | '/_public/membership/details/$membershipId'
     | '/_public/about/bpp-goals/'
     | '/_public/about/commitment-progress/'
     | '/_public/about/get-to-know-bpp/'
@@ -1960,6 +1984,7 @@ export const routeTree = rootRoute
         "/_public/download-app/",
         "/_public/privacy-policy/",
         "/_public/terms-and-conditions/",
+        "/_public/membership/details/$membershipId",
         "/_public/about/bpp-goals/",
         "/_public/about/commitment-progress/",
         "/_public/about/get-to-know-bpp/",
@@ -2155,6 +2180,10 @@ export const routeTree = rootRoute
     "/dashboard/users/": {
       "filePath": "dashboard/users/index.lazy.tsx",
       "parent": "/dashboard"
+    },
+    "/_public/membership/details/$membershipId": {
+      "filePath": "_public/membership/details/$membershipId.tsx",
+      "parent": "/_public"
     },
     "/_public/about/bpp-goals/": {
       "filePath": "_public/about/bpp-goals/index.tsx",

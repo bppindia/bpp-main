@@ -1,22 +1,12 @@
-import { memo, useState } from 'react'
-// import { CreditCard, Eye } from 'lucide-react'
+import { memo } from 'react'
 import { cn } from '@/lib/utils'
 import { UserRole, UserStatus } from '@/utils/roleAccess'
 import { useAuth } from '@/context/AuthContext'
 import { DashboardData } from '@/hooks/use-dashboard-data'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-// import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
 import { Skeleton } from '@/components/ui/skeleton'
-
-// import { ReferralShare } from './referal-share'
 
 // Define user card styles based on role and status
 type CardStyle = {
@@ -82,7 +72,17 @@ const UserCard = memo(({ dashboardData, isLoading }: UserCardProps) => {
   const { user: authUser } = useAuth()
   const isPrimaryMember = dashboardData.user.role === UserRole.PRIMARY_MEMBER
   const isActiveMember = dashboardData.user.role === UserRole.ACTIVE_MEMBER
-  const [isCardModalOpen, setIsCardModalOpen] = useState(false)
+
+  const getRemainingDays = () => {
+    if (!dashboardData.membership?.expiryDate) return null
+    
+    const expiryDate = new Date(dashboardData.membership.expiryDate)
+    const today = new Date()
+    const diffTime = expiryDate.getTime() - today.getTime()
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    
+    return diffDays > 0 ? diffDays : 0
+  }
 
   // Get the appropriate style based on user status and role
   const getCardStyle = (): CardStyle => {
@@ -104,14 +104,7 @@ const UserCard = memo(({ dashboardData, isLoading }: UserCardProps) => {
   }
 
   const cardStyle = getCardStyle()
-
-  // // Check if membership is expired
-  // const isMembershipExpired = dashboardData.membership?.expiryDate
-  //   ? new Date(dashboardData.membership.expiryDate) < new Date()
-  //   : false
-
-  // // Check if user has enough referrals for upgrade
-  // const hasEnoughReferrals = dashboardData.referrals?.successfulReferrals >= 10
+  const remainingDays = getRemainingDays()
 
   const renderUserInfo = () => {
     if (isLoading) {
@@ -259,101 +252,40 @@ const UserCard = memo(({ dashboardData, isLoading }: UserCardProps) => {
                 {isLoading ? (
                   <Skeleton className='h-8 w-48' />
                 ) : (
-                  <h2 className='truncate text-xl font-bold sm:text-2xl'>
-                    {dashboardData.user.title} {dashboardData.user.firstName}{' '}
-                    {dashboardData.user.middleName
-                      ? `${dashboardData.user.middleName} `
-                      : ''}
-                    {dashboardData.user.lastName}
-                  </h2>
-                )}
-                {!isLoading && (
-                  <Badge
-                    variant={cardStyle.badgeVariant}
-                    className={cn(
-                      'shrink-0 whitespace-nowrap',
-                      cardStyle.badgeStyle
-                    )}
-                  >
-                    {cardStyle.badgeText}
-                  </Badge>
-                )}
-              </div>
-
-              {renderUserInfo()}
-
-              {/* <div className='flex flex-col gap-2 sm:flex-row sm:items-center'>
-                {isLoading ? (
-                  <div className='flex flex-col gap-2 sm:flex-row'>
-                    <Skeleton className='h-10 w-full sm:w-32' />
-                    <Skeleton className='h-10 w-full sm:w-32' />
-                  </div>
-                ) : (
                   <>
-                    {(isPrimaryMember || isActiveMember) &&
-                      dashboardData.membership?.number &&
-                      dashboardData.membership?.cardUrl && (
-                        <div className='flex flex-wrap items-center gap-2'>
-                          <Button
-                            variant='outline'
-                            size='default'
-                            onClick={() => setIsCardModalOpen(true)}
-                            className='w-auto'
-                          >
-                            <Eye className='mr-2 h-4 w-4 sm:h-6 sm:w-6' />
-                            View Card
-                          </Button>
-                          <ReferralShare
-                            referralLink={
-                              dashboardData?.referrals?.referralLink ||
-                              undefined
-                            }
-                          />
-                          {(isPrimaryMember && hasEnoughReferrals) ||
-                          isMembershipExpired ? (
-                            <Button
-                              variant='outline'
-                              size='default'
-                              onClick={() => {
-                                // Handle upgrade membership
-                              }}
-                              className='w-auto'
-                            >
-                              <CreditCard className='mr-2 h-4 w-4' />
-                              Upgrade
-                            </Button>
-                          ) : null}
-                        </div>
-                      )}
+                    <h2 className='truncate text-xl font-bold sm:text-2xl'>
+                      {dashboardData.user.title} {dashboardData.user.firstName}{' '}
+                      {dashboardData.user.middleName
+                        ? `${dashboardData.user.middleName} `
+                        : ''}
+                      {dashboardData.user.lastName}
+                    </h2>
                   </>
                 )}
-              </div> */}
+                {!isLoading && (
+                  <div className='flex flex-col items-end gap-1'>
+                    <Badge
+                      variant={cardStyle.badgeVariant}
+                      className={cn(
+                        'shrink-0 whitespace-nowrap',
+                        cardStyle.badgeStyle
+                      )}
+                    >
+                      {cardStyle.badgeText}
+                    </Badge>
+                    {(isPrimaryMember || isActiveMember) && remainingDays !== null && (
+                      <span className='text-sm text-muted-foreground font-medium'>
+                        {remainingDays} days remaining
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+              {renderUserInfo()}
             </div>
           </div>
         </CardContent>
       </Card>
-
-      {/* Membership Card Modal */}
-      <Dialog open={isCardModalOpen} onOpenChange={setIsCardModalOpen}>
-        <DialogContent className='sm:max-w-md'>
-          <DialogHeader>
-            <DialogTitle>Membership Card</DialogTitle>
-          </DialogHeader>
-          <div className='flex items-center justify-center p-4'>
-            {dashboardData.membership?.cardUrl ? (
-              <img
-                src={dashboardData.membership.cardUrl}
-                alt='Membership Card'
-                className='h-auto max-w-full rounded-lg'
-              />
-            ) : (
-              <p className='text-muted-foreground'>
-                No membership card available
-              </p>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
     </>
   )
 })
